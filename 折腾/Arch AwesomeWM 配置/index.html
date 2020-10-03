@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://origami404.github.io').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="Arch AwesomeWM 配置 配个awesome. 主要痛点有:  任务栏在上面, 并且有一堆很讨厌的东西, 比如什么启动菜单啊, 当前任务啊, 键盘键位等 默认layout居然是floating, 理解不能 tag居然是全部显示然后有东西就有个点, 这样看起来很累 快捷键不合我口味 壁纸有点丑啊…">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Arch AwesomeWM 配置">
+<meta property="og:url" content="https://origami404.github.io/%E6%8A%98%E8%85%BE/Arch%20AwesomeWM%20%E9%85%8D%E7%BD%AE/index.html">
+<meta property="og:site_name" content="Origami404">
+<meta property="og:description" content="Arch AwesomeWM 配置 配个awesome. 主要痛点有:  任务栏在上面, 并且有一堆很讨厌的东西, 比如什么启动菜单啊, 当前任务啊, 键盘键位等 默认layout居然是floating, 理解不能 tag居然是全部显示然后有东西就有个点, 这样看起来很累 快捷键不合我口味 壁纸有点丑啊…">
+<meta property="og:image" content="https://i.loli.net/2020/01/28/23XRdTQwxc4mNol.png">
+<meta property="article:published_time" content="2020-01-29T11:30:00.000Z">
+<meta property="article:modified_time" content="2020-10-02T14:59:19.083Z">
+<meta property="article:author" content="Origami404">
+<meta property="article:tag" content="折腾">
+<meta property="article:tag" content="Arch">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/01/28/23XRdTQwxc4mNol.png">
+
+<link rel="canonical" href="https://origami404.github.io/%E6%8A%98%E8%85%BE/Arch%20AwesomeWM%20%E9%85%8D%E7%BD%AE/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Arch AwesomeWM 配置 | Origami404</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Origami404</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://origami404.github.io/%E6%8A%98%E8%85%BE/Arch%20AwesomeWM%20%E9%85%8D%E7%BD%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Origami404">
+      <meta itemprop="description" content="某蒟蒻OIer">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Origami404">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Arch AwesomeWM 配置
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-01-29 19:30:00" itemprop="dateCreated datePublished" datetime="2020-01-29T19:30:00+08:00">2020-01-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-02 22:59:19" itemprop="dateModified" datetime="2020-10-02T22:59:19+08:00">2020-10-02</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="arch-awesomewm-配置"><a class="markdownIt-Anchor" href="#arch-awesomewm-配置"></a> Arch AwesomeWM 配置</h1>
+<p>配个awesome.</p>
+<p>主要痛点有:</p>
+<ul>
+<li>任务栏在上面, 并且有一堆很讨厌的东西, 比如什么启动菜单啊, 当前任务啊, 键盘键位等</li>
+<li>默认layout居然是floating, 理解不能</li>
+<li>tag居然是全部显示然后有东西就有个点, 这样看起来很累</li>
+<li>快捷键不合我口味</li>
+<li>壁纸有点丑啊…</li>
+</ul>
+<a id="more"></a>
+<p>在<code>~/.config</code>下弄出这样的文件夹结构:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">tree -a</span><br><span class="line">~</span><br><span class="line">└── .config</span><br><span class="line">    └── awesome</span><br><span class="line">        ├── rc.lua</span><br><span class="line">        └── theme.lua</span><br></pre></td></tr></table></figure>
+<p>其中<code>themes.lua</code>是从<code>/usr/share/awesome/themes/default</code>里搞来的.</p>
+<p>这个是<code>rc.lua</code>, 删掉了很多东西(<strong>备份注意!</strong>)</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- include 一些东西, 留着</span></span><br><span class="line"><span class="built_in">pcall</span>(<span class="built_in">require</span>, <span class="string">"luarocks.loader"</span>)</span><br><span class="line"><span class="keyword">local</span> gears = <span class="built_in">require</span>(<span class="string">"gears"</span>)</span><br><span class="line"><span class="keyword">local</span> awful = <span class="built_in">require</span>(<span class="string">"awful"</span>)</span><br><span class="line"><span class="built_in">require</span>(<span class="string">"awful.autofocus"</span>)</span><br><span class="line"><span class="keyword">local</span> wibox = <span class="built_in">require</span>(<span class="string">"wibox"</span>)</span><br><span class="line"><span class="keyword">local</span> beautiful = <span class="built_in">require</span>(<span class="string">"beautiful"</span>)</span><br><span class="line"><span class="keyword">local</span> naughty = <span class="built_in">require</span>(<span class="string">"naughty"</span>)</span><br><span class="line"><span class="keyword">local</span> hotkeys_popup = <span class="built_in">require</span>(<span class="string">"awful.hotkeys_popup"</span>)</span><br><span class="line"><span class="built_in">require</span>(<span class="string">"awful.hotkeys_popup.keys"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- &#123;&#123;&#123; 错误处理</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 这可以在rc.lua出错时通过通知的形式告诉你, 保留(当然如果你十分自信就可以删)</span></span><br><span class="line"><span class="keyword">if</span> awesome.startup_errors <span class="keyword">then</span></span><br><span class="line">    naughty.notify(&#123; preset = naughty.<span class="built_in">config</span>.presets.critical,</span><br><span class="line">                     title = <span class="string">"Oops, there were errors during startup!"</span>,</span><br><span class="line">                     text = awesome.startup_errors &#125;)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 处理启动之后的一些错误, 就是不是rc.lua的错</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="keyword">local</span> in_error = <span class="literal">false</span></span><br><span class="line">    awesome.connect_signal(<span class="string">"debug::error"</span>, <span class="function"><span class="keyword">function</span> <span class="params">(err)</span></span></span><br><span class="line">        <span class="comment">-- Make sure we don't go into an endless error loop</span></span><br><span class="line">        <span class="keyword">if</span> in_error <span class="keyword">then</span> <span class="keyword">return</span> <span class="keyword">end</span></span><br><span class="line">        in_error = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">        naughty.notify(&#123; preset = naughty.<span class="built_in">config</span>.presets.critical,</span><br><span class="line">                         title = <span class="string">"Oops, an error happened!"</span>,</span><br><span class="line">                         text = <span class="built_in">tostring</span>(err) &#125;)</span><br><span class="line">        in_error = <span class="literal">false</span></span><br><span class="line">    <span class="keyword">end</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="comment">-- &#125;&#125;&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- &#123;&#123;&#123; 变量定义</span></span><br><span class="line"><span class="comment">-- 主题文件, 就是某某地方的themes.lua</span></span><br><span class="line">beautiful.init(<span class="string">"/home/origami/.config/awesome/theme.lua"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 默认的终端模拟器</span></span><br><span class="line">terminal = <span class="string">"alacritty --config-file=/home/origami/.config/alacritty/alacritty.yml "</span></span><br><span class="line">editor = <span class="built_in">os</span>.<span class="built_in">getenv</span>(<span class="string">"EDITOR"</span>) <span class="keyword">or</span> <span class="string">"vim"</span></span><br><span class="line">editor_cmd = terminal .. <span class="string">" -e "</span> .. editor</span><br><span class="line"></span><br><span class="line"><span class="comment">-- modkey, 这里选了win键, 就是夹在Ctrl跟Alt中间的那个</span></span><br><span class="line">modkey = <span class="string">"Mod4"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 按顺序排的默认layout, 我喜欢平铺, 并且新窗口从右边出来</span></span><br><span class="line"><span class="comment">-- 所以layout要保留左边, 意思就是把旧窗口保留在左边</span></span><br><span class="line">awful.layout.layouts = &#123;</span><br><span class="line">    awful.layout.suit.tile.left,</span><br><span class="line">    awful.layout.suit.fair,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">-- &#125;&#125;&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- &#123;&#123;&#123; Wibar</span></span><br><span class="line"><span class="comment">-- 搞个时钟 widget. widget就是能摆在任务栏的一块区域</span></span><br><span class="line"><span class="comment">-- 可以参考一下这两篇文章 https://www.jianshu.com/p/76ac11863591, https://awesomewm.org/doc/api/classes/wibox.wi不拉dget.textclock.html</span></span><br><span class="line"><span class="comment">-- 按照这个参数, 效果大概是: 2020/01/24 11:47:36 Fri</span></span><br><span class="line">mytextclock = wibox.widget.textclock(<span class="string">"  %Y/%m/%d %X %a "</span>, <span class="number">1</span>, <span class="string">"+08:00"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 让任务栏上每一个tag对应的wibox(就是一种小块)能让鼠标按, 并且在鼠标按时切换tag</span></span><br><span class="line"><span class="comment">-- tag类似于windows上的一个虚拟桌面</span></span><br><span class="line"><span class="comment">-- 函数中的第二个参数, 那个蜜汁数字的意思是绑定鼠标上的哪个键</span></span><br><span class="line"><span class="comment">-- 1 -&gt; 鼠标左键, 3 -&gt; 鼠标右键, 4, 5 -&gt; 滚轮上下 </span></span><br><span class="line"><span class="keyword">local</span> taglist_buttons = gears.<span class="built_in">table</span>.join(</span><br><span class="line">                    <span class="comment">-- 我只需要点击切换就好了, 不需要那么多花里胡哨的玩意</span></span><br><span class="line">                    awful.button(&#123; &#125;, <span class="number">1</span>, <span class="function"><span class="keyword">function</span><span class="params">(t)</span></span> t:view_only() <span class="keyword">end</span>)</span><br><span class="line">                )</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 设置墙纸, 主要是考虑到多显示器(screen)的情况才单独抽出一个函数, 我也懒得改了</span></span><br><span class="line"><span class="keyword">local</span> <span class="function"><span class="keyword">function</span> <span class="title">set_wallpaper</span><span class="params">(s)</span></span></span><br><span class="line">    <span class="comment">-- Wallpaper</span></span><br><span class="line">    <span class="keyword">if</span> beautiful.wallpaper <span class="keyword">then</span></span><br><span class="line">        <span class="keyword">local</span> wallpaper = beautiful.wallpaper</span><br><span class="line">        <span class="comment">-- If wallpaper is a function, call it with the screen</span></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">type</span>(wallpaper) == <span class="string">"function"</span> <span class="keyword">then</span></span><br><span class="line">            wallpaper = wallpaper(s)</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        gears.wallpaper.maximized(wallpaper, s, <span class="literal">true</span>)</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)</span></span><br><span class="line">screen.connect_signal(<span class="string">"property::geometry"</span>, set_wallpaper)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 对每一个显示器</span></span><br><span class="line">awful.screen.connect_for_each_screen(<span class="function"><span class="keyword">function</span><span class="params">(s)</span></span></span><br><span class="line">    <span class="comment">-- 首先壁纸安排上</span></span><br><span class="line">    set_wallpaper(s)</span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 然后加上tag 1~9, 我不习惯给tag一个有意义的名字, 所以就直接数字了. 最后一个参数是默认layout</span></span><br><span class="line">    awful.tag(&#123; <span class="string">"1"</span>, <span class="string">"2"</span>, <span class="string">"3"</span>, <span class="string">"4"</span>, <span class="string">"5"</span>, <span class="string">"6"</span>, <span class="string">"7"</span>, <span class="string">"8"</span>, <span class="string">"9"</span> &#125;, s, awful.layout.layouts[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">    <span class="comment">-- prompt是一个类似启动器一样的玩意, 按Modkey+r就能出来, 能spawn程序</span></span><br><span class="line">    s.mypromptbox = awful.widget.prompt()</span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 创建一个taglist widget</span></span><br><span class="line">    s.mytaglist = awful.widget.taglist &#123;</span><br><span class="line">        screen  = s,</span><br><span class="line">        <span class="comment">-- 过滤器, 原版配置文件是全部都显示上, 我的习惯是只显示非空的tag</span></span><br><span class="line">        filter  = awful.widget.taglist.filter.noempty,</span><br><span class="line">        buttons = taglist_buttons</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">-- Create the wibox</span></span><br><span class="line">    <span class="comment">-- 把任务栏放到底下去</span></span><br><span class="line">    s.mywibox = awful.wibar(&#123; position = <span class="string">"bottom"</span>, screen = s &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 任务栏上的widget怎么放</span></span><br><span class="line">    s.mywibox:setup &#123;</span><br><span class="line">        layout = wibox.layout.align.horizontal,</span><br><span class="line">        &#123; <span class="comment">-- 左边</span></span><br><span class="line">            layout = wibox.layout.fixed.horizontal,</span><br><span class="line">            <span class="comment">-- 辣鸡启动菜单给爷爬</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">-- 放taglist</span></span><br><span class="line">            s.mytaglist,</span><br><span class="line">            <span class="comment">-- 放启动器</span></span><br><span class="line">            s.mypromptbox,</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123; <span class="comment">-- 中间</span></span><br><span class="line">            <span class="comment">-- 啥也不放, 但是要占个位置, 防止右边跑到中间来</span></span><br><span class="line">            layout = wibox.layout.align.horizontal</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123; <span class="comment">-- 右边</span></span><br><span class="line">            layout = wibox.layout.fixed.horizontal,</span><br><span class="line">            <span class="comment">-- 这有点类似于windows下面的任务栏, 可以放一些应用图标, 比如输入法的小键盘</span></span><br><span class="line">            wibox.widget.systray(),</span><br><span class="line">            <span class="comment">-- 放个钟</span></span><br><span class="line">            mytextclock,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">end</span>)</span><br><span class="line"><span class="comment">-- &#125;&#125;&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- &#123;&#123;&#123; 不知道是干嘛的, 放着</span></span><br><span class="line">root.buttons(gears.<span class="built_in">table</span>.join(</span><br><span class="line">    awful.button(&#123; &#125;, <span class="number">3</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span></span> mymainmenu:toggle() <span class="keyword">end</span>),</span><br><span class="line">    awful.button(&#123; &#125;, <span class="number">4</span>, awful.tag.viewnext),</span><br><span class="line">    awful.button(&#123; &#125;, <span class="number">5</span>, awful.tag.viewprev)</span><br><span class="line">))</span><br><span class="line"><span class="comment">-- &#125;&#125;&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- &#123;&#123;&#123; 键位绑定, 这里是全局按键, 就是按下键之后要干什么不依赖于当前焦点应用的</span></span><br><span class="line">globalkeys = gears.<span class="built_in">table</span>.join(</span><br><span class="line">    <span class="comment">-- 显示一张快捷键表</span></span><br><span class="line">    awful.key(&#123; modkey, <span class="string">"Shift"</span>   &#125;, <span class="string">"s"</span>,      hotkeys_popup.show_help,</span><br><span class="line">              &#123;description=<span class="string">"show help"</span>, group=<span class="string">"awesome"</span>&#125;),</span><br><span class="line">    </span><br><span class="line">    <span class="comment">-- 让它像输入法一样可以通过-/=键来前后切换tag(虽然我好像没用过)</span></span><br><span class="line">    awful.key(&#123; modkey,           &#125;, <span class="string">"-"</span>,   awful.tag.viewprev,</span><br><span class="line">              &#123;description = <span class="string">"view previous"</span>, group = <span class="string">"tag"</span>&#125;),</span><br><span class="line">    awful.key(&#123; modkey,           &#125;, <span class="string">"="</span>,  awful.tag.viewnext,</span><br><span class="line">              &#123;description = <span class="string">"view next"</span>, group = <span class="string">"tag"</span>&#125;),</span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 改变layout, 就是把当前tag中的几个窗口挪来挪去</span></span><br><span class="line">    awful.key(&#123; modkey, <span class="string">"Shift"</span>   &#125;, <span class="string">"j"</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span></span> awful.client.swap.byidx(  <span class="number">1</span>)    <span class="keyword">end</span>,</span><br><span class="line">              &#123;description = <span class="string">"swap with next client by index"</span>, group = <span class="string">"client"</span>&#125;),</span><br><span class="line">    awful.key(&#123; modkey, <span class="string">"Shift"</span>   &#125;, <span class="string">"k"</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span></span> awful.client.swap.byidx( <span class="number">-1</span>)    <span class="keyword">end</span>,</span><br><span class="line">              &#123;description = <span class="string">"swap with previous client by index"</span>, group = <span class="string">"client"</span>&#125;),</span><br><span class="line"></span><br><span class="line">    <span class="comment">-- Modkey+回车 出终端, Modkey+Shift+r 重启awesome</span></span><br><span class="line">    awful.key(&#123; modkey,           &#125;, <span class="string">"Return"</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span></span> awful.spawn(terminal) <span class="keyword">end</span>,</span><br><span class="line">              &#123;description = <span class="string">"open a terminal"</span>, group = <span class="string">"launcher"</span>&#125;),</span><br><span class="line">    awful.key(&#123; modkey, <span class="string">"Shift"</span> &#125;, <span class="string">"r"</span>, awesome.restart,</span><br><span class="line">              &#123;description = <span class="string">"reload awesome"</span>, group = <span class="string">"awesome"</span>&#125;),</span><br><span class="line"></span><br><span class="line">    <span class="comment">-- Modkey+r 调用启动器</span></span><br><span class="line">    awful.key(&#123; modkey &#125;,            <span class="string">"r"</span>,     <span class="function"><span class="keyword">function</span> <span class="params">()</span></span> awful.screen.focused().mypromptbox:run() <span class="keyword">end</span>,</span><br><span class="line">              &#123;description = <span class="string">"run prompt"</span>, group = <span class="string">"launcher"</span>&#125;),</span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 人活着不能没有浏览器和编辑器啊!</span></span><br><span class="line">    awful.key(&#123; modkey, <span class="string">"Alt"</span> &#125;,     <span class="string">"v"</span>,     <span class="function"><span class="keyword">function</span> <span class="params">()</span></span> awesome.spawn(<span class="string">"code"</span>) <span class="keyword">end</span>,</span><br><span class="line">              &#123;description = <span class="string">"start vscode"</span>, group = <span class="string">"Custom App"</span>&#125;),</span><br><span class="line">    awful.key(&#123; modkey, <span class="string">"Alt"</span> &#125;,     <span class="string">"c"</span>,     <span class="function"><span class="keyword">function</span> <span class="params">()</span></span> awesome.spawn(<span class="string">"chromium"</span>) <span class="keyword">end</span>, </span><br><span class="line">              &#123;description = <span class="string">"start chromium"</span>, group = <span class="string">"Custom App"</span>&#125;)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 依赖于当前焦点应用的快捷键绑定</span></span><br><span class="line">clientkeys = gears.<span class="built_in">table</span>.join(</span><br><span class="line">    <span class="comment">-- 全屏</span></span><br><span class="line">    awful.key(&#123; modkey,           &#125;, <span class="string">"f"</span>,</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="params">(c)</span></span></span><br><span class="line">            c.fullscreen = <span class="keyword">not</span> c.fullscreen</span><br><span class="line">            c:raise()</span><br><span class="line">        <span class="keyword">end</span>,</span><br><span class="line">        &#123;description = <span class="string">"toggle fullscreen"</span>, group = <span class="string">"client"</span>&#125;),</span><br><span class="line">    </span><br><span class="line">    <span class="comment">-- 退出</span></span><br><span class="line">    awful.key(&#123; modkey, <span class="string">"Shift"</span>   &#125;, <span class="string">"q"</span>,      <span class="function"><span class="keyword">function</span> <span class="params">(c)</span></span> c:kill()   <span class="keyword">end</span>,</span><br><span class="line">              &#123;description = <span class="string">"close"</span>, group = <span class="string">"client"</span>&#125;)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 给每一个tag绑定Modkey+1/2/3/4/5/6/7/8/9</span></span><br><span class="line"><span class="comment">-- 显然不写循环会看起来很傻</span></span><br><span class="line"><span class="keyword">for</span> i = <span class="number">1</span>, <span class="number">9</span> <span class="keyword">do</span></span><br><span class="line">    globalkeys = gears.<span class="built_in">table</span>.join(globalkeys,</span><br><span class="line">        <span class="comment">-- 据说是使用了黑魔法来保证在不同键盘上绑定的键都是1到9, 不要动就对了</span></span><br><span class="line">        awful.key(&#123; modkey &#125;, <span class="string">"#"</span> .. i + <span class="number">9</span>,</span><br><span class="line">                  <span class="function"><span class="keyword">function</span> <span class="params">()</span></span></span><br><span class="line">                        <span class="keyword">local</span> screen = awful.screen.focused()</span><br><span class="line">                        <span class="keyword">local</span> tag = screen.tags[i]</span><br><span class="line">                        <span class="comment">-- 我想要让它跟i3一样, 如果我现在在2 tag, 我再按Modkey+2就给我切换到上一个我访问过的tag去 (方便抄代码) </span></span><br><span class="line">                        <span class="comment">-- 获得我当前的tag</span></span><br><span class="line">                        <span class="keyword">local</span> now_tag = screen.selected_tag</span><br><span class="line">                        <span class="keyword">if</span> tag <span class="keyword">then</span></span><br><span class="line">                            <span class="comment">-- 如果当前的tag就是我现在在看着的tag</span></span><br><span class="line">                            <span class="keyword">if</span> tag == now_tag <span class="keyword">then</span></span><br><span class="line">                                <span class="comment">-- 回到上一次我访问的tag那里去</span></span><br><span class="line">                                awful.tag.history.restore(screen)</span><br><span class="line">                            <span class="keyword">else</span> tag:view_only() <span class="keyword">end</span> <span class="comment">-- 如果不是就切换到要去的tag</span></span><br><span class="line">                        <span class="keyword">end</span></span><br><span class="line">                  <span class="keyword">end</span>,</span><br><span class="line">                  &#123;description = <span class="string">"view tag #"</span>..i, group = <span class="string">"tag"</span>&#125;),</span><br><span class="line">        <span class="comment">-- 移动应用去到对应tag</span></span><br><span class="line">        awful.key(&#123; modkey, <span class="string">"Shift"</span> &#125;, <span class="string">"#"</span> .. i + <span class="number">9</span>,</span><br><span class="line">                  <span class="function"><span class="keyword">function</span> <span class="params">()</span></span></span><br><span class="line">                      <span class="keyword">if</span> client.focus <span class="keyword">then</span></span><br><span class="line">                          <span class="keyword">local</span> tag = client.focus.screen.tags[i]</span><br><span class="line">                          <span class="keyword">if</span> tag <span class="keyword">then</span></span><br><span class="line">                              client.focus:move_to_tag(tag)</span><br><span class="line">                          <span class="keyword">end</span></span><br><span class="line">                     <span class="keyword">end</span></span><br><span class="line">                  <span class="keyword">end</span>,</span><br><span class="line">                  &#123;description = <span class="string">"move focused client to tag #"</span>..i, group = <span class="string">"tag"</span>&#125;)</span><br><span class="line">    )</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 保证你鼠标在的应用是焦点应用</span></span><br><span class="line">clientbuttons = gears.<span class="built_in">table</span>.join(</span><br><span class="line">    awful.button(&#123; &#125;, <span class="number">1</span>, <span class="function"><span class="keyword">function</span> <span class="params">(c)</span></span></span><br><span class="line">        c:emit_signal(<span class="string">"request::activate"</span>, <span class="string">"mouse_click"</span>, &#123;raise = <span class="literal">true</span>&#125;)</span><br><span class="line">    <span class="keyword">end</span>),</span><br><span class="line">    awful.button(&#123; modkey &#125;, <span class="number">1</span>, <span class="function"><span class="keyword">function</span> <span class="params">(c)</span></span></span><br><span class="line">        c:emit_signal(<span class="string">"request::activate"</span>, <span class="string">"mouse_click"</span>, &#123;raise = <span class="literal">true</span>&#125;)</span><br><span class="line">        awful.mouse.client.move(c)</span><br><span class="line">    <span class="keyword">end</span>),</span><br><span class="line">    awful.button(&#123; modkey &#125;, <span class="number">3</span>, <span class="function"><span class="keyword">function</span> <span class="params">(c)</span></span></span><br><span class="line">        c:emit_signal(<span class="string">"request::activate"</span>, <span class="string">"mouse_click"</span>, &#123;raise = <span class="literal">true</span>&#125;)</span><br><span class="line">        awful.mouse.client.resize(c)</span><br><span class="line">    <span class="keyword">end</span>)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 使快捷键生效</span></span><br><span class="line">root.keys(globalkeys)</span><br><span class="line"><span class="comment">-- &#125;&#125;&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- &#123;&#123;&#123; 这里是让一些特殊应用使用特殊布局的地方, 放着</span></span><br><span class="line"><span class="comment">--      blabla..... </span></span><br><span class="line"><span class="comment">-- &#125;&#125;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>这个是<code>themes.lua</code>, 同样删除了很多东西~~(任务栏要什么图标)~~</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> theme_assets = <span class="built_in">require</span>(<span class="string">"beautiful.theme_assets"</span>)</span><br><span class="line"><span class="keyword">local</span> xresources = <span class="built_in">require</span>(<span class="string">"beautiful.xresources"</span>)</span><br><span class="line"><span class="keyword">local</span> dpi = xresources.apply_dpi</span><br><span class="line"></span><br><span class="line"><span class="comment">-- local gfs = require("gears.filesystem")</span></span><br><span class="line"><span class="keyword">local</span> themes_path = <span class="string">"/home/origami/.config/awesome/themes"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">local</span> theme = &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- Fira Code 大法好, 后面的数字定字号</span></span><br><span class="line">theme.font          = <span class="string">"Fira Code 9"</span></span><br><span class="line"></span><br><span class="line">theme.bg_normal     = <span class="string">"#222222AA"</span></span><br><span class="line">theme.bg_focus      = <span class="string">"#535d6cCC"</span></span><br><span class="line">theme.bg_urgent     = <span class="string">"#ff0000"</span></span><br><span class="line">theme.bg_minimize   = <span class="string">"#444444"</span></span><br><span class="line">theme.bg_systray    = theme.bg_normal</span><br><span class="line"></span><br><span class="line">theme.fg_normal     = <span class="string">"#aaaaaa"</span></span><br><span class="line">theme.fg_focus      = <span class="string">"#ffffff"</span></span><br><span class="line">theme.fg_urgent     = <span class="string">"#ffffff"</span></span><br><span class="line">theme.fg_minimize   = <span class="string">"#ffffff"</span></span><br><span class="line"></span><br><span class="line">theme.useless_gap   = dpi(<span class="number">0</span>) <span class="comment">-- 这是两个应用之间的间隔的宽度</span></span><br><span class="line">theme.border_width  = dpi(<span class="number">1</span>) <span class="comment">-- 这是应用边框的宽度</span></span><br><span class="line">theme.border_normal = <span class="string">"#000000"</span></span><br><span class="line">theme.border_focus  = <span class="string">"#535d6c"</span></span><br><span class="line">theme.border_marked = <span class="string">"#91231c"</span></span><br><span class="line"></span><br><span class="line">theme.menu_height = dpi(<span class="number">15</span>)</span><br><span class="line">theme.menu_width  = dpi(<span class="number">100</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 墙纸挑一张喜欢的就好</span></span><br><span class="line">theme.wallpaper = <span class="string">"/home/origami/pictures/new_bg/03.jpg"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> theme</span><br></pre></td></tr></table></figure>
+<p>最后放截图:</p>
+<p><img src="https://i.loli.net/2020/01/28/23XRdTQwxc4mNol.png" alt="2020-01-28-203617_1920x1080_scrot.png" /></p>
+<p>壁纸是p站的, <a href="https://www.pixiv.net/artworks/74601565" target="_blank" rel="noopener">原链接</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%8A%98%E8%85%BE/" rel="tag"># 折腾</a>
+              <a href="/tags/Arch/" rel="tag"># Arch</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/%E6%8A%98%E8%85%BE/Arch%20CLI%E5%B7%A5%E5%85%B7%20%E5%AE%89%E8%A3%85%E8%AE%B0%E5%BD%95/" rel="prev" title="Arch CLI工具 安装记录">
+      <i class="fa fa-chevron-left"></i> Arch CLI工具 安装记录
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/%E8%87%AA%E7%84%B6%E7%A7%91%E5%AD%A6/%E5%8F%98%E5%88%86%E5%AD%A6%E5%9F%BA%E6%9C%AC%E5%AE%9A%E7%90%86/" rel="next" title="变分学基本定理">
+      变分学基本定理 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#arch-awesomewm-配置"><span class="nav-number">1.</span> <span class="nav-text"> Arch AwesomeWM 配置</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Origami404"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Origami404</p>
+  <div class="site-description" itemprop="description">某蒟蒻OIer</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Origami404" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Origami404" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Origami404</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.7.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

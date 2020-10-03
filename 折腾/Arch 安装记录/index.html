@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://origami404.github.io').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="Arch 安装记录 简单记录一下安装arch时需要的命令. (虽然install.txt里都有了) install.txt复读机  如果你还不知道Arch是什么, 可以戳这里看看维基   打开作弊指南 install.txt 为了方便安装, 在启动完arch镜像后, &#x2F;root下有一个install.txt, 打开就是安装所需的大部分步骤, 然后就可以一边看着一边抄了. 一开始我用Ctrl+Al">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Arch 安装记录">
+<meta property="og:url" content="https://origami404.github.io/%E6%8A%98%E8%85%BE/Arch%20%E5%AE%89%E8%A3%85%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="Origami404">
+<meta property="og:description" content="Arch 安装记录 简单记录一下安装arch时需要的命令. (虽然install.txt里都有了) install.txt复读机  如果你还不知道Arch是什么, 可以戳这里看看维基   打开作弊指南 install.txt 为了方便安装, 在启动完arch镜像后, &#x2F;root下有一个install.txt, 打开就是安装所需的大部分步骤, 然后就可以一边看着一边抄了. 一开始我用Ctrl+Al">
+<meta property="article:published_time" content="2020-01-29T11:30:00.000Z">
+<meta property="article:modified_time" content="2020-10-02T14:59:19.086Z">
+<meta property="article:author" content="Origami404">
+<meta property="article:tag" content="折腾">
+<meta property="article:tag" content="Arch">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://origami404.github.io/%E6%8A%98%E8%85%BE/Arch%20%E5%AE%89%E8%A3%85%E8%AE%B0%E5%BD%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Arch 安装记录 | Origami404</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Origami404</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://origami404.github.io/%E6%8A%98%E8%85%BE/Arch%20%E5%AE%89%E8%A3%85%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Origami404">
+      <meta itemprop="description" content="某蒟蒻OIer">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Origami404">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Arch 安装记录
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-01-29 19:30:00" itemprop="dateCreated datePublished" datetime="2020-01-29T19:30:00+08:00">2020-01-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-02 22:59:19" itemprop="dateModified" datetime="2020-10-02T22:59:19+08:00">2020-10-02</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="arch-安装记录"><a class="markdownIt-Anchor" href="#arch-安装记录"></a> Arch 安装记录</h1>
+<p>简单记录一下安装arch时需要的命令. (虽然<code>install.txt</code>里都有了)</p>
+<p><s><code>install.txt</code>复读机</s></p>
+<blockquote>
+<p>如果你还不知道Arch是什么, 可以<a href="https://zh.wikipedia.org/zh-hans/Arch_Linux" target="_blank" rel="noopener">戳这里看看维基</a></p>
+</blockquote>
+<h2 id="打开作弊指南-installtxt"><a class="markdownIt-Anchor" href="#打开作弊指南-installtxt"></a> 打开<s>作弊指南</s> install.txt</h2>
+<p>为了方便安装, 在启动完arch镜像后, <code>/root</code>下有一个<code>install.txt</code>, 打开就是安装所需的大部分步骤, 然后就可以一边看着一边抄了.</p>
+<p>一开始我用<code>Ctrl+Alt+F2</code>开多一个虚拟终端然后在<code>F1</code>和<code>F2</code>之间切换着抄, 后来<code>vim</code>支持虚拟终端之后就直接<code>vim</code>抄美滋滋.</p>
+<p>具体做法是用<code>vim</code>打开<code>install.txt</code>之后, 在<code>normal</code>模式下键入<code>:term</code>就可以打开一个终端. 然后按<code>Ctrl+Shift+h/j/k/l</code>就可以挪终端位置, 挪到喜欢的位置就可以开抄(?)了.</p>
+<a id="more"></a>
+<h2 id="正常流程-准备pre-installtion"><a class="markdownIt-Anchor" href="#正常流程-准备pre-installtion"></a> 正常流程: 准备(pre-installtion)</h2>
+<h3 id="村通网"><a class="markdownIt-Anchor" href="#村通网"></a> 村通网</h3>
+<p>看看网络通不通, 可以<code>ping</code>一下<code>baidu.com</code>什么的.</p>
+<p>如果你是<strong>有线网络并且支持dhcp</strong>, 那就好办, 啥都不用设置.</p>
+<p>如果你是<strong>有线网络但是需要设置ip</strong>, 可以参考这里. 大概就是:</p>
+<ol>
+<li>看看自己有什么网络接口(<code>network interface</code>)可以用(这玩意就大概类似于win下的网络适配器一样的东西吧). 运行: <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip link show dev</span><br></pre></td></tr></table></figure>
+就可以看到一堆. 其中<code>lo</code>是本地<code>loopback</code>接口, 没个卵用. 真正有用的是类似于<code>eth0</code>或者<code>enp3s0</code>之类的东西, 记着, 下面用<code>&lt;dev&gt;</code>引用</li>
+<li>然后需要对特定的<code>interface</code>添加<code>ip</code>地址: <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip address add &lt;address/prefix_len&gt; broadcast + dev &lt;dev&gt;</span><br></pre></td></tr></table></figure>
+<code>&lt;address/prefix_len&gt;</code>那里可以填诸如<code>192.168.0.234/24</code>之类的东西.</li>
+<li>添加网关(<code>gateway</code>, 或者叫<code>router</code>) <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip route add default via &lt;address&gt; dev &lt;dev&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>然后就大概行了.</p>
+<p>实在不行, 可以直接写配置文件<code>/etc/rc.conf</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Static IP example</span><br><span class="line">interface&#x3D;eth0</span><br><span class="line">address&#x3D;192.168.0.2</span><br><span class="line">netmask&#x3D;255.255.255.0</span><br><span class="line">broadcast&#x3D;192.168.0.255</span><br><span class="line">gateway&#x3D;192.168.0.1</span><br></pre></td></tr></table></figure>
+<p>广播地址怎么填是由掩码和网关决定的, 可以自己<code>google</code></p>
+<p>DNS也可以在<code>/etc/resolv.conf</code>设置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nameserver 8.8.8.8</span><br><span class="line">nameserver 8.8.4.4</span><br></pre></td></tr></table></figure>
+<p>如果你是<strong>无线网络比如wifi</strong>, 可以直接用<code>wifi-menu</code>设置</p>
+<h2 id="对时"><a class="markdownIt-Anchor" href="#对时"></a> 对时</h2>
+<p>直接设网络校准.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">timedatectl <span class="built_in">set</span>-ntp <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<h2 id="分区-格式化"><a class="markdownIt-Anchor" href="#分区-格式化"></a> 分区 &amp; 格式化</h2>
+<p>这一块装双系统的话建议<code>windows</code>下搞或者用<code>pe</code>. 单系统无所谓, 随便搞.</p>
+<p>关于<code>fdisk</code>怎么用, 可以看<a href="https://wiki.archlinux.org/index.php/Fdisk_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)" target="_blank" rel="noopener">这里</a>.</p>
+<p>通常内存大于等于8G并且不是经常跑内存负载大的应用的用户, 可以不用设<code>swap</code>分区(比如我)</p>
+<p>分好区之后使用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkfs.ext4 /dev/sdX?</span><br></pre></td></tr></table></figure>
+<p>来格式化分区为<code>ext4</code>.</p>
+<h2 id="安装"><a class="markdownIt-Anchor" href="#安装"></a> 安装</h2>
+<p>首先为了网速, 选择一个镜像(<code>mirror</code>). 编辑<code>/etc/pacman.d/mirrorlist</code>(安利清华源), 把所需的镜像网站丢最上面即可.</p>
+<p>Tips: <code>vim</code>中<code>normal</code>模式输入<code>/tuna</code>可以查找<code>tuna</code>, <code>v</code>可以进入<code>visual</code>模式选择, <code>d</code>可以剪切, <code>y</code>可以复制, <code>p</code>可以粘贴</p>
+<p>挂载分区, 然后把一切丢给<code>pacman</code>, 去喝杯爪哇咖啡. (700多M东西, 要多久自己可以算算)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mount /dev/sdX? /mnt</span><br><span class="line">pacstrap /mnt base linux linux-firmware</span><br></pre></td></tr></table></figure>
+<h2 id="基础配置"><a class="markdownIt-Anchor" href="#基础配置"></a> 基础配置</h2>
+<p>生成<code>fstab</code>(用于管理挂载的文件系统的文件, 怪怪的)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">genfstab -U /mnt &gt;&gt; /mnt/etc/fstab</span><br></pre></td></tr></table></figure>
+<p><s>滚进新装的系统里打滚</s>  <code>chroot</code>到新的系统</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arch-chroot /mnt</span><br></pre></td></tr></table></figure>
+<p>现在你可以认为你已经在新系统里了.</p>
+<p>设置时区(如果你在看这篇中文文章, 一般您会在中国, 可以选择上海时区), 并把硬件时钟设置为系统时间</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br><span class="line">hwclock --systoh</span><br></pre></td></tr></table></figure>
+<p>设置localization</p>
+<p>编辑<code>/etc/locale.gen</code>, 去掉<code>en_US.UTF-8</code>跟<code>zh_CN.UTF-8</code>(或者你也可以顺路去掉<code>HK</code>跟<code>TW</code>的)的注释, 然后</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">locale-gen</span><br></pre></td></tr></table></figure>
+<h2 id="驱动-bootloader-dhcpcd"><a class="markdownIt-Anchor" href="#驱动-bootloader-dhcpcd"></a> 驱动 &amp; bootloader &amp; dhcpcd</h2>
+<p>这里选择<code>grub2</code>作为<code>bootloader</code>. 同时因为我还要用<code>windows</code>打游戏, 顺路把<code>windows</code>的引导解决掉</p>
+<p>先装个<code>微码</code>跟<code>ntfs</code>的驱动</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -S &lt;micro-code&gt; ntfs-3g fuse</span><br></pre></td></tr></table></figure>
+<p><code>cpu</code>为<code>intel</code>的, 装<code>intel-ucode</code>; 为<code>amd</code>的装<code>amd-ucode</code>, 不知道的或者装<code>Arch</code>在u盘四处插的可以两个都装.</p>
+<p>然后装<code>grub2</code>跟<code>os-prober</code>, 如果是<code>uefi</code>的还(可能)要装个<code>efibootmgr</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -S grub2 os-prober efibootmgr</span><br></pre></td></tr></table></figure>
+<p>如果你已经装过<code>windows</code>了, 硬盘里一般会有一个<code>efi</code>分区, 可以通过<code>fdisk -l</code>查看, 一般就200来M的样子. 如果没有就<code>google</code>一下自己建一个分区.</p>
+<p>找到分区后挂载到<code>/boot/efi</code>上:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount /dev/sdX? /boot/efi</span><br></pre></td></tr></table></figure>
+<p>然后把<code>bootloader</code>装到硬盘里. 如果有什么报错可以先看看有没有<code>/boot/grub</code>这个文件夹, 没有可以先<code>mkdir</code>一个</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">os-prober</span><br><span class="line">grub-mkconfig -o /boot/grub/grub.cfg</span><br><span class="line">grub-install --target=x86_64-efi --efi-directory=/boot/EFI --bootloader-id=GRUB</span><br></pre></td></tr></table></figure>
+<p>记得装<code>dhcpcd</code>, 要不然就等着重启断网吧</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pacman -S dhcpcd</span><br><span class="line">systemctl <span class="built_in">enable</span> dhcpcd</span><br></pre></td></tr></table></figure>
+<p>重启, 应该就能进入系统了.</p>
+<p>接下的配置可以看<a href="../Arch%20CLI%E5%B7%A5%E5%85%B7%20%E5%AE%89%E8%A3%85%E8%AE%B0%E5%BD%95">这里</a>.</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%8A%98%E8%85%BE/" rel="tag"># 折腾</a>
+              <a href="/tags/Arch/" rel="tag"># Arch</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/%E6%8A%98%E8%85%BE/Arch%20RIMI%20%E8%BE%93%E5%85%A5%E6%B3%95%20%E9%85%8D%E7%BD%AE/" rel="prev" title="Arch 上 RIMI 输入法的配置">
+      <i class="fa fa-chevron-left"></i> Arch 上 RIMI 输入法的配置
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/%E6%8A%98%E8%85%BE/Arch%20LightDM%20%E9%85%8D%E7%BD%AE/" rel="next" title="Arch LightDM 配置">
+      Arch LightDM 配置 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#arch-安装记录"><span class="nav-number">1.</span> <span class="nav-text"> Arch 安装记录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#打开作弊指南-installtxt"><span class="nav-number">1.1.</span> <span class="nav-text"> 打开作弊指南 install.txt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正常流程-准备pre-installtion"><span class="nav-number">1.2.</span> <span class="nav-text"> 正常流程: 准备(pre-installtion)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#村通网"><span class="nav-number">1.2.1.</span> <span class="nav-text"> 村通网</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对时"><span class="nav-number">1.3.</span> <span class="nav-text"> 对时</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分区-格式化"><span class="nav-number">1.4.</span> <span class="nav-text"> 分区 &amp; 格式化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">1.5.</span> <span class="nav-text"> 安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基础配置"><span class="nav-number">1.6.</span> <span class="nav-text"> 基础配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#驱动-bootloader-dhcpcd"><span class="nav-number">1.7.</span> <span class="nav-text"> 驱动 &amp; bootloader &amp; dhcpcd</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Origami404"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Origami404</p>
+  <div class="site-description" itemprop="description">某蒟蒻OIer</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Origami404" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Origami404" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Origami404</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.7.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

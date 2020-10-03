@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://origami404.github.io').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="前言 &amp; 介绍 Category Theory for Programmers, 顾名思义, 是一本关于范畴论的书, 但是偏向CS而非数学. 书的LaTeX\LaTeXLATE​X代码以GPL-3.0公布在GitHub, 有两个版本, 一个以C++作为辅助说明语言, 另一个是Scala. 作为一个蒟蒻OI党当然是选择C++版啦. 本文(如果不咕咕咕的话)会持续更新, 大概记录一些摘录或者">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Category-theory-for-programmers 阅读笔记">
+<meta property="og:url" content="https://origami404.github.io/Category-theory-for-programmers%20%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Origami404">
+<meta property="og:description" content="前言 &amp; 介绍 Category Theory for Programmers, 顾名思义, 是一本关于范畴论的书, 但是偏向CS而非数学. 书的LaTeX\LaTeXLATE​X代码以GPL-3.0公布在GitHub, 有两个版本, 一个以C++作为辅助说明语言, 另一个是Scala. 作为一个蒟蒻OI党当然是选择C++版啦. 本文(如果不咕咕咕的话)会持续更新, 大概记录一些摘录或者">
+<meta property="article:published_time" content="2020-04-16T14:00:00.000Z">
+<meta property="article:modified_time" content="2020-10-02T14:59:19.083Z">
+<meta property="article:author" content="Origami404">
+<meta property="article:tag" content="Haskell">
+<meta property="article:tag" content="读书笔记">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://origami404.github.io/Category-theory-for-programmers%20%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Category-theory-for-programmers 阅读笔记 | Origami404</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Origami404</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://origami404.github.io/Category-theory-for-programmers%20%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Origami404">
+      <meta itemprop="description" content="某蒟蒻OIer">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Origami404">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Category-theory-for-programmers 阅读笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-04-16 22:00:00" itemprop="dateCreated datePublished" datetime="2020-04-16T22:00:00+08:00">2020-04-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-02 22:59:19" itemprop="dateModified" datetime="2020-10-02T22:59:19+08:00">2020-10-02</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="前言-介绍"><a class="markdownIt-Anchor" href="#前言-介绍"></a> 前言 &amp; 介绍</h2>
+<p><code>Category Theory for Programmers</code>, 顾名思义, 是一本关于范畴论的书, 但是偏向CS而非数学.</p>
+<p>书的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mtext>LaTeX</mtext></mrow><annotation encoding="application/x-tex">\LaTeX</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.89883em;vertical-align:-0.2155em;"></span><span class="mord text"><span class="mord textrm">L</span><span class="mspace" style="margin-right:-0.36em;"></span><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.68333em;"><span style="top:-2.904999em;"><span class="pstrut" style="height:2.7em;"></span><span class="mord text"><span class="mord textrm sizing reset-size6 size3">A</span></span></span></span></span></span><span class="mspace" style="margin-right:-0.15em;"></span><span class="mord text"><span class="mord textrm">T</span><span class="mspace" style="margin-right:-0.1667em;"></span><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.46782999999999997em;"><span style="top:-2.7845em;"><span class="pstrut" style="height:3em;"></span><span class="mord text"><span class="mord textrm">E</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2155em;"><span></span></span></span></span><span class="mspace" style="margin-right:-0.125em;"></span><span class="mord textrm">X</span></span></span></span></span></span>代码以<code>GPL-3.0</code>公布在<a href="https://github.com/hmemcpy/milewski-ctfp-pdf" target="_blank" rel="noopener">GitHub</a>, 有两个版本, 一个以<code>C++</code>作为辅助说明语言, 另一个是<code>Scala</code>.</p>
+<p>作为一个蒟蒻OI党当然是选择<code>C++</code>版啦.</p>
+<p>本文(如果不咕咕咕的话)会持续更新, 大概记录一些摘录或者感想或者我不知道的东西…</p>
+<a id="more"></a>
+<h2 id="preface"><a class="markdownIt-Anchor" href="#preface"></a> Preface</h2>
+<blockquote>
+<p>Category Theory – rather than dealing with particulars – deals with structure. It deals with the kind of structure that <strong>makes programs composable</strong>.</p>
+</blockquote>
+<blockquote>
+<p>Functional programming is not only about composing functions and algebraic data structures — <strong>it makes concurrency composable</strong> — something that’s virtually impossible with other programming paradigms.</p>
+</blockquote>
+<blockquote>
+<p>It’s not that side effects are inherently bad — it’s the fact that they are hidden from view that makes them impossible to manage at larger scales. <strong>Side effects don’t scale</strong>.</p>
+</blockquote>
+<blockquote>
+<p>I hope future generations will <strong>be as admiring of the programming skills we’ve been displaying in building complex operating systems, web servers, and the internet infrastructure</strong>.<br />
+(上文提到我们尽管中世纪的石头建筑在现在可以方便地用钢筋混凝土结构搭建, 但我们还是惊叹于中世纪的工匠们那将石质结构发挥到他们的极限的精巧工艺)</p>
+</blockquote>
+<h2 id="part-i-category-the-essence-of-composition"><a class="markdownIt-Anchor" href="#part-i-category-the-essence-of-composition"></a> Part I - Category: The Essence of Composition</h2>
+<blockquote>
+<p>A category consists of objects and arrows that go between them.</p>
+</blockquote>
+<p><a href="https://en.wikipedia.org/wiki/Category_(mathematics)" target="_blank" rel="noopener">Category的Wikipedia链接</a></p>
+<h3 id="我的误解"><a class="markdownIt-Anchor" href="#我的误解"></a> 我的误解…</h3>
+<p>Native的我, 一直把范畴当成一种特殊的有向图. 这本身没什么大毛病, 问题在于受OI题的影响, 我默认:</p>
+<ul>
+<li>边与边之间唯一的区别就是起点与终点</li>
+</ul>
+<p>但是, 范畴并不是这样的, 不同边在本质上就是不同的东西, 就算他们起点终点相同; 事实上, 存在<s>一些</s>许多范畴, 有无限多的自边, 比如下面很快被提到的<code>Monoid</code>范畴.</p>
+<p>还有, 如果把morphism看作边, (对我来说)很难形象地构造出所谓的<code>composition</code>…</p>
+<h3 id="那范畴是什么呢"><a class="markdownIt-Anchor" href="#那范畴是什么呢"></a> 那范畴是什么呢?</h3>
+<p>说了这么多, 其实范畴<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi></mrow><annotation encoding="application/x-tex">C</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span></span></span></span>就是一个拥有:</p>
+<ul>
+<li>对象集合, 即一堆对象组成的集合, 记作 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">ob</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>C</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\operatorname{ob}(C)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop"><span class="mord mathrm">o</span><span class="mord mathrm">b</span></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mclose">)</span></span></span></span></li>
+<li>态射集合, 即一堆定义域和值域都是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">ob</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>C</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\operatorname{ob}(C)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop"><span class="mord mathrm">o</span><span class="mord mathrm">b</span></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mclose">)</span></span></span></span> 里的函数, 记作 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>hom</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>C</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\hom(C)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">hom</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mclose">)</span></span></span></span>. 特别地, 给定<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo>∈</mo><mi mathvariant="normal">ob</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>C</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">a, b \in \operatorname{ob}(C)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">b</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop"><span class="mord mathrm">o</span><span class="mord mathrm">b</span></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mclose">)</span></span></span></span>, 我们把定义域为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span>且值域为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span></span></span></span>的态射集合记为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>hom</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\hom(a, b)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">hom</span><span class="mopen">(</span><span class="mord mathdefault">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">b</span><span class="mclose">)</span></span></span></span></li>
+<li>态射复合, 对于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo separator="true">,</mo><mi>c</mi><mo>∈</mo><mi mathvariant="normal">ob</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>C</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">a, b, c \in \operatorname{ob}(C)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">b</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">c</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop"><span class="mord mathrm">o</span><span class="mord mathrm">b</span></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mclose">)</span></span></span></span>, 态射复合<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>∘</mo></mrow><annotation encoding="application/x-tex">\circ</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">∘</span></span></span></span>是一个函数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>hom</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo stretchy="false">)</mo><mo>×</mo><mi>hom</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>b</mi><mo separator="true">,</mo><mi>c</mi><mo stretchy="false">)</mo><mo>→</mo><mi>hom</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>a</mi><mo separator="true">,</mo><mi>c</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\hom(a, b) \times \hom(b, c) \rarr \hom(a, c)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">hom</span><span class="mopen">(</span><span class="mord mathdefault">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">b</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">hom</span><span class="mopen">(</span><span class="mord mathdefault">b</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">c</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">hom</span><span class="mopen">(</span><span class="mord mathdefault">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">c</span><span class="mclose">)</span></span></span></span></li>
+</ul>
+<p>对于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>∈</mo><mi>hom</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">f \in \hom(a, b)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">hom</span><span class="mopen">(</span><span class="mord mathdefault">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">b</span><span class="mclose">)</span></span></span></span>, 我们顺带还把这句话记作: <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>:</mo><mi>a</mi><mo>→</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">f : a \rarr b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span></span></span></span></p>
+<p>并且 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi></mrow><annotation encoding="application/x-tex">C</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>∘</mo></mrow><annotation encoding="application/x-tex">\circ</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">∘</span></span></span></span> 还要满足:</p>
+<ul>
+<li>存在单位元: 即对任意<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo>∈</mo><mi mathvariant="normal">ob</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>C</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">a, b \in \operatorname{ob}(C)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">b</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop"><span class="mord mathrm">o</span><span class="mord mathrm">b</span></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mclose">)</span></span></span></span>, 存在<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mrow><mi mathvariant="bold">i</mi><msub><mi mathvariant="bold">d</mi><mi mathvariant="bold">a</mi></msub></mrow><mo>:</mo><mi>a</mi><mo>→</mo><mi>a</mi></mrow><annotation encoding="application/x-tex">\mathbf{id_a} : a \rarr a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathbf">i</span><span class="mord"><span class="mord mathbf">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.161108em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathbf mtight">a</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mrow><mi mathvariant="bold">i</mi><msub><mi mathvariant="bold">d</mi><mi mathvariant="bold">b</mi></msub></mrow><mo>:</mo><mi>b</mi><mo>→</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">\mathbf{id_b} : b \rarr b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathbf">i</span><span class="mord"><span class="mord mathbf">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathbf mtight">b</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span></span></span></span>, 对任意<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>:</mo><mi>a</mi><mo>→</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">f : a \rarr b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span></span></span></span>, 有:<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mrow><mi mathvariant="bold">i</mi><msub><mi mathvariant="bold">d</mi><mi mathvariant="bold">a</mi></msub></mrow><mo>∘</mo><mi>f</mi><mo>=</mo><mi>f</mi><mo>∘</mo><mrow><mi mathvariant="bold">i</mi><msub><mi mathvariant="bold">d</mi><mi mathvariant="bold">b</mi></msub></mrow><mo>=</mo><mi>f</mi></mrow><annotation encoding="application/x-tex">\mathbf{id_a} \circ f = f \circ \mathbf{id_b} = f
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathbf">i</span><span class="mord"><span class="mord mathbf">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.161108em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathbf mtight">a</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∘</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∘</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathbf">i</span><span class="mord"><span class="mord mathbf">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathbf mtight">b</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span></span></span></span></span></p>
+</li>
+<li>满足结合律: 即对任意<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>:</mo><mi>a</mi><mo>→</mo><mi>b</mi><mo separator="true">,</mo><mspace width="1em"/><mi>g</mi><mo>:</mo><mi>b</mi><mo>→</mo><mi>c</mi><mo separator="true">,</mo><mspace width="1em"/><mi>h</mi><mo>:</mo><mi>c</mi><mo>→</mo><mi>d</mi></mrow><annotation encoding="application/x-tex">f : a \rarr b,\quad g: b \rarr c,\quad h: c \rarr d</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">b</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace" style="margin-right:1em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">c</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace" style="margin-right:1em;"></span><span class="mord mathdefault">h</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">c</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">d</span></span></span></span> 有:<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">(</mo><mi>f</mi><mo>∘</mo><mi>g</mi><mo stretchy="false">)</mo><mo>∘</mo><mi>h</mi><mo>=</mo><mi>f</mi><mo>∘</mo><mo stretchy="false">(</mo><mi>g</mi><mo>∘</mo><mi>h</mi><mo stretchy="false">)</mo><mo>=</mo><mi>f</mi><mo>∘</mo><mi>g</mi><mo>∘</mo><mi>h</mi></mrow><annotation encoding="application/x-tex">(f \circ g) \circ h = f \circ (g \circ h) = f \circ g \circ h
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∘</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∘</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">h</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∘</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∘</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">h</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∘</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.63889em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∘</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">h</span></span></span></span></span></p>
+</li>
+</ul>
+<p><s>态射(morphism)就是函数的好听的名字, 跟函数交错使用看起来特别错落有致(?).</s></p>
+<h3 id="haskell小课堂-声明函数-复合函数"><a class="markdownIt-Anchor" href="#haskell小课堂-声明函数-复合函数"></a> Haskell小课堂: 声明函数 &amp; 复合函数</h3>
+<p>在<code>Haskell</code>中我们可以通过:</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">f</span> :: <span class="type">A</span> -&gt; <span class="type">B</span></span><br></pre></td></tr></table></figure>
+<p>来声明一个从类型A到类型B的函数, 以大写字母开头的类型名会被当成具体的类型.</p>
+<p>而使用小写字母名开头的类型名会被当成泛化类型, 类似<code>C++</code>中的模板类型参数:</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">g</span> :: b -&gt; c</span><br></pre></td></tr></table></figure>
+<p>函数的复合记作<code>.</code>:</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">f</span> . g</span><br></pre></td></tr></table></figure>
+<h2 id="part-i-what-are-types"><a class="markdownIt-Anchor" href="#part-i-what-are-types"></a> Part I - What Are Types?</h2>
+<blockquote>
+<p>The simplest intuition for types is that they are sets of values.</p>
+</blockquote>
+<p>换句话讲, 类型定义等价于某个集合定义. 当我们说某个东西是什么类型的时候, 我们其实是在说:“看! 这个东西的值只能是这个这个这个这个和这个…!”</p>
+<p>因此, 对programmer而言, 我们可以把类型当作对象, 把类型之间的函数当作态射来研究范畴.</p>
+<p>我们先从最简单的类型开始看起, 那就是空集<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">∅</mi></mrow><annotation encoding="application/x-tex">\emptyset</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.80556em;vertical-align:-0.05556em;"></span><span class="mord">∅</span></span></span></span>对应的类型<code>Void</code>和只有一个元素的集合<code>()</code>.</p>
+<h3 id="emptyset-和-void"><a class="markdownIt-Anchor" href="#emptyset-和-void"></a> <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">∅</mi></mrow><annotation encoding="application/x-tex">\emptyset</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.80556em;vertical-align:-0.05556em;"></span><span class="mord">∅</span></span></span></span> 和 <code>Void</code></h3>
+<p>简而言之, <code>Void</code>在C<ins>中没有对应类型, 而<code>()</code>对应于C</ins>的void类型.</p>
+<p>想象一下, 如果一个函数以<code>Void</code>为输入类型, 那你要怎么调用它呢 – 显然没有任何一个值是属于<code>Void</code>的, 所以你不可能调用它.</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">f</span> :: <span class="type">Void</span> -&gt; a</span><br><span class="line"><span class="title">f</span> = blabla</span><br><span class="line"></span><br><span class="line"><span class="title">f</span> ????</span><br></pre></td></tr></table></figure>
+<p>同时, 这时候a是不受任何约束的–也就是说它的返回值是多态(polymorphic)的. 显然这样的函数只能有一个, 标准库(preinclude)里把它定义为:</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">absurd</span> :: <span class="type">Void</span> -&gt; a</span><br></pre></td></tr></table></figure>
+<p><s>荒谬可还行</s></p>
+<blockquote>
+<p>作者还提到在<code>Curry-Howard isomorphism</code>下这个函数代表恒假命题(falsity), 但是这可能要到很久之后了</p>
+</blockquote>
+<h3 id="单集singleton-set-和"><a class="markdownIt-Anchor" href="#单集singleton-set-和"></a> 单集(singleton set) 和 <code>()</code></h3>
+<p>那么C<ins>里的void对应的是什么呢? 每一个以空参数为输入的函数都是可以调用的, 而且仅能用一种方式调用, 那就是<code>f()</code>. 这说明C</ins>里的void类型对应的集合其实是一个只有一个元素的集合, 简称<code>单集(singleton set或unit set)</code><s>(这个中文翻译我乱蒙的…)</s>.</p>
+<p>我们来看一些纯的C++函数:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// the answer to life, the universe, and everything</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">f42</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">42</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">square</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x * x; <span class="comment">// 不要担心溢出什么鬼的啦! </span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们来研究一下他们的参数类型. <code>square</code>只有接受一个类型为<code>int</code>的参数, 它的参数类型显然就是<code>int</code>. 但是<code>add</code>呢? 难道我们要说它有两个参数类型吗? 回想一下我们对类型的&quot;定义&quot;: 取值范围的集合. 那么把<code>add</code>的类型定义为两个<code>int</code>之间的类似&quot;<a href="">集合间的笛卡尔积</a>&quot;的形式是合理的.</p>
+<p>有了这个认识, 那<code>void</code>对应的类型, 应该就是0个类型之间的&quot;笛卡尔积&quot;了.</p>
+<p>相似地, 在<code>Haskell</code>, 我们也用类似的形式定义一种&quot;复合&quot;类型:</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">f42</span> :: () -&gt; <span class="type">Integer</span></span><br><span class="line"><span class="title">f42</span> () = <span class="number">42</span></span><br><span class="line"></span><br><span class="line"><span class="title">square_like_cpp</span> :: (<span class="type">Integer</span>) -&gt;  <span class="type">Integer</span></span><br><span class="line"><span class="title">square_like_cpp</span> (x) = x * x</span><br><span class="line"></span><br><span class="line"><span class="title">square_normal</span> :: <span class="type">Integer</span> -&gt; <span class="type">Integer</span></span><br><span class="line"><span class="title">square_normal</span> x = x * x</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="title">add_like_cpp</span> :: (<span class="type">Integer</span>, <span class="type">Integer</span>) -&gt; <span class="type">Integer</span></span><br><span class="line"><span class="title">add_like_cpp</span> (x, y) = x + y</span><br><span class="line"></span><br><span class="line"><span class="title">add_normal</span> :: <span class="type">Integer</span> -&gt; <span class="type">Integer</span> -&gt; <span class="type">Integer</span></span><br><span class="line"><span class="title">add_normal</span> x y = x + y</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>其实我们从这里可以看到一件事实–一个接受多个参数的函数的可以被变成一个接受一个参数并且返回函数的高阶函数, 这叫做<code>Currying(柯里化)</code>.</p>
+</blockquote>
+<p>我们可以看到, 通过<code>(类型1, 类型2, ...)</code>可以通过类型间的笛卡尔积构造出新的复合类型, 类似于C++中的<code>tuple(元组)</code></p>
+<p>这时候<code>C++</code>中的<code>void</code>自然就对应于<code>Haskell</code>中的<code>()</code>; <code>Haskell</code>也有一个构造<code>()</code>的函数:</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">unit</span> :: a -&gt; ()</span><br><span class="line"><span class="title">unit</span> _ = ()</span><br></pre></td></tr></table></figure>
+<p>类似于<code>absurd</code>在输出类型上是多态的, <code>unit</code>在输入类型上也是多态的.</p>
+<h3 id="只有两个元素的集合二元集-bool"><a class="markdownIt-Anchor" href="#只有两个元素的集合二元集-bool"></a> 只有两个元素的集合(二元集): Bool</h3>
+<p>只要学会如何在<code>Haskell</code>中定义类型. 一种定义方法很简单, 直接枚举类型所能包含的值就好了:</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">data</span> <span class="type">Bool</span> = <span class="type">True</span> | <span class="type">False</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="categories-great-and-small"><a class="markdownIt-Anchor" href="#categories-great-and-small"></a> Categories Great and Small</h2>
+<p>从这里开始, 我们就要认识一些简单的范畴了.</p>
+<h3 id="空范畴"><a class="markdownIt-Anchor" href="#空范畴"></a> 空范畴</h3>
+<p>就是空的范畴.</p>
+<p>如果你硬要一个数学定义的话, 那么一个范畴<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi></mrow><annotation encoding="application/x-tex">C</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span></span></span></span>是空范畴当且仅当其满足:</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">ob</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>C</mi><mo stretchy="false">)</mo><mo>=</mo><mi mathvariant="normal">∅</mi><mspace linebreak="newline"></mspace><mi>hom</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>C</mi><mo stretchy="false">)</mo><mo>=</mo><mi mathvariant="normal">∅</mi></mrow><annotation encoding="application/x-tex">\operatorname{ob}(C) = \emptyset \\
+\hom(C) = \emptyset
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop"><span class="mord mathrm">o</span><span class="mord mathrm">b</span></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.80556em;vertical-align:-0.05556em;"></span><span class="mord">∅</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">hom</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.80556em;vertical-align:-0.05556em;"></span><span class="mord">∅</span></span></span></span></span></p>
+<blockquote>
+<p>其实没有对象自然就没有态射…后一条不是必须的</p>
+</blockquote>
+<h3 id="简单图"><a class="markdownIt-Anchor" href="#简单图"></a> 简单图</h3>
+<p>我们可以简单地从一张有向图及其中节点的可达性生成一个范畴.</p>
+<p>更确切地, 对于一张有向图而言, 定义:</p>
+<ul>
+<li>有向图中的节点定义为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">ob</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>C</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\operatorname{ob}(C)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop"><span class="mord mathrm">o</span><span class="mord mathrm">b</span></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mclose">)</span></span></span></span></li>
+<li>若存在从节点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span>到节点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span></span></span></span>的路径, 那么就往<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>hom</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>C</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\hom(C)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">hom</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mclose">)</span></span></span></span>里加入态射<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo>→</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">a \rarr b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span></span></span></span></li>
+</ul>
+<p>显然我们的态射有单位元和结合性.</p>
+<p>这种构建方法叫<code>free construction</code>, 构建出来的范畴叫<code>free category</code>.</p>
+<blockquote>
+<p>为啥叫free我也不知道…<br />
+这种方法的特点就是从给定结构做出最小的扩展然后生成一个合法的范畴</p>
+</blockquote>
+<h3 id="序-orders"><a class="markdownIt-Anchor" href="#序-orders"></a> 序 Orders</h3>
+<p>首先来做点概念题. 请解析下面三个名词的区别:</p>
+<ul>
+<li>预序(preorder)</li>
+<li>偏序(partial order)</li>
+<li>全序(total order)</li>
+</ul>
+<p>以及<code>严格序</code>和<code>非严格序</code></p>
+<p><strong><code>(⊙﹏⊙)</code></strong></p>
+<blockquote>
+<p>序是定义在某个集合上的二元关系; 一个关系就是是一个谓词.</p>
+</blockquote>
+<p>首先我们来抽象出一个定义在集合<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>A</mi></mrow><annotation encoding="application/x-tex">A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">A</span></span></span></span>上的序关系<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>∽</mo></mrow><annotation encoding="application/x-tex">\backsim</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.37788em;vertical-align:0em;"></span><span class="mrel amsrm">∽</span></span></span></span>能有什么关系. 令<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo separator="true">,</mo><mtext>  </mtext><mi>b</mi><mo separator="true">,</mo><mtext>  </mtext><mi>c</mi></mrow><annotation encoding="application/x-tex">a,\; b,\; c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord mathdefault">b</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord mathdefault">c</span></span></span></span>为序上的对象,</p>
+<ol>
+<li>自反性. <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo>∽</mo><mi>b</mi><mo>⇔</mo><mi>b</mi><mo>∽</mo><mi>a</mi></mrow><annotation encoding="application/x-tex">a \backsim b \lrArr b \backsim a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel amsrm">∽</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">⇔</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel amsrm">∽</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span></li>
+<li>传递性. <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo>∽</mo><mi>b</mi><mo>∧</mo><mi>b</mi><mo>∽</mo><mi>c</mi><mo>⇒</mo><mi>a</mi><mo>∽</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">a \backsim b \land b \backsim c \rArr a \backsim c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel amsrm">∽</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∧</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel amsrm">∽</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">c</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">⇒</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel amsrm">∽</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">c</span></span></span></span></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Haskell/" rel="tag"># Haskell</a>
+              <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag"># 读书笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Win10%E4%B8%8BHaskell%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E7%9A%84%E9%85%8D%E7%BD%AE/" rel="prev" title="Win10下Haskell开发环境的配置">
+      <i class="fa fa-chevron-left"></i> Win10下Haskell开发环境的配置
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/%E9%AB%98%E4%B8%AD%E7%94%9F%E6%B4%BB/%E5%A4%A7%E5%AD%A6%E7%9B%AE%E6%A0%87/" rel="next" title="写了份大学目标">
+      写了份大学目标 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言-介绍"><span class="nav-number">1.</span> <span class="nav-text"> 前言 &amp; 介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#preface"><span class="nav-number">2.</span> <span class="nav-text"> Preface</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#part-i-category-the-essence-of-composition"><span class="nav-number">3.</span> <span class="nav-text"> Part I - Category: The Essence of Composition</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#我的误解"><span class="nav-number">3.1.</span> <span class="nav-text"> 我的误解…</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#那范畴是什么呢"><span class="nav-number">3.2.</span> <span class="nav-text"> 那范畴是什么呢?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#haskell小课堂-声明函数-复合函数"><span class="nav-number">3.3.</span> <span class="nav-text"> Haskell小课堂: 声明函数 &amp; 复合函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#part-i-what-are-types"><span class="nav-number">4.</span> <span class="nav-text"> Part I - What Are Types?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#emptyset-和-void"><span class="nav-number">4.1.</span> <span class="nav-text"> ∅\emptyset∅ 和 Void</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单集singleton-set-和"><span class="nav-number">4.2.</span> <span class="nav-text"> 单集(singleton set) 和 ()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#只有两个元素的集合二元集-bool"><span class="nav-number">4.3.</span> <span class="nav-text"> 只有两个元素的集合(二元集): Bool</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#categories-great-and-small"><span class="nav-number">5.</span> <span class="nav-text"> Categories Great and Small</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#空范畴"><span class="nav-number">5.1.</span> <span class="nav-text"> 空范畴</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单图"><span class="nav-number">5.2.</span> <span class="nav-text"> 简单图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#序-orders"><span class="nav-number">5.3.</span> <span class="nav-text"> 序 Orders</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Origami404"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Origami404</p>
+  <div class="site-description" itemprop="description">某蒟蒻OIer</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Origami404" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Origami404" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Origami404</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.7.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css">
+
+
+  
+
+</body>
+</html>

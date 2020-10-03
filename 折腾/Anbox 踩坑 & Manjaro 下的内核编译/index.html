@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://origami404.github.io').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="Anbox 踩坑 &amp; Manjaro 下的内核编译  前言 &amp; Anbox 简介 最近换回了 Manjaro 和 Xfce, 打算认认真真地开始将 Linux 作为日常生活系统而不仅仅是开发系统来用了. 然而在日常生活中, 总归是逃不掉某国产IM的 😦. 为了实现以 Manjaro 作为生活主力系统的目标, (同时也为了以后说不定能愉快地打游戏), 决定安装一个能跑安卓应用的东">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Anbox 踩坑 &amp; Manjaro 下的内核编译">
+<meta property="og:url" content="https://origami404.github.io/%E6%8A%98%E8%85%BE/Anbox%20%E8%B8%A9%E5%9D%91%20&%20Manjaro%20%E4%B8%8B%E7%9A%84%E5%86%85%E6%A0%B8%E7%BC%96%E8%AF%91/index.html">
+<meta property="og:site_name" content="Origami404">
+<meta property="og:description" content="Anbox 踩坑 &amp; Manjaro 下的内核编译  前言 &amp; Anbox 简介 最近换回了 Manjaro 和 Xfce, 打算认认真真地开始将 Linux 作为日常生活系统而不仅仅是开发系统来用了. 然而在日常生活中, 总归是逃不掉某国产IM的 😦. 为了实现以 Manjaro 作为生活主力系统的目标, (同时也为了以后说不定能愉快地打游戏), 决定安装一个能跑安卓应用的东">
+<meta property="article:published_time" content="2020-10-02T15:22:00.000Z">
+<meta property="article:modified_time" content="2020-10-03T12:23:33.226Z">
+<meta property="article:author" content="Origami404">
+<meta property="article:tag" content="折腾">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://origami404.github.io/%E6%8A%98%E8%85%BE/Anbox%20%E8%B8%A9%E5%9D%91%20&%20Manjaro%20%E4%B8%8B%E7%9A%84%E5%86%85%E6%A0%B8%E7%BC%96%E8%AF%91/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Anbox 踩坑 & Manjaro 下的内核编译 | Origami404</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Origami404</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://origami404.github.io/%E6%8A%98%E8%85%BE/Anbox%20%E8%B8%A9%E5%9D%91%20&%20Manjaro%20%E4%B8%8B%E7%9A%84%E5%86%85%E6%A0%B8%E7%BC%96%E8%AF%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Origami404">
+      <meta itemprop="description" content="某蒟蒻OIer">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Origami404">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Anbox 踩坑 & Manjaro 下的内核编译
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-10-02 23:22:00" itemprop="dateCreated datePublished" datetime="2020-10-02T23:22:00+08:00">2020-10-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-03 20:23:33" itemprop="dateModified" datetime="2020-10-03T20:23:33+08:00">2020-10-03</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="anbox-踩坑-manjaro-下的内核编译"><a class="markdownIt-Anchor" href="#anbox-踩坑-manjaro-下的内核编译"></a> Anbox 踩坑 &amp; Manjaro 下的内核编译</h1>
+<h2 id="前言-anbox-简介"><a class="markdownIt-Anchor" href="#前言-anbox-简介"></a> 前言 &amp; Anbox 简介</h2>
+<p>最近换回了 Manjaro 和 Xfce, 打算认认真真地开始将 Linux 作为日常生活系统而不仅仅是开发系统来用了. 然而在日常生活中, 总归是逃不掉某国产IM的 😦. 为了实现以 Manjaro 作为生活主力系统的目标, (同时也为了以后说不定能愉快地打游戏), 决定安装一个能跑安卓应用的东西. 于是我的 Anbox 之旅就在完全搞不懂 Android x86 是什么玩意的情况下展开了.</p>
+<p><a href="https://anbox.io/" target="_blank" rel="noopener">Anbox 官网</a>上的介绍:</p>
+<blockquote>
+<p>Anbox: Android in a Box<br />
+Run Android applications on any GNU/Linux operating system.<br />
+Anbox puts the Android operating system into a container, abstracts hardware access and integrates core system services into a GNU/Linux system. Every Android application will be integrated with your operating system like any other native application.</p>
+</blockquote>
+<p>简单来讲就类似 docker , 利用 LXD 技术在 Linux 系统里新建一个全新的容器, 然后直接去跑一个 Android x86. 好处嘛就是跑得比虚拟机快, 集成度比虚拟机好. 坏处嘛就是兼容性还是有待提高…</p>
+<a id="more"></a>
+<h2 id="安装"><a class="markdownIt-Anchor" href="#安装"></a> 安装</h2>
+<h3 id="安装之前"><a class="markdownIt-Anchor" href="#安装之前"></a> 安装之前…</h3>
+<p>确保您的内核支持 <code>/dev/ashmem</code> 和 <code>/dev/binder</code>, 如果没有, 请参照: <a href="#%E6%9B%BF%E6%8D%A2%E5%86%85%E6%A0%B8"></a></p>
+<h3 id="安装-anbox"><a class="markdownIt-Anchor" href="#安装-anbox"></a> 安装 Anbox</h3>
+<p>Anbox 分为两块, 一块是本体, 一块是安卓镜像.</p>
+<h4 id="archlinuxcn"><a class="markdownIt-Anchor" href="#archlinuxcn"></a> archlinuxcn</h4>
+<p>使用 archlinuxcn 的并且没有特殊需求的老哥可以直接用 archlinuxcn 里的.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ pacman -Ss anbox</span><br><span class="line">archlinuxcn/anbox-git 1:1282.170f1e0-2</span><br><span class="line">    Running Android <span class="keyword">in</span> a container</span><br><span class="line">archlinuxcn/anbox-image 1:2018.07.19-1</span><br><span class="line">    Android image <span class="keyword">for</span> running <span class="keyword">in</span> Anbox</span><br><span class="line"></span><br><span class="line">$ pacman -S anbox-git anbox-image</span><br></pre></td></tr></table></figure>
+<p>注意, 此镜像就是一纯的 AOSP , 没有谷歌框架, 没有 ARM 译码器.</p>
+<h4 id="aur"><a class="markdownIt-Anchor" href="#aur"></a> aur</h4>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ pikaur -Ss anbox</span><br><span class="line">aur&#x2F;anbox-git 1:r1240.c1e7550-1 (134, 0.86)  # 本体</span><br><span class="line">    Running Android in a container</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">aur&#x2F;anbox-image 1:2018.07.19-1 (67, 0.36)             # 纯净镜像</span><br><span class="line">    Android image for running in Anbox</span><br><span class="line">aur&#x2F;anbox-image-gapps 2018.07.19-15 (18, 0.40)        # 带 Google 框架的镜像</span><br><span class="line">    Android image for running in Anbox, with OpenGApps and Houdini</span><br><span class="line">aur&#x2F;anbox-image-houdini-rooted 2018.07.19-5 (6, 0.67) # 带译码器, SuperSU 的镜像</span><br><span class="line">    Android image for running in Anbox with Houdini and SuperSU</span><br><span class="line">aur&#x2F;anbox-image-gapps-rooted 2018.07.19-7 (4, 0.04)   # 带 Google 框架, SuperSU 的镜像</span><br><span class="line">    Android image for running in Anbox with Houdini, OpenGApps and SuperSU</span><br><span class="line">aur&#x2F;anbox-image-houdini 2018.07.19-5 (3, 0.03)        # 带译码器的镜像</span><br><span class="line">    Android image for running in Anbox with Houdini</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Houdini <s>(某知名动画软件)</s><br />
+<a href="https://osdn.net/projects/android-x86/scm/git/vendor-intel-houdini/" target="_blank" rel="noopener"><code>libhoudini</code></a>, 是 Android x86 默认采用的, 将 arm 架构译码到 x86 的转换层.<br />
+简单来说, 有了它, Android x86 就可以安装/运行很多基于 ARM 的 Apk/App 了. (理所当然地, 会变慢, 并且不是全部都能跑. 但是对于现代电脑来说这点性能损失完全抵消不掉其对手机处理器的性能优势)</p>
+</blockquote>
+<p>把 <em>本体</em> 装上之后再挑一个 <em>镜像</em> 装上就可以了.</p>
+<h3 id="安装之后"><a class="markdownIt-Anchor" href="#安装之后"></a> 安装之后</h3>
+<p>挂载 <code>binder</code>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir /dev/binderfs</span><br><span class="line">sudo mount -t binder binder /dev/binderfs</span><br></pre></td></tr></table></figure>
+<p>启动服务:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl start anbox-container-manager.service</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> anbox-container-manager.service <span class="comment"># 让这个服务每次开机之后保持运行</span></span><br></pre></td></tr></table></figure>
+<p>启动 Anbox 的应用抽屉:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">anbox launch --package=org.anbox.appmgr --component=org.anbox.appmgr.AppViewActivity</span><br></pre></td></tr></table></figure>
+<p>如果有像下面这样的报错:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The name org.anbox was not provided by any .service fil</span><br></pre></td></tr></table></figure>
+<p>请检查您是否完成上面两步. 同时您还可以查看日志:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl status anbox-container-manager.service</span><br></pre></td></tr></table></figure>
+<h2 id="替换内核"><a class="markdownIt-Anchor" href="#替换内核"></a> 替换内核</h2>
+<p>根据 <a href="https://wiki.archlinux.org/index.php/Anbox#Installation" target="_blank" rel="noopener">Arch Wiki 的 Anbox 页面</a>, <code>5.7.0</code> 及以上的内核需要重新编译开启某些选项来支持 <code>binder</code> 等功能.</p>
+<p><code>5.7.0</code> 以下的内核直接安装名字里带有 <code>dkms</code> 的包即可.</p>
+<h3 id="通过-aur"><a class="markdownIt-Anchor" href="#通过-aur"></a> 通过 aur</h3>
+<blockquote>
+<p>在编译完之后才发现 aur 里直接就有…</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pikaur -S linux-xanmod-anbox</span><br></pre></td></tr></table></figure>
+<p>随后重启.</p>
+<h3 id="自己编译"><a class="markdownIt-Anchor" href="#自己编译"></a> 自己编译</h3>
+<p>当初看鸟哥的私房菜的时候, 编译内核还是高级操作, 搞得我一开始还害怕极了… 后来发现前辈们早已为我们准备了各种各样的工具, 编译内核? 几行搞定!</p>
+<blockquote>
+<p>主要参考: <a href="https://extendswind.top/posts/technical/manjaro_kernel_compile/" target="_blank" rel="noopener">[extendswind] Manjaro内核编译</a></p>
+</blockquote>
+<h4 id="下载源码"><a class="markdownIt-Anchor" href="#下载源码"></a> 下载源码</h4>
+<p>如果您在时隔多年(?)以后看我的文章的话, 记得把链接最后那个 <code>linux58</code> 改成您想要的版本号.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;gitlab.manjaro.org&#x2F;packages&#x2F;core&#x2F;linux58.git</span><br></pre></td></tr></table></figure>
+<h4 id="可选-修改makepkg的编译选项"><a class="markdownIt-Anchor" href="#可选-修改makepkg的编译选项"></a> (可选) 修改makepkg的编译选项</h4>
+<p>主要就是开一个<code>-march=native</code>. 编辑 <code>/etc/makepkg.conf</code>, 将 <code>CFLAGS</code> 和 <code>CXXFLAGS</code> 改为:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CFLAGS&#x3D;&quot;-march&#x3D;native -O2 -pipe -fstack-protector-strong -fno-plt&quot;</span><br><span class="line">CXXFLAGS&#x3D;&quot;-march&#x3D;native -O2 -pipe -fstack-protector-strong -fno-plt&quot;</span><br></pre></td></tr></table></figure>
+<p>这个选项是让 <code>gcc</code> 自己选择当前平台的优化. 参见 <a href="https://wiki.archlinux.org/index.php/Makepkg#Building_optimized_binaries" target="_blank" rel="noopener">Arch Wiki 上的介绍</a></p>
+<h4 id="编译"><a class="markdownIt-Anchor" href="#编译"></a> 编译</h4>
+<p>查看 clone 下来的 <code>PKGBUILD</code> 文件可以看到, <code>Manjaro</code> 团队已经很贴心地帮我们把 Anbox 的内核编译参数写好加进去了. 所以我们只需要编译就好了</p>
+<p><code>config.anbox</code> 的内容:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CONFIG_ASHMEM&#x3D;y</span><br><span class="line"># CONFIG_ION is not set</span><br><span class="line">CONFIG_ANDROID&#x3D;y</span><br><span class="line">CONFIG_ANDROID_BINDER_IPC&#x3D;y</span><br><span class="line">CONFIG_ANDROID_BINDERFS&#x3D;y</span><br><span class="line">CONFIG_ANDROID_BINDER_DEVICES&#x3D;&quot;binder,hwbinder,vndbinder&quot;</span><br><span class="line"># CONFIG_ANDROID_BINDER_IPC_SELFTEST is not set</span><br></pre></td></tr></table></figure>
+<p>编译!</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;autogen.sh</span><br><span class="line">makepkg</span><br></pre></td></tr></table></figure>
+<p>在本人的 <code>i5-7500</code> 上编译大概要一小时, 编译完之后安装产出的 <code>linux58-headers-5.8.13-3-x86_64.pkg.tar.xz</code> 包即可:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -U linux58-headers-5.8.13-3-x86_64.pkg.tar.xz</span><br></pre></td></tr></table></figure>
+<p>然后重启.</p>
+<h2 id="最后"><a class="markdownIt-Anchor" href="#最后"></a> 最后</h2>
+<p><code>deepin.com.qq.office</code> 跟 <code>deepin.com.wechat2</code> 真香! 结果又花了几个小时的时间折腾了没意义的东西呢!</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%8A%98%E8%85%BE/" rel="tag"># 折腾</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/%E6%8A%98%E8%85%BE/Arch%20Alacritty%20%E9%85%8D%E7%BD%AE/" rel="prev" title="Arch Alacritty 配置">
+      <i class="fa fa-chevron-left"></i> Arch Alacritty 配置
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#anbox-踩坑-manjaro-下的内核编译"><span class="nav-number">1.</span> <span class="nav-text"> Anbox 踩坑 &amp; Manjaro 下的内核编译</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言-anbox-简介"><span class="nav-number">1.1.</span> <span class="nav-text"> 前言 &amp; Anbox 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">1.2.</span> <span class="nav-text"> 安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装之前"><span class="nav-number">1.2.1.</span> <span class="nav-text"> 安装之前…</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-anbox"><span class="nav-number">1.2.2.</span> <span class="nav-text"> 安装 Anbox</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#archlinuxcn"><span class="nav-number">1.2.2.1.</span> <span class="nav-text"> archlinuxcn</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#aur"><span class="nav-number">1.2.2.2.</span> <span class="nav-text"> aur</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装之后"><span class="nav-number">1.2.3.</span> <span class="nav-text"> 安装之后</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#替换内核"><span class="nav-number">1.3.</span> <span class="nav-text"> 替换内核</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#通过-aur"><span class="nav-number">1.3.1.</span> <span class="nav-text"> 通过 aur</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自己编译"><span class="nav-number">1.3.2.</span> <span class="nav-text"> 自己编译</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#下载源码"><span class="nav-number">1.3.2.1.</span> <span class="nav-text"> 下载源码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#可选-修改makepkg的编译选项"><span class="nav-number">1.3.2.2.</span> <span class="nav-text"> (可选) 修改makepkg的编译选项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编译"><span class="nav-number">1.3.2.3.</span> <span class="nav-text"> 编译</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最后"><span class="nav-number">1.4.</span> <span class="nav-text"> 最后</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Origami404"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Origami404</p>
+  <div class="site-description" itemprop="description">某蒟蒻OIer</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Origami404" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Origami404" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Origami404</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.7.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

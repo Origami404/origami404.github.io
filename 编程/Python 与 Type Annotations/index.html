@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://origami404.github.io').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="前言 用Python写了个Scheme解释器, 代码. 记录一下Python的类型标注要怎么用, 有什么坑.  话说回来这好像是我第一篇技术性文章…? 不务正业实锤   本文假定您已有支持编译期泛型的静态类型语言的编程背景, 比如C++, Haskell之类的.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python 与 Type Annotations">
+<meta property="og:url" content="https://origami404.github.io/%E7%BC%96%E7%A8%8B/Python%20%E4%B8%8E%20Type%20Annotations/index.html">
+<meta property="og:site_name" content="Origami404">
+<meta property="og:description" content="前言 用Python写了个Scheme解释器, 代码. 记录一下Python的类型标注要怎么用, 有什么坑.  话说回来这好像是我第一篇技术性文章…? 不务正业实锤   本文假定您已有支持编译期泛型的静态类型语言的编程背景, 比如C++, Haskell之类的.">
+<meta property="article:published_time" content="2020-07-21T03:30:00.000Z">
+<meta property="article:modified_time" content="2020-10-02T14:59:19.086Z">
+<meta property="article:author" content="Origami404">
+<meta property="article:tag" content="编程">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://origami404.github.io/%E7%BC%96%E7%A8%8B/Python%20%E4%B8%8E%20Type%20Annotations/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Python 与 Type Annotations | Origami404</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Origami404</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://origami404.github.io/%E7%BC%96%E7%A8%8B/Python%20%E4%B8%8E%20Type%20Annotations/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Origami404">
+      <meta itemprop="description" content="某蒟蒻OIer">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Origami404">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Python 与 Type Annotations
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-07-21 11:30:00" itemprop="dateCreated datePublished" datetime="2020-07-21T11:30:00+08:00">2020-07-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-02 22:59:19" itemprop="dateModified" datetime="2020-10-02T22:59:19+08:00">2020-10-02</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2>
+<p>用Python写了个Scheme解释器, <a href="">代码</a>. 记录一下Python的类型标注要怎么用, 有什么坑.</p>
+<blockquote>
+<p><s>话说回来这好像是我第一篇技术性文章…?</s></p>
+<p><s>不务正业实锤</s></p>
+</blockquote>
+<blockquote>
+<p>本文假定您已有支持编译期泛型的静态类型语言的编程背景, 比如C++, Haskell之类的.</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="基础"><a class="markdownIt-Anchor" href="#基础"></a> 基础</h2>
+<h3 id="q-a"><a class="markdownIt-Anchor" href="#q-a"></a> Q &amp; A</h3>
+<h4 id="类型标注是什么"><a class="markdownIt-Anchor" href="#类型标注是什么"></a> 类型标注是什么</h4>
+<p>是Python在3.5版本以后推出的一种船新语法, 可以让你<strong>在代码(而不是注释)里</strong>比较自然地标记上你期望这个变量/函数参数/函数返回值是什么类型.</p>
+<h4 id="它会让我的程序变慢吗"><a class="markdownIt-Anchor" href="#它会让我的程序变慢吗"></a> 它会让我的程序变慢吗</h4>
+<p>不会. 因为Python在运行时压根不会管这些标注. 换句话讲, 这个语法就是一个官方钦定的标识变量/函数类型的注释</p>
+<blockquote>
+<p><s>不会有人写Python了还在意性能吧?</s></p>
+</blockquote>
+<h4 id="类型标注有什么用啊"><a class="markdownIt-Anchor" href="#类型标注有什么用啊"></a> 类型标注有什么用啊</h4>
+<p>有许多linter已经支持了基于类型标注的静态代码查错, 最出名的一个是<a href="https://github.com/python/mypy" target="_blank" rel="noopener">mypy</a>. 也有许多IDE(比如PyCharm, VSCode)都可以获取类型标注里的信息来给你提示.</p>
+<p>所以它能让你:</p>
+<ul>
+<li>尊享静态类型语言的IDE补全体验</li>
+<li>免去一部分啰里啰唆的注释: 好的类型声明即是好的文档</li>
+</ul>
+<blockquote>
+<p>如果普通的Python写起来像是在把史莱姆捏成合适的形状的话, 类型标注就是能帮你把史莱姆撑起来的骨头</p>
+</blockquote>
+<h3 id="基本语法"><a class="markdownIt-Anchor" href="#基本语法"></a> 基本语法</h3>
+<p>大体上就是<code>&lt;id&gt;: &lt;type&gt; (= &lt;var&gt;)</code>这个样子</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 可以在普通的变量上加</span></span><br><span class="line">a: int</span><br><span class="line">b: str = <span class="string">'我是str'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以在函数参数上加, 返回类型用箭头表示</span></span><br><span class="line"><span class="comment"># *arg 跟 **kw 不能加</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(a: int, b: str=<span class="string">'a str'</span>, *arg, **kw)</span> -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">    <span class="keyword">return</span> </span><br><span class="line"></span><br><span class="line"><span class="comment"># lambda 的参数跟返回的东西都不可以加</span></span><br><span class="line">x = <span class="keyword">lambda</span> x: x</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>为什么lambda表达式不能加类型标注的原因可以看这个: <a href="https://stackoverflow.com/a/33833896" target="_blank" rel="noopener">Stackoverflow: Is it possible to type hint a lambda function?</a></p>
+<p>简单来讲就是如果要加上类型标注的话lambda的语法可能要修改成这个样子以区分类型标注的冒号跟参数列表/lambda体之间的冒号:</p>
+<p><code>lambda (x: str) -&gt; int: ...</code></p>
+<p>然而这是个破坏性的改动, 而且看起来一点都不’pythonic’, 所以就没动.</p>
+</blockquote>
+<p>那么什么东西可以写在类型标注那里(<code>&lt;type&gt;</code>)呢?</p>
+<ul>
+<li><code>type</code>对象</li>
+<li><code>typing</code>里出来的各种东西, 下面简称标注对象</li>
+<li><code>None</code></li>
+</ul>
+<p><code>typing</code>里面的东西主要有:</p>
+<ul>
+<li>TypeVar: 用<code>TypeVar</code>定义出来的泛型类型参数</li>
+<li>SpecialForm: <code>Any</code>, <code>NoReturn</code>, <code>Union</code></li>
+<li>GenericAlias: 常用数据结构的泛型化别名, 比如: <code>List</code>, <code>Tuple</code>, <code>Dict</code></li>
+<li>ProtocolMeta: <code>Support*</code>, 主要看你类有没有对应的<code>__xxx__</code></li>
+</ul>
+<p>基本上后者就是前者的弱化版, 只保留了前者标记类型和作为构造函数的功能, 而不能当作isinstance的参数使用.</p>
+<p><code>typing</code>模块的文档<a href="https://docs.python.org/zh-cn/3/library/typing.html" target="_blank" rel="noopener">在这里</a>.</p>
+<h3 id="常见用法"><a class="markdownIt-Anchor" href="#常见用法"></a> 常见用法</h3>
+<blockquote>
+<p>以下代码均假设你在开头已经<code>from typing import *</code></p>
+</blockquote>
+<h4 id="python-内置的各种的type"><a class="markdownIt-Anchor" href="#python-内置的各种的type"></a> Python 内置的各种的type</h4>
+<p>基本上就是<code>int</code>, <code>float</code>, <code>str</code>, <code>byte</code>之类的老面孔, 没什么好说的.</p>
+<h4 id="内置容器类型的genericalias"><a class="markdownIt-Anchor" href="#内置容器类型的genericalias"></a> 内置容器类型的GenericAlias</h4>
+<p>包括: <code>List[T]</code>, <code>Tuple[T1, T2, ...]</code>, <code>Dict[KT, VT]</code>, <code>Iterable[ReturnT]</code></p>
+<p>方括号里的东西叫<code>subscript</code>, 加上了<code>subscript</code>的<code>generic</code>就变成了<code>Subscripted generics</code></p>
+<blockquote>
+<p>其实基本上就是C++里那些什么<code>vector&lt;T&gt;</code>, <code>map&lt;KT, VT&gt;</code>里的<code>T</code></p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">int_list: List[int] = [<span class="number">2</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>] <span class="comment"># 现在int_list的类型就是只能放int的list</span></span><br><span class="line"></span><br><span class="line">tw_list: List[List[int]] = [int_list] <span class="comment"># 套娃类型, subscript里可以放任何能在&lt;type&gt;里放的东西</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 下面三个的类型是等价的, 都是一个可以放任何东西的list</span></span><br><span class="line">any_list: List[Any] = [<span class="string">'asd'</span>, [<span class="number">12</span>, <span class="number">34</span>, &#123;<span class="string">'2'</span>: <span class="string">'3'</span>&#125;]]</span><br><span class="line">any_list_2: list = any_list</span><br><span class="line">any_list_3: List = any_list</span><br></pre></td></tr></table></figure>
+<h4 id="和类型与积类型"><a class="markdownIt-Anchor" href="#和类型与积类型"></a> 和类型与积类型</h4>
+<p>构建和类型可以用<code>Union[T1, T2, ...]</code>, 表示这个变量可以是<code>T1</code>或者<code>T2</code>…</p>
+<p>构建积类型可以用<code>Tuple[T1, T2, ...]</code>, 表示这个变量是一个元组, 里面的元素类型分别为<code>T1</code>, <code>T2</code>…</p>
+<p>Python 函数的多返回值其实就是返回一个元组, 所以它的返回类型标注要使用<code>Tuple</code></p>
+<p>特别地, <code>Optional[T]</code>等价于<code>Union[T, None]</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">int_or_str: Union[int, str] = <span class="string">'123'</span></span><br><span class="line">int_or_str = <span class="number">123</span> <span class="comment"># mypy不会报错</span></span><br><span class="line"></span><br><span class="line">int_and_str: Tuple[int, str] = (<span class="number">123</span>, <span class="string">'123'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">reciprocal</span><span class="params">(n: float)</span> -&gt; Optional[float]:</span></span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span> / n</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">make_a_pair</span><span class="params">(n: num)</span> -&gt; Tuple[int, str]:</span></span><br><span class="line">    <span class="keyword">return</span> n, str(n) <span class="comment"># 等价于 return (n, str(n))</span></span><br></pre></td></tr></table></figure>
+<h4 id="函数类型标记"><a class="markdownIt-Anchor" href="#函数类型标记"></a> 函数类型标记</h4>
+<p>mypy会检查你函数是不是在所有if分支里都会返回你标注的返回类型. 如果你觉得它很烦, 你可以直接在函数的末尾抛个异常, 这样它就不会管你了.</p>
+<p>换句话说, 类型标注不能标注这个函数会抛出什么异常. (精Java狂怒)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">I_am_tired</span><span class="params">()</span> -&gt; List[int]:</span></span><br><span class="line">    <span class="keyword">raise</span> RuntimeError(<span class="string">"I don't want to return anything."</span>)</span><br></pre></td></tr></table></figure>
+<p>没有返回值的函数可以标注返回值为<code>None</code>. 永远不会返回的函数可以标注返回值为<code>NoReturn</code>. 不标注返回类型的函数mypy默认它返回<code>Any</code>.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">assuming_len</span><span class="params">(l: list, length: int)</span> -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">    <span class="keyword">if</span> len(l) != length:</span><br><span class="line">        <span class="keyword">raise</span> RuntimeError(<span class="string">'invaild length'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">kill_myself</span><span class="params">()</span> -&gt; NoReturn:</span></span><br><span class="line">    exit()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 等价于: def return_something_as_I_like() -&gt; Any:</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">return_something_as_I_like</span><span class="params">()</span>:</span></span><br><span class="line">    n = random.randint(<span class="number">1</span>, <span class="number">3</span>)</span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">elif</span> n == <span class="number">2</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'2'</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">1</span>, <span class="string">'2'</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="类型推断与转换"><a class="markdownIt-Anchor" href="#类型推断与转换"></a> 类型推断与转换</h4>
+<p>使用<code>cast(目标类型, 要转换的变量)</code>可以把变量从一个类型转换到另一个类型. <code>cast</code>不进行运行时类型检查.</p>
+<blockquote>
+<p>换句话讲, cast相当于掐着linter的脖子<strong>指鹿为马</strong></p>
+<p>当然也会有linter错把马认为是鹿的时候 <s>(mypy是马鹿!)</s></p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a: int = <span class="number">1</span></span><br><span class="line">b: str = cast(str, a)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 目标类型参数可以塞&lt;type&gt;能塞的东西而不仅仅是type对象</span></span><br><span class="line">al: List[int] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">bl: List[str] = cast(List[str], al)</span><br></pre></td></tr></table></figure>
+<p>对于某个特定的变量, mypy的推导能力还是挺强的:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">to_int</span><span class="params">(a: Union[int, str])</span> -&gt; int:</span></span><br><span class="line">    <span class="keyword">if</span> isinstance(a, int):</span><br><span class="line">        <span class="keyword">return</span> a <span class="comment"># 这里a的类型就是int了</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> int(a) <span class="comment"># 这里a的类型就是str了</span></span><br></pre></td></tr></table></figure>
+<p>但是对于表达式就不能通过<code>isinstance</code>判断类型了:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">first_to_int</span><span class="params">(a: Union[List[int], List[str]])</span> -&gt; int:</span></span><br><span class="line">    <span class="keyword">if</span> isinstance(a[<span class="number">0</span>], int):</span><br><span class="line">        b = a[<span class="number">0</span>] <span class="comment"># 这里b还是Union[int, str]</span></span><br><span class="line">        <span class="keyword">return</span> b</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> int(a[<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
+<p>另外对于列表之类的容器类型, 如果在声明后面紧接着跟一个赋值用的for循环的话, mypy就能推断出那个容器的类型. (其实一般写上也没什么问题)</p>
+<p>Python 3.8之后, <code>typing</code>多了一个蛮好用的Special Form: <code>Literal</code>, 它可以限定一个变量取特定的某些值, 比如:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">TypeTag = Literal[<span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>]</span><br><span class="line"></span><br><span class="line">a: TypeTag = <span class="string">'D'</span> <span class="comment"># 报错</span></span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">并且根据你在`Literal`里设定的字面量类型, `a`可以塞到更广泛的, 比如接受一个`str`作为参数的函数中去. 如果字面量类型里有多个类型的值, `a`会被扩展为`Union[...]`</span><br><span class="line"></span><br><span class="line">对于在代码中写死的变量而言, 它的类型会被推导为字面量类型:</span><br><span class="line"></span><br><span class="line">```python</span><br><span class="line">l = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>] <span class="comment"># l 的类型被推导为List[Literal[1, 2, 3]]</span></span><br></pre></td></tr></table></figure>
+<p>但是如果你手动指定, 它就会是你手动指定的类型. 在本篇文章中为行文方便~~(我懒)~~, 在不引起迷惑的情况下上面<code>l</code>这种变量的类型一般写为<code>List[int]</code></p>
+<h2 id="泛型"><a class="markdownIt-Anchor" href="#泛型"></a> 泛型</h2>
+<h3 id="基本"><a class="markdownIt-Anchor" href="#基本"></a> 基本</h3>
+<p>首先, 跟C++完全不一样的第一点是, Python的泛型参数<strong>不是</strong>跟函数/类型硬性绑定的, 也不是某种语法之类的, 而是<strong>一种对象</strong>, 在被绑定了之后就能作为标注对象放在标注那里.</p>
+<p>比如在C++里我们会这么写:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function">T <span class="title">abs</span><span class="params">(T x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x &lt; <span class="number">0</span> ? -x : x</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个类型变量<code>T</code>显然是只能在abs里用的.</p>
+<p>但是在Python里我们要这样写:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 构造类型变量</span></span><br><span class="line">T = TypeVar(<span class="string">'T'</span>)</span><br><span class="line"></span><br><span class="line">a: T <span class="comment"># 现在T没被绑定, 所以这行在mypy下会报错: Type variable "t.T" is unbound</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将T用在某个函数的参数上以将T绑定到这个函数里面</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">abs</span><span class="params">(n: T)</span> -&gt; T:</span></span><br><span class="line">    v: T = n <span class="comment"># 在函数体里就可以用T来标注变量类型了</span></span><br><span class="line">    <span class="keyword">return</span> -n <span class="keyword">if</span> n &lt; <span class="number">0</span> <span class="keyword">else</span> n</span><br><span class="line"></span><br><span class="line">b: T <span class="comment"># 脱离了函数体之后T就被解绑了, 现在T又是没有被绑定的了, 这行也会报错</span></span><br></pre></td></tr></table></figure>
+<p><code>TypeVar</code>的第一个参数必须要跟要绑定类型变量的名字相同, 要不然mypy会跟你抱怨.</p>
+<p>第二点不同的是, C++模板的类型检查只有在模板实例化的时候才会检查; 而Python的泛型更像Java和Haskell, 会要求类型至少满足在泛型函数中使用到的操作. 所以其实上面的Python泛型函数其实是会在mypy中报错的:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">error: Unsupported operand type for unary - (&quot;T&quot;)</span><br><span class="line">error: Unsupported operand types for &gt; (&quot;int&quot; and &quot;T&quot;)</span><br></pre></td></tr></table></figure>
+<p>所以其实我们要这么写:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">T = TypeVar(<span class="string">'T'</span>, int, float)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">abs</span><span class="params">(n: T)</span> -&gt; T:</span></span><br><span class="line">    <span class="keyword">return</span> -n <span class="keyword">if</span> n &lt; <span class="number">0</span> <span class="keyword">else</span> n</span><br></pre></td></tr></table></figure>
+<p><code>TypeVar</code>后面的参数限定了它只能取的类型, 这里就只能塞type对象, 而不能塞标注对象.</p>
+<p>所以如果你像做下面这种操作的话:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Explain = TypeVar(<span class="string">'Explain'</span>)</span><br><span class="line">DataWithExplain = TypeVar(<span class="string">'DataWithExplain'</span>, Tuple[V, int], Tuple[V, str])</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">extract_data</span><span class="params">(v: DataWithExplain)</span> -&gt; V:</span></span><br><span class="line">    <span class="keyword">return</span> v[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+<p>当然是不可以的. 得这样写:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Explain = TypeVar(<span class="string">'Explain'</span>, int, str)</span><br><span class="line">Data = TypeVar(<span class="string">'Data'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">extract_data</span><span class="params">(v: Tuple[Data, Explain])</span> -&gt; Data:</span></span><br><span class="line">    <span class="keyword">return</span> v[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+<p>另外, 虽然TypeVar可以限制能取的类型, 但是不能限制不能取的类型; <a href="https://github.com/python/typing/issues/599" target="_blank" rel="noopener">Python的typing项目里有一个issue是关于这个的</a>有一个关于支持这项功能的issue.</p>
+<h3 id="泛型与重载-坑"><a class="markdownIt-Anchor" href="#泛型与重载-坑"></a> 泛型与重载 (坑)</h3>
+<p>在C++里, 我们经常会玩带模板参数的模板偏特化.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="built_in">list</span>&lt;T&gt; <span class="title">as_list</span><span class="params">(T a)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">list</span>(<span class="number">1</span>, a)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="built_in">list</span>&lt;T&gt; as_list(<span class="built_in">list</span>&lt;T&gt; a) &#123;</span><br><span class="line">    <span class="keyword">return</span> a</span><br><span class="line">&#125;</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">在Python里你可能会想这样写:</span><br><span class="line"></span><br><span class="line">```python</span><br><span class="line">T = TypeVar(<span class="string">'T'</span>)</span><br><span class="line"></span><br><span class="line">@overload</span><br><span class="line">def as_list(l: List[T]) -&gt; List[T]: ...</span><br><span class="line">@overload</span><br><span class="line">def as_list(l: T) -&gt; List[T]: ...</span><br><span class="line"></span><br><span class="line">def as_list(l):</span><br><span class="line">    <span class="keyword">if</span> isinstance(l, <span class="built_in">list</span>):</span><br><span class="line">        <span class="keyword">return</span> l</span><br><span class="line">    <span class="keyword">return</span> [l]</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>关于这种先写声明再写实现的Python重载写法, 可以参考这个<a href="https://www.python.org/dev/peps/pep-0484/#function-method-overloading" target="_blank" rel="noopener">PEP 0484</a></p>
+<p>简单来说就是对Python来讲, 后来的重名函数会直接覆盖前面函数的定义, 所以要把实现写在最后面, 然后手动isinstacne分配</p>
+</blockquote>
+<p>这个代码本身是没有问题的…但是就是某些情况下达不到目的罢了</p>
+<p>对具体类型已知的变量, 上面这个函数都能工作得很好, 比如:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">l = as_list([<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]) <span class="comment"># l: List[int]</span></span><br><span class="line">v = as_list(<span class="number">1</span>)         <span class="comment"># v: List[int]</span></span><br><span class="line"></span><br><span class="line">a: Union[int, List[int]] = <span class="number">1</span> <span class="comment"># 此时a的类型会被规约为int, 所以虽然它被标注为Union, 但是其实它的类型是一个具体的int</span></span><br><span class="line">b = as_list(a)               <span class="comment"># b: List[int], 此时mypy还能选择合适的重载</span></span><br></pre></td></tr></table></figure>
+<p>但是不是所有Union类型的变量都能被规约到具体的类型, 比如在函数参数里的:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(c: Union[int, List[int]])</span> -&gt; List[int]:</span></span><br><span class="line">    t = as_list(c) <span class="comment"># 这里的类型就会变成 Union[List[int], List[List[int]]]而不是List[int]</span></span><br><span class="line">    <span class="keyword">return</span> t</span><br></pre></td></tr></table></figure>
+<p>这时候mypy就不能选择到正确的类型. (写本文时用到的<code>mypy</code>版本是0.782)</p>
+<p>也许你会想为什么我们不能直接这样写:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">as_list</span><span class="params">(l: Union[T, List[T]])</span> -&gt; List[T]:</span></span><br><span class="line">    <span class="keyword">return</span> l <span class="keyword">if</span> isinstance(l, list) <span class="keyword">else</span> [l]</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">但是这样子写出来mypy并不会优先匹配最好的, 甚至在确定的类型中也不能得到期望的结果</span><br><span class="line"></span><br><span class="line">```python</span><br><span class="line">l = as_list([<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]) <span class="comment"># 这里就会出问题: l: Union[List[List[int], int]</span></span><br><span class="line">v = as_list(<span class="number">1</span>)         <span class="comment"># v: List[int]</span></span><br><span class="line"></span><br><span class="line">a: Union[int, List[int]] = <span class="number">1</span> <span class="comment"># 此时a的类型会被规约为int, 所以虽然它被标注为Union, 但是其实它的类型是一个具体的int</span></span><br><span class="line">b = as_list(a)               <span class="comment"># b: List[int], 此时mypy还能选择合适的重载</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(c: Union[int, List[int]])</span> -&gt; List[int]:</span></span><br><span class="line">    t = as_list(c) <span class="comment"># 这里的类型还是 Union[List[int], List[List[int]]]而不是List[int]</span></span><br><span class="line">    <span class="keyword">return</span> t</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">或者你会说为什么不重载`f`写成这个样子:</span><br><span class="line"></span><br><span class="line">```python</span><br><span class="line"><span class="meta">@overload</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(c: int)</span> -&gt; List[int]:</span> ...</span><br><span class="line"><span class="meta">@overload</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(c: List[int])</span> -&gt; List[int]:</span> ...</span><br></pre></td></tr></table></figure>
+<p>但是这意味着每一个用到<code>as_list</code>的函数都需要这样写一次重载, 这样我还不如手动内联呢:(</p>
+<p>什么时候如果mypy能够优先选择匹配度高的函数重载或者可以限定类型变量<code>T</code>不取<code>list</code>类型这个问题就能被解决了.</p>
+<h3 id="泛型类型"><a class="markdownIt-Anchor" href="#泛型类型"></a> 泛型类型</h3>
+<p>通过继承<code>Generic[T, ...]</code>来将<code>T, ...</code>绑定到class里面.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">X, Y = TypeVar(<span class="string">'X'</span>), TypeVar(<span class="string">'Y'</span>)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Pair</span><span class="params">(Generic[X, Y])</span>:</span></span><br><span class="line">    <span class="comment"># 构造函数的返回值是None; 所有对象方法的self都可以不用标注</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, car: X, cdr: Y)</span> -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">        self.car, self.cdr = car, cdr</span><br></pre></td></tr></table></figure>
+<p>需要注意的是, 类似于Java, 运行时的泛型参数类型会被擦除掉; 意思就是说:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a: Pair[int, int] = Pair(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">isinstance(a, Pair[int, int]) <span class="comment"># 这里会报错</span></span><br></pre></td></tr></table></figure>
+<p>或者你也可以这么认为, 泛型类型对象加上subscript之后就是标注对象(或者<code>GenericAlias</code>)说了.</p>
+<p>用带subscript的泛型类型来构造对象的话, 构造函数就是对应subscript的类型; 否则就是按类型变量决定之后构造出对象之后再确定对象的subscript.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">NNPair = Pair[int, int] <span class="comment"># 可以起别名; 真的就只是缩写, 没有特别的</span></span><br><span class="line"></span><br><span class="line">a: NNPair = NNPair(<span class="number">2</span>, [<span class="number">2</span>, <span class="number">3</span>]) <span class="comment"># 这个会报错: [2, 3]的类型不符合Pair[int, int]</span></span><br><span class="line"></span><br><span class="line">b: NNPair = Pair(<span class="number">2</span>, [<span class="number">2</span>, <span class="number">3</span>]) <span class="comment"># 这个会报错: Pair[int, List[int]]的类型不符合NNPair</span></span><br></pre></td></tr></table></figure>
+<h3 id="协变-逆变和-不变"><a class="markdownIt-Anchor" href="#协变-逆变和-不变"></a> 协变, 逆变和… 不变(?)</h3>
+<p>协变的英文短一点, 是<code>Covariance</code>, <code>co</code>-variance.</p>
+<p>逆变的英文长一点, 是<code>Contravariance</code>, <code>contra</code>-variance.</p>
+<p>不变的英文基本上不会跟上面两个混起来, 是<code>irvariance</code>, <code>ir</code>-variance.</p>
+<p>在Python里, 协变/逆变的属性是可调节的, 并且是绑定在类型变量上的. (好奇怪啊…)</p>
+<h4 id="范畴论理解"><a class="markdownIt-Anchor" href="#范畴论理解"></a> 范畴论理解</h4>
+<p>Python里的泛型类型<code>F[T]</code>可以看作一个Functor/反-Functor(是叫这名字吗…?)/啥也不是. 如果对任意两类型<code>a</code>, <code>b</code>:</p>
+<p>当存在态射(a -&gt; b), 总有态射(F[a] -&gt; F[b])</p>
+<p>那么说<code>T</code>对<code>F</code>是协变的(Functor); 反之, 若:</p>
+<p>当存在态射(a -&gt; b), 总有态射(F[b] -&gt; F[a])</p>
+<p>那么说<code>T</code>对<code>F</code>是逆变的(反-Functor); 如果<code>T</code>对<code>F</code>既不是协变的也不是逆变的, 那它就是不变的.</p>
+<h4 id="python理解"><a class="markdownIt-Anchor" href="#python理解"></a> Python理解</h4>
+<p>如果<code>如果a是b的子类型, 那么F[a]是F[b]的子类型</code>为真, 那T就是协变的;</p>
+<p>如果<code>如果a是b的子类型, 那么F[b]是F[a]的子类型</code>为真, 那T就是逆变的;</p>
+<p>如果T不协变也不逆变, 那T就是不变的;</p>
+<h4 id="例子"><a class="markdownIt-Anchor" href="#例子"></a> 例子</h4>
+<blockquote>
+<p>范畴论例子:</p>
+<p>一个函数(a -&gt; b), 固定a以b为参数, 那么b就是协变的;  固定b以a为参数, 那么a就是逆变的.</p>
+</blockquote>
+<p>让我们考虑列表. 假如B是A的子类型(你可以假定<code>class B(A)</code>), C也是A的子类型.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span> <span class="keyword">pass</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span><span class="params">(A)</span>:</span> <span class="keyword">pass</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span><span class="params">(A)</span>:</span> <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+<h5 id="只读列表是协变的"><a class="markdownIt-Anchor" href="#只读列表是协变的"></a> 只读列表是协变的</h5>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 只读列表是协变的</span></span><br><span class="line">CoT = TypeVar(<span class="string">'CoT'</span>, covariant=<span class="literal">True</span>)</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RList</span><span class="params">(Generic[CoT])</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, l: List[CoT])</span> -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">        self.l = l</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, idx: int)</span> -&gt; CoT:</span></span><br><span class="line">        <span class="keyword">return</span> self.l[idx]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 考虑</span></span><br><span class="line">a: RList[A]</span><br><span class="line">b: RList[B]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 因为所有的B都是A, 所以如果我们从RList里读出来一个B, 也没有什么关系, 总之把它当成A就可以了</span></span><br><span class="line"><span class="comment"># 所以所有的RList[B]应该都是RList[A]的子类型, 也就是说T对RList是协变的</span></span><br></pre></td></tr></table></figure>
+<h5 id="只写列表是逆变的"><a class="markdownIt-Anchor" href="#只写列表是逆变的"></a> 只写列表是逆变的</h5>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">ContraT = TypeVar(<span class="string">'ContraT'</span>, contravariant=<span class="literal">True</span>)</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WList</span><span class="params">(Generic[ContraT])</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, l: List[ContraT])</span> -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">        self.l = l</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">set</span><span class="params">(self, idx: int, val: ContraT)</span> -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">        self.l[idx] = val</span><br><span class="line"></span><br><span class="line"><span class="comment"># 考虑:</span></span><br><span class="line">a: WList[A]</span><br><span class="line">b: WList[B]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 假如我有一个WList[A], 我总能把它当作一个WList[B]; 因为我总可以把类型为B的对象往WList[A]里写进去;</span></span><br><span class="line"><span class="comment"># 所以所有的WList[A]都应该是WList[B]的子类型, 也就是说T对WList是逆变的</span></span><br></pre></td></tr></table></figure>
+<h5 id="可读可写的列表是不变的"><a class="markdownIt-Anchor" href="#可读可写的列表是不变的"></a> 可读可写的列表是不变的</h5>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">IrT = TypeVar(<span class="string">'IrT'</span>)</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RWList</span><span class="params">(Generic[IrT])</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, l: List[IrT])</span> -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">        self.l = l</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">set</span><span class="params">(self, idx: int, val: IrT)</span> -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">        self.l[idx] = val</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, idx: int)</span> -&gt; IrT:</span></span><br><span class="line">        <span class="keyword">return</span> self.l[idx]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 考虑</span></span><br><span class="line">a: RWList[A]</span><br><span class="line">b: RWList[B]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 我能把RWList[A]当作RWList[B]吗? 不能. 我不能保证RWList[A]读出来的对象一定是B, 它可能是C</span></span><br><span class="line"><span class="comment"># 我能把RWList[B]当作RWList[A]吗? 不能. 我不能保证拿A往里面写时A的实际类型就一定是B, 它可能是C</span></span><br><span class="line"><span class="comment"># 所以T对于RWList是不变的</span></span><br></pre></td></tr></table></figure>
+<h4 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h4>
+<p>不懂也没关系, 说明您的应用场景还不需要用到协变/逆变的概念. 多用用自然就会懂了.</p>
+<h2 id="杂项"><a class="markdownIt-Anchor" href="#杂项"></a> 杂项</h2>
+<h3 id="循环引用"><a class="markdownIt-Anchor" href="#循环引用"></a> 循环引用?</h3>
+<p>如果我要在类里标注类自己这种类型怎么办?</p>
+<p>答: 直接用字符串就可以了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_self</span><span class="params">(self)</span> -&gt; 'A':</span></span><br><span class="line">        <span class="keyword">return</span> self</span><br></pre></td></tr></table></figure>
+<p>同样的方法还可以用来定义递归类型</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ValueType = Union[int, str, <span class="string">'Procedure'</span>]</span><br><span class="line">Procedure = Callable[[ValueType], ValueType]</span><br></pre></td></tr></table></figure>
+<h3 id="模块与包"><a class="markdownIt-Anchor" href="#模块与包"></a> 模块与包?</h3>
+<p>当你有这样一个目录结构:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">project</span><br><span class="line">└── code</span><br><span class="line">    ├── main.py</span><br><span class="line">    └── my_util.py</span><br></pre></td></tr></table></figure>
+<p>并且在main.py里想import util.py的时候, 你会发现一个很尴尬的事情.</p>
+<p>如果你这样来:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># main.py</span></span><br><span class="line"><span class="keyword">import</span> my_util</span><br></pre></td></tr></table></figure>
+<p>那么mypy会找不到my_util.py, 因为同目录的文件并不在mypy找文件的路径里; 然后自动补全就gg了.</p>
+<p>如果你这样来:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> .my_util</span><br></pre></td></tr></table></figure>
+<p>在你运行<code>python -u main.py</code>的时候又会报错:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">ImportError: attempted relative import with no known parent package</span><br><span class="line">&#96;&#96;&#96; </span><br><span class="line"></span><br><span class="line">这个错是因为当python直接执行某个文件的时候, 这个文件就会变成&#96;__main__&#96;模块的一部分. 那么如果你在这个文件里使用相对路径来引用的话, python就不知道你这个相对路径是相对于你目录还是&#96;__main__&#96;模块了, 所以就直接ban掉这种import了. </span><br><span class="line"></span><br><span class="line">那么怎么办呢?</span><br><span class="line"></span><br><span class="line">首先你需要先把代码目录弄到mypy的补全路径里去. 在VSCode的Pylance拓展中你需要加入这样一条设置:</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;jsonc</span><br><span class="line">&quot;python.analysis.extraPaths&quot;: [</span><br><span class="line">    &quot;code&quot; &#x2F;&#x2F; 直接写你代码目录的名字, 不用加路径</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>其次你要解决这个相对路径的问题. 那你直接就用第一种写法就可以了. 只要你的文件不跟python标准库的重名, python在找完所有路径之后没发现这个名字就会去找同一目录下的文件, 问题就解决了.</p>
+<h2 id="杂项-2"><a class="markdownIt-Anchor" href="#杂项-2"></a> 杂项</h2>
+<h3 id="type类型"><a class="markdownIt-Anchor" href="#type类型"></a> <code>Type</code>类型</h3>
+<p>如果你需要某种类型的类型对象怎么办? 你可以使用<code>Type</code> GenericAlias:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">T = TypeVar(<span class="string">'T'</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">safe_cast</span><span class="params">(obj: Any, cls: Type[T])</span> -&gt; T:</span></span><br><span class="line">    <span class="keyword">if</span> isinstance(obj, cls):</span><br><span class="line">        <span class="keyword">return</span> cast(obj, cls)</span><br><span class="line">    <span class="keyword">raise</span> RuntimeError(<span class="string">f'Type not match: given: <span class="subst">&#123;type(obj).__name__&#125;</span>, expect: <span class="subst">&#123;cls.__name__&#125;</span>'</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="ide配置"><a class="markdownIt-Anchor" href="#ide配置"></a> IDE配置</h2>
+<h3 id="vscode"><a class="markdownIt-Anchor" href="#vscode"></a> VSCode</h3>
+<p>您可以使用<code>PyRight</code>扩展搭配基础的<code>Python</code>扩展使用. 也可以直接使用微软&quot;次世代&quot;的Python插件<code>Pylance</code>.</p>
+<p>如果您使用<code>Pylance</code>的话, 可能还需要去设置里开启:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"python.analysis.typeCheckingMode": "basic"</span><br></pre></td></tr></table></figure>
+<p>基本上都是开箱即用的.</p>
+<h3 id="pycharm"><a class="markdownIt-Anchor" href="#pycharm"></a> PyCharm</h3>
+<p>由于本人没有PyCharm, 所以略.</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BC%96%E7%A8%8B/" rel="tag"># 编程</a>
+              <a href="/tags/Python/" rel="tag"># Python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/%E9%AB%98%E4%B8%AD%E7%94%9F%E6%B4%BB/%E5%A4%A7%E5%AD%A6%E7%9B%AE%E6%A0%87/" rel="prev" title="写了份大学目标">
+      <i class="fa fa-chevron-left"></i> 写了份大学目标
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/%E6%8A%98%E8%85%BE/Arch%20Alacritty%20%E9%85%8D%E7%BD%AE/" rel="next" title="Arch Alacritty 配置">
+      Arch Alacritty 配置 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text"> 前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基础"><span class="nav-number">2.</span> <span class="nav-text"> 基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#q-a"><span class="nav-number">2.1.</span> <span class="nav-text"> Q &amp; A</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#类型标注是什么"><span class="nav-number">2.1.1.</span> <span class="nav-text"> 类型标注是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#它会让我的程序变慢吗"><span class="nav-number">2.1.2.</span> <span class="nav-text"> 它会让我的程序变慢吗</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#类型标注有什么用啊"><span class="nav-number">2.1.3.</span> <span class="nav-text"> 类型标注有什么用啊</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本语法"><span class="nav-number">2.2.</span> <span class="nav-text"> 基本语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常见用法"><span class="nav-number">2.3.</span> <span class="nav-text"> 常见用法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#python-内置的各种的type"><span class="nav-number">2.3.1.</span> <span class="nav-text"> Python 内置的各种的type</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内置容器类型的genericalias"><span class="nav-number">2.3.2.</span> <span class="nav-text"> 内置容器类型的GenericAlias</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#和类型与积类型"><span class="nav-number">2.3.3.</span> <span class="nav-text"> 和类型与积类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#函数类型标记"><span class="nav-number">2.3.4.</span> <span class="nav-text"> 函数类型标记</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#类型推断与转换"><span class="nav-number">2.3.5.</span> <span class="nav-text"> 类型推断与转换</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#泛型"><span class="nav-number">3.</span> <span class="nav-text"> 泛型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本"><span class="nav-number">3.1.</span> <span class="nav-text"> 基本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#泛型与重载-坑"><span class="nav-number">3.2.</span> <span class="nav-text"> 泛型与重载 (坑)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#泛型类型"><span class="nav-number">3.3.</span> <span class="nav-text"> 泛型类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#协变-逆变和-不变"><span class="nav-number">3.4.</span> <span class="nav-text"> 协变, 逆变和… 不变(?)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#范畴论理解"><span class="nav-number">3.4.1.</span> <span class="nav-text"> 范畴论理解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#python理解"><span class="nav-number">3.4.2.</span> <span class="nav-text"> Python理解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#例子"><span class="nav-number">3.4.3.</span> <span class="nav-text"> 例子</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#只读列表是协变的"><span class="nav-number">3.4.3.1.</span> <span class="nav-text"> 只读列表是协变的</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#只写列表是逆变的"><span class="nav-number">3.4.3.2.</span> <span class="nav-text"> 只写列表是逆变的</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#可读可写的列表是不变的"><span class="nav-number">3.4.3.3.</span> <span class="nav-text"> 可读可写的列表是不变的</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">3.4.4.</span> <span class="nav-text"> 总结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#杂项"><span class="nav-number">4.</span> <span class="nav-text"> 杂项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#循环引用"><span class="nav-number">4.1.</span> <span class="nav-text"> 循环引用?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模块与包"><span class="nav-number">4.2.</span> <span class="nav-text"> 模块与包?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#杂项-2"><span class="nav-number">5.</span> <span class="nav-text"> 杂项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#type类型"><span class="nav-number">5.1.</span> <span class="nav-text"> Type类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ide配置"><span class="nav-number">6.</span> <span class="nav-text"> IDE配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vscode"><span class="nav-number">6.1.</span> <span class="nav-text"> VSCode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pycharm"><span class="nav-number">6.2.</span> <span class="nav-text"> PyCharm</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Origami404"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Origami404</p>
+  <div class="site-description" itemprop="description">某蒟蒻OIer</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Origami404" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Origami404" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Origami404</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.7.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

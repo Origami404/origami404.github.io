@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://origami404.github.io').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="前言 时隔半年再次开始学Haskell, 然后在配环境中度过了一个哭笑不得的下午…">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Win10下Haskell开发环境的配置">
+<meta property="og:url" content="https://origami404.github.io/Win10%E4%B8%8BHaskell%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E7%9A%84%E9%85%8D%E7%BD%AE/index.html">
+<meta property="og:site_name" content="Origami404">
+<meta property="og:description" content="前言 时隔半年再次开始学Haskell, 然后在配环境中度过了一个哭笑不得的下午…">
+<meta property="article:published_time" content="2020-04-14T14:00:00.000Z">
+<meta property="article:modified_time" content="2020-10-02T14:59:19.083Z">
+<meta property="article:author" content="Origami404">
+<meta property="article:tag" content="Haskell">
+<meta property="article:tag" content="折腾">
+<meta property="article:tag" content="我会熟练地安装xxx系列">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://origami404.github.io/Win10%E4%B8%8BHaskell%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E7%9A%84%E9%85%8D%E7%BD%AE/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Win10下Haskell开发环境的配置 | Origami404</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Origami404</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://origami404.github.io/Win10%E4%B8%8BHaskell%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E7%9A%84%E9%85%8D%E7%BD%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Origami404">
+      <meta itemprop="description" content="某蒟蒻OIer">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Origami404">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Win10下Haskell开发环境的配置
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-04-14 22:00:00" itemprop="dateCreated datePublished" datetime="2020-04-14T22:00:00+08:00">2020-04-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-02 22:59:19" itemprop="dateModified" datetime="2020-10-02T22:59:19+08:00">2020-10-02</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2>
+<p>时隔半年再次开始学<code>Haskell</code>, 然后在配环境中度过了一个哭笑不得的下午…</p>
+<a id="more"></a>
+<h2 id="haskell环境是啥呢"><a class="markdownIt-Anchor" href="#haskell环境是啥呢"></a> Haskell环境是啥呢…?</h2>
+<p>按我不完全的理解, 主要有:</p>
+<ol>
+<li>一个编译器, 比如<code>ghc</code>; 它还附带一个REPL叫<code>ghci</code></li>
+<li>一个包管理器兼项目管理器<code>stack</code></li>
+<li>一个提供后台语言分析支持的<code>Language Engine</code>, 比如<code>Haskell-Ide-Engine</code>(<code>HIE</code>)</li>
+</ol>
+<p>然后呢还有一个东西叫<code>cabal</code>, 是一个历史遗留下来的包管理器, 有一套自己的包系统啊blabla的, 也没多大关系了…</p>
+<blockquote>
+<p>stack和cabal的更多信息:<br />
+<a href="https://www.fpcomplete.com/blog/2015/06/why-is-stack-not-cabal" target="_blank" rel="noopener">Why is stack not cabal?.</a><br />
+<a href="https://www.fpcomplete.com/blog/2015/06/announcing-first-public-beta-stack" target="_blank" rel="noopener">ANNOUNCING: first public beta of stack.</a><br />
+<a href="https://stackoverflow.com/questions/30913145/what-is-the-difference-between-cabal-and-stack" target="_blank" rel="noopener">What is the difference between Cabal and Stack?</a></p>
+</blockquote>
+<p>本来呢, 目标是把上面三个, 最主要是第三个搞好; 但是由于我太菜了, 直到本文写好为止, 都…</p>
+<h2 id="wsl"><a class="markdownIt-Anchor" href="#wsl"></a> WSL</h2>
+<p>如果配好了<code>stack</code>, 那剩下两个基本上就是水到渠成了.</p>
+<p>第一反应当然是选择<code>WSL</code>配置!</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S stack</span><br></pre></td></tr></table></figure>
+<p>装完, 主要参考了<a href="">这里</a>, 配了一波<code>stack.yaml</code>, 然后开始折腾三, 照着<a href="https://www.vacationlabs.com/haskell/environment-setup.html">这里</a>的做法,</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/haskell/haskell-ide-engine</span><br><span class="line"><span class="built_in">cd</span> haskell-ide-engine</span><br><span class="line">stack install</span><br></pre></td></tr></table></figure>
+<p>然后报错:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Cabal file info not found for apply-refact-0.7.0.0, updating</span><br><span class="line">Selected mirror https:&#x2F;&#x2F;s3.amazonaws.com&#x2F;hackage.fpcomplete.com&#x2F;</span><br><span class="line">Downloading root</span><br><span class="line">Waiting to acquire cache lock on $HOME&#x2F;.stack&#x2F;pantry&#x2F;hackage&#x2F;hackage-security-lock</span><br><span class="line">fdLock: invalid argument (Invalid argument)</span><br></pre></td></tr></table></figure>
+<p>Google之后, 在<a href="https://stackoverflow.com/questions/42891065/fcntl-returns-errno-invalid-argument" target="_blank" rel="noopener">这里</a>发现这可能是<code>WSL</code>的一个<code>bug</code>, 并且看起来修不了…</p>
+<p>然后我在<a href="https://github.com/haskell/cabal/issues/6551" target="_blank" rel="noopener">Cabel的issue里</a>发现了一种可能的解决方法: 在项目目录下的<code>cabal.project</code>做出如下修改:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">constraints:</span></span><br><span class="line">  <span class="string">lukko</span> <span class="string">-ofd-locking</span></span><br></pre></td></tr></table></figure>
+<p>报错依旧, 可能这个方法只能修<code>cabel-install</code>. 由于我对<code>Haskell</code>的包管理体系还完全不熟悉, 所以不知道能不能把这个方法移植到<code>stack</code>上, 但这条路看起来是行不通了…</p>
+<h2 id="那万能的aur呢"><a class="markdownIt-Anchor" href="#那万能的aur呢"></a> 那万能的AUR呢?</h2>
+<p>Google后发现果然有直接有<code>HIE</code>的包.</p>
+<p>然后熟练地输入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pikaur -S haskell-ide-engine</span><br></pre></td></tr></table></figure>
+<p>熟练地得到报错:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;&#x2F;usr&#x2F;sbin&#x2F;pikaur&quot;, line 9, in &lt;module&gt;</span><br><span class="line">    main()</span><br><span class="line">  File &quot;&#x2F;usr&#x2F;lib&#x2F;python3.8&#x2F;site-packages&#x2F;pikaur&#x2F;main.py&quot;, line 401, in main</span><br><span class="line">    create_dirs()</span><br><span class="line">  File &quot;&#x2F;usr&#x2F;lib&#x2F;python3.8&#x2F;site-packages&#x2F;pikaur&#x2F;main.py&quot;, line 373, in create_dirs</span><br><span class="line">    raise Exception(result)</span><br><span class="line">Exception: InteractiveSpawn returned 1:</span><br><span class="line">STDOUT:</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">STDERR:</span><br><span class="line">System has not been booted with systemd as init system (PID 1). Can&#39;t operate.</span><br><span class="line">Failed to create bus connection: Host is down</span><br></pre></td></tr></table></figure>
+<p>经过Google发现WSL基本上不可能折腾出<code>systemd</code>出来, 遂放弃, 转而去装了个<code>yay</code></p>
+<blockquote>
+<p>后来发现我还是太菜了. 按照装包的惯性, 我加了<code>sudo</code>, 但是<code>pikaur</code>默认是不想带着<code>root</code>权限跑(怕恶意<code>aur</code>), 所以它会试着派生出一个普通权限的进程, 而这时用到了<code>systemd</code>. 所以只要不加<code>sudo</code>, 它就完全可以正常地在<code>WSL</code>上运行…</p>
+</blockquote>
+<blockquote>
+<p>然而我发现得太晚了…</p>
+</blockquote>
+<p>装好<code>yay</code>之后, 尝试安装那个<code>AUR</code>, 发现它其实就是手动做法, 把源码下下来然后<code>stack install</code>…</p>
+<p><strong>(o_ _)ﾉ</strong></p>
+<h2 id="我换windows版总行了吧"><a class="markdownIt-Anchor" href="#我换windows版总行了吧"></a> 我换Windows版总行了吧…</h2>
+<p>下载win版安装, 然后<code>stack setup</code>, 报错:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">...(一些OS相关信息)</span><br><span class="line">(internalexception (handshakefailed (error_misc &quot;network.socket.sendbuf: failed (no error)&quot;)))</span><br></pre></td></tr></table></figure>
+<p>我…迷惑…</p>
+<p>啥玩意叫<code>failed (no error)</code>啊啊啊啊啊啊???</p>
+<p>Google之后发现完全没有相关的结果, 大家都有<code>error</code>就我没有…遂怀疑是某堵墙的问题(因为它好像要从<code>raw.githubcontent</code>)那里下点什么东西</p>
+<p>然后去找了一会才找到<code>powershell</code>怎么给命令挂代理(好像win10自带的全局代理不可以…), 本质上也是加环境变量:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$Env:http_proxy</span>=http://<span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">1080</span></span><br><span class="line"><span class="variable">$Env:https_proxy</span>=http://<span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">1080</span></span><br></pre></td></tr></table></figure>
+<p>然后再跑就没问题了… <s><code>f**k GFW</code></s></p>
+<blockquote>
+<p>这setup好像还顺路装了个<code>msys2</code>…</p>
+</blockquote>
+<p>好. 去<code>HIE</code>的目录下愉快地<code>stack install</code>吧!</p>
+<p>然后编译到一半报错:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">某个项目     &gt; Registering library for 项目-版本..</span><br><span class="line">terminateProcess: permission denied (Permission denied)</span><br></pre></td></tr></table></figure>
+<p>我有给管理员啊…而且<code>Ctrl+C</code>重来后还在不一样的地方报错; 还不是所有包都会报这个错…</p>
+<p>无奈Google, 发现了一个神奇的方法(<a href="https://github.com/commercialhaskell/stack/issues/5034" target="_blank" rel="noopener">这里</a>):</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chcp <span class="number">65001</span></span><br></pre></td></tr></table></figure>
+<p>把当前<code>powershell</code>代码页切换到<code>UTF-8</code>就好了…</p>
+<p><strong>什么鬼啊<code>w(ﾟДﾟ)w</code></strong></p>
+<p>然后又历经几次奇奇怪怪的报错, 多编译了几次, 总算把这200+的依赖编译完了, 一运行:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hie.exe: could not detect mingw toolchain</span><br></pre></td></tr></table></figure>
+<p>Boom!</p>
+<p>气急败坏的我甚至跑去<code>WSL</code>里输了个<code>hie.exe</code>, 然后还是报错:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hie.exe: 当前目录: getDirectoryContents:findFirstFile: permission denied ()</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>过一天重启之后再次在<code>powershell</code>里运行, 报的错跟<code>WSL</code>里的一样了…</p>
+</blockquote>
+<h2 id="最后"><a class="markdownIt-Anchor" href="#最后"></a> 最后</h2>
+<p>发现了一个<code>VSCode</code>扩展<a href="https://github.com/dramforever/vscode-ghc-simple#readme" target="_blank" rel="noopener"><code>Simple GHC (Haskell) Integration for VSCode</code></a>, 只需要<code>GHCi</code>就可以运行就能提供的基本的补全, 对我这种轻度使用是完全ok了…</p>
+<p>所以我是白折腾了…?</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Haskell/" rel="tag"># Haskell</a>
+              <a href="/tags/%E6%8A%98%E8%85%BE/" rel="tag"># 折腾</a>
+              <a href="/tags/%E6%88%91%E4%BC%9A%E7%86%9F%E7%BB%83%E5%9C%B0%E5%AE%89%E8%A3%85xxx%E7%B3%BB%E5%88%97/" rel="tag"># 我会熟练地安装xxx系列</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/%E6%8A%98%E8%85%BE/Win10%E9%87%8D%E8%A3%85%E4%B8%8EMSR%E5%88%86%E5%8C%BA/" rel="prev" title="Win10重装与MSR分区">
+      <i class="fa fa-chevron-left"></i> Win10重装与MSR分区
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Category-theory-for-programmers%20%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" rel="next" title="Category-theory-for-programmers 阅读笔记">
+      Category-theory-for-programmers 阅读笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text"> 前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#haskell环境是啥呢"><span class="nav-number">2.</span> <span class="nav-text"> Haskell环境是啥呢…?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wsl"><span class="nav-number">3.</span> <span class="nav-text"> WSL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#那万能的aur呢"><span class="nav-number">4.</span> <span class="nav-text"> 那万能的AUR呢?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我换windows版总行了吧"><span class="nav-number">5.</span> <span class="nav-text"> 我换Windows版总行了吧…</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最后"><span class="nav-number">6.</span> <span class="nav-text"> 最后</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Origami404"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Origami404</p>
+  <div class="site-description" itemprop="description">某蒟蒻OIer</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Origami404" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Origami404" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Origami404</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.7.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
