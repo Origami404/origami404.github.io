@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://origami404.github.io').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="Git Index: Git 的暂存区 此文章施工中…  二进制格式 前后顺序均按从低位到高位.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git 实现&#x2F;暂存区">
+<meta property="og:url" content="https://origami404.github.io/Git%20%E5%AE%9E%E7%8E%B0/%E6%9A%82%E5%AD%98%E5%8C%BA/index.html">
+<meta property="og:site_name" content="Origami404">
+<meta property="og:description" content="Git Index: Git 的暂存区 此文章施工中…  二进制格式 前后顺序均按从低位到高位.">
+<meta property="article:published_time" content="2021-02-19T15:23:46.174Z">
+<meta property="article:modified_time" content="2021-02-19T15:52:48.301Z">
+<meta property="article:author" content="Origami404">
+<meta property="article:tag" content="OIer">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://origami404.github.io/Git%20%E5%AE%9E%E7%8E%B0/%E6%9A%82%E5%AD%98%E5%8C%BA/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Git 实现/暂存区 | Origami404</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Origami404</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://origami404.github.io/Git%20%E5%AE%9E%E7%8E%B0/%E6%9A%82%E5%AD%98%E5%8C%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Origami404">
+      <meta itemprop="description" content="某蒟蒻OIer">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Origami404">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Git 实现/暂存区
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-02-19 23:23:46 / Modified: 23:52:48" itemprop="dateCreated datePublished" datetime="2021-02-19T23:23:46+08:00">2021-02-19</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="git-index-git-的暂存区"><a class="markdownIt-Anchor" href="#git-index-git-的暂存区"></a> Git Index: Git 的暂存区</h1>
+<p><strong>此文章施工中…</strong></p>
+<h2 id="二进制格式"><a class="markdownIt-Anchor" href="#二进制格式"></a> 二进制格式</h2>
+<p>前后顺序<strong>均按从低位到高位</strong>.</p>
+<a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">&lt;index&gt;     ::&#x3D; &lt;header&#x2F;12-byte&gt; &lt;entries&#x2F;8k-byte&gt; &lt;extensions&gt; &lt;checksum&gt;</span><br><span class="line"></span><br><span class="line">&lt;header&gt;    ::&#x3D; &lt;signature&#x2F;4-byte&gt; &lt;version&#x2F;4-byte&gt; &lt;entry_cnt&#x2F;32-bit&gt;</span><br><span class="line">&lt;signature&gt; ::&#x3D; b&#39;DIRC&#39; </span><br><span class="line">&lt;version&gt;   ::&#x3D; (0002, 0003, 0004)                          in ASCII format</span><br><span class="line">&lt;entry_cnt&gt; ::&#x3D; the amount of entries below                 in u32   format</span><br><span class="line"></span><br><span class="line">&lt;entries&gt;   ::&#x3D; [&lt;entry&gt; &lt;padding&gt;]</span><br><span class="line">&lt;entry&gt;     ::&#x3D; &lt;c_time&#x2F;32-bit&gt; &lt;c_time_ns&#x2F;32-bit&gt;</span><br><span class="line">                &lt;m_time&#x2F;32-bit&gt; &lt;m_time_ns&#x2F;32-bit&gt;</span><br><span class="line">                &lt;dev&#x2F;32-bit&gt;    &lt;ino&#x2F;32-bit&gt;</span><br><span class="line">                &lt;mode&#x2F;32-bit&gt;</span><br><span class="line">                &lt;uid&#x2F;32-bit&gt;    &lt;gid&#x2F;32-bit&gt;</span><br><span class="line">                &lt;file_size&#x2F;32-bit&gt;</span><br><span class="line">                &lt;sha-1&#x2F;20-byte&gt;</span><br><span class="line">                &lt;flags&#x2F;16-bit&gt;</span><br><span class="line">                &lt;path_name&gt;</span><br><span class="line"></span><br><span class="line">&lt;c_time&gt;    ::&#x3D; 以秒为单位的最后一次文件元信息改变时间      in u32 format</span><br><span class="line">&lt;c_time_ns&gt; ::&#x3D; c_time 的纳秒部分                           in u32 format</span><br><span class="line"></span><br><span class="line">&lt;m_time&gt;    ::&#x3D; 以秒为单位的最后一次文件改变时间            in u32 format</span><br><span class="line">&lt;m_time_ns&gt; ::&#x3D; m_time 的纳秒部分                           in u32 format</span><br><span class="line"></span><br><span class="line">&lt;dev&gt;       ::&#x3D; 文件的设备号</span><br><span class="line">&lt;ino&gt;       ::&#x3D; 文件的 ino (Infomation NOde) 号,            in u32 format</span><br><span class="line">                与 &lt;dev&gt; 一起在能同一台机器上唯一地确定某个文件</span><br><span class="line"></span><br><span class="line">&lt;mode&gt;      ::&#x3D; &lt;unused_0&#x2F;16-bit&gt; &lt;obj_type&#x2F;4-bit&gt; &lt;unused_0&#x2F;3-bit&gt; &lt;unix-permission&#x2F;9-bit&gt;</span><br><span class="line">&lt;obj_type&gt;  ::&#x3D; (1000, 1010, 1110) 三选一 </span><br><span class="line">                分别代表文件类型为 (普通文件, 符号链接, 子模块链接(Gitlink))</span><br><span class="line">&lt;unix-permission&gt; ::&#x3D; 常见的 Unix 权限位, 就是 644 &#x2F; 777 那种</span><br><span class="line"></span><br><span class="line">&lt;uid&gt;       ::&#x3D; 文件所有者的用户 ID                         in u32 format</span><br><span class="line">&lt;gid&gt;       ::&#x3D; 文件所有者的用户组 ID                       in u32 format</span><br><span class="line"></span><br><span class="line">&lt;file_size&gt; ::&#x3D; 文件的大小, 按字节记                        in u32 format</span><br><span class="line">&lt;sha-1&gt;     ::&#x3D; 对象的 SHA-1                                in u160 format (20-byte 长的二进制数)</span><br><span class="line"></span><br><span class="line">&lt;flags&gt;     ::&#x3D; &lt;assume-valid&#x2F;1-bit&gt; &lt;extended&#x2F;1-bit&gt; &lt;stage&#x2F;2-bit&gt; &lt;path_len&#x2F;12-bit&gt;</span><br><span class="line">&lt;assume-vaild&gt; ::&#x3D; Flag, 为 1 时 Git 会假定此文件未变动, 从而允许你让 Git 忽略该文件的改变</span><br><span class="line">&lt;extended&gt;  ::&#x3D; Flag, 在 version 2 中一定为 0</span><br><span class="line">&lt;stage&gt;     ::&#x3D; 描述其属于同路径名对象的哪个 Slot</span><br><span class="line">&lt;path_len&gt;  ::&#x3D; 路径名长度, 如果大于等于 0xFFF(4095) 的话就是 0xFFF</span><br><span class="line"></span><br><span class="line">&lt;path_name&gt; ::&#x3D; 路径名, 统一用 &quot;&#x2F;&quot; 作为路径分隔符</span><br></pre></td></tr></table></figure>
+<p>直接按以上二进制格式储存于 <code>.git/index</code> 文件中, 不需要压缩</p>
+<h2 id="一个例子"><a class="markdownIt-Anchor" href="#一个例子"></a> 一个例子</h2>
+<p>现在我们的工作目录里有两个文件: <code>a.txt</code> 与 <code>b/c.txt</code>.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ tree .</span><br><span class="line">├─b</span><br><span class="line">│ └─c.txt</span><br><span class="line">└─a.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ cat .git/index | xxd</span><br><span class="line">00000000: 4449 5243 0000 0002 0000 0002 6026 33b5  DIRC........`&amp;3.</span><br><span class="line">00000010: 053f fd99 6026 33b5 053f fd99 0000 0802  .?..`&amp;3..?......</span><br><span class="line">00000020: 0050 008b 0000 81a4 0000 03e8 0000 03e8  .P..............</span><br><span class="line">00000030: 0000 0005 81c5 45ef ebe5 f57d 4cab 2ba9  ......E....&#125;L.+.</span><br><span class="line">00000040: ec29 4c4b 0cad f672 0005 612e 7478 7400  .)LK...r..a.txt.</span><br><span class="line">00000050: 0000 0000 6026 6662 15c4 8f97 6026 6662  ....`&amp;fb....`&amp;fb</span><br><span class="line">00000060: 15c4 8f97 0000 0802 0056 0b99 0000 81a4  .........V......</span><br><span class="line">00000070: 0000 03e8 0000 03e8 0000 0005 9c9d dc2c  ...............,</span><br><span class="line">00000080: c36e c58f 5fc7 6c7c 5157 cfc0 46dd 79ea  .n.._.l|QW..F.y.</span><br><span class="line">00000090: 0007 622f 632e 7478 7400 0000 5452 4545  ..b/c.txt...TREE</span><br><span class="line">000000a0: 0000 0033 0032 2031 0a05 e780 1182 a544  ...3.2 1.......D</span><br><span class="line">000000b0: c4ab bf92 588d 3d2a b043 91ef 1562 0031  ....X.=*.C...b.1</span><br><span class="line">000000c0: 2030 0afe 7ce1 8c5d 3590 42f6 eb43 e81c   0..|..]5.B..C..</span><br><span class="line">000000d0: f711 9240 dd36 8137 fd86 0a4c e3d2 cdd2  ...@.6.7...L....</span><br><span class="line">000000e0: c822 c701 1d2f dc6e 5c97 68              .<span class="string">".../.n\.h</span></span><br></pre></td></tr></table></figure>
+<p>我们把它按上文的字段分开一个一个看:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 文件头</span></span><br><span class="line">4449 5243 0000 0002 0000 0002 </span><br><span class="line"></span><br><span class="line"><span class="comment"># 第一个条目</span></span><br><span class="line">6026 33b5 053f fd99 6026 </span><br><span class="line">33b5 053f fd99 0000 0802  </span><br><span class="line">0050 008b 0000 81a4 0000 </span><br><span class="line">03e8 0000 03e8 0000 0005 </span><br><span class="line">81c5 45ef ebe5 f57d 4cab </span><br><span class="line">2ba9 ec29 4c4b 0cad f672 </span><br><span class="line">0005 612e 7478 7400 0000 0000 </span><br><span class="line"></span><br><span class="line"><span class="comment"># 第二个条目</span></span><br><span class="line">6026 6662 15c4 8f97 </span><br><span class="line">6026 6662 15c4 8f97 0000 </span><br><span class="line">0802 0056 0b99 0000 81a4  </span><br><span class="line">0000 03e8 0000 03e8 0000 </span><br><span class="line">0005 9c9d dc2c c36e c58f </span><br><span class="line">5fc7 6c7c 5157 cfc0 46dd </span><br><span class="line">79ea 0007 622f 632e 7478 </span><br><span class="line">7400 0000            </span><br><span class="line"></span><br><span class="line"><span class="comment"># 扩展 &amp; Hash checksum</span></span><br><span class="line">5452 4545  </span><br><span class="line">0000 0033 0032 2031 0a05 e780 1182 a544  </span><br><span class="line">c4ab bf92 588d 3d2a b043 91ef 1562 0031  </span><br><span class="line">2030 0afe 7ce1 8c5d 3590 42f6 eb43 e81c  </span><br><span class="line">f711 9240 dd36 8137 fd86 0a4c e3d2 cdd2  </span><br><span class="line">c822 c701 1d2f dc6e 5c97 68              </span><br><span class="line"></span><br><span class="line"><span class="comment"># ---------- 下面是详细解释 -----------------</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 文件头</span></span><br><span class="line">4449 5243  <span class="comment"># 4-byte signature: DIRC</span></span><br><span class="line">0000 0002  <span class="comment"># 4-byte ASCII version: 2</span></span><br><span class="line">0000 0002  <span class="comment"># 32-bit entry count: 2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 条目 1: a.txt</span></span><br><span class="line">6026 33b5  <span class="comment"># 32-bit: c_time</span></span><br><span class="line">053f fd99  <span class="comment"># 32-bit: c_time_ns</span></span><br><span class="line">6026 33b5  <span class="comment"># 32-bit: m_time</span></span><br><span class="line">053f fd99  <span class="comment"># 32-bit: m_time_ns</span></span><br><span class="line"></span><br><span class="line">0000 0802  <span class="comment"># 32-bit: dev</span></span><br><span class="line">0050 008b  <span class="comment"># 32-bit: ino</span></span><br><span class="line"></span><br><span class="line">0000 81a4  <span class="comment"># 32-bit: mode: 4-bit obj_type / 3-bit unused / 9-bit unix permission</span></span><br><span class="line">           <span class="comment"># 81a4: 1000 000 110100100 : 1000 for file, 000 for unused, 110/100/100 for mode 644</span></span><br><span class="line"></span><br><span class="line">0000 03e8  <span class="comment"># 32-bit: uid</span></span><br><span class="line">0000 03e8  <span class="comment"># 32-bit: gid</span></span><br><span class="line"></span><br><span class="line">0000 0005  <span class="comment"># 32-bit: size of the file from stat(2), means len('1234\n') == 5</span></span><br><span class="line"></span><br><span class="line">81c5 45ef ebe5 f57d 4cab <span class="comment"># 20-byte: the SHA-1 of the object in a SHA-1 repo</span></span><br><span class="line">2ba9 ec29 4c4b 0cad f672 <span class="comment"># </span></span><br><span class="line"></span><br><span class="line">0005 <span class="comment"># flags: 1-bit / 1-bit / 2-bit / 12-bit size of its path name below: 5</span></span><br><span class="line"></span><br><span class="line">612e 7478 74  <span class="comment"># its path name: 'a.txt'</span></span><br><span class="line">00 0000 0000  <span class="comment"># padding: 让每一个条目的大小是 8-byte 的倍数, 并且保证至少有一个 NUL (size: 72 bytes)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 条目 2: b/c.txt</span></span><br><span class="line"><span class="comment"># 相信读者可以自行解读下面的字段了</span></span><br><span class="line">6026 6662 </span><br><span class="line">15c4 8f97 </span><br><span class="line">6026 6662 </span><br><span class="line">15c4 8f97 </span><br><span class="line"></span><br><span class="line">0000 0802 </span><br><span class="line">0056 0b99 </span><br><span class="line"></span><br><span class="line">0000 81a4  </span><br><span class="line"></span><br><span class="line">0000 03e8 </span><br><span class="line">0000 03e8 </span><br><span class="line"></span><br><span class="line">0000 0005 </span><br><span class="line"></span><br><span class="line">9c9d dc2c c36e c58f 5fc7 </span><br><span class="line">6c7c 5157 cfc0 46dd 79ea </span><br><span class="line"></span><br><span class="line">0007 </span><br><span class="line"></span><br><span class="line">622f 632e 7478 74  <span class="comment"># b/c.txt</span></span><br><span class="line">00 0000            </span><br><span class="line"></span><br><span class="line"><span class="comment"># 扩展 &amp; Hash checksum: 略</span></span><br></pre></td></tr></table></figure>
+<h2 id="stage-字段的含义"><a class="markdownIt-Anchor" href="#stage-字段的含义"></a> Stage 字段的含义</h2>
+<p>在 Git 合并分支的时候有用.</p>
+<p>例子取自参考里的 SO 问题.</p>
+<p>假如我们现在有两个分支 <code>A</code>, <code>B</code>, 工作目录下原本有三个文件 <code>x</code>, <code>y</code>, <code>z</code>. 现在你:</p>
+<p>在 <code>A</code> 分支:</p>
+<ul>
+<li>修改了 <code>x</code> 的内容并且将它的名字改成了 <code>t</code></li>
+<li>修改了 <code>y</code> 的内容</li>
+<li><code>z</code> 的内容保持不变</li>
+</ul>
+<p>在 <code>B</code> 分支:</p>
+<ul>
+<li>修改了 <code>x</code> 的内容</li>
+<li>删除了 <code>y</code></li>
+<li><code>z</code> 的内容保持不变</li>
+</ul>
+<p>这时候你在 <code>A</code> 分支, 想要把它合并到 <code>B</code> 分支:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(on git:A)$ git merge B</span><br></pre></td></tr></table></figure>
+<p>这时候 Git 就会要求你手动合并冲突, 此时的 <code>index</code> 文件内容如下:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(on git:A)$ git ls-file --stage</span><br><span class="line">100644  4362ab...   1   t   <span class="comment"># 指向保存了原来的 x 文件内容的 blob</span></span><br><span class="line">100644  49db92...   2   t   <span class="comment"># 指向保存了 当前分支A 中 t(原来的x) 文件内容的 blob</span></span><br><span class="line">100644  04b399...   3   t   <span class="comment"># 指向保存了 要被合并分支B 中 x 文件内容的 blob</span></span><br><span class="line">100644  366b52...   1   y   <span class="comment"># 指向保存了原来的 y 文件内容的 blob</span></span><br><span class="line">100644  6fecb1...   2   y   <span class="comment"># 指向保存了 当前分支A 中 y 文件</span></span><br><span class="line">                            <span class="comment"># 因为在 B 分支中 y 被删除了, 所以没有 stage 为 3 的 B分支 y 文件 blob</span></span><br><span class="line">100644  7129c6...   0   z   <span class="comment"># 没有冲突的正常文件 stage 号为 0</span></span><br></pre></td></tr></table></figure>
+<p>当你解决完冲突合并之后, 比如说你:</p>
+<ul>
+<li>选择了 <code>t</code> 文件</li>
+<li>删除了 <code>y</code> 文件</li>
+</ul>
+<p>那么合并成功后 <code>index</code> 会变成这样:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(on git:B)$ git ls-file --stage</span><br><span class="line">100644  49db92...   0   t</span><br><span class="line">100644  7129c6...   0   z</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>参考:</p>
+<p>二进制格式: <a href="https://git-scm.com/docs/index-format" target="_blank" rel="noopener">Git Manuel</a>. 请特别注意它的排版方式, 可以的话建议先看完前文再去看这个</p>
+<p>Stat 字段的意义: <a href="https://docs.python.org/zh-cn/3.8/library/os.html#os.stat_result" target="_blank" rel="noopener">Python os.stat</a></p>
+<p>Assume-vaild flag 的意义: <a href="https://stackoverflow.com/questions/47263883/eclipse-git-what-is-assume-valid" target="_blank" rel="noopener">SO-1: 描述了 Assume-vaild flag 对应的 Git 高层术语</a>, <a href="https://stackoverflow.com/questions/16779929/how-do-i-make-to-some-of-the-files-that-i-have-changed-is-not-offered-in-the-com" target="_blank" rel="noopener">SO-2: 描述了该高层术语的一种应用场景</a>,  <a href="https://git-scm.com/docs/git-update-index#Documentation/git-update-index.txt---no-assume-unchanged" target="_blank" rel="noopener">Git Manuel: 描述了如何设置这一 Flag</a></p>
+<p>Stage/2-bit 的含义参考: <a href="https://mincong.io/2018/04/28/git-index/#1-understand-index-via-git-ls-files" target="_blank" rel="noopener">描述了其对应的高层术语 Slot</a>, <a href="https://stackoverflow.com/questions/21309490/how-do-contents-of-git-index-evolve-during-a-merge-and-whats-in-the-index-afte" target="_blank" rel="noopener">SO: 解释了其用途</a></p>
+<p>实现参考: <a href="https://github.com/dulwich/dulwich/blob/2cf84bf9ca358655849761d81d1fe2b96e8952ed/dulwich/index.py" target="_blank" rel="noopener">Dulwich index.py</a>, <a href="https://github.com/sbp/gin/blob/master/gin" target="_blank" rel="noopener">Gin</a></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Git%20%E5%AE%9E%E7%8E%B0/%E7%9B%AE%E5%BD%95%20&%20%E5%89%8D%E8%A8%80%20&%20Git%20repo/" rel="prev" title="Git 实现: 目录 & 前言 & Git repo">
+      <i class="fa fa-chevron-left"></i> Git 实现: 目录 & 前言 & Git repo
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Git%20%E5%AE%9E%E7%8E%B0/%E6%8C%87%E4%BB%A4/" rel="next" title="Git 实现/指令">
+      Git 实现/指令 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#git-index-git-的暂存区"><span class="nav-number">1.</span> <span class="nav-text"> Git Index: Git 的暂存区</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#二进制格式"><span class="nav-number">1.1.</span> <span class="nav-text"> 二进制格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个例子"><span class="nav-number">1.2.</span> <span class="nav-text"> 一个例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stage-字段的含义"><span class="nav-number">1.3.</span> <span class="nav-text"> Stage 字段的含义</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Origami404"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Origami404</p>
+  <div class="site-description" itemprop="description">某蒟蒻OIer</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Origami404" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Origami404" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Origami404</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.7.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
