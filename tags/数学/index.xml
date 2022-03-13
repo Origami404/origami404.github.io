@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>数学 on Origami404 的 Blog</title>
+    <link>https://blog.origami404.top/tags/%E6%95%B0%E5%AD%A6/</link>
+    <description>Recent content in 数学 on Origami404 的 Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 30 Sep 2021 19:30:00 +0800</lastBuildDate><atom:link href="https://blog.origami404.top/tags/%E6%95%B0%E5%AD%A6/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>矢量运算与高阶线性结构的构造性定义</title>
+      <link>https://blog.origami404.top/post/2021-09-constructive-def-of-vector-operation/</link>
+      <pubDate>Thu, 30 Sep 2021 19:30:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/post/2021-09-constructive-def-of-vector-operation/</guid>
+      <description>前言 上大学了, 终于有大段的时间来整理数学和物理学内容了. 本文有其思想上的参考: 3b1b: 发明新数学是怎样一种体验？ &amp;ldquo;最原始的&amp;quot;双线性二元运算 让我们来考虑矢量的运算吧! 假如我们需要在线性空</description>
+    </item>
+    
+    <item>
+      <title>从外代数出发的行列式理论</title>
+      <link>https://blog.origami404.top/post/2021-09-determinant-begin-from-wedge-product/</link>
+      <pubDate>Mon, 27 Sep 2021 19:30:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/post/2021-09-determinant-begin-from-wedge-product/</guid>
+      <description>前置 这篇文章有些前置知识我默认读者是知道的, 比如矢量和线性空间(wiki, 知乎)的概念. 具体来讲, 我希望读者能完全理解这句话: &amp;ldquo;基底通过线性组合张成线性空间&amp;rdquo;. 但更加重要的是,</description>
+    </item>
+    
+  </channel>
+</rss>

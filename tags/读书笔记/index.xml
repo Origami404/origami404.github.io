@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>读书笔记 on Origami404 的 Blog</title>
+    <link>https://blog.origami404.top/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</link>
+    <description>Recent content in 读书笔记 on Origami404 的 Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 16 Apr 2020 22:00:00 +0800</lastBuildDate><atom:link href="https://blog.origami404.top/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Category-theory-for-programmers 阅读笔记</title>
+      <link>https://blog.origami404.top/compiler-and-type-theory/2020-04-notes-on-category-theory-for-programmers/</link>
+      <pubDate>Thu, 16 Apr 2020 22:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/compiler-and-type-theory/2020-04-notes-on-category-theory-for-programmers/</guid>
+      <description>前言 &amp;amp; 介绍 Category Theory for Programmers, 顾名思义, 是一本关于范畴论的书, 但是偏向CS而非数学. 书的$\LaTeX$代码以GPL-3.0公布在GitHub, 有两个版本, 一个以C++作为辅助说明语言, 另一个是Scala. 作为一</description>
+    </item>
+    
+  </channel>
+</rss>

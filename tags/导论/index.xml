@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>导论 on Origami404 的 Blog</title>
+    <link>https://blog.origami404.top/tags/%E5%AF%BC%E8%AE%BA/</link>
+    <description>Recent content in 导论 on Origami404 的 Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 12 Mar 2022 22:00:00 +0800</lastBuildDate><atom:link href="https://blog.origami404.top/tags/%E5%AF%BC%E8%AE%BA/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>图取样算法简介</title>
+      <link>https://blog.origami404.top/post/2022-03-graph-sampling-intro/</link>
+      <pubDate>Sat, 12 Mar 2022 22:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/post/2022-03-graph-sampling-intro/</guid>
+      <description>发现了重要的一点: 对人来说, 1k 节点的图跟 10k 节点的图完全没有差别: 都是一团黑糊糊的看不清的玩意. 所以大规模图可视化没有活路, 取样才是真理. 主要参考: https://github.com/Ashish7129/Graph_Sampling 基于探索(遍历)的取样 简单随机游走 SRW, Simple Random Walk 随机挑一个</description>
+    </item>
+    
+  </channel>
+</rss>

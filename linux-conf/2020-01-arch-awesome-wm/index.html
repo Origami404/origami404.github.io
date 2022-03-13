@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="zh-hans">
+
+<head>
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.92.2" />
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png" />
+<link rel="manifest" href="icons/site.webmanifest" />
+<link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#8aa2d3" />
+<link rel="shortcut icon" href="icons/favicon.ico" />
+<meta name="theme-color" content="#ffffff" />
+
+
+<title>Arch AwesomeWM 配置 - Origami404 的 Blog</title>
+
+
+<meta name="author" content="Origami404" />
+
+
+<meta name="description" content="有空的话就随便逛逛吧 www" />
+
+
+<meta name="keywords" content="折腾, Arch" />
+
+
+<meta property="og:title" content="Arch AwesomeWM 配置" />
+<meta name="twitter:title" content="Arch AwesomeWM 配置" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.origami404.top/linux-conf/2020-01-arch-awesome-wm/" /><meta property="og:description" content="配个awesome. 主要痛点有: 任务栏在上面, 并且有一堆很讨厌的东西, 比如什么启动菜单啊, 当前任务啊, 键盘键位等 默认layout居然是floating, 理解不能 tag居然是全部显示然后有东西就有个点," />
+<meta name="twitter:description" content="配个awesome. 主要痛点有: 任务栏在上面, 并且有一堆很讨厌的东西, 比如什么启动菜单啊, 当前任务啊, 键盘键位等 默认layout居然是floating, 理解不能 tag居然是全部显示然后有东西就有个点," /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://blog.origami404.top/img/og.png" /><meta property="article:published_time" content="2020-01-29T19:30:00+08:00" /><meta property="article:modified_time" content="2020-01-29T19:30:00+08:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+
+<link rel="stylesheet" href="https://blog.origami404.top/assets/css/fuji.min.css" />
+
+
+
+
+
+
+
+
+</head>
+
+<body
+  data-theme="auto"
+  data-theme-auto='true'
+  >
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
+
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="https://blog.origami404.top/">Origami404 的 Blog</a>
+            
+            <span class="title-sub">有空的话就随便逛逛吧 www</span>
+            
+        </div>
+    </div>
+</header>
+
+    <main>
+        <div class="container-lg clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="https://blog.origami404.top/linux-conf/2020-01-arch-awesome-wm/">Arch AwesomeWM 配置</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-01-29</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;2307 字</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E6%8A%98%E8%85%BE">折腾</a>&nbsp;<a href="/tags/arch">Arch</a>&nbsp;</span>
+
+    </div>
+    
+    <div class="post-content markdown-body">
+        <p>配个awesome.</p>
+<p>主要痛点有:</p>
+<ul>
+<li>任务栏在上面, 并且有一堆很讨厌的东西, 比如什么启动菜单啊, 当前任务啊, 键盘键位等</li>
+<li>默认layout居然是floating, 理解不能</li>
+<li>tag居然是全部显示然后有东西就有个点, 这样看起来很累</li>
+<li>快捷键不合我口味</li>
+<li>壁纸有点丑啊&hellip;</li>
+</ul>
+<!-- more -->
+<p>在<code>~/.config</code>下弄出这样的文件夹结构:</p>
+<pre><code class="language-bash">tree -a
+~
+└── .config
+    └── awesome
+        ├── rc.lua
+        └── theme.lua
+</code></pre>
+<p>其中<code>themes.lua</code>是从<code>/usr/share/awesome/themes/default</code>里搞来的.</p>
+<p>这个是<code>rc.lua</code>, 删掉了很多东西(<strong>备份注意!</strong>)</p>
+<pre><code class="language-lua">-- include 一些东西, 留着
+pcall(require, &quot;luarocks.loader&quot;)
+local gears = require(&quot;gears&quot;)
+local awful = require(&quot;awful&quot;)
+require(&quot;awful.autofocus&quot;)
+local wibox = require(&quot;wibox&quot;)
+local beautiful = require(&quot;beautiful&quot;)
+local naughty = require(&quot;naughty&quot;)
+local hotkeys_popup = require(&quot;awful.hotkeys_popup&quot;)
+require(&quot;awful.hotkeys_popup.keys&quot;)
+
+-- {{{ 错误处理
+
+-- 这可以在rc.lua出错时通过通知的形式告诉你, 保留(当然如果你十分自信就可以删)
+if awesome.startup_errors then
+    naughty.notify({ preset = naughty.config.presets.critical,
+                     title = &quot;Oops, there were errors during startup!&quot;,
+                     text = awesome.startup_errors })
+end
+
+-- 处理启动之后的一些错误, 就是不是rc.lua的错
+do
+    local in_error = false
+    awesome.connect_signal(&quot;debug::error&quot;, function (err)
+        -- Make sure we don't go into an endless error loop
+        if in_error then return end
+        in_error = true
+
+        naughty.notify({ preset = naughty.config.presets.critical,
+                         title = &quot;Oops, an error happened!&quot;,
+                         text = tostring(err) })
+        in_error = false
+    end)
+end
+-- }}}
+
+-- {{{ 变量定义
+-- 主题文件, 就是某某地方的themes.lua
+beautiful.init(&quot;/home/origami/.config/awesome/theme.lua&quot;)
+
+-- 默认的终端模拟器
+terminal = &quot;alacritty --config-file=/home/origami/.config/alacritty/alacritty.yml &quot;
+editor = os.getenv(&quot;EDITOR&quot;) or &quot;vim&quot;
+editor_cmd = terminal .. &quot; -e &quot; .. editor
+
+-- modkey, 这里选了win键, 就是夹在Ctrl跟Alt中间的那个
+modkey = &quot;Mod4&quot;
+
+-- 按顺序排的默认layout, 我喜欢平铺, 并且新窗口从右边出来
+-- 所以layout要保留左边, 意思就是把旧窗口保留在左边
+awful.layout.layouts = {
+    awful.layout.suit.tile.left,
+    awful.layout.suit.fair,
+}
+-- }}}
+
+-- {{{ Wibar
+-- 搞个时钟 widget. widget就是能摆在任务栏的一块区域
+-- 可以参考一下这两篇文章 https://www.jianshu.com/p/76ac11863591, https://awesomewm.org/doc/api/classes/wibox.wi不拉dget.textclock.html
+-- 按照这个参数, 效果大概是: 2020/01/24 11:47:36 Fri
+mytextclock = wibox.widget.textclock(&quot;  %Y/%m/%d %X %a &quot;, 1, &quot;+08:00&quot;)
+
+-- 让任务栏上每一个tag对应的wibox(就是一种小块)能让鼠标按, 并且在鼠标按时切换tag
+-- tag类似于windows上的一个虚拟桌面
+-- 函数中的第二个参数, 那个蜜汁数字的意思是绑定鼠标上的哪个键
+-- 1 -&gt; 鼠标左键, 3 -&gt; 鼠标右键, 4, 5 -&gt; 滚轮上下 
+local taglist_buttons = gears.table.join(
+                    -- 我只需要点击切换就好了, 不需要那么多花里胡哨的玩意
+                    awful.button({ }, 1, function(t) t:view_only() end)
+                )
+
+-- 设置墙纸, 主要是考虑到多显示器(screen)的情况才单独抽出一个函数, 我也懒得改了
+local function set_wallpaper(s)
+    -- Wallpaper
+    if beautiful.wallpaper then
+        local wallpaper = beautiful.wallpaper
+        -- If wallpaper is a function, call it with the screen
+        if type(wallpaper) == &quot;function&quot; then
+            wallpaper = wallpaper(s)
+        end
+        gears.wallpaper.maximized(wallpaper, s, true)
+    end
+end
+
+-- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
+screen.connect_signal(&quot;property::geometry&quot;, set_wallpaper)
+
+-- 对每一个显示器
+awful.screen.connect_for_each_screen(function(s)
+    -- 首先壁纸安排上
+    set_wallpaper(s)
+
+    -- 然后加上tag 1~9, 我不习惯给tag一个有意义的名字, 所以就直接数字了. 最后一个参数是默认layout
+    awful.tag({ &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot; }, s, awful.layout.layouts[1])
+
+    -- prompt是一个类似启动器一样的玩意, 按Modkey+r就能出来, 能spawn程序
+    s.mypromptbox = awful.widget.prompt()
+
+    -- 创建一个taglist widget
+    s.mytaglist = awful.widget.taglist {
+        screen  = s,
+        -- 过滤器, 原版配置文件是全部都显示上, 我的习惯是只显示非空的tag
+        filter  = awful.widget.taglist.filter.noempty,
+        buttons = taglist_buttons
+    }
+
+    -- Create the wibox
+    -- 把任务栏放到底下去
+    s.mywibox = awful.wibar({ position = &quot;bottom&quot;, screen = s })
+
+    -- 任务栏上的widget怎么放
+    s.mywibox:setup {
+        layout = wibox.layout.align.horizontal,
+        { -- 左边
+            layout = wibox.layout.fixed.horizontal,
+            -- 辣鸡启动菜单给爷爬
+
+            -- 放taglist
+            s.mytaglist,
+            -- 放启动器
+            s.mypromptbox,
+        },
+        { -- 中间
+            -- 啥也不放, 但是要占个位置, 防止右边跑到中间来
+            layout = wibox.layout.align.horizontal
+        },
+        { -- 右边
+            layout = wibox.layout.fixed.horizontal,
+            -- 这有点类似于windows下面的任务栏, 可以放一些应用图标, 比如输入法的小键盘
+            wibox.widget.systray(),
+            -- 放个钟
+            mytextclock,
+        },
+    }
+end)
+-- }}}
+
+-- {{{ 不知道是干嘛的, 放着
+root.buttons(gears.table.join(
+    awful.button({ }, 3, function () mymainmenu:toggle() end),
+    awful.button({ }, 4, awful.tag.viewnext),
+    awful.button({ }, 5, awful.tag.viewprev)
+))
+-- }}}
+
+-- {{{ 键位绑定, 这里是全局按键, 就是按下键之后要干什么不依赖于当前焦点应用的
+globalkeys = gears.table.join(
+    -- 显示一张快捷键表
+    awful.key({ modkey, &quot;Shift&quot;   }, &quot;s&quot;,      hotkeys_popup.show_help,
+              {description=&quot;show help&quot;, group=&quot;awesome&quot;}),
+    
+    -- 让它像输入法一样可以通过-/=键来前后切换tag(虽然我好像没用过)
+    awful.key({ modkey,           }, &quot;-&quot;,   awful.tag.viewprev,
+              {description = &quot;view previous&quot;, group = &quot;tag&quot;}),
+    awful.key({ modkey,           }, &quot;=&quot;,  awful.tag.viewnext,
+              {description = &quot;view next&quot;, group = &quot;tag&quot;}),
+
+    -- 改变layout, 就是把当前tag中的几个窗口挪来挪去
+    awful.key({ modkey, &quot;Shift&quot;   }, &quot;j&quot;, function () awful.client.swap.byidx(  1)    end,
+              {description = &quot;swap with next client by index&quot;, group = &quot;client&quot;}),
+    awful.key({ modkey, &quot;Shift&quot;   }, &quot;k&quot;, function () awful.client.swap.byidx( -1)    end,
+              {description = &quot;swap with previous client by index&quot;, group = &quot;client&quot;}),
+
+    -- Modkey+回车 出终端, Modkey+Shift+r 重启awesome
+    awful.key({ modkey,           }, &quot;Return&quot;, function () awful.spawn(terminal) end,
+              {description = &quot;open a terminal&quot;, group = &quot;launcher&quot;}),
+    awful.key({ modkey, &quot;Shift&quot; }, &quot;r&quot;, awesome.restart,
+              {description = &quot;reload awesome&quot;, group = &quot;awesome&quot;}),
+
+    -- Modkey+r 调用启动器
+    awful.key({ modkey },            &quot;r&quot;,     function () awful.screen.focused().mypromptbox:run() end,
+              {description = &quot;run prompt&quot;, group = &quot;launcher&quot;}),
+
+    -- 人活着不能没有浏览器和编辑器啊!
+    awful.key({ modkey, &quot;Alt&quot; },     &quot;v&quot;,     function () awesome.spawn(&quot;code&quot;) end,
+              {description = &quot;start vscode&quot;, group = &quot;Custom App&quot;}),
+    awful.key({ modkey, &quot;Alt&quot; },     &quot;c&quot;,     function () awesome.spawn(&quot;chromium&quot;) end, 
+              {description = &quot;start chromium&quot;, group = &quot;Custom App&quot;})
+)
+
+-- 依赖于当前焦点应用的快捷键绑定
+clientkeys = gears.table.join(
+    -- 全屏
+    awful.key({ modkey,           }, &quot;f&quot;,
+        function (c)
+            c.fullscreen = not c.fullscreen
+            c:raise()
+        end,
+        {description = &quot;toggle fullscreen&quot;, group = &quot;client&quot;}),
+    
+    -- 退出
+    awful.key({ modkey, &quot;Shift&quot;   }, &quot;q&quot;,      function (c) c:kill()   end,
+              {description = &quot;close&quot;, group = &quot;client&quot;})
+)
+
+-- 给每一个tag绑定Modkey+1/2/3/4/5/6/7/8/9
+-- 显然不写循环会看起来很傻
+for i = 1, 9 do
+    globalkeys = gears.table.join(globalkeys,
+        -- 据说是使用了黑魔法来保证在不同键盘上绑定的键都是1到9, 不要动就对了
+        awful.key({ modkey }, &quot;#&quot; .. i + 9,
+                  function ()
+                        local screen = awful.screen.focused()
+                        local tag = screen.tags[i]
+                        -- 我想要让它跟i3一样, 如果我现在在2 tag, 我再按Modkey+2就给我切换到上一个我访问过的tag去 (方便抄代码) 
+                        -- 获得我当前的tag
+                        local now_tag = screen.selected_tag
+                        if tag then
+                            -- 如果当前的tag就是我现在在看着的tag
+                            if tag == now_tag then
+                                -- 回到上一次我访问的tag那里去
+                                awful.tag.history.restore(screen)
+                            else tag:view_only() end -- 如果不是就切换到要去的tag
+                        end
+                  end,
+                  {description = &quot;view tag #&quot;..i, group = &quot;tag&quot;}),
+        -- 移动应用去到对应tag
+        awful.key({ modkey, &quot;Shift&quot; }, &quot;#&quot; .. i + 9,
+                  function ()
+                      if client.focus then
+                          local tag = client.focus.screen.tags[i]
+                          if tag then
+                              client.focus:move_to_tag(tag)
+                          end
+                     end
+                  end,
+                  {description = &quot;move focused client to tag #&quot;..i, group = &quot;tag&quot;})
+    )
+end
+
+-- 保证你鼠标在的应用是焦点应用
+clientbuttons = gears.table.join(
+    awful.button({ }, 1, function (c)
+        c:emit_signal(&quot;request::activate&quot;, &quot;mouse_click&quot;, {raise = true})
+    end),
+    awful.button({ modkey }, 1, function (c)
+        c:emit_signal(&quot;request::activate&quot;, &quot;mouse_click&quot;, {raise = true})
+        awful.mouse.client.move(c)
+    end),
+    awful.button({ modkey }, 3, function (c)
+        c:emit_signal(&quot;request::activate&quot;, &quot;mouse_click&quot;, {raise = true})
+        awful.mouse.client.resize(c)
+    end)
+)
+
+-- 使快捷键生效
+root.keys(globalkeys)
+-- }}}
+
+-- {{{ 这里是让一些特殊应用使用特殊布局的地方, 放着
+--      blabla..... 
+-- }}}
+</code></pre>
+<p>这个是<code>themes.lua</code>, 同样删除了很多东西~~(任务栏要什么图标)~~</p>
+<pre><code class="language-lua">local theme_assets = require(&quot;beautiful.theme_assets&quot;)
+local xresources = require(&quot;beautiful.xresources&quot;)
+local dpi = xresources.apply_dpi
+
+-- local gfs = require(&quot;gears.filesystem&quot;)
+local themes_path = &quot;/home/origami/.config/awesome/themes&quot;
+
+local theme = {}
+
+-- Fira Code 大法好, 后面的数字定字号
+theme.font          = &quot;Fira Code 9&quot;
+
+theme.bg_normal     = &quot;#222222AA&quot;
+theme.bg_focus      = &quot;#535d6cCC&quot;
+theme.bg_urgent     = &quot;#ff0000&quot;
+theme.bg_minimize   = &quot;#444444&quot;
+theme.bg_systray    = theme.bg_normal
+
+theme.fg_normal     = &quot;#aaaaaa&quot;
+theme.fg_focus      = &quot;#ffffff&quot;
+theme.fg_urgent     = &quot;#ffffff&quot;
+theme.fg_minimize   = &quot;#ffffff&quot;
+
+theme.useless_gap   = dpi(0) -- 这是两个应用之间的间隔的宽度
+theme.border_width  = dpi(1) -- 这是应用边框的宽度
+theme.border_normal = &quot;#000000&quot;
+theme.border_focus  = &quot;#535d6c&quot;
+theme.border_marked = &quot;#91231c&quot;
+
+theme.menu_height = dpi(15)
+theme.menu_width  = dpi(100)
+
+-- 墙纸挑一张喜欢的就好
+theme.wallpaper = &quot;/home/origami/pictures/new_bg/03.jpg&quot;
+
+return theme
+</code></pre>
+<p>最后放截图:</p>
+<p><img class="img-zoomable" src="https://i.loli.net/2020/01/28/23XRdTQwxc4mNol.png" alt="2020-01-28-203617_1920x1080_scrot.png" />
+</p>
+<p>壁纸是p站的, <a href="https://www.pixiv.net/artworks/74601565" target="_blank">原链接</a></p>
+
+    </div>
+</article>
+
+
+<div class="license markdown-body">
+    <blockquote>
+        <p>除特殊注明部分，本站内容采用 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
+               target="_blank">CC BY-NC-SA 4.0</a> 进行许可。</p>
+    </blockquote>
+</div>
+
+
+
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>页面</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>链接</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Origami404" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://wiki.hitsz.org" target="_blank"><span>HITsz LUG wiki</span></a>
+            </li>
+            
+            <li>
+                <a href="https://space.bilibili.com/1124374292" target="_blank"><span>bilibili</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>标签</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/arch/">Arch</a>
+            </span>
+            
+            <span>
+                <a href="/tags/arm/">ARM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/c/">C</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">Docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">Git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/haskell/">Haskell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/https/">HTTPS</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux-%E5%B7%A5%E5%85%B7/">linux 工具</a>
+            </span>
+            
+            <span>
+                <a href="/tags/llvm/">LLVM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mgit/">mgit</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/windows/">Windows</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%8F%98%E5%88%86%E6%B3%95/">变分法</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9B%BE%E8%AE%BA/">图论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9F%9F%E5%90%8D/">域名</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%AF%BC%E8%AE%BA/">导论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%88%91%E4%BC%9A%E7%86%9F%E7%BB%83%E5%9C%B0%E5%AE%89%E8%A3%85xxx%E7%B3%BB%E5%88%97/">我会熟练地安装xxx系列</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%8A%98%E8%85%BE/">折腾</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%95%B0%E5%AD%A6/">数学</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%96%B0%E8%A7%82%E7%82%B9/">新观点</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AE%A1%E7%90%86/">服务器管理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%AF%95%E6%98%87%E6%9D%AF/">毕昇杯</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%B1%87%E7%BC%96/">汇编</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%90%86%E8%AE%BA%E7%89%A9%E7%90%86/">理论物理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BA%BF%E4%BB%A3/">线代</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E7%A8%8B/">编程</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%89%8D%E7%AB%AF/">编译前端</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%87%AA%E7%95%99%E5%9C%B0/">自留地</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%BD%AE%E5%AD%90/">轮子</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E9%9D%9E%E6%8A%80%E6%9C%AF/">非技术</a>
+            </span>
+            
+        </div>
+    </div>
+    <div class="sidebar-item sidebar-toc">
+        <h3>目录</h3><nav id="TableOfContents"></nav></div>
+</aside>
+
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>页面</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>链接</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Origami404" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://wiki.hitsz.org" target="_blank"><span>HITsz LUG wiki</span></a>
+            </li>
+            
+            <li>
+                <a href="https://space.bilibili.com/1124374292" target="_blank"><span>bilibili</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>标签</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/arch/">Arch</a>
+            </span>
+            
+            <span>
+                <a href="/tags/arm/">ARM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/c/">C</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">Docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">Git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/haskell/">Haskell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/https/">HTTPS</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux-%E5%B7%A5%E5%85%B7/">linux 工具</a>
+            </span>
+            
+            <span>
+                <a href="/tags/llvm/">LLVM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mgit/">mgit</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/windows/">Windows</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%8F%98%E5%88%86%E6%B3%95/">变分法</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9B%BE%E8%AE%BA/">图论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9F%9F%E5%90%8D/">域名</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%AF%BC%E8%AE%BA/">导论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%88%91%E4%BC%9A%E7%86%9F%E7%BB%83%E5%9C%B0%E5%AE%89%E8%A3%85xxx%E7%B3%BB%E5%88%97/">我会熟练地安装xxx系列</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%8A%98%E8%85%BE/">折腾</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%95%B0%E5%AD%A6/">数学</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%96%B0%E8%A7%82%E7%82%B9/">新观点</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AE%A1%E7%90%86/">服务器管理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%AF%95%E6%98%87%E6%9D%AF/">毕昇杯</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%B1%87%E7%BC%96/">汇编</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%90%86%E8%AE%BA%E7%89%A9%E7%90%86/">理论物理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BA%BF%E4%BB%A3/">线代</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E7%A8%8B/">编程</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%89%8D%E7%AB%AF/">编译前端</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%87%AA%E7%95%99%E5%9C%B0/">自留地</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%BD%AE%E5%AD%90/">轮子</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E9%9D%9E%E6%8A%80%E6%9C%AF/">非技术</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <h3>目录</h3>
+        <nav id="TableOfContents"></nav>
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2019-2022
+                <a href="https://blog.origami404.top/">Origami404</a>
+                
+                | 基于 <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 构建
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+
+
+</body>
+
+</html>

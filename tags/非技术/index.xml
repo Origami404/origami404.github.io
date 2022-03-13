@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>非技术 on Origami404 的 Blog</title>
+    <link>https://blog.origami404.top/tags/%E9%9D%9E%E6%8A%80%E6%9C%AF/</link>
+    <description>Recent content in 非技术 on Origami404 的 Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 20 Jul 2019 00:00:00 +0800</lastBuildDate><atom:link href="https://blog.origami404.top/tags/%E9%9D%9E%E6%8A%80%E6%9C%AF/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>About</title>
+      <link>https://blog.origami404.top/about/</link>
+      <pubDate>Sat, 20 Jul 2019 00:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/about/</guid>
+      <description>大学生, 2021 年起就读于 HITsz. 是 HITsz Linux User Group 的成员, 偶尔也会在 HITsz LUG wiki 上写点东西. 初中出于无聊学了 C++, 高中以打 OI 的名义彻底接触了 CS 的方方面面. 比起研究者更像工程师. 打 OI 心累了, 不打 ACM. 最近作为兴趣爱好主要在学编译原理啊</description>
+    </item>
+    
+  </channel>
+</rss>

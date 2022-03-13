@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>C on Origami404 的 Blog</title>
+    <link>https://blog.origami404.top/tags/c/</link>
+    <description>Recent content in C on Origami404 的 Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 05 Sep 2021 22:00:00 +0800</lastBuildDate><atom:link href="https://blog.origami404.top/tags/c/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>基于Bison和Flex的编译器前端实现</title>
+      <link>https://blog.origami404.top/compiler-and-type-theory/2021-09-compiler-frontend-with-flex-bison/</link>
+      <pubDate>Sun, 05 Sep 2021 22:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/compiler-and-type-theory/2021-09-compiler-frontend-with-flex-bison/</guid>
+      <description>前言 最近被某学长介绍了毕昇杯编译器比赛, 有点感兴趣, 遂开始用 C 自己实现, 然后就: 还是 Java 香! 本文记录了我用 Bison 和 Flex 来构建 SysY2021 语言前端的尝试. Show me the code. 前置声明: 大体的代码架构和使用方法在最后, 可以交叉着看. lex</description>
+    </item>
+    
+  </channel>
+</rss>

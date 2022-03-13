@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="zh-hans">
+
+<head>
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.92.2" />
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png" />
+<link rel="manifest" href="icons/site.webmanifest" />
+<link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#8aa2d3" />
+<link rel="shortcut icon" href="icons/favicon.ico" />
+<meta name="theme-color" content="#ffffff" />
+
+
+<title>图取样算法简介 - Origami404 的 Blog</title>
+
+
+<meta name="author" content="Origami404" />
+
+
+<meta name="description" content="有空的话就随便逛逛吧 www" />
+
+
+<meta name="keywords" content="图论, 导论" />
+
+
+<meta property="og:title" content="图取样算法简介" />
+<meta name="twitter:title" content="图取样算法简介" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.origami404.top/post/2022-03-graph-sampling-intro/" /><meta property="og:description" content="发现了重要的一点: 对人来说, 1k 节点的图跟 10k 节点的图完全没有差别: 都是一团黑糊糊的看不清的玩意. 所以大规模图可视化没有活路, 取样才是真理. 主要参考: https://github.com/Ashish7129/Graph_Sampling 基于探索(遍历)的取样 简单随机游走 SRW, Simple Random Walk 随机挑一个" />
+<meta name="twitter:description" content="发现了重要的一点: 对人来说, 1k 节点的图跟 10k 节点的图完全没有差别: 都是一团黑糊糊的看不清的玩意. 所以大规模图可视化没有活路, 取样才是真理. 主要参考: https://github.com/Ashish7129/Graph_Sampling 基于探索(遍历)的取样 简单随机游走 SRW, Simple Random Walk 随机挑一个" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://blog.origami404.top/img/og.png" /><meta property="article:published_time" content="2022-03-12T22:00:00+08:00" /><meta property="article:modified_time" content="2022-03-12T22:00:00+08:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+
+<link rel="stylesheet" href="https://blog.origami404.top/assets/css/fuji.min.css" />
+
+
+
+
+
+
+
+
+</head>
+
+<body
+  data-theme="auto"
+  data-theme-auto='true'
+  >
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
+
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="https://blog.origami404.top/">Origami404 的 Blog</a>
+            
+            <span class="title-sub">有空的话就随便逛逛吧 www</span>
+            
+        </div>
+    </div>
+</header>
+
+    <main>
+        <div class="container-lg clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="https://blog.origami404.top/post/2022-03-graph-sampling-intro/">图取样算法简介</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2022-03-12</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;868 字</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E5%9B%BE%E8%AE%BA">图论</a>&nbsp;<a href="/tags/%E5%AF%BC%E8%AE%BA">导论</a>&nbsp;</span>
+
+    </div>
+    
+    <div class="post-content markdown-body">
+        <p>发现了重要的一点: 对人来说, 1k 节点的图跟 10k 节点的图完全没有差别: 都是一团黑糊糊的看不清的玩意. 所以大规模图可视化没有活路, 取样才是真理.</p>
+<blockquote>
+<p>主要参考: <a href="https://github.com/Ashish7129/Graph_Sampling" target="_blank">https://github.com/Ashish7129/Graph_Sampling</a></p>
+</blockquote>
+<!-- more -->
+<h2 id="基于探索遍历的取样">基于探索(遍历)的取样</h2>
+<h3 id="简单随机游走-srw-simple-random-walk">简单随机游走 SRW, Simple Random Walk</h3>
+<p>随机挑一个开始点, 然后随机游走(指每次随机取一个邻居), 当走到新点时就把点加入取样结果中. 如果在一段时间内都没有走到新点, 就随机换一个起始点重新开始.</p>
+<p>会影响取样图的平均度数等属性.</p>
+<h3 id="带飞回的随机游走-rwf-random-walk-with-fly-back-probability">带飞回的随机游走 RWF, Random Walk with Fly back probability</h3>
+<p>设定一个飞回概率 p. 每次随机游走选下一个点的时候, 以 p 的概率飞回起始点重新开始, 以 1-p 的概率进行随机选下一个点.</p>
+<p>其能确保起始点的所有邻居被充分地探索. 随着 p 增大, 取样近似于 BFS 的结果.</p>
+<h3 id="带导出子图的随机游走-isrw-induced-subgraph-random-walk">带导出子图的随机游走 ISRW, Induced Subgraph Random Walk</h3>
+<p>SRW 跟 RWF 都不能 “完整” 地体现原图的结构: 因为它们每次取样都只选择了一个邻居, 这导致几乎不可能把一个点的所有邻居都保留在取样中 &ndash; 于是取样图的平均度数会比原图小. 并且, SRW/RWF 还会影响图的最短路/平均路径长度, 因为有很多的边被忽略了.</p>
+<p>于是我们修改 SRW 的单个取样策略 &ndash; 每次走到新点的时候, 把这个新点及其全部邻居都加入取样图(也就是将新点的导出子图加入取样图), 这样也许能更好地反映原图的结构.</p>
+<h3 id="雪球取样-sb-snowball-sampling">雪球取样 SB, Snowball Sampling</h3>
+<p>BFS, 但是限制每次只取 k 个不在取样图里的邻居. (每一片外层雪花负责滚来 k 片不在雪球里的雪花组成新的外层)</p>
+<h3 id="林火取样-ff-forestfire-sampling">林火取样 FF, ForestFire Sampling</h3>
+<p>BFS, 但是每个邻居都只有一个概率被选中. (类似树林里树把火传到另一颗邻居树的概率)</p>
+<h3 id="metropolis-hastings-随机游走-mhrw">Metropolis-Hastings 随机游走 MHRW</h3>
+<blockquote>
+<p>梅特罗波利斯-黑斯廷斯算法, MH 算法, 是一种马尔可夫蒙特卡洛(MCMC)方法, 参考:</p>
+<p><a href="https://zh.wikipedia.org/wiki/" target="_blank">https://zh.wikipedia.org/wiki/</a>梅特罗波利斯－黑斯廷斯算法</p>
+</blockquote>
+<p>随机选一个起始点 v 作为当前点, 记 D(v) 为 v 的度, 随机选一个邻居 w, 如果 p &lt;= D(v)/D(w), 其中 p 是一个[0, 1]的随机数, 那么就把 “当前点” 设成 w (并把 w 加入取样). 一直做到取完样为止.</p>
+<h3 id="带子图的-mhrw">带子图的 MHRW</h3>
+<p>如题, 就是取样的时候取导出子图的 MHRW.</p>
+<h2 id="基于边的取样">基于边的取样</h2>
+<h3 id="带完全导出子图的边取样-ties-total-induction-edge-sampling">带完全导出子图的边取样 TIES, Total Induction Edge Sampling</h3>
+<p>先在图中随机选边, 然后将边两端的节点加入选样. 当选样完后, 将选样图中所有节点导出的子图的其他边都补全进选样图中.</p>
+
+    </div>
+</article>
+
+
+<div class="license markdown-body">
+    <blockquote>
+        <p>除特殊注明部分，本站内容采用 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
+               target="_blank">CC BY-NC-SA 4.0</a> 进行许可。</p>
+    </blockquote>
+</div>
+
+
+
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>页面</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>链接</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Origami404" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://wiki.hitsz.org" target="_blank"><span>HITsz LUG wiki</span></a>
+            </li>
+            
+            <li>
+                <a href="https://space.bilibili.com/1124374292" target="_blank"><span>bilibili</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>标签</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/arch/">Arch</a>
+            </span>
+            
+            <span>
+                <a href="/tags/arm/">ARM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/c/">C</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">Docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">Git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/haskell/">Haskell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/https/">HTTPS</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux-%E5%B7%A5%E5%85%B7/">linux 工具</a>
+            </span>
+            
+            <span>
+                <a href="/tags/llvm/">LLVM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mgit/">mgit</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/windows/">Windows</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%8F%98%E5%88%86%E6%B3%95/">变分法</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9B%BE%E8%AE%BA/">图论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9F%9F%E5%90%8D/">域名</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%AF%BC%E8%AE%BA/">导论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%88%91%E4%BC%9A%E7%86%9F%E7%BB%83%E5%9C%B0%E5%AE%89%E8%A3%85xxx%E7%B3%BB%E5%88%97/">我会熟练地安装xxx系列</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%8A%98%E8%85%BE/">折腾</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%95%B0%E5%AD%A6/">数学</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%96%B0%E8%A7%82%E7%82%B9/">新观点</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AE%A1%E7%90%86/">服务器管理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%AF%95%E6%98%87%E6%9D%AF/">毕昇杯</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%B1%87%E7%BC%96/">汇编</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%90%86%E8%AE%BA%E7%89%A9%E7%90%86/">理论物理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BA%BF%E4%BB%A3/">线代</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E7%A8%8B/">编程</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%89%8D%E7%AB%AF/">编译前端</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%87%AA%E7%95%99%E5%9C%B0/">自留地</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%BD%AE%E5%AD%90/">轮子</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E9%9D%9E%E6%8A%80%E6%9C%AF/">非技术</a>
+            </span>
+            
+        </div>
+    </div>
+    <div class="sidebar-item sidebar-toc">
+        <h3>目录</h3><nav id="TableOfContents">
+  <ul>
+    <li><a href="#基于探索遍历的取样">基于探索(遍历)的取样</a>
+      <ul>
+        <li><a href="#简单随机游走-srw-simple-random-walk">简单随机游走 SRW, Simple Random Walk</a></li>
+        <li><a href="#带飞回的随机游走-rwf-random-walk-with-fly-back-probability">带飞回的随机游走 RWF, Random Walk with Fly back probability</a></li>
+        <li><a href="#带导出子图的随机游走-isrw-induced-subgraph-random-walk">带导出子图的随机游走 ISRW, Induced Subgraph Random Walk</a></li>
+        <li><a href="#雪球取样-sb-snowball-sampling">雪球取样 SB, Snowball Sampling</a></li>
+        <li><a href="#林火取样-ff-forestfire-sampling">林火取样 FF, ForestFire Sampling</a></li>
+        <li><a href="#metropolis-hastings-随机游走-mhrw">Metropolis-Hastings 随机游走 MHRW</a></li>
+        <li><a href="#带子图的-mhrw">带子图的 MHRW</a></li>
+      </ul>
+    </li>
+    <li><a href="#基于边的取样">基于边的取样</a>
+      <ul>
+        <li><a href="#带完全导出子图的边取样-ties-total-induction-edge-sampling">带完全导出子图的边取样 TIES, Total Induction Edge Sampling</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+</aside>
+
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>页面</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>链接</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Origami404" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://wiki.hitsz.org" target="_blank"><span>HITsz LUG wiki</span></a>
+            </li>
+            
+            <li>
+                <a href="https://space.bilibili.com/1124374292" target="_blank"><span>bilibili</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>标签</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/arch/">Arch</a>
+            </span>
+            
+            <span>
+                <a href="/tags/arm/">ARM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/c/">C</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">Docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">Git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/haskell/">Haskell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/https/">HTTPS</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux-%E5%B7%A5%E5%85%B7/">linux 工具</a>
+            </span>
+            
+            <span>
+                <a href="/tags/llvm/">LLVM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mgit/">mgit</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/windows/">Windows</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%8F%98%E5%88%86%E6%B3%95/">变分法</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9B%BE%E8%AE%BA/">图论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9F%9F%E5%90%8D/">域名</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%AF%BC%E8%AE%BA/">导论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%88%91%E4%BC%9A%E7%86%9F%E7%BB%83%E5%9C%B0%E5%AE%89%E8%A3%85xxx%E7%B3%BB%E5%88%97/">我会熟练地安装xxx系列</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%8A%98%E8%85%BE/">折腾</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%95%B0%E5%AD%A6/">数学</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%96%B0%E8%A7%82%E7%82%B9/">新观点</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AE%A1%E7%90%86/">服务器管理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%AF%95%E6%98%87%E6%9D%AF/">毕昇杯</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%B1%87%E7%BC%96/">汇编</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%90%86%E8%AE%BA%E7%89%A9%E7%90%86/">理论物理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BA%BF%E4%BB%A3/">线代</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E7%A8%8B/">编程</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%89%8D%E7%AB%AF/">编译前端</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%87%AA%E7%95%99%E5%9C%B0/">自留地</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%BD%AE%E5%AD%90/">轮子</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E9%9D%9E%E6%8A%80%E6%9C%AF/">非技术</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <h3>目录</h3>
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#基于探索遍历的取样">基于探索(遍历)的取样</a>
+      <ul>
+        <li><a href="#简单随机游走-srw-simple-random-walk">简单随机游走 SRW, Simple Random Walk</a></li>
+        <li><a href="#带飞回的随机游走-rwf-random-walk-with-fly-back-probability">带飞回的随机游走 RWF, Random Walk with Fly back probability</a></li>
+        <li><a href="#带导出子图的随机游走-isrw-induced-subgraph-random-walk">带导出子图的随机游走 ISRW, Induced Subgraph Random Walk</a></li>
+        <li><a href="#雪球取样-sb-snowball-sampling">雪球取样 SB, Snowball Sampling</a></li>
+        <li><a href="#林火取样-ff-forestfire-sampling">林火取样 FF, ForestFire Sampling</a></li>
+        <li><a href="#metropolis-hastings-随机游走-mhrw">Metropolis-Hastings 随机游走 MHRW</a></li>
+        <li><a href="#带子图的-mhrw">带子图的 MHRW</a></li>
+      </ul>
+    </li>
+    <li><a href="#基于边的取样">基于边的取样</a>
+      <ul>
+        <li><a href="#带完全导出子图的边取样-ties-total-induction-edge-sampling">带完全导出子图的边取样 TIES, Total Induction Edge Sampling</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2019-2022
+                <a href="https://blog.origami404.top/">Origami404</a>
+                
+                | 基于 <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 构建
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+
+
+</body>
+
+</html>

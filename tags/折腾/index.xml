@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>折腾 on Origami404 的 Blog</title>
+    <link>https://blog.origami404.top/tags/%E6%8A%98%E8%85%BE/</link>
+    <description>Recent content in 折腾 on Origami404 的 Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 31 Oct 2020 23:22:00 +0800</lastBuildDate><atom:link href="https://blog.origami404.top/tags/%E6%8A%98%E8%85%BE/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>UEFI下的引导恢复</title>
+      <link>https://blog.origami404.top/post/2020-10-boot-recovery-in-uefi/</link>
+      <pubDate>Sat, 31 Oct 2020 23:22:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/post/2020-10-boot-recovery-in-uefi/</guid>
+      <description>背景 想调整一下分区大小, 结果一不小心删掉了 ESP&amp;hellip; 前置知识 ESP, 全称EFI System Partition, 是一个在物理硬盘主分区表上的特殊分区, 它: 是 FAT 格式的; (可以是 FAT16/FAT32 ) 与操作系统无关, 而是 UEFI 固件用来寻找引导器的存储空间 一般分区表会使用</description>
+    </item>
+    
+    <item>
+      <title>Anbox 踩坑 &amp; Manjaro 下的内核编译</title>
+      <link>https://blog.origami404.top/post/2020-10-anbox-and-compile-kernel/</link>
+      <pubDate>Fri, 02 Oct 2020 23:22:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/post/2020-10-anbox-and-compile-kernel/</guid>
+      <description>前言 &amp;amp; Anbox 简介 最近换回了 Manjaro 和 Xfce, 打算认认真真地开始将 Linux 作为日常生活系统而不仅仅是开发系统来用了. 然而在日常生活中, 总归是逃不掉某国产IM的 :(. 为了实现以 Manjaro 作为生活主力系统的目标, (同时也为了以后说不定能愉快</description>
+    </item>
+    
+    <item>
+      <title>Win10下Haskell开发环境的配置</title>
+      <link>https://blog.origami404.top/post/2020-04-haskell-dev-in-win10/</link>
+      <pubDate>Tue, 14 Apr 2020 22:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/post/2020-04-haskell-dev-in-win10/</guid>
+      <description>前言 时隔半年再次开始学Haskell, 然后在配环境中度过了一个哭笑不得的下午&amp;hellip; Haskell环境是啥呢&amp;hellip;? 按我不完全的理解, 主要有: 一个编译器, 比如ghc; 它还附带一个RE</description>
+    </item>
+    
+    <item>
+      <title>Win10重装与MSR分区</title>
+      <link>https://blog.origami404.top/post/2020-04-win10-and-msr/</link>
+      <pubDate>Wed, 08 Apr 2020 09:45:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/post/2020-04-win10-and-msr/</guid>
+      <description>前言 大概1月底, 辣鸡win10的更新就更不上去了, 然后我折腾了好久&amp;hellip;包括各种系统检查啊手动安装啊, 无果. 最后在3月决定干脆删了重装&amp;hellip; 重装过程中遇到了大大小小的问题, 写个文章</description>
+    </item>
+    
+    <item>
+      <title>Arch Alacritty 配置</title>
+      <link>https://blog.origami404.top/linux-conf/2020-01-arch-alacritty/</link>
+      <pubDate>Wed, 29 Jan 2020 19:30:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/linux-conf/2020-01-arch-alacritty/</guid>
+      <description>应某人推荐, 终端模拟器使用了Alacritty, 特此记录. oh-my-zsh主题用了ys 主题使用了darcula 注意, 因为我用的是Awesome WM, 不自带合成器效果, 需要安装compton之后, Alac</description>
+    </item>
+    
+    <item>
+      <title>Arch AwesomeWM 配置</title>
+      <link>https://blog.origami404.top/linux-conf/2020-01-arch-awesome-wm/</link>
+      <pubDate>Wed, 29 Jan 2020 19:30:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/linux-conf/2020-01-arch-awesome-wm/</guid>
+      <description>配个awesome. 主要痛点有: 任务栏在上面, 并且有一堆很讨厌的东西, 比如什么启动菜单啊, 当前任务啊, 键盘键位等 默认layout居然是floating, 理解不能 tag居然是全部显示然后有东西就有个点,</description>
+    </item>
+    
+    <item>
+      <title>Arch CLI工具 安装记录</title>
+      <link>https://blog.origami404.top/linux-conf/2020-01-arch-install-cli/</link>
+      <pubDate>Wed, 29 Jan 2020 19:30:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/linux-conf/2020-01-arch-install-cli/</guid>
+      <description>接着上文, 记录一些常用的CLI工具 首先装sudo并新建用户 pacman -S sudo useradd -m -g wheel origami 安装一堆工具 pacman -S base-devel git cmake 装个v2ray并启动, ss实在太容易被ban了. proxychains可以通过替换动态链接库的方法来强迫</description>
+    </item>
+    
+    <item>
+      <title>Arch GUI 配置</title>
+      <link>https://blog.origami404.top/linux-conf/2020-01-arch-install-gui/</link>
+      <pubDate>Wed, 29 Jan 2020 19:30:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/linux-conf/2020-01-arch-install-gui/</guid>
+      <description>安装 桌面环境这次选择了X+awesome, wayland现在还是太折腾了, 并且还有输入法这一个大坑. 用过i3之后对浮动式wm就再也提不起兴趣, 同时因为用了一阵子i3, 决定换个口味, 试试配一个aweso</description>
+    </item>
+    
+    <item>
+      <title>Arch LightDM 配置</title>
+      <link>https://blog.origami404.top/linux-conf/2020-01-arch-lightdm/</link>
+      <pubDate>Wed, 29 Jan 2020 19:30:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/linux-conf/2020-01-arch-lightdm/</guid>
+      <description>简要名词介绍 WM: Windows Manager, 用于登录之后管理窗口的玩意 DM: Display Manager, 提供登录之前跟登录界面 Greeter: 用来提供登录界面, 依赖于特定的DM 安装 LightDM sudo pacman -S lightdm lightdm-webkit2-greeter 安装完编辑/etc/lightdm/lightdm.conf文件, 先找到[S</description>
+    </item>
+    
+    <item>
+      <title>Arch Nvidia 闭源驱动 配置</title>
+      <link>https://blog.origami404.top/linux-conf/2020-01-arch-nvidia/</link>
+      <pubDate>Wed, 29 Jan 2020 19:30:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/linux-conf/2020-01-arch-nvidia/</guid>
+      <description>其实开源驱动已经很好了, 但是颜色看起来总是怪怪的&amp;hellip; 白色跟浅浅的黄白之间的交界简直awful&amp;hellip;令人窒息, 特别是每次打开google都得看一次, 辣眼睛. 一开始以为是颜色深度的问</description>
+    </item>
+    
+    <item>
+      <title>Arch 上 RIMI 输入法的配置</title>
+      <link>https://blog.origami404.top/linux-conf/2020-01-arch-rime/</link>
+      <pubDate>Wed, 29 Jan 2020 19:30:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/linux-conf/2020-01-arch-rime/</guid>
+      <description>TODO. 搜狗挺香, 可惜人总是想折腾的. TODO. 安装</description>
+    </item>
+    
+    <item>
+      <title>Arch 安装记录</title>
+      <link>https://blog.origami404.top/linux-conf/2020-01-arch-install-basic/</link>
+      <pubDate>Wed, 29 Jan 2020 19:30:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/linux-conf/2020-01-arch-install-basic/</guid>
+      <description>简单记录一下安装arch时需要的命令. (虽然install.txt里都有了) install.txt复读机 如果你还不知道Arch是什么, 可以戳这里看看维基 打开作弊指南 install.txt 为了方便安装, 在启动完arch镜像</description>
+    </item>
+    
+    <item>
+      <title>Blog 搭建</title>
+      <link>https://blog.origami404.top/post/2019-07-blog-init/</link>
+      <pubDate>Sat, 20 Jul 2019 00:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/post/2019-07-blog-init/</guid>
+      <description>前言 忽然想建个blog来记录自己没填的坑了&amp;hellip; 使用hexo搭建, 主题为new-vno, 托管于github-pages. 搭建hexo 在你的平台上安装好nodejs, 然后使用npm安装hexo</description>
+    </item>
+    
+  </channel>
+</rss>

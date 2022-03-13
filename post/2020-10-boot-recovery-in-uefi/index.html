@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="zh-hans">
+
+<head>
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.92.2" />
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png" />
+<link rel="manifest" href="icons/site.webmanifest" />
+<link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#8aa2d3" />
+<link rel="shortcut icon" href="icons/favicon.ico" />
+<meta name="theme-color" content="#ffffff" />
+
+
+<title>UEFI下的引导恢复 - Origami404 的 Blog</title>
+
+
+<meta name="author" content="Origami404" />
+
+
+<meta name="description" content="有空的话就随便逛逛吧 www" />
+
+
+<meta name="keywords" content="折腾" />
+
+
+<meta property="og:title" content="UEFI下的引导恢复" />
+<meta name="twitter:title" content="UEFI下的引导恢复" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.origami404.top/post/2020-10-boot-recovery-in-uefi/" /><meta property="og:description" content="背景 想调整一下分区大小, 结果一不小心删掉了 ESP&hellip; 前置知识 ESP, 全称EFI System Partition, 是一个在物理硬盘主分区表上的特殊分区, 它: 是 FAT 格式的; (可以是 FAT16/FAT32 ) 与操作系统无关, 而是 UEFI 固件用来寻找引导器的存储空间 一般分区表会使用" />
+<meta name="twitter:description" content="背景 想调整一下分区大小, 结果一不小心删掉了 ESP&hellip; 前置知识 ESP, 全称EFI System Partition, 是一个在物理硬盘主分区表上的特殊分区, 它: 是 FAT 格式的; (可以是 FAT16/FAT32 ) 与操作系统无关, 而是 UEFI 固件用来寻找引导器的存储空间 一般分区表会使用" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://blog.origami404.top/img/og.png" /><meta property="article:published_time" content="2020-10-31T23:22:00+08:00" /><meta property="article:modified_time" content="2020-10-31T23:22:00+08:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+
+<link rel="stylesheet" href="https://blog.origami404.top/assets/css/fuji.min.css" />
+
+
+
+
+
+
+
+
+</head>
+
+<body
+  data-theme="auto"
+  data-theme-auto='true'
+  >
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
+
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="https://blog.origami404.top/">Origami404 的 Blog</a>
+            
+            <span class="title-sub">有空的话就随便逛逛吧 www</span>
+            
+        </div>
+    </div>
+</header>
+
+    <main>
+        <div class="container-lg clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="https://blog.origami404.top/post/2020-10-boot-recovery-in-uefi/">UEFI下的引导恢复</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-10-31</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;506 字</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E6%8A%98%E8%85%BE">折腾</a>&nbsp;</span>
+
+    </div>
+    
+    <div class="post-content markdown-body">
+        <h2 id="背景">背景</h2>
+<p>想调整一下分区大小, 结果一不小心删掉了 ESP&hellip;</p>
+<!-- more -->
+<h2 id="前置知识">前置知识</h2>
+<p>ESP, 全称EFI System Partition, 是一个在物理硬盘主分区表上的特殊分区, 它:</p>
+<ul>
+<li>是 FAT 格式的; (可以是 FAT16/FAT32 )</li>
+<li>与操作系统无关, 而是 UEFI 固件用来寻找引导器的存储空间</li>
+<li>一般分区表会使用 GPT 而非 MBR, 因为现有的 UEFI 固件都不怎么支持 MBR 上的启动</li>
+</ul>
+<h2 id="创建分区">创建分区</h2>
+<p>用你喜欢的分区软件, 创建一个大概 512MiB 大的 FAT32 分区(理论上在哪都行). 然后跑一遍<code>mkfs</code>:</p>
+<pre><code class="language-bash">mkfs.fat -F32 /dev/&lt;ESP&gt;
+</code></pre>
+<h2 id="构建内核">构建内核</h2>
+<p>挂载原来的系统:</p>
+<pre><code>sudo mount /dev/&lt;SYSTEM&gt; /mnt
+sudo mount /dev/&lt;ESP&gt; /mnt/boot
+sudo manjaro-chroot /mnt
+</code></pre>
+<p>注意必须要用<code>manjaro-chroot</code>(如果是 Archlinux 的话就<code>arch-chroot</code>)而不是普通的<code>chroot</code>. <code>chroot</code>似乎不会继承 EFI Variables 导致下面 <code>grub-install</code> 失败.</p>
+<p><code>manjaro-chroot</code>会自己把非文件分区绑定上, 所以不需要再打那三行<code>sudo mount --bind /dev /mnt/dev</code>之类的了.</p>
+<p>然后更新一下内核; 内核会把自己放进<code>/boot</code>里:</p>
+<pre><code>sudo pacman -S linux
+</code></pre>
+<p>可以去检查一下<code>/boot</code>下是否已经有<code>vmlinuz-*</code>文件了.</p>
+<h2 id="修复引导">修复引导</h2>
+<pre><code>grub-install --recheck /dev/sdX --efi-directory=/boot
+grub-mkconfig -o /boot/grub/grub.cfg
+</code></pre>
+<p>如果在这一步出现了报错: <code>efi variables are not supported on this system</code>, 那么:</p>
+<ol>
+<li>检查您的 Live CD 启动方式是否为 UEFI. 比如说在 Live CD 的 shell 里运行<code>efibootmgr</code>, 如果输出是一堆那就是 UEFI; 如果报错那就不是.</li>
+<li>检查您是否使用了 <code>chroot</code> 而非 <code>manjaro-chroot</code>.</li>
+</ol>
+<h2 id="最后">最后</h2>
+<p>祈祷并重启. 完好的系统又回来啦.</p>
+
+    </div>
+</article>
+
+
+<div class="license markdown-body">
+    <blockquote>
+        <p>除特殊注明部分，本站内容采用 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
+               target="_blank">CC BY-NC-SA 4.0</a> 进行许可。</p>
+    </blockquote>
+</div>
+
+
+
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>页面</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>链接</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Origami404" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://wiki.hitsz.org" target="_blank"><span>HITsz LUG wiki</span></a>
+            </li>
+            
+            <li>
+                <a href="https://space.bilibili.com/1124374292" target="_blank"><span>bilibili</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>标签</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/arch/">Arch</a>
+            </span>
+            
+            <span>
+                <a href="/tags/arm/">ARM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/c/">C</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">Docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">Git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/haskell/">Haskell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/https/">HTTPS</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux-%E5%B7%A5%E5%85%B7/">linux 工具</a>
+            </span>
+            
+            <span>
+                <a href="/tags/llvm/">LLVM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mgit/">mgit</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/windows/">Windows</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%8F%98%E5%88%86%E6%B3%95/">变分法</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9B%BE%E8%AE%BA/">图论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9F%9F%E5%90%8D/">域名</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%AF%BC%E8%AE%BA/">导论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%88%91%E4%BC%9A%E7%86%9F%E7%BB%83%E5%9C%B0%E5%AE%89%E8%A3%85xxx%E7%B3%BB%E5%88%97/">我会熟练地安装xxx系列</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%8A%98%E8%85%BE/">折腾</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%95%B0%E5%AD%A6/">数学</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%96%B0%E8%A7%82%E7%82%B9/">新观点</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AE%A1%E7%90%86/">服务器管理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%AF%95%E6%98%87%E6%9D%AF/">毕昇杯</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%B1%87%E7%BC%96/">汇编</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%90%86%E8%AE%BA%E7%89%A9%E7%90%86/">理论物理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BA%BF%E4%BB%A3/">线代</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E7%A8%8B/">编程</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%89%8D%E7%AB%AF/">编译前端</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%87%AA%E7%95%99%E5%9C%B0/">自留地</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%BD%AE%E5%AD%90/">轮子</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E9%9D%9E%E6%8A%80%E6%9C%AF/">非技术</a>
+            </span>
+            
+        </div>
+    </div>
+    <div class="sidebar-item sidebar-toc">
+        <h3>目录</h3><nav id="TableOfContents">
+  <ul>
+    <li><a href="#背景">背景</a></li>
+    <li><a href="#前置知识">前置知识</a></li>
+    <li><a href="#创建分区">创建分区</a></li>
+    <li><a href="#构建内核">构建内核</a></li>
+    <li><a href="#修复引导">修复引导</a></li>
+    <li><a href="#最后">最后</a></li>
+  </ul>
+</nav></div>
+</aside>
+
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>页面</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>链接</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Origami404" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://wiki.hitsz.org" target="_blank"><span>HITsz LUG wiki</span></a>
+            </li>
+            
+            <li>
+                <a href="https://space.bilibili.com/1124374292" target="_blank"><span>bilibili</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>标签</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/arch/">Arch</a>
+            </span>
+            
+            <span>
+                <a href="/tags/arm/">ARM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/c/">C</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">Docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">Git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/haskell/">Haskell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/https/">HTTPS</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux-%E5%B7%A5%E5%85%B7/">linux 工具</a>
+            </span>
+            
+            <span>
+                <a href="/tags/llvm/">LLVM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mgit/">mgit</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/windows/">Windows</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%8F%98%E5%88%86%E6%B3%95/">变分法</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9B%BE%E8%AE%BA/">图论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9F%9F%E5%90%8D/">域名</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%AF%BC%E8%AE%BA/">导论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%88%91%E4%BC%9A%E7%86%9F%E7%BB%83%E5%9C%B0%E5%AE%89%E8%A3%85xxx%E7%B3%BB%E5%88%97/">我会熟练地安装xxx系列</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%8A%98%E8%85%BE/">折腾</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%95%B0%E5%AD%A6/">数学</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%96%B0%E8%A7%82%E7%82%B9/">新观点</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AE%A1%E7%90%86/">服务器管理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%AF%95%E6%98%87%E6%9D%AF/">毕昇杯</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%B1%87%E7%BC%96/">汇编</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%90%86%E8%AE%BA%E7%89%A9%E7%90%86/">理论物理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BA%BF%E4%BB%A3/">线代</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E7%A8%8B/">编程</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%89%8D%E7%AB%AF/">编译前端</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%87%AA%E7%95%99%E5%9C%B0/">自留地</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%BD%AE%E5%AD%90/">轮子</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E9%9D%9E%E6%8A%80%E6%9C%AF/">非技术</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <h3>目录</h3>
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#背景">背景</a></li>
+    <li><a href="#前置知识">前置知识</a></li>
+    <li><a href="#创建分区">创建分区</a></li>
+    <li><a href="#构建内核">构建内核</a></li>
+    <li><a href="#修复引导">修复引导</a></li>
+    <li><a href="#最后">最后</a></li>
+  </ul>
+</nav>
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2019-2022
+                <a href="https://blog.origami404.top/">Origami404</a>
+                
+                | 基于 <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 构建
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ARM on Origami404 的 Blog</title>
+    <link>https://blog.origami404.top/tags/arm/</link>
+    <description>Recent content in ARM on Origami404 的 Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 13 Feb 2022 21:00:00 +0800</lastBuildDate><atom:link href="https://blog.origami404.top/tags/arm/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>毕昇杯专用 ARMv7 汇编急救</title>
+      <link>https://blog.origami404.top/compiler-and-type-theory/2022-02-armv7-basic/</link>
+      <pubDate>Sun, 13 Feb 2022 21:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/compiler-and-type-theory/2022-02-armv7-basic/</guid>
+      <description>总览 主要参考文章: https://thinkingeek.com/arm-assembler-raspberry-pi/ 绝大部分示例代码都是从此文章抄来的 这篇参考文章偏向于使用 ARM 汇编进行开发的入门, 期望读者水平为学过 C, 还教了一些算法啥的. 作者还有一本书, 200来页, 书比网站上的更加系统, 建议看书. 当</description>
+    </item>
+    
+  </channel>
+</rss>

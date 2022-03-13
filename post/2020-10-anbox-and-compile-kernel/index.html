@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="zh-hans">
+
+<head>
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.92.2" />
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png" />
+<link rel="manifest" href="icons/site.webmanifest" />
+<link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#8aa2d3" />
+<link rel="shortcut icon" href="icons/favicon.ico" />
+<meta name="theme-color" content="#ffffff" />
+
+
+<title>Anbox 踩坑 &amp; Manjaro 下的内核编译 - Origami404 的 Blog</title>
+
+
+<meta name="author" content="Origami404" />
+
+
+<meta name="description" content="有空的话就随便逛逛吧 www" />
+
+
+<meta name="keywords" content="折腾" />
+
+
+<meta property="og:title" content="Anbox 踩坑 &amp; Manjaro 下的内核编译" />
+<meta name="twitter:title" content="Anbox 踩坑 &amp; Manjaro 下的内核编译" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.origami404.top/post/2020-10-anbox-and-compile-kernel/" /><meta property="og:description" content="前言 &amp; Anbox 简介 最近换回了 Manjaro 和 Xfce, 打算认认真真地开始将 Linux 作为日常生活系统而不仅仅是开发系统来用了. 然而在日常生活中, 总归是逃不掉某国产IM的 :(. 为了实现以 Manjaro 作为生活主力系统的目标, (同时也为了以后说不定能愉快" />
+<meta name="twitter:description" content="前言 &amp; Anbox 简介 最近换回了 Manjaro 和 Xfce, 打算认认真真地开始将 Linux 作为日常生活系统而不仅仅是开发系统来用了. 然而在日常生活中, 总归是逃不掉某国产IM的 :(. 为了实现以 Manjaro 作为生活主力系统的目标, (同时也为了以后说不定能愉快" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://blog.origami404.top/img/og.png" /><meta property="article:published_time" content="2020-10-02T23:22:00+08:00" /><meta property="article:modified_time" content="2020-10-02T23:22:00+08:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+
+<link rel="stylesheet" href="https://blog.origami404.top/assets/css/fuji.min.css" />
+
+
+
+
+
+
+
+
+</head>
+
+<body
+  data-theme="auto"
+  data-theme-auto='true'
+  >
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
+
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="https://blog.origami404.top/">Origami404 的 Blog</a>
+            
+            <span class="title-sub">有空的话就随便逛逛吧 www</span>
+            
+        </div>
+    </div>
+</header>
+
+    <main>
+        <div class="container-lg clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="https://blog.origami404.top/post/2020-10-anbox-and-compile-kernel/">Anbox 踩坑 &amp; Manjaro 下的内核编译</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-10-02</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;1268 字</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E6%8A%98%E8%85%BE">折腾</a>&nbsp;</span>
+
+    </div>
+    
+    <div class="post-content markdown-body">
+        <h2 id="前言--anbox-简介">前言 &amp; Anbox 简介</h2>
+<p>最近换回了 Manjaro 和 Xfce, 打算认认真真地开始将 Linux 作为日常生活系统而不仅仅是开发系统来用了. 然而在日常生活中, 总归是逃不掉某国产IM的 :(. 为了实现以 Manjaro 作为生活主力系统的目标, (同时也为了以后说不定能愉快地打游戏), 决定安装一个能跑安卓应用的东西. 于是我的 Anbox 之旅就在完全搞不懂 Android x86 是什么玩意的情况下展开了.</p>
+<p><a href="https://anbox.io/" target="_blank">Anbox 官网</a>上的介绍:</p>
+<blockquote>
+<p>Anbox: Android in a Box
+Run Android applications on any GNU/Linux operating system.
+Anbox puts the Android operating system into a container, abstracts hardware access and integrates core system services into a GNU/Linux system. Every Android application will be integrated with your operating system like any other native application.</p>
+</blockquote>
+<p>简单来讲就类似 docker , 利用 LXD 技术在 Linux 系统里新建一个全新的容器, 然后直接去跑一个 Android x86. 好处嘛就是跑得比虚拟机快, 集成度比虚拟机好. 坏处嘛就是兼容性还是有待提高&hellip;</p>
+<!-- more -->
+<h2 id="安装">安装</h2>
+<h3 id="安装之前">安装之前&hellip;</h3>
+<p>确保您的内核支持 <code>/dev/ashmem</code> 和 <code>/dev/binder</code>, 如果没有, 请参照: <a href="#%e6%9b%bf%e6%8d%a2%e5%86%85%e6%a0%b8"></a></p>
+<h3 id="安装-anbox">安装 Anbox</h3>
+<p>Anbox 分为两块, 一块是本体, 一块是安卓镜像.</p>
+<h4 id="archlinuxcn">archlinuxcn</h4>
+<p>使用 archlinuxcn 的并且没有特殊需求的老哥可以直接用 archlinuxcn 里的.</p>
+<pre><code class="language-bash">$ pacman -Ss anbox
+archlinuxcn/anbox-git 1:1282.170f1e0-2
+    Running Android in a container
+archlinuxcn/anbox-image 1:2018.07.19-1
+    Android image for running in Anbox
+
+$ pacman -S anbox-git anbox-image
+</code></pre>
+<p>注意, 此镜像就是一纯的 AOSP , 没有谷歌框架, 没有 ARM 译码器.</p>
+<h4 id="aur">aur</h4>
+<pre><code>$ pikaur -Ss anbox
+aur/anbox-git 1:r1240.c1e7550-1 (134, 0.86)  # 本体
+    Running Android in a container
+
+
+aur/anbox-image 1:2018.07.19-1 (67, 0.36)             # 纯净镜像
+    Android image for running in Anbox
+aur/anbox-image-gapps 2018.07.19-15 (18, 0.40)        # 带 Google 框架的镜像
+    Android image for running in Anbox, with OpenGApps and Houdini
+aur/anbox-image-houdini-rooted 2018.07.19-5 (6, 0.67) # 带译码器, SuperSU 的镜像
+    Android image for running in Anbox with Houdini and SuperSU
+aur/anbox-image-gapps-rooted 2018.07.19-7 (4, 0.04)   # 带 Google 框架, SuperSU 的镜像
+    Android image for running in Anbox with Houdini, OpenGApps and SuperSU
+aur/anbox-image-houdini 2018.07.19-5 (3, 0.03)        # 带译码器的镜像
+    Android image for running in Anbox with Houdini
+</code></pre>
+<blockquote>
+<p>Houdini <del>(某知名动画软件)</del>
+<a href="https://osdn.net/projects/android-x86/scm/git/vendor-intel-houdini/" target="_blank"><code>libhoudini</code></a>, 是 Android x86 默认采用的, 将 arm 架构译码到 x86 的转换层.<br>
+简单来说, 有了它, Android x86 就可以安装/运行很多基于 ARM 的 Apk/App 了. (理所当然地, 会变慢, 并且不是全部都能跑. 但是对于现代电脑来说这点性能损失完全抵消不掉其对手机处理器的性能优势)</p>
+</blockquote>
+<p>把 <em>本体</em> 装上之后再挑一个 <em>镜像</em> 装上就可以了.</p>
+<h3 id="安装之后">安装之后</h3>
+<p>挂载 <code>binder</code>:</p>
+<pre><code class="language-bash">mkdir /dev/binderfs
+sudo mount -t binder binder /dev/binderfs
+</code></pre>
+<p>启动服务:</p>
+<pre><code class="language-bash">sudo systemctl start anbox-container-manager.service
+sudo systemctl enable anbox-container-manager.service # 让这个服务每次开机之后保持运行
+</code></pre>
+<p>启动 Anbox 的应用抽屉:</p>
+<pre><code class="language-bash">anbox launch --package=org.anbox.appmgr --component=org.anbox.appmgr.AppViewActivity
+</code></pre>
+<p>如果有像下面这样的报错:</p>
+<pre><code>The name org.anbox was not provided by any .service fil
+</code></pre>
+<p>请检查您是否完成上面两步. 同时您还可以查看日志:</p>
+<pre><code class="language-bash">sudo systemctl status anbox-container-manager.service
+</code></pre>
+<h2 id="替换内核">替换内核</h2>
+<p>根据 <a href="https://wiki.archlinux.org/index.php/Anbox#Installation" target="_blank">Arch Wiki 的 Anbox 页面</a>, <code>5.7.0</code> 及以上的内核需要重新编译开启某些选项来支持 <code>binder</code> 等功能.</p>
+<p><code>5.7.0</code> 以下的内核直接安装名字里带有 <code>dkms</code> 的包即可.</p>
+<h3 id="通过-aur">通过 aur</h3>
+<blockquote>
+<p>在编译完之后才发现 aur 里直接就有&hellip;</p>
+</blockquote>
+<pre><code class="language-bash">pikaur -S linux-xanmod-anbox
+</code></pre>
+<p>随后重启.</p>
+<h3 id="自己编译">自己编译</h3>
+<p>当初看鸟哥的私房菜的时候, 编译内核还是高级操作, 搞得我一开始还害怕极了&hellip; 后来发现前辈们早已为我们准备了各种各样的工具, 编译内核? 几行搞定!</p>
+<blockquote>
+<p>主要参考: <a href="https://extendswind.top/posts/technical/manjaro_kernel_compile/" target="_blank">[extendswind] Manjaro内核编译</a></p>
+</blockquote>
+<h4 id="下载源码">下载源码</h4>
+<p>如果您在时隔多年(?)以后看我的文章的话, 记得把链接最后那个 <code>linux58</code> 改成您想要的版本号.</p>
+<pre><code>git clone https://gitlab.manjaro.org/packages/core/linux58.git
+</code></pre>
+<h4 id="可选-修改makepkg的编译选项">(可选) 修改makepkg的编译选项</h4>
+<p>主要就是开一个<code>-march=native</code>. 编辑 <code>/etc/makepkg.conf</code>, 将 <code>CFLAGS</code> 和 <code>CXXFLAGS</code> 改为:</p>
+<pre><code>CFLAGS=&quot;-march=native -O2 -pipe -fstack-protector-strong -fno-plt&quot;
+CXXFLAGS=&quot;-march=native -O2 -pipe -fstack-protector-strong -fno-plt&quot;
+</code></pre>
+<p>这个选项是让 <code>gcc</code> 自己选择当前平台的优化. 参见 <a href="https://wiki.archlinux.org/index.php/Makepkg#Building_optimized_binaries" target="_blank">Arch Wiki 上的介绍</a></p>
+<h4 id="编译">编译</h4>
+<p>查看 clone 下来的 <code>PKGBUILD</code> 文件可以看到, <code>Manjaro</code> 团队已经很贴心地帮我们把 Anbox 的内核编译参数写好加进去了. 所以我们只需要编译就好了</p>
+<p><code>config.anbox</code> 的内容:</p>
+<pre><code class="language-conf">CONFIG_ASHMEM=y
+# CONFIG_ION is not set
+CONFIG_ANDROID=y
+CONFIG_ANDROID_BINDER_IPC=y
+CONFIG_ANDROID_BINDERFS=y
+CONFIG_ANDROID_BINDER_DEVICES=&quot;binder,hwbinder,vndbinder&quot;
+# CONFIG_ANDROID_BINDER_IPC_SELFTEST is not set
+</code></pre>
+<p>编译!</p>
+<pre><code>./autogen.sh
+makepkg
+</code></pre>
+<p>在本人的 <code>i5-7500</code> 上编译大概要一小时, 编译完之后安装产出的 <code>linux58-headers-5.8.13-3-x86_64.pkg.tar.xz</code> 包即可:</p>
+<pre><code class="language-bash">sudo pacman -U linux58-headers-5.8.13-3-x86_64.pkg.tar.xz
+</code></pre>
+<p>然后重启.</p>
+<h2 id="最后">最后</h2>
+<p><code>deepin.com.qq.office</code> 跟 <code>deepin.com.wechat2</code> 真香! 结果又花了几个小时的时间折腾了没意义的东西呢!</p>
+
+    </div>
+</article>
+
+
+<div class="license markdown-body">
+    <blockquote>
+        <p>除特殊注明部分，本站内容采用 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
+               target="_blank">CC BY-NC-SA 4.0</a> 进行许可。</p>
+    </blockquote>
+</div>
+
+
+
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>页面</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>链接</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Origami404" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://wiki.hitsz.org" target="_blank"><span>HITsz LUG wiki</span></a>
+            </li>
+            
+            <li>
+                <a href="https://space.bilibili.com/1124374292" target="_blank"><span>bilibili</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>标签</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/arch/">Arch</a>
+            </span>
+            
+            <span>
+                <a href="/tags/arm/">ARM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/c/">C</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">Docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">Git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/haskell/">Haskell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/https/">HTTPS</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux-%E5%B7%A5%E5%85%B7/">linux 工具</a>
+            </span>
+            
+            <span>
+                <a href="/tags/llvm/">LLVM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mgit/">mgit</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/windows/">Windows</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%8F%98%E5%88%86%E6%B3%95/">变分法</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9B%BE%E8%AE%BA/">图论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9F%9F%E5%90%8D/">域名</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%AF%BC%E8%AE%BA/">导论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%88%91%E4%BC%9A%E7%86%9F%E7%BB%83%E5%9C%B0%E5%AE%89%E8%A3%85xxx%E7%B3%BB%E5%88%97/">我会熟练地安装xxx系列</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%8A%98%E8%85%BE/">折腾</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%95%B0%E5%AD%A6/">数学</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%96%B0%E8%A7%82%E7%82%B9/">新观点</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AE%A1%E7%90%86/">服务器管理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%AF%95%E6%98%87%E6%9D%AF/">毕昇杯</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%B1%87%E7%BC%96/">汇编</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%90%86%E8%AE%BA%E7%89%A9%E7%90%86/">理论物理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BA%BF%E4%BB%A3/">线代</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E7%A8%8B/">编程</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%89%8D%E7%AB%AF/">编译前端</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%87%AA%E7%95%99%E5%9C%B0/">自留地</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%BD%AE%E5%AD%90/">轮子</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E9%9D%9E%E6%8A%80%E6%9C%AF/">非技术</a>
+            </span>
+            
+        </div>
+    </div>
+    <div class="sidebar-item sidebar-toc">
+        <h3>目录</h3><nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言--anbox-简介">前言 &amp; Anbox 简介</a></li>
+    <li><a href="#安装">安装</a>
+      <ul>
+        <li><a href="#安装之前">安装之前&hellip;</a></li>
+        <li><a href="#安装-anbox">安装 Anbox</a></li>
+        <li><a href="#安装之后">安装之后</a></li>
+      </ul>
+    </li>
+    <li><a href="#替换内核">替换内核</a>
+      <ul>
+        <li><a href="#通过-aur">通过 aur</a></li>
+        <li><a href="#自己编译">自己编译</a></li>
+      </ul>
+    </li>
+    <li><a href="#最后">最后</a></li>
+  </ul>
+</nav></div>
+</aside>
+
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>页面</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>链接</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Origami404" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://wiki.hitsz.org" target="_blank"><span>HITsz LUG wiki</span></a>
+            </li>
+            
+            <li>
+                <a href="https://space.bilibili.com/1124374292" target="_blank"><span>bilibili</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>标签</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/arch/">Arch</a>
+            </span>
+            
+            <span>
+                <a href="/tags/arm/">ARM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/c/">C</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">Docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">Git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/haskell/">Haskell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/https/">HTTPS</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux-%E5%B7%A5%E5%85%B7/">linux 工具</a>
+            </span>
+            
+            <span>
+                <a href="/tags/llvm/">LLVM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mgit/">mgit</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/windows/">Windows</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%8F%98%E5%88%86%E6%B3%95/">变分法</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9B%BE%E8%AE%BA/">图论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9F%9F%E5%90%8D/">域名</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%AF%BC%E8%AE%BA/">导论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%88%91%E4%BC%9A%E7%86%9F%E7%BB%83%E5%9C%B0%E5%AE%89%E8%A3%85xxx%E7%B3%BB%E5%88%97/">我会熟练地安装xxx系列</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%8A%98%E8%85%BE/">折腾</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%95%B0%E5%AD%A6/">数学</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%96%B0%E8%A7%82%E7%82%B9/">新观点</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AE%A1%E7%90%86/">服务器管理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%AF%95%E6%98%87%E6%9D%AF/">毕昇杯</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%B1%87%E7%BC%96/">汇编</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%90%86%E8%AE%BA%E7%89%A9%E7%90%86/">理论物理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BA%BF%E4%BB%A3/">线代</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E7%A8%8B/">编程</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%89%8D%E7%AB%AF/">编译前端</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%87%AA%E7%95%99%E5%9C%B0/">自留地</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%BD%AE%E5%AD%90/">轮子</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E9%9D%9E%E6%8A%80%E6%9C%AF/">非技术</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <h3>目录</h3>
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言--anbox-简介">前言 &amp; Anbox 简介</a></li>
+    <li><a href="#安装">安装</a>
+      <ul>
+        <li><a href="#安装之前">安装之前&hellip;</a></li>
+        <li><a href="#安装-anbox">安装 Anbox</a></li>
+        <li><a href="#安装之后">安装之后</a></li>
+      </ul>
+    </li>
+    <li><a href="#替换内核">替换内核</a>
+      <ul>
+        <li><a href="#通过-aur">通过 aur</a></li>
+        <li><a href="#自己编译">自己编译</a></li>
+      </ul>
+    </li>
+    <li><a href="#最后">最后</a></li>
+  </ul>
+</nav>
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2019-2022
+                <a href="https://blog.origami404.top/">Origami404</a>
+                
+                | 基于 <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 构建
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+
+
+</body>
+
+</html>

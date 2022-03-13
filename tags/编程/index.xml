@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>编程 on Origami404 的 Blog</title>
+    <link>https://blog.origami404.top/tags/%E7%BC%96%E7%A8%8B/</link>
+    <description>Recent content in 编程 on Origami404 的 Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 21 Jul 2020 11:30:00 +0800</lastBuildDate><atom:link href="https://blog.origami404.top/tags/%E7%BC%96%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Python 与 Type Annotations</title>
+      <link>https://blog.origami404.top/compiler-and-type-theory/2020-07-python-and-type-annotations/</link>
+      <pubDate>Tue, 21 Jul 2020 11:30:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/compiler-and-type-theory/2020-07-python-and-type-annotations/</guid>
+      <description>前言 用Python写了个Scheme解释器, 代码. 记录一下Python的类型标注要怎么用, 有什么坑. 话说回来这好像是我第一篇技术性文章&amp;hellip;? 不务正业实锤 本文假定您已有支持编译期泛型的静态类</description>
+    </item>
+    
+  </channel>
+</rss>

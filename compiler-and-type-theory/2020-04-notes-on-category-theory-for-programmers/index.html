@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="zh-hans">
+
+<head>
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.92.2" />
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png" />
+<link rel="manifest" href="icons/site.webmanifest" />
+<link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#8aa2d3" />
+<link rel="shortcut icon" href="icons/favicon.ico" />
+<meta name="theme-color" content="#ffffff" />
+
+
+<title>Category-theory-for-programmers 阅读笔记 - Origami404 的 Blog</title>
+
+
+<meta name="author" content="Origami404" />
+
+
+<meta name="description" content="有空的话就随便逛逛吧 www" />
+
+
+<meta name="keywords" content="Haskell, 读书笔记" />
+
+
+<meta property="og:title" content="Category-theory-for-programmers 阅读笔记" />
+<meta name="twitter:title" content="Category-theory-for-programmers 阅读笔记" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.origami404.top/compiler-and-type-theory/2020-04-notes-on-category-theory-for-programmers/" /><meta property="og:description" content="前言 &amp; 介绍 Category Theory for Programmers, 顾名思义, 是一本关于范畴论的书, 但是偏向CS而非数学. 书的$\LaTeX$代码以GPL-3.0公布在GitHub, 有两个版本, 一个以C&#43;&#43;作为辅助说明语言, 另一个是Scala. 作为一" />
+<meta name="twitter:description" content="前言 &amp; 介绍 Category Theory for Programmers, 顾名思义, 是一本关于范畴论的书, 但是偏向CS而非数学. 书的$\LaTeX$代码以GPL-3.0公布在GitHub, 有两个版本, 一个以C&#43;&#43;作为辅助说明语言, 另一个是Scala. 作为一" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://blog.origami404.top/img/og.png" /><meta property="article:published_time" content="2020-04-16T22:00:00+08:00" /><meta property="article:modified_time" content="2020-04-16T22:00:00+08:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+
+<link rel="stylesheet" href="https://blog.origami404.top/assets/css/fuji.min.css" />
+
+
+
+
+
+
+
+
+</head>
+
+<body
+  data-theme="auto"
+  data-theme-auto='true'
+  >
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
+
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="https://blog.origami404.top/">Origami404 的 Blog</a>
+            
+            <span class="title-sub">有空的话就随便逛逛吧 www</span>
+            
+        </div>
+    </div>
+</header>
+
+    <main>
+        <div class="container-lg clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="https://blog.origami404.top/compiler-and-type-theory/2020-04-notes-on-category-theory-for-programmers/">Category-theory-for-programmers 阅读笔记</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-04-16</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;2897 字</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/haskell">Haskell</a>&nbsp;<a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0">读书笔记</a>&nbsp;</span>
+
+    </div>
+    
+    <div class="post-content markdown-body">
+        <h2 id="前言--介绍">前言 &amp; 介绍</h2>
+<p><code>Category Theory for Programmers</code>, 顾名思义, 是一本关于范畴论的书, 但是偏向CS而非数学.</p>
+<p>书的$\LaTeX$代码以<code>GPL-3.0</code>公布在<a href="https://github.com/hmemcpy/milewski-ctfp-pdf" target="_blank">GitHub</a>, 有两个版本, 一个以<code>C++</code>作为辅助说明语言, 另一个是<code>Scala</code>.</p>
+<p>作为一个蒟蒻OI党当然是选择<code>C++</code>版啦.</p>
+<p>本文(如果不咕咕咕的话)会持续更新, 大概记录一些摘录或者感想或者我不知道的东西&hellip;</p>
+<!-- more -->
+<h2 id="preface">Preface</h2>
+<blockquote>
+<p>Category Theory &ndash; rather than dealing with particulars &ndash; deals with structure. It deals with the kind of structure that <strong>makes programs composable</strong>.</p>
+</blockquote>
+<blockquote>
+<p>Functional programming is not only about composing functions and algebraic data structures — <strong>it makes concurrency composable</strong> — something that’s virtually impossible with other programming paradigms.</p>
+</blockquote>
+<blockquote>
+<p>It’s not that side effects are inherently bad — it’s the fact that they are hidden from view that makes them impossible to manage at larger scales. <strong>Side effects don’t scale</strong>.</p>
+</blockquote>
+<blockquote>
+<p>I hope future generations will <strong>be as admiring of the programming skills we’ve been displaying in building complex operating systems, web servers, and the internet infrastructure</strong>.
+(上文提到我们尽管中世纪的石头建筑在现在可以方便地用钢筋混凝土结构搭建, 但我们还是惊叹于中世纪的工匠们那将石质结构发挥到他们的极限的精巧工艺)</p>
+</blockquote>
+<h2 id="part-i---category-the-essence-of-composition">Part I - Category: The Essence of Composition</h2>
+<blockquote>
+<p>A category consists of objects and arrows that go between them.</p>
+</blockquote>
+<p><a href="https://en.wikipedia.org/wiki/Category_%28mathematics%29" target="_blank">Category的Wikipedia链接</a></p>
+<h3 id="我的误解">我的误解&hellip;</h3>
+<p>Native的我, 一直把范畴当成一种特殊的有向图. 这本身没什么大毛病, 问题在于受OI题的影响, 我默认:</p>
+<ul>
+<li>边与边之间唯一的区别就是起点与终点</li>
+</ul>
+<p>但是, 范畴并不是这样的, 不同边在本质上就是不同的东西, 就算他们起点终点相同; 事实上, 存在<del>一些</del>许多范畴, 有无限多的自边, 比如下面很快被提到的<code>Monoid</code>范畴.</p>
+<p>还有, 如果把morphism看作边, (对我来说)很难形象地构造出所谓的<code>composition</code>&hellip;</p>
+<h3 id="那范畴是什么呢">那范畴是什么呢?</h3>
+<p>说了这么多, 其实范畴$C$就是一个拥有:</p>
+<ul>
+<li>对象集合, 即一堆对象组成的集合, 记作 $\operatorname{ob}(C)$</li>
+<li>态射集合, 即一堆定义域和值域都是 $\operatorname{ob}(C)$ 里的函数, 记作 $\hom(C)$. 特别地, 给定$a, b \in \operatorname{ob}(C)$, 我们把定义域为$a$且值域为$b$的态射集合记为 $\hom(a, b)$</li>
+<li>态射复合, 对于$a, b, c \in \operatorname{ob}(C)$, 态射复合$\circ$是一个函数$\hom(a, b) \times \hom(b, c) \rarr \hom(a, c)$</li>
+</ul>
+<p>对于$f \in \hom(a, b)$, 我们顺带还把这句话记作: $f : a \rarr b$</p>
+<p>并且 $C$ 和 $\circ$ 还要满足:</p>
+<ul>
+<li>存在单位元: 即对任意$a, b \in \operatorname{ob}(C)$, 存在$\mathbf{id_a} : a \rarr a$和$\mathbf{id_b} : b \rarr b$, 对任意$f : a \rarr b$, 有:
+$$\mathbf{id_a} \circ f = f \circ \mathbf{id_b} = f$$</li>
+<li>满足结合律: 即对任意$f : a \rarr b,\quad g: b \rarr c,\quad h: c \rarr d$ 有:
+$$(f \circ g) \circ h = f \circ (g \circ h) = f \circ g \circ h$$</li>
+</ul>
+<p><del>态射(morphism)就是函数的好听的名字, 跟函数交错使用看起来特别错落有致(?).</del></p>
+<h3 id="haskell小课堂-声明函数--复合函数">Haskell小课堂: 声明函数 &amp; 复合函数</h3>
+<p>在<code>Haskell</code>中我们可以通过:</p>
+<pre><code class="language-haskell">f :: A -&gt; B
+</code></pre>
+<p>来声明一个从类型A到类型B的函数, 以大写字母开头的类型名会被当成具体的类型.</p>
+<p>而使用小写字母名开头的类型名会被当成泛化类型, 类似<code>C++</code>中的模板类型参数:</p>
+<pre><code class="language-haskell">g :: b -&gt; c
+</code></pre>
+<p>函数的复合记作<code>.</code>:</p>
+<pre><code class="language-Haskell">f . g
+</code></pre>
+<h2 id="part-i---what-are-types">Part I - What Are Types?</h2>
+<blockquote>
+<p>The simplest intuition for types is that they are sets of values.</p>
+</blockquote>
+<p>换句话讲, 类型定义等价于某个集合定义. 当我们说某个东西是什么类型的时候, 我们其实是在说:&ldquo;看! 这个东西的值只能是这个这个这个这个和这个&hellip;!&rdquo;</p>
+<p>因此, 对programmer而言, 我们可以把类型当作对象, 把类型之间的函数当作态射来研究范畴.</p>
+<p>我们先从最简单的类型开始看起, 那就是空集$\emptyset$对应的类型<code>Void</code>和只有一个元素的集合<code>()</code>.</p>
+<h3 id="emptyset-和-void">$\emptyset$ 和 <code>Void</code></h3>
+<p>简而言之, <code>Void</code>在C++中没有对应类型, 而<code>()</code>对应于C++的void类型.</p>
+<p>想象一下, 如果一个函数以<code>Void</code>为输入类型, 那你要怎么调用它呢 &ndash; 显然没有任何一个值是属于<code>Void</code>的, 所以你不可能调用它.</p>
+<pre><code class="language-Haskell">f :: Void -&gt; a
+f = blabla
+
+f ????
+</code></pre>
+<p>同时, 这时候a是不受任何约束的&ndash;也就是说它的返回值是多态(polymorphic)的. 显然这样的函数只能有一个, 标准库(preinclude)里把它定义为:</p>
+<pre><code class="language-haskell">absurd :: Void -&gt; a
+</code></pre>
+<p><del>荒谬可还行</del></p>
+<blockquote>
+<p>作者还提到在<code>Curry-Howard isomorphism</code>下这个函数代表恒假命题(falsity), 但是这可能要到很久之后了</p>
+</blockquote>
+<h3 id="单集singleton-set-和-">单集(singleton set) 和 <code>()</code></h3>
+<p>那么C++里的void对应的是什么呢? 每一个以空参数为输入的函数都是可以调用的, 而且仅能用一种方式调用, 那就是<code>f()</code>. 这说明C++里的void类型对应的集合其实是一个只有一个元素的集合, 简称<code>单集(singleton set或unit set)</code><del>(这个中文翻译我乱蒙的&hellip;)</del>.</p>
+<p>我们来看一些纯的C++函数:</p>
+<pre><code class="language-cpp">// the answer to life, the universe, and everything
+int f42() {
+    return 42;
+}
+
+int square(int x) {
+    return x * x; // 不要担心溢出什么鬼的啦! 
+}
+
+int add(int a, int b) {
+    return a + b;
+}
+</code></pre>
+<p>我们来研究一下他们的参数类型. <code>square</code>只有接受一个类型为<code>int</code>的参数, 它的参数类型显然就是<code>int</code>. 但是<code>add</code>呢? 难道我们要说它有两个参数类型吗? 回想一下我们对类型的&quot;定义&quot;: 取值范围的集合. 那么把<code>add</code>的类型定义为两个<code>int</code>之间的类似&quot;<a href="">集合间的笛卡尔积</a>&ldquo;的形式是合理的.</p>
+<p>有了这个认识, 那<code>void</code>对应的类型, 应该就是0个类型之间的&quot;笛卡尔积&quot;了.</p>
+<p>相似地, 在<code>Haskell</code>, 我们也用类似的形式定义一种&quot;复合&quot;类型:</p>
+<pre><code class="language-haskell">f42 :: () -&gt; Integer
+f42 () = 42
+
+square_like_cpp :: (Integer) -&gt;  Integer
+square_like_cpp (x) = x * x
+
+square_normal :: Integer -&gt; Integer
+square_normal x = x * x
+
+
+add_like_cpp :: (Integer, Integer) -&gt; Integer
+add_like_cpp (x, y) = x + y
+
+add_normal :: Integer -&gt; Integer -&gt; Integer
+add_normal x y = x + y
+</code></pre>
+<blockquote>
+<p>其实我们从这里可以看到一件事实&ndash;一个接受多个参数的函数的可以被变成一个接受一个参数并且返回函数的高阶函数, 这叫做<code>Currying(柯里化)</code>.</p>
+</blockquote>
+<p>我们可以看到, 通过<code>(类型1, 类型2, ...)</code>可以通过类型间的笛卡尔积构造出新的复合类型, 类似于C++中的<code>tuple(元组)</code></p>
+<p>这时候<code>C++</code>中的<code>void</code>自然就对应于<code>Haskell</code>中的<code>()</code>; <code>Haskell</code>也有一个构造<code>()</code>的函数:</p>
+<pre><code class="language-haskell">unit :: a -&gt; ()
+unit _ = ()
+</code></pre>
+<p>类似于<code>absurd</code>在输出类型上是多态的, <code>unit</code>在输入类型上也是多态的.</p>
+<h3 id="只有两个元素的集合二元集-bool">只有两个元素的集合(二元集): Bool</h3>
+<p>只要学会如何在<code>Haskell</code>中定义类型. 一种定义方法很简单, 直接枚举类型所能包含的值就好了:</p>
+<pre><code class="language-haskell">data Bool = True | False
+</code></pre>
+<h2 id="categories-great-and-small">Categories Great and Small</h2>
+<p>从这里开始, 我们就要认识一些简单的范畴了.</p>
+<h3 id="空范畴">空范畴</h3>
+<p>就是空的范畴.</p>
+<p>如果你硬要一个数学定义的话, 那么一个范畴$C$是空范畴当且仅当其满足:</p>
+<p>$$
+\operatorname{ob}(C) = \emptyset \
+\hom(C) = \emptyset
+$$</p>
+<blockquote>
+<p>其实没有对象自然就没有态射&hellip;后一条不是必须的</p>
+</blockquote>
+<h3 id="简单图">简单图</h3>
+<p>我们可以简单地从一张有向图及其中节点的可达性生成一个范畴.</p>
+<p>更确切地, 对于一张有向图而言, 定义:</p>
+<ul>
+<li>有向图中的节点定义为$\operatorname{ob}(C)$</li>
+<li>若存在从节点$a$到节点$b$的路径, 那么就往$\hom(C)$里加入态射$a \rarr b$</li>
+</ul>
+<p>显然我们的态射有单位元和结合性.</p>
+<p>这种构建方法叫<code>free construction</code>, 构建出来的范畴叫<code>free category</code>.</p>
+<blockquote>
+<p>为啥叫free我也不知道&hellip;.</p>
+<p>这种方法的特点就是从给定结构做出最小的扩展然后生成一个合法的范畴</p>
+</blockquote>
+<h3 id="序-orders">序 Orders</h3>
+<p>首先来做点概念题. 请解析下面三个名词的区别:</p>
+<ul>
+<li>预序(preorder)</li>
+<li>偏序(partial order)</li>
+<li>全序(total order)</li>
+</ul>
+<p>以及<code>严格序</code>和<code>非严格序</code></p>
+<p><strong><code>(⊙﹏⊙)</code></strong></p>
+<blockquote>
+<p>序是定义在某个集合上的二元关系; 一个关系就是是一个谓词.</p>
+</blockquote>
+<p>首先我们来抽象出一个定义在集合$A$上的序关系$\backsim$能有什么关系. 令$a,; b,; c$为序上的对象,</p>
+<ol>
+<li>自反性. $a \backsim b \lrArr b \backsim a$</li>
+<li>传递性. $a \backsim b \land b \backsim c \rArr a \backsim c$</li>
+</ol>
+
+    </div>
+</article>
+
+
+<div class="license markdown-body">
+    <blockquote>
+        <p>除特殊注明部分，本站内容采用 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
+               target="_blank">CC BY-NC-SA 4.0</a> 进行许可。</p>
+    </blockquote>
+</div>
+
+
+
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>页面</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>链接</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Origami404" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://wiki.hitsz.org" target="_blank"><span>HITsz LUG wiki</span></a>
+            </li>
+            
+            <li>
+                <a href="https://space.bilibili.com/1124374292" target="_blank"><span>bilibili</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>标签</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/arch/">Arch</a>
+            </span>
+            
+            <span>
+                <a href="/tags/arm/">ARM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/c/">C</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">Docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">Git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/haskell/">Haskell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/https/">HTTPS</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux-%E5%B7%A5%E5%85%B7/">linux 工具</a>
+            </span>
+            
+            <span>
+                <a href="/tags/llvm/">LLVM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mgit/">mgit</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/windows/">Windows</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%8F%98%E5%88%86%E6%B3%95/">变分法</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9B%BE%E8%AE%BA/">图论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9F%9F%E5%90%8D/">域名</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%AF%BC%E8%AE%BA/">导论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%88%91%E4%BC%9A%E7%86%9F%E7%BB%83%E5%9C%B0%E5%AE%89%E8%A3%85xxx%E7%B3%BB%E5%88%97/">我会熟练地安装xxx系列</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%8A%98%E8%85%BE/">折腾</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%95%B0%E5%AD%A6/">数学</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%96%B0%E8%A7%82%E7%82%B9/">新观点</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AE%A1%E7%90%86/">服务器管理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%AF%95%E6%98%87%E6%9D%AF/">毕昇杯</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%B1%87%E7%BC%96/">汇编</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%90%86%E8%AE%BA%E7%89%A9%E7%90%86/">理论物理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BA%BF%E4%BB%A3/">线代</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E7%A8%8B/">编程</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%89%8D%E7%AB%AF/">编译前端</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%87%AA%E7%95%99%E5%9C%B0/">自留地</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%BD%AE%E5%AD%90/">轮子</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E9%9D%9E%E6%8A%80%E6%9C%AF/">非技术</a>
+            </span>
+            
+        </div>
+    </div>
+    <div class="sidebar-item sidebar-toc">
+        <h3>目录</h3><nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言--介绍">前言 &amp; 介绍</a></li>
+    <li><a href="#preface">Preface</a></li>
+    <li><a href="#part-i---category-the-essence-of-composition">Part I - Category: The Essence of Composition</a>
+      <ul>
+        <li><a href="#我的误解">我的误解&hellip;</a></li>
+        <li><a href="#那范畴是什么呢">那范畴是什么呢?</a></li>
+        <li><a href="#haskell小课堂-声明函数--复合函数">Haskell小课堂: 声明函数 &amp; 复合函数</a></li>
+      </ul>
+    </li>
+    <li><a href="#part-i---what-are-types">Part I - What Are Types?</a>
+      <ul>
+        <li><a href="#emptyset-和-void">$\emptyset$ 和 <code>Void</code></a></li>
+        <li><a href="#单集singleton-set-和-">单集(singleton set) 和 <code>()</code></a></li>
+        <li><a href="#只有两个元素的集合二元集-bool">只有两个元素的集合(二元集): Bool</a></li>
+      </ul>
+    </li>
+    <li><a href="#categories-great-and-small">Categories Great and Small</a>
+      <ul>
+        <li><a href="#空范畴">空范畴</a></li>
+        <li><a href="#简单图">简单图</a></li>
+        <li><a href="#序-orders">序 Orders</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+</aside>
+
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>页面</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>链接</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Origami404" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://wiki.hitsz.org" target="_blank"><span>HITsz LUG wiki</span></a>
+            </li>
+            
+            <li>
+                <a href="https://space.bilibili.com/1124374292" target="_blank"><span>bilibili</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>标签</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/arch/">Arch</a>
+            </span>
+            
+            <span>
+                <a href="/tags/arm/">ARM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/c/">C</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">Docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">Git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/haskell/">Haskell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/https/">HTTPS</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux-%E5%B7%A5%E5%85%B7/">linux 工具</a>
+            </span>
+            
+            <span>
+                <a href="/tags/llvm/">LLVM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mgit/">mgit</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/windows/">Windows</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%8F%98%E5%88%86%E6%B3%95/">变分法</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9B%BE%E8%AE%BA/">图论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9F%9F%E5%90%8D/">域名</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%AF%BC%E8%AE%BA/">导论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%88%91%E4%BC%9A%E7%86%9F%E7%BB%83%E5%9C%B0%E5%AE%89%E8%A3%85xxx%E7%B3%BB%E5%88%97/">我会熟练地安装xxx系列</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%8A%98%E8%85%BE/">折腾</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%95%B0%E5%AD%A6/">数学</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%96%B0%E8%A7%82%E7%82%B9/">新观点</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AE%A1%E7%90%86/">服务器管理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%AF%95%E6%98%87%E6%9D%AF/">毕昇杯</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%B1%87%E7%BC%96/">汇编</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%90%86%E8%AE%BA%E7%89%A9%E7%90%86/">理论物理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BA%BF%E4%BB%A3/">线代</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E7%A8%8B/">编程</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%89%8D%E7%AB%AF/">编译前端</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%87%AA%E7%95%99%E5%9C%B0/">自留地</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%BD%AE%E5%AD%90/">轮子</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E9%9D%9E%E6%8A%80%E6%9C%AF/">非技术</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <h3>目录</h3>
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言--介绍">前言 &amp; 介绍</a></li>
+    <li><a href="#preface">Preface</a></li>
+    <li><a href="#part-i---category-the-essence-of-composition">Part I - Category: The Essence of Composition</a>
+      <ul>
+        <li><a href="#我的误解">我的误解&hellip;</a></li>
+        <li><a href="#那范畴是什么呢">那范畴是什么呢?</a></li>
+        <li><a href="#haskell小课堂-声明函数--复合函数">Haskell小课堂: 声明函数 &amp; 复合函数</a></li>
+      </ul>
+    </li>
+    <li><a href="#part-i---what-are-types">Part I - What Are Types?</a>
+      <ul>
+        <li><a href="#emptyset-和-void">$\emptyset$ 和 <code>Void</code></a></li>
+        <li><a href="#单集singleton-set-和-">单集(singleton set) 和 <code>()</code></a></li>
+        <li><a href="#只有两个元素的集合二元集-bool">只有两个元素的集合(二元集): Bool</a></li>
+      </ul>
+    </li>
+    <li><a href="#categories-great-and-small">Categories Great and Small</a>
+      <ul>
+        <li><a href="#空范畴">空范畴</a></li>
+        <li><a href="#简单图">简单图</a></li>
+        <li><a href="#序-orders">序 Orders</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2019-2022
+                <a href="https://blog.origami404.top/">Origami404</a>
+                
+                | 基于 <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 构建
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+
+
+</body>
+
+</html>

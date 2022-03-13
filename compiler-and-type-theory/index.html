@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="zh-hans">
+
+<head>
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.92.2" />
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png" />
+<link rel="manifest" href="icons/site.webmanifest" />
+<link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#8aa2d3" />
+<link rel="shortcut icon" href="icons/favicon.ico" />
+<meta name="theme-color" content="#ffffff" />
+
+
+<title>Compiler-and-type-theories - Origami404 的 Blog</title>
+
+
+<meta name="author" content="Origami404" />
+
+
+<meta name="description" content="有空的话就随便逛逛吧 www" />
+
+
+<link rel="alternate" type="application/rss+xml" href="https://blog.origami404.top/compiler-and-type-theory/index.xml" title="Origami404 的 Blog" />
+
+<meta property="og:title" content="Compiler-and-type-theories" />
+<meta name="twitter:title" content="Compiler-and-type-theories" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://blog.origami404.top/compiler-and-type-theory/" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://blog.origami404.top/img/og.png" /><meta property="og:updated_time" content="2022-02-13T21:00:00+08:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+
+<link rel="stylesheet" href="https://blog.origami404.top/assets/css/fuji.min.css" />
+
+
+
+
+
+
+
+
+</head>
+
+<body
+  data-theme="auto"
+  data-theme-auto='true'
+  >
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
+
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="https://blog.origami404.top/">Origami404 的 Blog</a>
+            
+            <span class="title-sub">有空的话就随便逛逛吧 www</span>
+            
+        </div>
+    </div>
+</header>
+
+    <main>
+        <div class="container-lg clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+
+
+
+<div class="post">
+    <h2 class="post-item post-title">
+        <a href="https://blog.origami404.top/post/2022-03-graph-sampling-intro/">图取样算法简介</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2022-03-12</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;868 字</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E5%9B%BE%E8%AE%BA">图论</a>&nbsp;<a href="/tags/%E5%AF%BC%E8%AE%BA">导论</a>&nbsp;</span>
+
+    </div>
+    <div class="post-item post-summary markdown-body">
+        发现了重要的一点: 对人来说, 1k 节点的图跟 10k 节点的图完全没有差别: 都是一团黑糊糊的看不清的玩意. 所以大规模图可视化没有活路, 取样才是真理. 主要参考: https://github.com/Ashish7129/Graph_Sampling 基于探索(遍历)的取样 简单随机游走 SRW, Simple Random Walk 随机挑一个
+    </div>
+</div>
+
+<div class="post">
+    <h2 class="post-item post-title">
+        <a href="https://blog.origami404.top/compiler-and-type-theory/2022-02-armv7-basic/">毕昇杯专用 ARMv7 汇编急救</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2022-02-13</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;7905 字</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E6%B1%87%E7%BC%96">汇编</a>&nbsp;<a href="/tags/arm">ARM</a>&nbsp;<a href="/tags/%E6%AF%95%E6%98%87%E6%9D%AF">毕昇杯</a>&nbsp;</span>
+
+    </div>
+    <div class="post-item post-summary markdown-body">
+        总览 主要参考文章: https://thinkingeek.com/arm-assembler-raspberry-pi/ 绝大部分示例代码都是从此文章抄来的 这篇参考文章偏向于使用 ARM 汇编进行开发的入门, 期望读者水平为学过 C, 还教了一些算法啥的. 作者还有一本书, 200来页, 书比网站上的更加系统, 建议看书. 当
+    </div>
+</div>
+
+<div class="post">
+    <h2 class="post-item post-title">
+        <a href="https://blog.origami404.top/post/2022-02-domain-and-server-management/">购入域名之后...</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2022-02-03</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;6613 字</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E5%9F%9F%E5%90%8D">域名</a>&nbsp;<a href="/tags/https">HTTPS</a>&nbsp;<a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AE%A1%E7%90%86">服务器管理</a>&nbsp;<a href="/tags/docker">Docker</a>&nbsp;</span>
+
+    </div>
+    <div class="post-item post-summary markdown-body">
+        域名是什么? 域名 , Domain Name, 是一个可以写在 url 里的名字. 我们知道, 当下互联网上(同一个网络内)的实体是靠 IP 地址来唯一标识的. 完成域名到 IP 地址转换的系统称为 DNS. DNS 的主要构成部分是大大小小的 DNS 服务器. DNS 服务器接受客
+    </div>
+</div>
+
+<div class="post">
+    <h2 class="post-item post-title">
+        <a href="https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-7/">LLVM Kaleidoscope 第 7 章：可变量</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2022-01-21</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;11807 字</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86">编译原理</a>&nbsp;<a href="/tags/%E7%BC%96%E8%AF%91%E5%89%8D%E7%AB%AF">编译前端</a>&nbsp;<a href="/tags/llvm">LLVM</a>&nbsp;<a href="/tags/%E7%BF%BB%E8%AF%91">翻译</a>&nbsp;</span>
+
+    </div>
+    <div class="post-item post-summary markdown-body">
+        7.1 前言 欢迎来到 我的第一个基于 LLVM 的语言前端 教程第七章。在前六章我们构建了一门小而强的函数式编程语言, 从中我们学到了如何去解析程序文本，构建与表示 AST，生成 LLVM IR 以及优化冗余代码和实现即时编译。 尽管 Kaleidoscope 作为
+    </div>
+</div>
+
+<div class="post">
+    <h2 class="post-item post-title">
+        <a href="https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-8/">LLVM Kaleidoscope 第 7 章：可变量</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2022-01-18</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;5184 字</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86">编译原理</a>&nbsp;<a href="/tags/%E7%BC%96%E8%AF%91%E5%89%8D%E7%AB%AF">编译前端</a>&nbsp;<a href="/tags/llvm">LLVM</a>&nbsp;<a href="/tags/%E7%BF%BB%E8%AF%91">翻译</a>&nbsp;</span>
+
+    </div>
+    <div class="post-item post-summary markdown-body">
+        8.1 前言 欢迎来到 我的第一个基于 LLVM 的语言前端 教程第八章。本章将描述如何将我们实现的语言编译到目标文件 (object file)。 8.2 选择目标平台 LLVM 对交叉编译 (cross-compilation) 有原生支持，你既可以编译到你当前的机器架构上，也可以很轻松地编
+    </div>
+</div>
+
+<div class="post">
+    <h2 class="post-item post-title">
+        <a href="https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-6/">LLVM Kaleidoscope 第 6 章：扩展语言：自定义运算符</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2022-01-17</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;8278 字</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86">编译原理</a>&nbsp;<a href="/tags/%E7%BC%96%E8%AF%91%E5%89%8D%E7%AB%AF">编译前端</a>&nbsp;<a href="/tags/llvm">LLVM</a>&nbsp;<a href="/tags/%E7%BF%BB%E8%AF%91">翻译</a>&nbsp;</span>
+
+    </div>
+    <div class="post-item post-summary markdown-body">
+        6.1 前言 欢迎来到 我的第一个基于 LLVM 的语言前端 教程第六章。麻雀虽小，五脏俱全，现在我们已经有了一个相对完备的小型函数式编程语言。但目前我们的语言还有一个大缺点：它缺少很多有用的运算符 (比如除法和逻辑非，我们
+    </div>
+</div>
+
+<div class="post">
+    <h2 class="post-item post-title">
+        <a href="https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-1/">LLVM Kaleidoscope 第 -1 章 翻译者的话</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2022-01-15</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;328 字</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86">编译原理</a>&nbsp;<a href="/tags/%E7%BC%96%E8%AF%91%E5%89%8D%E7%AB%AF">编译前端</a>&nbsp;<a href="/tags/llvm">LLVM</a>&nbsp;<a href="/tags/%E7%BF%BB%E8%AF%91">翻译</a>&nbsp;</span>
+
+    </div>
+    <div class="post-item post-summary markdown-body">
+        本教程原文于 LLVM Tutorial. 网上现见有一些翻译： 连城 翻译的：用 LLVM 开发新语言: 比较老，里面的警告还是在警告 LLVM 2.7 版的，而且只有前三章，但其翻译被众多网友引用。 LLVM 中文网 翻译的：LLVM 开发新语言: 翻译来源不能确定，并且
+    </div>
+</div>
+
+<div class="post">
+    <h2 class="post-item post-title">
+        <a href="https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-0/">LLVM Kaleidoscope 第 0 章 我的第一个基于 LLVM 的语言前端</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2022-01-15</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;1354 字</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86">编译原理</a>&nbsp;<a href="/tags/%E7%BC%96%E8%AF%91%E5%89%8D%E7%AB%AF">编译前端</a>&nbsp;<a href="/tags/llvm">LLVM</a>&nbsp;<a href="/tags/%E7%BF%BB%E8%AF%91">翻译</a>&nbsp;</span>
+
+    </div>
+    <div class="post-item post-summary markdown-body">
+        前置技能： 本教程要求你有 C++ 基础，但你并不需要先去做一个编译器再来看这个教程。 欢迎来到“我的第一个基于 LLVM 的语言前端”教程。在本教程我们将会自己动手实现一个简单的语言，你将会看到这有多简单以及有趣。在接下
+    </div>
+</div>
+
+<div class="post">
+    <h2 class="post-item post-title">
+        <a href="https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-1/">LLVM Kaleidoscope 第 1 章 Kaleidoscope 与 lexer</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2022-01-15</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;65 字</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86">编译原理</a>&nbsp;<a href="/tags/%E7%BC%96%E8%AF%91%E5%89%8D%E7%AB%AF">编译前端</a>&nbsp;<a href="/tags/llvm">LLVM</a>&nbsp;<a href="/tags/%E7%BF%BB%E8%AF%91">翻译</a>&nbsp;</span>
+
+    </div>
+    <div class="post-item post-summary markdown-body">
+        暂未翻译，敬请参阅连城大佬的译文. 译文较老，请与原文对比以确保自己的代码是更新之后的。 本教程其他翻译将基于新版本教程。 下一章在此。
+    </div>
+</div>
+
+<div class="post">
+    <h2 class="post-item post-title">
+        <a href="https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-2/">LLVM Kaleidoscope 第 2 章 实现 Parser 与 AST</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2022-01-15</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;65 字</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86">编译原理</a>&nbsp;<a href="/tags/%E7%BC%96%E8%AF%91%E5%89%8D%E7%AB%AF">编译前端</a>&nbsp;<a href="/tags/llvm">LLVM</a>&nbsp;<a href="/tags/%E7%BF%BB%E8%AF%91">翻译</a>&nbsp;</span>
+
+    </div>
+    <div class="post-item post-summary markdown-body">
+        暂未翻译，敬请参阅连城大佬的译文. 译文较老，请与原文对比以确保自己的代码是更新之后的。 本教程其他翻译将基于新版本教程。 下一章在此。
+    </div>
+</div>
+<div class="pagination"><div class="pag-item pag-current">
+    <a href="/compiler-and-type-theory/">1</a>
+  </div><div class="pag-item">
+    <a href="/compiler-and-type-theory/page/2/">2</a>
+  </div><div class="pag-item">
+    <a href="/compiler-and-type-theory/page/3/">3</a>
+  </div><div class="pag-item">
+    <a href="/compiler-and-type-theory/page/4/">4</a>
+  </div><div class="pag-next">
+    <a href="/compiler-and-type-theory/page/2/"><i class="iconfont icon-chevron-forward-circle-sharp"></i></a>
+  </div><div class="pag-last">
+    <a href="/compiler-and-type-theory/page/4/"><i class="iconfont icon-caret-forward-circle-sharp"></i></a>
+  </div></div>
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>页面</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>链接</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Origami404" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://wiki.hitsz.org" target="_blank"><span>HITsz LUG wiki</span></a>
+            </li>
+            
+            <li>
+                <a href="https://space.bilibili.com/1124374292" target="_blank"><span>bilibili</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>标签</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/arch/">Arch</a>
+            </span>
+            
+            <span>
+                <a href="/tags/arm/">ARM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/c/">C</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">Docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">Git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/haskell/">Haskell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/https/">HTTPS</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux-%E5%B7%A5%E5%85%B7/">linux 工具</a>
+            </span>
+            
+            <span>
+                <a href="/tags/llvm/">LLVM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mgit/">mgit</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/windows/">Windows</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%8F%98%E5%88%86%E6%B3%95/">变分法</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9B%BE%E8%AE%BA/">图论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9F%9F%E5%90%8D/">域名</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%AF%BC%E8%AE%BA/">导论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%88%91%E4%BC%9A%E7%86%9F%E7%BB%83%E5%9C%B0%E5%AE%89%E8%A3%85xxx%E7%B3%BB%E5%88%97/">我会熟练地安装xxx系列</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%8A%98%E8%85%BE/">折腾</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%95%B0%E5%AD%A6/">数学</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%96%B0%E8%A7%82%E7%82%B9/">新观点</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AE%A1%E7%90%86/">服务器管理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%AF%95%E6%98%87%E6%9D%AF/">毕昇杯</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%B1%87%E7%BC%96/">汇编</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%90%86%E8%AE%BA%E7%89%A9%E7%90%86/">理论物理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BA%BF%E4%BB%A3/">线代</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E7%A8%8B/">编程</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%89%8D%E7%AB%AF/">编译前端</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%87%AA%E7%95%99%E5%9C%B0/">自留地</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%BD%AE%E5%AD%90/">轮子</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E9%9D%9E%E6%8A%80%E6%9C%AF/">非技术</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+</aside>
+
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>页面</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>链接</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Origami404" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://wiki.hitsz.org" target="_blank"><span>HITsz LUG wiki</span></a>
+            </li>
+            
+            <li>
+                <a href="https://space.bilibili.com/1124374292" target="_blank"><span>bilibili</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>标签</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/arch/">Arch</a>
+            </span>
+            
+            <span>
+                <a href="/tags/arm/">ARM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/c/">C</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">Docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">Git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/haskell/">Haskell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/https/">HTTPS</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux-%E5%B7%A5%E5%85%B7/">linux 工具</a>
+            </span>
+            
+            <span>
+                <a href="/tags/llvm/">LLVM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mgit/">mgit</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/windows/">Windows</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%8F%98%E5%88%86%E6%B3%95/">变分法</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9B%BE%E8%AE%BA/">图论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9F%9F%E5%90%8D/">域名</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%AF%BC%E8%AE%BA/">导论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%88%91%E4%BC%9A%E7%86%9F%E7%BB%83%E5%9C%B0%E5%AE%89%E8%A3%85xxx%E7%B3%BB%E5%88%97/">我会熟练地安装xxx系列</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%8A%98%E8%85%BE/">折腾</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%95%B0%E5%AD%A6/">数学</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%96%B0%E8%A7%82%E7%82%B9/">新观点</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AE%A1%E7%90%86/">服务器管理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%AF%95%E6%98%87%E6%9D%AF/">毕昇杯</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%B1%87%E7%BC%96/">汇编</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%90%86%E8%AE%BA%E7%89%A9%E7%90%86/">理论物理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BA%BF%E4%BB%A3/">线代</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E7%A8%8B/">编程</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%89%8D%E7%AB%AF/">编译前端</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%87%AA%E7%95%99%E5%9C%B0/">自留地</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%BD%AE%E5%AD%90/">轮子</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E9%9D%9E%E6%8A%80%E6%9C%AF/">非技术</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <h3>目录</h3>
+        
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2019-2022
+                <a href="https://blog.origami404.top/">Origami404</a>
+                
+                | 基于 <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 构建
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+
+
+</body>
+
+</html>

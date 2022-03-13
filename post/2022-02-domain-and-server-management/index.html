@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="zh-hans">
+
+<head>
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.92.2" />
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png" />
+<link rel="manifest" href="icons/site.webmanifest" />
+<link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#8aa2d3" />
+<link rel="shortcut icon" href="icons/favicon.ico" />
+<meta name="theme-color" content="#ffffff" />
+
+
+<title>购入域名之后... - Origami404 的 Blog</title>
+
+
+<meta name="author" content="Origami404" />
+
+
+<meta name="description" content="有空的话就随便逛逛吧 www" />
+
+
+<meta name="keywords" content="域名, HTTPS, 服务器管理, Docker" />
+
+
+<meta property="og:title" content="购入域名之后..." />
+<meta name="twitter:title" content="购入域名之后..." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.origami404.top/post/2022-02-domain-and-server-management/" /><meta property="og:description" content="域名是什么? 域名 , Domain Name, 是一个可以写在 url 里的名字. 我们知道, 当下互联网上(同一个网络内)的实体是靠 IP 地址来唯一标识的. 完成域名到 IP 地址转换的系统称为 DNS. DNS 的主要构成部分是大大小小的 DNS 服务器. DNS 服务器接受客" />
+<meta name="twitter:description" content="域名是什么? 域名 , Domain Name, 是一个可以写在 url 里的名字. 我们知道, 当下互联网上(同一个网络内)的实体是靠 IP 地址来唯一标识的. 完成域名到 IP 地址转换的系统称为 DNS. DNS 的主要构成部分是大大小小的 DNS 服务器. DNS 服务器接受客" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://blog.origami404.top/img/og.png" /><meta property="article:published_time" content="2022-02-03T10:00:00+08:00" /><meta property="article:modified_time" content="2022-02-03T10:00:00+08:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+
+<link rel="stylesheet" href="https://blog.origami404.top/assets/css/fuji.min.css" />
+
+
+
+
+
+
+
+
+</head>
+
+<body
+  data-theme="auto"
+  data-theme-auto='true'
+  >
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
+
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="https://blog.origami404.top/">Origami404 的 Blog</a>
+            
+            <span class="title-sub">有空的话就随便逛逛吧 www</span>
+            
+        </div>
+    </div>
+</header>
+
+    <main>
+        <div class="container-lg clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="https://blog.origami404.top/post/2022-02-domain-and-server-management/">购入域名之后...</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2022-02-03</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;6613 字</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E5%9F%9F%E5%90%8D">域名</a>&nbsp;<a href="/tags/https">HTTPS</a>&nbsp;<a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AE%A1%E7%90%86">服务器管理</a>&nbsp;<a href="/tags/docker">Docker</a>&nbsp;</span>
+
+    </div>
+    
+    <div class="post-content markdown-body">
+        <h2 id="域名是什么">域名是什么?</h2>
+<p><strong>域名</strong> , Domain Name, 是一个可以写在 url 里的名字.</p>
+<p>我们知道, 当下互联网上(同一个网络内)的实体是靠 IP 地址来唯一标识的. 完成域名到 IP 地址转换的系统称为 DNS. DNS 的主要构成部分是大大小小的 DNS 服务器. DNS 服务器接受客户的访问, 返回域名对应的 IP 地址; 它是多级缓存的分布式数据库, 通过将请求 “转发” 给其他服务器实现了具有层次结构的名称空间.</p>
+<h3 id="如何-拥有-一个域名-理论">如何 “拥有” 一个域名: 理论</h3>
+<p>那么, 在这个庞大的系统里, 我们要如何插入一条属于我们的记录呢?</p>
+<p>答: <strong>给钱.</strong></p>
+<p>尽管 DNS 是可以是分布式的系统, 但显然域名的管理不能是分布式的(真的吗?). <strong>ICANN</strong>, 互联网名称与数字地址分配机构(Internet Corporation for Assigned Names and Numbers), 一个位于美国加州的非营利社团, 负责域名与 IP 地址的分配. ICANN 直接管理顶级域名(TLD, top-level domain), 并且适当地把一些顶级域名分配给其他组织, 譬如:</p>
+<ul>
+<li>基础建设 TLD (<code>.arpa</code>)</li>
+<li>国家及地区 TLD (ccTLD): 如 <code>.cn</code>, <code>.uk</code> 等</li>
+<li>国际 TLD (IDN)</li>
+<li>通用 TLD (gTLD): 如 <code>.com</code>, <code>.org</code>, <code>.net</code> 等</li>
+</ul>
+<p>这里有一个 <a href="https://en.wikipedia.org/wiki/List_of_Internet_top-level_domains" target="_blank">TLD 列表</a>.</p>
+<p>ICANN 是非营利组织, 它把一些顶级域名的注册服务承包出去, 那些承包商可就不是非营利的了. 他们负责维护域名的 whois 信息(就是一大堆你的个人信息, 为了在法律上证明你对该域名的所有权), 保证域名的唯一性, 也许还为倒卖域名的其他公司提供支持 :(. 所以, 为了获得一个域名, 我们需要前往某个域名注册提供商那里支付一笔费用, 随后他们便会负责帮你去 ICANN 或者哪里为你注册一个域名.</p>
+<h3 id="如何-拥有-一个域名-实践">如何 “拥有” 一个域名: 实践</h3>
+<p>常见的外国域名注册提供商有:</p>
+<ul>
+<li>GoDaddy, 狗爹, 最大的一家, 小贵, 而且有点黑料</li>
+<li>Gandi</li>
+<li>Namecheap, 顾名思义, 主打便宜, 还送邮箱服务, 但是貌似不能支付宝</li>
+<li>ResellerClub, 印度公司, Web 页面很拉, 但是便宜, 而且是亚洲龙头</li>
+</ul>
+<p>国内的提供商有:</p>
+<ul>
+<li>万网</li>
+<li>DNSPod</li>
+<li>新网</li>
+<li><a href="https://www.quyu.net/" target="_blank">趣域网</a>, 免实名, 但是页面看起来很拉</li>
+<li>阿里云腾讯云这些貌似也可以买, 而且说不定有备案服务</li>
+</ul>
+<p>国内的提供商大多需要实名/备案, 但国内的基本上都比国外便宜(国外赚美刀花美刀怎么能一样呢). 况且很多国外的提供商都提供 <strong>whois 信息保护</strong>, 信息泄露可以少一点.</p>
+<p>上面的信息都是聊天聊来的. 出于贫穷+不想实名, 我选择在 ResellerClub 购入了一个 <code>.top</code> 域名(就是现在这个啦). 根据群友说法, <code>.top</code> 域名注册商是国内某家公司, 所以人力成本很低, 所以便宜 :(. 我的 id 字母混数字, 就更加便宜, <strong>10 年只需要 277 CNY</strong>.</p>
+<p>在 RC 的网站上选好域名, 注册账号. 注册账号要填很多信息, 这些信息可能在打官司的时候有用, 但鉴于我又不会拿这个域名来干什么, 我就直接填了我们学校的信息(笑)</p>
+<p>地址倒是卡了我一下 &ndash; 虽然帮李华写了很多信, 但是没写过英文地址啊. 咨询群友意见之后, 我选择了全拼音(包括 “Lu, 路” 之类的), 首字母大写, 逆序 (地址由小到大, 逗号分隔) 的形式.</p>
+<p>最后记得把 <strong>域名隐私保护</strong> 那个按钮打开就可以了.</p>
+<p>注册了域名, 接着就是要往 DNS 里插信息了. DNS 中维护了几类记录:</p>
+<ul>
+<li>主机记录 (A 记录): 记录域名对应到哪个 IPv4 地址.</li>
+<li>别名记录 (CNAME 记录): 记录域名对应到哪个域名. (“不要来烦我, 去找这个域名!”)</li>
+<li>IPv6主机记录 (AAAA 记录): 记录域名对应到哪个 IPv6 地址.</li>
+<li>域名服务器记录 (NS 记录): 用来指定该域名由哪个DNS服务器来进行解析. 每个注册的域名都可以由多个 DNS 域名服务器来进行解析, 并且在注册的时候就会默认被塞几条域名注册商提供的 NS 记录. 一般这个记录长这样子: <code>ns1.domain.com</code>、<code>ns2.domain.com</code>…. 这个记录只有域名注册商那里可以改, 所以如果你能改这个记录, 那你必然是域名的所有者.</li>
+<li>纯文本记录 (TXT 记录): 就是简单地把 DNS 当 “字典” 用; 这种记录一般用来验证你是域名的管理者: 只有能访问 NS 记录中的 DNS 服务提供商的人才能添加 DNS 记录.</li>
+</ul>
+<p>因为 RC 默认的 DNS 记录管理很拉, 所以我们选择使用 Cloudflare 来管理我们的 DNS 记录. 首先注册一个 Cloudflare 账号, 然后把刚刚买的域名填进去, 接着按照指示去 RC 里修改 NS 记录把管理权交给 Cloudflare 就可以了. 接着我们就可以在 Cloudflare 里加记录了. (或者, 让程序通过 API 来往里面加记录)</p>
+<p>有了域名还不够, 现在都 2022 年了, 怎么还能不上 HTTPS 呢. 等等, HTTPS 是啥?</p>
+<h2 id="为什么要申请-ssl-证书--上-https">为什么要申请 SSL 证书 / 上 <strong>HTTPS</strong>?</h2>
+<p>&ndash; 一张 SSL 证书能干什么呢?</p>
+<p>&ndash; 能证明你访问这个域名访问到的, 就是申请证书的主机.</p>
+<blockquote>
+<p>当然一张高级证书里可以塞进别的信息, 证明该域名的一些其他信息.</p>
+<p>像上面那样的, 只是证明访问域名访问到的是特定主机的证书, 叫 DV 证书, Domain Validated certificates</p>
+<p>往证书里塞入其他信息, 比如域名持有者的公司信息之类的, 就可以得到高级证书, 比如 OV 证书或者是 EV 证书.  (organization validated (OV) and <a href="https://www.keyfactor.com/blog/what-are-extended-validation-certificates-and-are-they-dead/" target="_blank">extended validation (EV) certificates</a>)</p>
+<p>偶尔你可以在浏览器的小锁上看到某某公司的名字, 这就是高级证书了 (笑)</p>
+</blockquote>
+<h3 id="ssl-证书是如何起作用的">SSL 证书是如何起作用的?</h3>
+<p>SSL 证书的验证流程大概是这样的:</p>
+<ol>
+<li>浏览器解析域名, 做 DNS, 拿到 ip, 访问 ip</li>
+<li>首先从那个 ip 里收一张证书回来</li>
+<li>然后拿证书开始加密通信</li>
+</ol>
+<p>验证过程中可能出现的问题与解决方法:</p>
+<ul>
+<li>我要是在 DNS 部分动手脚, 访问到假 ip, 给假证书, 怎么办?
+<ul>
+<li>DNS 很难动手脚</li>
+<li>证书的颁发是需要权威机构(CA)的认证的, 并且需要检验你是不是域名的管理者; 域名信息是写在证书里的, 所以不能通过简单的让浏览器访问假 ip 来骗</li>
+</ul>
+</li>
+<li>证书在传输过程中被截了怎么办?
+<ul>
+<li>证书也是被签名的, 浏览器收到证书会先检验你这证书是不是真的.</li>
+<li>检验证书的证书, 检验检验证书的证书, 一直套娃, 到最后的根证书, 形成了一条相继确保安全的证书链. 这条链的根节点, 根证书, 其私钥被全世界最权威的机构以最安全的形式保管, 公钥被直接放在常见的操作系统里, 安装就有.</li>
+<li>要想修改证书就得打破这条链, 但是这要是被打破了, 那天就塌了, 也轮不到我们来担心了 :)</li>
+</ul>
+</li>
+</ul>
+<p>所以, 有了 SSL 证书, 至少中间人攻击就难搞了; 数据的传输也被证书加密, 从而很难被嗅探到了.</p>
+<h3 id="那如何申请一张证书呢">那如何申请一张证书呢?</h3>
+<p>要申请证书, 自然要先 <strong>买服务器</strong> (钱无预定). 为了省心我直接买了 Vultr 新的韩国机房的 5$/mo 的机子, 1g1c 跑点小服务足以. IPv4 ping 100-150ms, IPv6 ping 250ms左右, 套层代理就很快了, 所以没大问题.</p>
+<p>然后就 <strong>是找 <del>便宜</del> 靠谱的 CA</strong> 来给你签一份证书. 作为穷人自然是选择给免费发证书的 CA: <strong>Let’s Encrypt</strong>. Let’s Encrypt 注册的证书一张管 90 天, 只能在倒数 30 天之前续签; 同时可以选择签通配符证书, 也就是一张证书证掉所有域名(比如*.origami404.top), 这样子就可以放肆使用子域名了.</p>
+<p>申请证书的方式有很多种, 比如你可以派一个人去 CA 的总部把证书抄回来然后打进去, 也可以通过 <strong>ACME 协议</strong> (这协议就是 Let’s Encrypt 那班人弄出来的来着)来自动申请. ACME 现在的版本是 ACME v2, 不跟 v1 向后兼容, 主要比 v1 好的地方就是支持签通配符证书.</p>
+<h3 id="acme-的原理">ACME 的原理</h3>
+<p>在 ACME 协议里, 我们有两个程序, ACME 客户端跟服务端. 服务端运行在 CA 的服务器上, 客户端运行在需要申请证书的服务器上. 当安装客户端时, 客户端会要求你输入你想申请证书的域名与 CA. 随后其:</p>
+<ol>
+<li>生成一个密钥对(也就是一个公钥跟对应的一个私钥), 然后与 CA py, 通过 HTTPS 链接(这个链接此时由 CA 的 SSL 证书保障)来跟 CA share 这个对. 这个密钥对又叫 authorization key pair (下文简称 AK)</li>
+<li>CA 生成一个 HTTP/DNS 挑战(issue challenges (DNS or HTTP)) 来验证客户端对其宣称的域名的控制权.</li>
+<li>为保安全, CA 还会发送一个随机数, 叫 nonce, 给客户端. 客户端必须用 AK 的私钥给它签名, 然后发回去, 以证明自己手上确实有私钥.</li>
+</ol>
+<p>HTTP 挑战认定了这样一个事实: 如果在 DNS 里, 你这个域名对应到的 ip 就是发出请求的服务器的话, 那你就是 “控制” 着这个域名. 因此, HTTP 挑战的主要流程如下:</p>
+<ol>
+<li>CA 给客户端发一个 token</li>
+<li>客户端收到 token, 创建一个文件, 里面包含了这个 token 跟 AK 的指纹</li>
+<li>客户端监听 80 端口, 准备把文件送出去, 同时通知 CA 说我好了</li>
+<li>CA 访问域名, 解析到 ip 地址, 访问那个 ip 地址的服务器的 80 端口, 尝试收文件. 一旦收到正确的文件了, 就认为挑战成功.</li>
+</ol>
+<p>DNS 挑战则认为, 如果你能往 DNS 里插这个域名关联着的记录, 那你就 “控制” 着这个域名. 于是, DNS 挑战的主要流程如下:</p>
+<ol>
+<li>CA 给客户端发一个 token</li>
+<li>客户端收到 token, 然后生成一个包含了 token 和 AK 指纹的一个字符串 (内容同 HTTP 挑战里的文件内容)</li>
+<li>客户端往 DNS 里加入一条 TXT 记录, 记录的值就是这个字符串, 然后通知 CA 来收</li>
+<li>CA 通过 DNS 查询得到 TXT 记录的值, 检查是不是自己发的. 如果值正确了, 就认为挑战成功.</li>
+</ol>
+<p>HTTP 挑战的主要坏处就是它要占用 80 端口一段时间 &ndash; 在这段时间里我们的服务就得停一会, 挺烦的. 而 DNS 挑战的主要坏处就是它需要让客户端这个程序能操纵你的 DNS 管理商. 对于正常的应用而言, 一般都是选择 DNS 挑战, 毕竟一般来讲我们都不想让网站每两个月就当掉 10-15 分钟, 并且主流 DNS 管理商(比如 Cloudflare)都提供了对应的 API 供 ACME 客户端使用. 但我选择了 HTTP 挑战 &ndash; 因为 Caddy 可以自动帮我处理这件事.</p>
+<p>这就不得不讲讲如何用一台服务器跑多个应用了 &ndash; 毕竟 80/443 端口只有一个, 不是吗?</p>
+<h2 id="用一台服务器跑多个应用">用一台服务器跑多个应用</h2>
+<h3 id="理论-子域名-反向代理-以及边缘网关">理论: 子域名, 反向代理, 以及边缘网关</h3>
+<p>在网络里, IP 地址用于确定某一台主机, 而端口号则可以用来确定主机上哪一个程序提供服务. 系统把端口号分给不同的应用, 在收到数据包之后根据端口号把数据包转给不同的应用处理, 于是我们就可以在一台服务器上同时运行多个需要访问网络的应用了. 需要访问不同应用, 就在地址上加上端口号就可以了, 比如这样: <code>127.0.0.1:3000</code>.</p>
+<p>当我们在浏览器里输入域名的时候, 浏览器就拿域名去找 DNS, 讨回来一个 IP 地址, 然后访问. 但问题是, 浏览器拿到了 IP 地址, 会访问它哪个端口呢?</p>
+<p>一个直觉的想法是, DNS 返回的 ip 地址应该是带着端口的, 这样浏览器不就知道了嘛. 然而 DNS 并没有这种功能 &ndash; DNS 在设计时就只是负责 <strong>把域名映射到 IP 地址</strong>, 而 <strong>不</strong> 负责把域名映射到 IP地址+端口号.</p>
+<blockquote>
+<p>DNS 在设计的时候为啥不把端口号加上呢? 我猜测有二:</p>
+<ul>
+<li>端口号相比 IP 地址, 变动得更加频繁, 加进去会加重 DNS 的负担</li>
+<li>设计 DNS 的人忘记了 :(</li>
+</ul>
+</blockquote>
+<p>所以浏览器拿到 IP 地址之后, 它也不知道该访问啥; 首先它会看看你打进去的 URL 是不是包含端口(有冒号), 有它就往那个 IP 发带着那个端口号的包; 没有的话, 浏览器就 <strong>直接假设你想访问 80 端口</strong> (如果你的 URL 是 http 开头的, 走 HTTP 协议的话), 然后往那个 IP 发带着 80 端口号的包.</p>
+<p>现在假如我们想要这样子:</p>
+<ul>
+<li>访问 A.origami404.top 就访问到 A 服务</li>
+<li>访问 B.origami404.top 就访问到 B 服务</li>
+<li>访问 C.origami404.top 就访问到 C 服务</li>
+</ul>
+<p>要怎么办呢? 一个简单的解决办法是, 买三台服务器, 把这三个域名绑定到三个 IP 上. 然而我并没有钱.</p>
+<p>俗话说, “计算机科学里的任何问题都可以通过加一个抽象层解决”. 既然操作系统可以看端口把收到的包分给不同的应用, 我们也可以写一个应用, 专门守住 80 端口, 收到包之后解包, 看看包里写着的 “待访问域名”, 然后根据这个的值把包处理一下, 然后跟对应的程序建立连接, 把处理好的包发过去就好了.</p>
+<p>像这种 <strong>“守门口分包”</strong> 的功能, 叫 <strong>反向代理</strong>. 正向代理把服务端跟用户隔离, 只让服务端看到自己; 反向代理也把用户端跟服务器隔离, 但是只让用户看到自己. 常见的可以用来当反代的软件有:</p>
+<ul>
+<li>Nginx: 很出名, 很强大, 很快. 能均衡, 反代, 静态文件. 但是配置文件看起来很复杂 (快进到图灵完备)</li>
+<li>Apache: 很老, 不大快</li>
+<li>Haproxy: 只做均衡和反代, 不能当静态文件服务器. 配置上比 nginx 更像 “网络配置”</li>
+<li>Caddy: 比较新, Go 写的; 自带一个 ACME 客户端, 可以自动通过 HTTP 挑战续 SSL 证书; 配置文件写起来很友好</li>
+<li>Traefik: 很新, 可以直接管理各种容器(通过容器的 label 来动态地决定这包该发哪)</li>
+</ul>
+<p>事实上大部分这些软件都能不止能做反代, 还能搞负载均衡/静态文件服务器等, 但无论如何做的都是 “守门口分包” 的工作: 负载均衡就是把收到的包均分丢几个不同服务器去, 静态文件服务器就是收包然后找文件发回去.</p>
+<p>基于好奇跟懒, 我选择了 <strong>Caddy</strong> 作为 “守门员”. 理由就像上面提到的那样:</p>
+<ul>
+<li>相对来讲很快的速度(毕竟是 Go 写的), 对我这小户人家完全够用</li>
+<li>可以 <strong>自动申请/续签证书</strong>, 不需要先把自己关掉, 让出 80 端口, 再用别的程序做 HTTP 挑战</li>
+<li>配置文件(Caddyfile)很好写, Nginx 的配置文件直接劝退, 抄都抄不懂 :(</li>
+</ul>
+<p>偶尔, 你也会看到上面的软件把自己叫做 “边缘网关”. 这个边缘指的是提供服务的服务器集群, 跟外部世界之间的边缘. 这些软件接受所有来自外界的访问, 将其转发, 就好像一个坐在边界的网关一样, 所以叫边缘网关.</p>
+<h3 id="实践-基于-docker-的服务架构">实践: 基于 Docker 的服务架构</h3>
+<p>如果一台服务器上跑多个服务的话, 各个服务的安装/管理/配置将会是一场噩梦. 幸好现在是 2022 年了, 我们有了非常好用的容器化技术, 以及还算可以的容器管理技术. 这次我打算把所有服务都丢容器里边, 同时充分利用 Docker 的 <a href="https://yeasy.gitbook.io/docker_practice/network" target="_blank">network 功能</a>, 尽可能少地暴露端口.</p>
+<p><img class="img-zoomable" src="" alt="服务器架构示意图" />
+</p>
+<p>图中的每一个黑框框都代表一个容器, 虚线框框代表一个 network, 被框住的容器就代表其与该 network 相连. 最外边代表整个 Docker 环境, 只有 80/443 端口被暴露出来, 连接到守门员 Caddy 的容器里.</p>
+<p>我的管理方法是这样的, 对每一项服务, 比如 Outline, 创建一个子文件夹, 里面放一个 docker-compose.yml, 描述了这个服务. 如果有需要挂载出来的数据目录, 或者挂载进去的配置文件, 也都放在这个子文件夹里, 方便备份和管理. 大概目录就长这个样子:</p>
+<pre><code>.
+└── services
+    ├── caddy-main                  # Caddy 的目录
+    │   ├── caddy-config               # 数据
+    │   ├── caddy-data                 # 数据
+    │   ├── Caddyfile                  # 配置, 每次加新服务都要修改这个文件, 增加反代规则, 然后重启 Caddy
+    │   └── docker-compose.yml         # Docker-compose
+    ├── miniflux                    # Miniflux 的目录(一个 RSS 服务)
+    │   ├── data                       # Miniflux 的数据存放的目录
+    │   └── docker-compose.yml         # Docker-compose
+    ├── outline                     # Outline 的目录
+    │   ├── docker-compose.yml         # Docker-compose
+    │   ├── docker.env                 # Outline 的环境变量太多, 单独拿一个文件出来设
+    │   ├── init_minio.yml             # 用来初始化 MinIO 的命令, 因为有关系, 所以放在 Outline 这里
+    │   ├── minio_main_data            # 数据
+    │   ├── outline_db_data            # 数据
+    │   └── redis.conf                 # 配置
+    ............
+</code></pre>
+<p>然后 Caddy 如下配置:</p>
+<pre><code class="language-yml"># Caddy docker-compose.yml
+version: &quot;3&quot;
+
+services:
+  caddy-main:
+    image: caddy:2-alpine
+    container_name: caddy-main
+    restart: always
+    ports:
+      - &quot;80:80&quot;
+      - &quot;443:443&quot;
+    volumes:
+      # 把各种配置文件挂进去, 数据都挂出来
+      - &quot;./Caddyfile:/etc/caddy/Caddyfile:ro&quot;
+      - &quot;./caddy-config:/config&quot;
+      - &quot;./caddy-data:/data&quot;
+
+    networks:
+      # 将 caddy-main 容器加入 service-net 之中
+      - service-net
+    
+networks:
+  # service-net 这个顶层网络我们在外部单独创建
+  # 使其跟所有服务独立, 便于管理(不会说一不小心把哪个服务关了, 所有服务都死了)
+  service-net:
+    external: true
+</code></pre>
+<pre><code class="language-bash"># Caddyfile
+
+# 对于任何访问到 80 端口的包, Caddy 都会把它们转发到对应域名的 443 端口去
+# 也就是说相当于有一条 *:80 -&gt; *:443 的转发规则
+# 所以我们在下面只需要配置各个子域名的 443 端口的转发规则就可以了
+
+# 对于访问 443 端口, 目标域名为 outline.origami404.top 的包
+outline.origami404.top:443 {
+  # 这些包的日志将会被记录
+  log {
+    # 等级为 info
+    level INFO
+    # 记录在容器里的 /data/outline.log
+    output file /data/outline.log {
+      # 单个大小最大 10MB, 保留最近的 10 个这样的文件, 超过了就开始循环写入
+      roll_size 10MB
+      roll_keep 10
+    }
+  }
+
+  # 设置给这个子域名进行 ACME HTTP 挑战的时候要交给 CA 的邮箱
+  tls Origami404g@gmail.com
+
+  # 启用基于 gzip 的压缩传输
+  # 有可能会有问题, 但我还没遇到 2333
+  encode gzip
+
+  # 设置反向代理(reverse_proxy)
+  # 把收到的包丢到地址 http://outline:3000 去
+  # 因为我们提供服务的容器都在同一个 network, service-net 里
+  # 所以我们可以通过容器的名字当 url 互相访问容器
+  reverse_proxy outline:3000 
+}
+
+# 如果需要增加其他的服务, 照猫画虎复制粘贴就可以了, 只不过改改反代的目标地址而已
+# 比如下面这堆, 可以将对 rss.origami404.top 的访问, 反代到对应的容器 miniflux 的 80 端口上. 
+rss.origami404.top:443 {
+  log {
+    level INFO
+    output file /data/miniflux.log {
+      roll_size 10MB
+      roll_keep 10
+    }
+  }
+
+  tls Origami404g@gmail.com
+  encode gzip
+
+  reverse_proxy miniflux:80
+}
+</code></pre>
+<p>我看到貌似有可以直接通过给容器加 label 的形式定义 Caddy 的转发规则(而不用写在 Caddyfile 里), 从而真正实现动态增加服务 &ndash; 然而我现在还不会</p>
+<p>然后我们稍微地配置一下 Miniflux 跟 Outline:</p>
+<p>此处不会详细介绍如何配置它们, 目的主要是介绍服务的架构</p>
+<pre><code class="language-yml"># Miniflux docker-compose.yml
+version: &quot;3&quot;
+
+# 基本配置照抄官网
+services:
+  miniflux:
+    image: miniflux/miniflux:latest
+    container_name: miniflux
+    # 注意这里我们不需要写任何的 ports
+    # 这个 ports 是用来把端口绑定到主机上的
+    # 而我们根本不需要让外界能通过这个端口访问到该容器
+    # 我们只需要让 Caddy 能访问到这个容器就可以了
+    # 然而要做到上面这点, 我们只需要把容器们放到同一个网络就可以了
+    # 同一个网路的容器之间默认是都可以互相访问的
+    #ports:
+    #  - &quot;80:80&quot;
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgres://miniflux:secret@db/miniflux?sslmode=disable
+      - RUN_MIGRATIONS=1
+      - CREATE_ADMIN=1
+      - ADMIN_USERNAME=管理员用户名
+      - ADMIN_PASSWORD=管理员用户密码
+    healthcheck:
+      test: [&quot;CMD&quot;, &quot;/usr/bin/miniflux&quot;, &quot;-healthcheck&quot;, &quot;auto&quot;]
+    # 在这里对于网络的配置要注意加入这个 docker-compose 创建的默认网络
+    # 同一个 docker-compose.yml 里创建的容器可以互相访问的原因, 就是它们在同一个网络里
+    # 执行 docker-compose up 的时候, 首先创建一个网络 xxx_default, 然后再创建容器, 把容器加入到网络里
+    # 这个网络在 docker-compose.yml 里可以通过 default 来访问  
+    networks:
+      - service-net
+      - default       # 就是这个
+    
+  db:
+    image: postgres:latest
+    container_name: miniflus_postgres
+    environment:
+      - POSTGRES_USER=miniflux
+      - POSTGRES_PASSWORD=secret
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    healthcheck:
+      test: [&quot;CMD&quot;, &quot;pg_isready&quot;, &quot;-U&quot;, &quot;miniflux&quot;]
+      interval: 10s
+      start_period: 30s
+
+networks:
+  # 同样地, 指明这个网络是外部的, 这样执行这个的 docker-compose up 的时候
+  # 就不会尝试去创建一个网络 service-net, 而是去找一个已经存在的网络 service-net 了
+  service-net:
+    external: true
+</code></pre>
+<pre><code class="language-yml"># Outline docker-compose.yml
+
+version: &quot;3&quot;
+services:
+  # 基本上就照抄官方的
+  outline:
+    image: outlinewiki/outline
+    container_name: outline
+    env_file: ./docker.env
+    restart: always
+    # 同样不需要暴露端口
+    # ports:
+    #   - &quot;3000:3000&quot;
+    # 同样网络记得加入 default, 要不然就不能访问数据库了
+    networks:
+      - service-net
+      - default
+    depends_on:
+      - postgres
+      - redis
+      - storage
+
+  redis:
+    image: redis
+    container_name: outline_redis
+    env_file: ./docker.env
+    restart: always
+    # 把数据啊配置啊全部挂出来, 不要用 docker volume
+    volumes:
+      - ./redis.conf:/redis.conf
+    command: [&quot;redis-server&quot;, &quot;/redis.conf&quot;]
+    # 不需要对外提供服务的容器根本不需要加入到 service-net 网络中
+    # 只需要加入到这个 docker-compose 定义的 default 网络就可以了
+
+  postgres:
+    image: postgres
+    container_name: outline_postgres
+    env_file: ./docker.env
+    restart: always
+    volumes:
+      - ./outline_db_data:/var/lib/postgresql/data
+
+networks:
+  service-net:
+    external: true
+</code></pre>
+<p>要运行的话, 就只需要简单地创建网络, 并且启动所有 docker-compose 就可以了.</p>
+<pre><code class="language-bash">$ docker network create service-net # 创建网络
+$ cd caddy-main &amp;&amp; docker-compose up -d    # 把容器都创建起来
+$ cd ../outline &amp;&amp; docker-compose up -d
+$ cd ../miniflux &amp;&amp; docker-compose up -d 
+</code></pre>
+<h3 id="子域名注册">子域名注册</h3>
+<p>现在我们的服务器已经准备好接收访问各个子域名的包了, 是时候来修改 DNS, 使所有子域名都被解析到我们的服务器上了. 在之前的文章里, 我们已经把域名的 NS 记录改成了 Cloudflare. 登录 Cloudflare 检查一下, 发现 CF 很贴心地直接帮我们加入了通配符形式的 DNS 记录, 不需要我们再进一步配置了.</p>
+<p>那么基本的配置到这里就结束了.</p>
+
+    </div>
+</article>
+
+
+<div class="license markdown-body">
+    <blockquote>
+        <p>除特殊注明部分，本站内容采用 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
+               target="_blank">CC BY-NC-SA 4.0</a> 进行许可。</p>
+    </blockquote>
+</div>
+
+
+
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>页面</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>链接</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Origami404" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://wiki.hitsz.org" target="_blank"><span>HITsz LUG wiki</span></a>
+            </li>
+            
+            <li>
+                <a href="https://space.bilibili.com/1124374292" target="_blank"><span>bilibili</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>标签</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/arch/">Arch</a>
+            </span>
+            
+            <span>
+                <a href="/tags/arm/">ARM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/c/">C</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">Docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">Git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/haskell/">Haskell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/https/">HTTPS</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux-%E5%B7%A5%E5%85%B7/">linux 工具</a>
+            </span>
+            
+            <span>
+                <a href="/tags/llvm/">LLVM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mgit/">mgit</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/windows/">Windows</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%8F%98%E5%88%86%E6%B3%95/">变分法</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9B%BE%E8%AE%BA/">图论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9F%9F%E5%90%8D/">域名</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%AF%BC%E8%AE%BA/">导论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%88%91%E4%BC%9A%E7%86%9F%E7%BB%83%E5%9C%B0%E5%AE%89%E8%A3%85xxx%E7%B3%BB%E5%88%97/">我会熟练地安装xxx系列</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%8A%98%E8%85%BE/">折腾</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%95%B0%E5%AD%A6/">数学</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%96%B0%E8%A7%82%E7%82%B9/">新观点</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AE%A1%E7%90%86/">服务器管理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%AF%95%E6%98%87%E6%9D%AF/">毕昇杯</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%B1%87%E7%BC%96/">汇编</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%90%86%E8%AE%BA%E7%89%A9%E7%90%86/">理论物理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BA%BF%E4%BB%A3/">线代</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E7%A8%8B/">编程</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%89%8D%E7%AB%AF/">编译前端</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%87%AA%E7%95%99%E5%9C%B0/">自留地</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%BD%AE%E5%AD%90/">轮子</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E9%9D%9E%E6%8A%80%E6%9C%AF/">非技术</a>
+            </span>
+            
+        </div>
+    </div>
+    <div class="sidebar-item sidebar-toc">
+        <h3>目录</h3><nav id="TableOfContents">
+  <ul>
+    <li><a href="#域名是什么">域名是什么?</a>
+      <ul>
+        <li><a href="#如何-拥有-一个域名-理论">如何 “拥有” 一个域名: 理论</a></li>
+        <li><a href="#如何-拥有-一个域名-实践">如何 “拥有” 一个域名: 实践</a></li>
+      </ul>
+    </li>
+    <li><a href="#为什么要申请-ssl-证书--上-https">为什么要申请 SSL 证书 / 上 <strong>HTTPS</strong>?</a>
+      <ul>
+        <li><a href="#ssl-证书是如何起作用的">SSL 证书是如何起作用的?</a></li>
+        <li><a href="#那如何申请一张证书呢">那如何申请一张证书呢?</a></li>
+        <li><a href="#acme-的原理">ACME 的原理</a></li>
+      </ul>
+    </li>
+    <li><a href="#用一台服务器跑多个应用">用一台服务器跑多个应用</a>
+      <ul>
+        <li><a href="#理论-子域名-反向代理-以及边缘网关">理论: 子域名, 反向代理, 以及边缘网关</a></li>
+        <li><a href="#实践-基于-docker-的服务架构">实践: 基于 Docker 的服务架构</a></li>
+        <li><a href="#子域名注册">子域名注册</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+</aside>
+
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>页面</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>链接</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Origami404" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://wiki.hitsz.org" target="_blank"><span>HITsz LUG wiki</span></a>
+            </li>
+            
+            <li>
+                <a href="https://space.bilibili.com/1124374292" target="_blank"><span>bilibili</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>标签</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/arch/">Arch</a>
+            </span>
+            
+            <span>
+                <a href="/tags/arm/">ARM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/c/">C</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">Docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">Git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/haskell/">Haskell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/https/">HTTPS</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux-%E5%B7%A5%E5%85%B7/">linux 工具</a>
+            </span>
+            
+            <span>
+                <a href="/tags/llvm/">LLVM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mgit/">mgit</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/windows/">Windows</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%8F%98%E5%88%86%E6%B3%95/">变分法</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9B%BE%E8%AE%BA/">图论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9F%9F%E5%90%8D/">域名</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%AF%BC%E8%AE%BA/">导论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%88%91%E4%BC%9A%E7%86%9F%E7%BB%83%E5%9C%B0%E5%AE%89%E8%A3%85xxx%E7%B3%BB%E5%88%97/">我会熟练地安装xxx系列</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%8A%98%E8%85%BE/">折腾</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%95%B0%E5%AD%A6/">数学</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%96%B0%E8%A7%82%E7%82%B9/">新观点</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AE%A1%E7%90%86/">服务器管理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%AF%95%E6%98%87%E6%9D%AF/">毕昇杯</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%B1%87%E7%BC%96/">汇编</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%90%86%E8%AE%BA%E7%89%A9%E7%90%86/">理论物理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BA%BF%E4%BB%A3/">线代</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E7%A8%8B/">编程</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%89%8D%E7%AB%AF/">编译前端</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%87%AA%E7%95%99%E5%9C%B0/">自留地</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%BD%AE%E5%AD%90/">轮子</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E9%9D%9E%E6%8A%80%E6%9C%AF/">非技术</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <h3>目录</h3>
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#域名是什么">域名是什么?</a>
+      <ul>
+        <li><a href="#如何-拥有-一个域名-理论">如何 “拥有” 一个域名: 理论</a></li>
+        <li><a href="#如何-拥有-一个域名-实践">如何 “拥有” 一个域名: 实践</a></li>
+      </ul>
+    </li>
+    <li><a href="#为什么要申请-ssl-证书--上-https">为什么要申请 SSL 证书 / 上 <strong>HTTPS</strong>?</a>
+      <ul>
+        <li><a href="#ssl-证书是如何起作用的">SSL 证书是如何起作用的?</a></li>
+        <li><a href="#那如何申请一张证书呢">那如何申请一张证书呢?</a></li>
+        <li><a href="#acme-的原理">ACME 的原理</a></li>
+      </ul>
+    </li>
+    <li><a href="#用一台服务器跑多个应用">用一台服务器跑多个应用</a>
+      <ul>
+        <li><a href="#理论-子域名-反向代理-以及边缘网关">理论: 子域名, 反向代理, 以及边缘网关</a></li>
+        <li><a href="#实践-基于-docker-的服务架构">实践: 基于 Docker 的服务架构</a></li>
+        <li><a href="#子域名注册">子域名注册</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2019-2022
+                <a href="https://blog.origami404.top/">Origami404</a>
+                
+                | 基于 <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 构建
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+
+
+</body>
+
+</html>

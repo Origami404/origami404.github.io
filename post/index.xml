@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Origami404 的 Blog</title>
+    <link>https://blog.origami404.top/post/</link>
+    <description>Recent content in Posts on Origami404 的 Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 12 Mar 2022 22:00:00 +0800</lastBuildDate><atom:link href="https://blog.origami404.top/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>图取样算法简介</title>
+      <link>https://blog.origami404.top/post/2022-03-graph-sampling-intro/</link>
+      <pubDate>Sat, 12 Mar 2022 22:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/post/2022-03-graph-sampling-intro/</guid>
+      <description>发现了重要的一点: 对人来说, 1k 节点的图跟 10k 节点的图完全没有差别: 都是一团黑糊糊的看不清的玩意. 所以大规模图可视化没有活路, 取样才是真理. 主要参考: https://github.com/Ashish7129/Graph_Sampling 基于探索(遍历)的取样 简单随机游走 SRW, Simple Random Walk 随机挑一个</description>
+    </item>
+    
+    <item>
+      <title>购入域名之后...</title>
+      <link>https://blog.origami404.top/post/2022-02-domain-and-server-management/</link>
+      <pubDate>Thu, 03 Feb 2022 10:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/post/2022-02-domain-and-server-management/</guid>
+      <description>域名是什么? 域名 , Domain Name, 是一个可以写在 url 里的名字. 我们知道, 当下互联网上(同一个网络内)的实体是靠 IP 地址来唯一标识的. 完成域名到 IP 地址转换的系统称为 DNS. DNS 的主要构成部分是大大小小的 DNS 服务器. DNS 服务器接受客</description>
+    </item>
+    
+    <item>
+      <title>矢量运算与高阶线性结构的构造性定义</title>
+      <link>https://blog.origami404.top/post/2021-09-constructive-def-of-vector-operation/</link>
+      <pubDate>Thu, 30 Sep 2021 19:30:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/post/2021-09-constructive-def-of-vector-operation/</guid>
+      <description>前言 上大学了, 终于有大段的时间来整理数学和物理学内容了. 本文有其思想上的参考: 3b1b: 发明新数学是怎样一种体验？ &amp;ldquo;最原始的&amp;quot;双线性二元运算 让我们来考虑矢量的运算吧! 假如我们需要在线性空</description>
+    </item>
+    
+    <item>
+      <title>从外代数出发的行列式理论</title>
+      <link>https://blog.origami404.top/post/2021-09-determinant-begin-from-wedge-product/</link>
+      <pubDate>Mon, 27 Sep 2021 19:30:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/post/2021-09-determinant-begin-from-wedge-product/</guid>
+      <description>前置 这篇文章有些前置知识我默认读者是知道的, 比如矢量和线性空间(wiki, 知乎)的概念. 具体来讲, 我希望读者能完全理解这句话: &amp;ldquo;基底通过线性组合张成线性空间&amp;rdquo;. 但更加重要的是,</description>
+    </item>
+    
+    <item>
+      <title>UEFI下的引导恢复</title>
+      <link>https://blog.origami404.top/post/2020-10-boot-recovery-in-uefi/</link>
+      <pubDate>Sat, 31 Oct 2020 23:22:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/post/2020-10-boot-recovery-in-uefi/</guid>
+      <description>背景 想调整一下分区大小, 结果一不小心删掉了 ESP&amp;hellip; 前置知识 ESP, 全称EFI System Partition, 是一个在物理硬盘主分区表上的特殊分区, 它: 是 FAT 格式的; (可以是 FAT16/FAT32 ) 与操作系统无关, 而是 UEFI 固件用来寻找引导器的存储空间 一般分区表会使用</description>
+    </item>
+    
+    <item>
+      <title>Anbox 踩坑 &amp; Manjaro 下的内核编译</title>
+      <link>https://blog.origami404.top/post/2020-10-anbox-and-compile-kernel/</link>
+      <pubDate>Fri, 02 Oct 2020 23:22:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/post/2020-10-anbox-and-compile-kernel/</guid>
+      <description>前言 &amp;amp; Anbox 简介 最近换回了 Manjaro 和 Xfce, 打算认认真真地开始将 Linux 作为日常生活系统而不仅仅是开发系统来用了. 然而在日常生活中, 总归是逃不掉某国产IM的 :(. 为了实现以 Manjaro 作为生活主力系统的目标, (同时也为了以后说不定能愉快</description>
+    </item>
+    
+    <item>
+      <title>Win10下Haskell开发环境的配置</title>
+      <link>https://blog.origami404.top/post/2020-04-haskell-dev-in-win10/</link>
+      <pubDate>Tue, 14 Apr 2020 22:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/post/2020-04-haskell-dev-in-win10/</guid>
+      <description>前言 时隔半年再次开始学Haskell, 然后在配环境中度过了一个哭笑不得的下午&amp;hellip; Haskell环境是啥呢&amp;hellip;? 按我不完全的理解, 主要有: 一个编译器, 比如ghc; 它还附带一个RE</description>
+    </item>
+    
+    <item>
+      <title>Win10重装与MSR分区</title>
+      <link>https://blog.origami404.top/post/2020-04-win10-and-msr/</link>
+      <pubDate>Wed, 08 Apr 2020 09:45:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/post/2020-04-win10-and-msr/</guid>
+      <description>前言 大概1月底, 辣鸡win10的更新就更不上去了, 然后我折腾了好久&amp;hellip;包括各种系统检查啊手动安装啊, 无果. 最后在3月决定干脆删了重装&amp;hellip; 重装过程中遇到了大大小小的问题, 写个文章</description>
+    </item>
+    
+    <item>
+      <title>变分学基本定理</title>
+      <link>https://blog.origami404.top/post/2020-01-basic-of-calculus-of-variations/</link>
+      <pubDate>Fri, 31 Jan 2020 17:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/post/2020-01-basic-of-calculus-of-variations/</guid>
+      <description>在试卷现实生活中, 总是会碰到一些泛函上的最优化问题. 它们大多可以归为以下形式: 在函数集合 $$ \left{ x(t)\ | \ x(t_1) = y_1, x(t_2) = y_2, x^{(k)} 存在 \right} $$ 中, 求一个函数$x(t)$使得泛函$I[x(\centerdot)]$的积分: $$</description>
+    </item>
+    
+    <item>
+      <title>Blog 搭建</title>
+      <link>https://blog.origami404.top/post/2019-07-blog-init/</link>
+      <pubDate>Sat, 20 Jul 2019 00:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/post/2019-07-blog-init/</guid>
+      <description>前言 忽然想建个blog来记录自己没填的坑了&amp;hellip; 使用hexo搭建, 主题为new-vno, 托管于github-pages. 搭建hexo 在你的平台上安装好nodejs, 然后使用npm安装hexo</description>
+    </item>
+    
+  </channel>
+</rss>

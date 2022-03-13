@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Origami404 的 Blog</title>
+    <link>https://blog.origami404.top/</link>
+    <description>Recent content on Origami404 的 Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 12 Mar 2022 22:00:00 +0800</lastBuildDate><atom:link href="https://blog.origami404.top/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>图取样算法简介</title>
+      <link>https://blog.origami404.top/post/2022-03-graph-sampling-intro/</link>
+      <pubDate>Sat, 12 Mar 2022 22:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/post/2022-03-graph-sampling-intro/</guid>
+      <description>发现了重要的一点: 对人来说, 1k 节点的图跟 10k 节点的图完全没有差别: 都是一团黑糊糊的看不清的玩意. 所以大规模图可视化没有活路, 取样才是真理. 主要参考: https://github.com/Ashish7129/Graph_Sampling 基于探索(遍历)的取样 简单随机游走 SRW, Simple Random Walk 随机挑一个</description>
+    </item>
+    
+    <item>
+      <title>毕昇杯专用 ARMv7 汇编急救</title>
+      <link>https://blog.origami404.top/compiler-and-type-theory/2022-02-armv7-basic/</link>
+      <pubDate>Sun, 13 Feb 2022 21:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/compiler-and-type-theory/2022-02-armv7-basic/</guid>
+      <description>总览 主要参考文章: https://thinkingeek.com/arm-assembler-raspberry-pi/ 绝大部分示例代码都是从此文章抄来的 这篇参考文章偏向于使用 ARM 汇编进行开发的入门, 期望读者水平为学过 C, 还教了一些算法啥的. 作者还有一本书, 200来页, 书比网站上的更加系统, 建议看书. 当</description>
+    </item>
+    
+    <item>
+      <title>购入域名之后...</title>
+      <link>https://blog.origami404.top/post/2022-02-domain-and-server-management/</link>
+      <pubDate>Thu, 03 Feb 2022 10:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/post/2022-02-domain-and-server-management/</guid>
+      <description>域名是什么? 域名 , Domain Name, 是一个可以写在 url 里的名字. 我们知道, 当下互联网上(同一个网络内)的实体是靠 IP 地址来唯一标识的. 完成域名到 IP 地址转换的系统称为 DNS. DNS 的主要构成部分是大大小小的 DNS 服务器. DNS 服务器接受客</description>
+    </item>
+    
+    <item>
+      <title>LLVM Kaleidoscope 第 7 章：可变量</title>
+      <link>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-7/</link>
+      <pubDate>Fri, 21 Jan 2022 22:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-7/</guid>
+      <description>7.1 前言 欢迎来到 我的第一个基于 LLVM 的语言前端 教程第七章。在前六章我们构建了一门小而强的函数式编程语言, 从中我们学到了如何去解析程序文本，构建与表示 AST，生成 LLVM IR 以及优化冗余代码和实现即时编译。 尽管 Kaleidoscope 作为</description>
+    </item>
+    
+    <item>
+      <title>LLVM Kaleidoscope 第 7 章：可变量</title>
+      <link>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-8/</link>
+      <pubDate>Tue, 18 Jan 2022 22:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-8/</guid>
+      <description>8.1 前言 欢迎来到 我的第一个基于 LLVM 的语言前端 教程第八章。本章将描述如何将我们实现的语言编译到目标文件 (object file)。 8.2 选择目标平台 LLVM 对交叉编译 (cross-compilation) 有原生支持，你既可以编译到你当前的机器架构上，也可以很轻松地编</description>
+    </item>
+    
+    <item>
+      <title>LLVM Kaleidoscope 第 6 章：扩展语言：自定义运算符</title>
+      <link>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-6/</link>
+      <pubDate>Mon, 17 Jan 2022 22:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-6/</guid>
+      <description>6.1 前言 欢迎来到 我的第一个基于 LLVM 的语言前端 教程第六章。麻雀虽小，五脏俱全，现在我们已经有了一个相对完备的小型函数式编程语言。但目前我们的语言还有一个大缺点：它缺少很多有用的运算符 (比如除法和逻辑非，我们</description>
+    </item>
+    
+    <item>
+      <title>LLVM Kaleidoscope 第 -1 章 翻译者的话</title>
+      <link>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-1/</link>
+      <pubDate>Sat, 15 Jan 2022 22:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-1/</guid>
+      <description>本教程原文于 LLVM Tutorial. 网上现见有一些翻译： 连城 翻译的：用 LLVM 开发新语言: 比较老，里面的警告还是在警告 LLVM 2.7 版的，而且只有前三章，但其翻译被众多网友引用。 LLVM 中文网 翻译的：LLVM 开发新语言: 翻译来源不能确定，并且</description>
+    </item>
+    
+    <item>
+      <title>LLVM Kaleidoscope 第 0 章 我的第一个基于 LLVM 的语言前端</title>
+      <link>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-0/</link>
+      <pubDate>Sat, 15 Jan 2022 22:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-0/</guid>
+      <description>前置技能： 本教程要求你有 C++ 基础，但你并不需要先去做一个编译器再来看这个教程。 欢迎来到“我的第一个基于 LLVM 的语言前端”教程。在本教程我们将会自己动手实现一个简单的语言，你将会看到这有多简单以及有趣。在接下</description>
+    </item>
+    
+    <item>
+      <title>LLVM Kaleidoscope 第 1 章 Kaleidoscope 与 lexer</title>
+      <link>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-1/</link>
+      <pubDate>Sat, 15 Jan 2022 22:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-1/</guid>
+      <description>暂未翻译，敬请参阅连城大佬的译文. 译文较老，请与原文对比以确保自己的代码是更新之后的。 本教程其他翻译将基于新版本教程。 下一章在此。</description>
+    </item>
+    
+    <item>
+      <title>LLVM Kaleidoscope 第 2 章 实现 Parser 与 AST</title>
+      <link>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-2/</link>
+      <pubDate>Sat, 15 Jan 2022 22:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-2/</guid>
+      <description>暂未翻译，敬请参阅连城大佬的译文. 译文较老，请与原文对比以确保自己的代码是更新之后的。 本教程其他翻译将基于新版本教程。 下一章在此。</description>
+    </item>
+    
+    <item>
+      <title>LLVM Kaleidoscope 第 3 章 生成 LLVM IR</title>
+      <link>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-3/</link>
+      <pubDate>Sat, 15 Jan 2022 22:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-3/</guid>
+      <description>暂未翻译，敬请参阅连城大佬的译文. 译文较老，请与原文对比以确保自己的代码是更新之后的。 本教程其他翻译将基于新版本教程。 下一章在此。</description>
+    </item>
+    
+    <item>
+      <title>LLVM Kaleidoscope 第 4 章 增加 JIT 与优化</title>
+      <link>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-4/</link>
+      <pubDate>Sat, 15 Jan 2022 22:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-4/</guid>
+      <description>4.1 前言 欢迎来到 我的第一个基于 LLVM 的语言前端 教程第四章。前三章描述了一门简单语言的实现与生成 LLVM IR 的过程，而本章将要描述两种新技术 &amp;ndash; 增加优化器 (optimizer) 与 JIT 编译器支持 &amp;ndash; 它们将会告诉你如何生成优雅高效的中间代码。 4.2 平</description>
+    </item>
+    
+    <item>
+      <title>LLVM Kaleidoscope 第 5 章 扩展语言：控制流</title>
+      <link>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-5/</link>
+      <pubDate>Sat, 15 Jan 2022 22:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-5/</guid>
+      <description>5.1 前言 欢迎来到 我的第一个基于 LLVM 的语言前端 教程第五章。前四章描述了一门简单语言的实现，生成 LLVM IR 并优化，随后即时编译到本地代码的过程。不幸的是，至少到目前为止，Kaleidoscope 还不堪大用：它没有控</description>
+    </item>
+    
+    <item>
+      <title>矢量运算与高阶线性结构的构造性定义</title>
+      <link>https://blog.origami404.top/post/2021-09-constructive-def-of-vector-operation/</link>
+      <pubDate>Thu, 30 Sep 2021 19:30:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/post/2021-09-constructive-def-of-vector-operation/</guid>
+      <description>前言 上大学了, 终于有大段的时间来整理数学和物理学内容了. 本文有其思想上的参考: 3b1b: 发明新数学是怎样一种体验？ &amp;ldquo;最原始的&amp;quot;双线性二元运算 让我们来考虑矢量的运算吧! 假如我们需要在线性空</description>
+    </item>
+    
+    <item>
+      <title>从外代数出发的行列式理论</title>
+      <link>https://blog.origami404.top/post/2021-09-determinant-begin-from-wedge-product/</link>
+      <pubDate>Mon, 27 Sep 2021 19:30:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/post/2021-09-determinant-begin-from-wedge-product/</guid>
+      <description>前置 这篇文章有些前置知识我默认读者是知道的, 比如矢量和线性空间(wiki, 知乎)的概念. 具体来讲, 我希望读者能完全理解这句话: &amp;ldquo;基底通过线性组合张成线性空间&amp;rdquo;. 但更加重要的是,</description>
+    </item>
+    
+    <item>
+      <title>基于Bison和Flex的编译器前端实现</title>
+      <link>https://blog.origami404.top/compiler-and-type-theory/2021-09-compiler-frontend-with-flex-bison/</link>
+      <pubDate>Sun, 05 Sep 2021 22:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/compiler-and-type-theory/2021-09-compiler-frontend-with-flex-bison/</guid>
+      <description>前言 最近被某学长介绍了毕昇杯编译器比赛, 有点感兴趣, 遂开始用 C 自己实现, 然后就: 还是 Java 香! 本文记录了我用 Bison 和 Flex 来构建 SysY2021 语言前端的尝试. Show me the code. 前置声明: 大体的代码架构和使用方法在最后, 可以交叉着看. lex</description>
+    </item>
+    
+    <item>
+      <title>Git Command: Git 的数据使用方式</title>
+      <link>https://blog.origami404.top/git-impl/2021-02-git-impl-command/</link>
+      <pubDate>Sun, 21 Feb 2021 22:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/git-impl/2021-02-git-impl-command/</guid>
+      <description>此文章施工中&amp;hellip; 现在让我们来使用上面我们写好的 Git Object 来实现常用的 Git 命令吧. Spec 我们要实现的命令有这些: 创建仓库: $ git init [path] # [path]: 在 [path] 下创建一个包含必要目录结构的 .git 目录, 默认为 . (当前目录) 泛用 Object 文</description>
+    </item>
+    
+    <item>
+      <title>Git Index: Git 的暂存区</title>
+      <link>https://blog.origami404.top/git-impl/2021-02-git-impl-index/</link>
+      <pubDate>Sat, 20 Feb 2021 22:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/git-impl/2021-02-git-impl-index/</guid>
+      <description>此文章施工中&amp;hellip; 二进制格式 前后顺序均按从低位到高位. &amp;lt;index&amp;gt; ::= &amp;lt;header/12-byte&amp;gt; &amp;lt;entries/8k-byte&amp;gt; &amp;lt;extensions&amp;gt; &amp;lt;checksum&amp;gt; &amp;lt;header&amp;gt; ::= &amp;lt;signature/4-byte&amp;gt; &amp;lt;version/4-byte&amp;gt; &amp;lt;entry_cnt/32-bit&amp;gt; &amp;lt;signature&amp;gt; ::= b&#39;DIRC&#39; &amp;lt;version&amp;gt; ::= (0002, 0003, 0004) in ASCII format &amp;lt;entry_cnt&amp;gt; ::= the amount of entries below in u32 format &amp;lt;entries&amp;gt; ::= [&amp;lt;entry&amp;gt; &amp;lt;padding&amp;gt;] &amp;lt;entry&amp;gt; ::= &amp;lt;c_time/32-bit&amp;gt; &amp;lt;c_time_ns/32-bit&amp;gt; &amp;lt;m_time/32-bit&amp;gt; &amp;lt;m_time_ns/32-bit&amp;gt; &amp;lt;dev/32-bit&amp;gt; &amp;lt;ino/32-bit&amp;gt; &amp;lt;mode/32-bit&amp;gt; &amp;lt;uid/32-bit&amp;gt; &amp;lt;gid/32-bit&amp;gt; &amp;lt;file_size/32-bit&amp;gt; &amp;lt;sha-1/20-byte&amp;gt; &amp;lt;flags/16-bit&amp;gt; &amp;lt;path_name&amp;gt; &amp;lt;c_time&amp;gt; ::= 以秒为单位的最后一次文件元信息</description>
+    </item>
+    
+    <item>
+      <title>Git 实现: Object 文件</title>
+      <link>https://blog.origami404.top/git-impl/2021-02-git-impl-object-file/</link>
+      <pubDate>Fri, 19 Feb 2021 22:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/git-impl/2021-02-git-impl-object-file/</guid>
+      <description>导读 本文先介绍了一些方便查看 Git Object 文件 二进制内容的命令行工具, 其次分别介绍了 4 种 Object: Blob, Commit, Tree, Tag. 每一种 Object 按&amp;quot;概念模型&amp;quot;与&amp;quot;二进制格式&amp;quot;分隔, 前者主要介绍其储存了那些抽象</description>
+    </item>
+    
+    <item>
+      <title>Git 实现: 目录 &amp; 前言 &amp; Git repo</title>
+      <link>https://blog.origami404.top/git-impl/2021-02-git-impl-content/</link>
+      <pubDate>Fri, 19 Feb 2021 22:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/git-impl/2021-02-git-impl-content/</guid>
+      <description>前言 写这篇文章一开始主要是受到了 Write Yourself a Git, 深入理解Git实现原理 这两篇文章的激励. 俗话说学会使用轮子的最佳方法就是造一个轮子(其实是我刚刚说的), 而在使用 Python 实现的过程中又多少碰到了点前面两篇文章没有覆盖</description>
+    </item>
+    
+    <item>
+      <title>UEFI下的引导恢复</title>
+      <link>https://blog.origami404.top/post/2020-10-boot-recovery-in-uefi/</link>
+      <pubDate>Sat, 31 Oct 2020 23:22:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/post/2020-10-boot-recovery-in-uefi/</guid>
+      <description>背景 想调整一下分区大小, 结果一不小心删掉了 ESP&amp;hellip; 前置知识 ESP, 全称EFI System Partition, 是一个在物理硬盘主分区表上的特殊分区, 它: 是 FAT 格式的; (可以是 FAT16/FAT32 ) 与操作系统无关, 而是 UEFI 固件用来寻找引导器的存储空间 一般分区表会使用</description>
+    </item>
+    
+    <item>
+      <title>Anbox 踩坑 &amp; Manjaro 下的内核编译</title>
+      <link>https://blog.origami404.top/post/2020-10-anbox-and-compile-kernel/</link>
+      <pubDate>Fri, 02 Oct 2020 23:22:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/post/2020-10-anbox-and-compile-kernel/</guid>
+      <description>前言 &amp;amp; Anbox 简介 最近换回了 Manjaro 和 Xfce, 打算认认真真地开始将 Linux 作为日常生活系统而不仅仅是开发系统来用了. 然而在日常生活中, 总归是逃不掉某国产IM的 :(. 为了实现以 Manjaro 作为生活主力系统的目标, (同时也为了以后说不定能愉快</description>
+    </item>
+    
+    <item>
+      <title>Python 与 Type Annotations</title>
+      <link>https://blog.origami404.top/compiler-and-type-theory/2020-07-python-and-type-annotations/</link>
+      <pubDate>Tue, 21 Jul 2020 11:30:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/compiler-and-type-theory/2020-07-python-and-type-annotations/</guid>
+      <description>前言 用Python写了个Scheme解释器, 代码. 记录一下Python的类型标注要怎么用, 有什么坑. 话说回来这好像是我第一篇技术性文章&amp;hellip;? 不务正业实锤 本文假定您已有支持编译期泛型的静态类</description>
+    </item>
+    
+    <item>
+      <title>Category-theory-for-programmers 阅读笔记</title>
+      <link>https://blog.origami404.top/compiler-and-type-theory/2020-04-notes-on-category-theory-for-programmers/</link>
+      <pubDate>Thu, 16 Apr 2020 22:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/compiler-and-type-theory/2020-04-notes-on-category-theory-for-programmers/</guid>
+      <description>前言 &amp;amp; 介绍 Category Theory for Programmers, 顾名思义, 是一本关于范畴论的书, 但是偏向CS而非数学. 书的$\LaTeX$代码以GPL-3.0公布在GitHub, 有两个版本, 一个以C++作为辅助说明语言, 另一个是Scala. 作为一</description>
+    </item>
+    
+    <item>
+      <title>Win10下Haskell开发环境的配置</title>
+      <link>https://blog.origami404.top/post/2020-04-haskell-dev-in-win10/</link>
+      <pubDate>Tue, 14 Apr 2020 22:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/post/2020-04-haskell-dev-in-win10/</guid>
+      <description>前言 时隔半年再次开始学Haskell, 然后在配环境中度过了一个哭笑不得的下午&amp;hellip; Haskell环境是啥呢&amp;hellip;? 按我不完全的理解, 主要有: 一个编译器, 比如ghc; 它还附带一个RE</description>
+    </item>
+    
+    <item>
+      <title>Win10重装与MSR分区</title>
+      <link>https://blog.origami404.top/post/2020-04-win10-and-msr/</link>
+      <pubDate>Wed, 08 Apr 2020 09:45:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/post/2020-04-win10-and-msr/</guid>
+      <description>前言 大概1月底, 辣鸡win10的更新就更不上去了, 然后我折腾了好久&amp;hellip;包括各种系统检查啊手动安装啊, 无果. 最后在3月决定干脆删了重装&amp;hellip; 重装过程中遇到了大大小小的问题, 写个文章</description>
+    </item>
+    
+    <item>
+      <title>变分学基本定理</title>
+      <link>https://blog.origami404.top/post/2020-01-basic-of-calculus-of-variations/</link>
+      <pubDate>Fri, 31 Jan 2020 17:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/post/2020-01-basic-of-calculus-of-variations/</guid>
+      <description>在试卷现实生活中, 总是会碰到一些泛函上的最优化问题. 它们大多可以归为以下形式: 在函数集合 $$ \left{ x(t)\ | \ x(t_1) = y_1, x(t_2) = y_2, x^{(k)} 存在 \right} $$ 中, 求一个函数$x(t)$使得泛函$I[x(\centerdot)]$的积分: $$</description>
+    </item>
+    
+    <item>
+      <title>Arch Alacritty 配置</title>
+      <link>https://blog.origami404.top/linux-conf/2020-01-arch-alacritty/</link>
+      <pubDate>Wed, 29 Jan 2020 19:30:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/linux-conf/2020-01-arch-alacritty/</guid>
+      <description>应某人推荐, 终端模拟器使用了Alacritty, 特此记录. oh-my-zsh主题用了ys 主题使用了darcula 注意, 因为我用的是Awesome WM, 不自带合成器效果, 需要安装compton之后, Alac</description>
+    </item>
+    
+    <item>
+      <title>Arch AwesomeWM 配置</title>
+      <link>https://blog.origami404.top/linux-conf/2020-01-arch-awesome-wm/</link>
+      <pubDate>Wed, 29 Jan 2020 19:30:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/linux-conf/2020-01-arch-awesome-wm/</guid>
+      <description>配个awesome. 主要痛点有: 任务栏在上面, 并且有一堆很讨厌的东西, 比如什么启动菜单啊, 当前任务啊, 键盘键位等 默认layout居然是floating, 理解不能 tag居然是全部显示然后有东西就有个点,</description>
+    </item>
+    
+    <item>
+      <title>Arch CLI工具 安装记录</title>
+      <link>https://blog.origami404.top/linux-conf/2020-01-arch-install-cli/</link>
+      <pubDate>Wed, 29 Jan 2020 19:30:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/linux-conf/2020-01-arch-install-cli/</guid>
+      <description>接着上文, 记录一些常用的CLI工具 首先装sudo并新建用户 pacman -S sudo useradd -m -g wheel origami 安装一堆工具 pacman -S base-devel git cmake 装个v2ray并启动, ss实在太容易被ban了. proxychains可以通过替换动态链接库的方法来强迫</description>
+    </item>
+    
+    <item>
+      <title>Arch GUI 配置</title>
+      <link>https://blog.origami404.top/linux-conf/2020-01-arch-install-gui/</link>
+      <pubDate>Wed, 29 Jan 2020 19:30:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/linux-conf/2020-01-arch-install-gui/</guid>
+      <description>安装 桌面环境这次选择了X+awesome, wayland现在还是太折腾了, 并且还有输入法这一个大坑. 用过i3之后对浮动式wm就再也提不起兴趣, 同时因为用了一阵子i3, 决定换个口味, 试试配一个aweso</description>
+    </item>
+    
+    <item>
+      <title>Arch LightDM 配置</title>
+      <link>https://blog.origami404.top/linux-conf/2020-01-arch-lightdm/</link>
+      <pubDate>Wed, 29 Jan 2020 19:30:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/linux-conf/2020-01-arch-lightdm/</guid>
+      <description>简要名词介绍 WM: Windows Manager, 用于登录之后管理窗口的玩意 DM: Display Manager, 提供登录之前跟登录界面 Greeter: 用来提供登录界面, 依赖于特定的DM 安装 LightDM sudo pacman -S lightdm lightdm-webkit2-greeter 安装完编辑/etc/lightdm/lightdm.conf文件, 先找到[S</description>
+    </item>
+    
+    <item>
+      <title>Arch Nvidia 闭源驱动 配置</title>
+      <link>https://blog.origami404.top/linux-conf/2020-01-arch-nvidia/</link>
+      <pubDate>Wed, 29 Jan 2020 19:30:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/linux-conf/2020-01-arch-nvidia/</guid>
+      <description>其实开源驱动已经很好了, 但是颜色看起来总是怪怪的&amp;hellip; 白色跟浅浅的黄白之间的交界简直awful&amp;hellip;令人窒息, 特别是每次打开google都得看一次, 辣眼睛. 一开始以为是颜色深度的问</description>
+    </item>
+    
+    <item>
+      <title>Arch 上 RIMI 输入法的配置</title>
+      <link>https://blog.origami404.top/linux-conf/2020-01-arch-rime/</link>
+      <pubDate>Wed, 29 Jan 2020 19:30:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/linux-conf/2020-01-arch-rime/</guid>
+      <description>TODO. 搜狗挺香, 可惜人总是想折腾的. TODO. 安装</description>
+    </item>
+    
+    <item>
+      <title>Arch 安装记录</title>
+      <link>https://blog.origami404.top/linux-conf/2020-01-arch-install-basic/</link>
+      <pubDate>Wed, 29 Jan 2020 19:30:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/linux-conf/2020-01-arch-install-basic/</guid>
+      <description>简单记录一下安装arch时需要的命令. (虽然install.txt里都有了) install.txt复读机 如果你还不知道Arch是什么, 可以戳这里看看维基 打开作弊指南 install.txt 为了方便安装, 在启动完arch镜像</description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>https://blog.origami404.top/about/</link>
+      <pubDate>Sat, 20 Jul 2019 00:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/about/</guid>
+      <description>大学生, 2021 年起就读于 HITsz. 是 HITsz Linux User Group 的成员, 偶尔也会在 HITsz LUG wiki 上写点东西. 初中出于无聊学了 C++, 高中以打 OI 的名义彻底接触了 CS 的方方面面. 比起研究者更像工程师. 打 OI 心累了, 不打 ACM. 最近作为兴趣爱好主要在学编译原理啊</description>
+    </item>
+    
+    <item>
+      <title>Blog 搭建</title>
+      <link>https://blog.origami404.top/post/2019-07-blog-init/</link>
+      <pubDate>Sat, 20 Jul 2019 00:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/post/2019-07-blog-init/</guid>
+      <description>前言 忽然想建个blog来记录自己没填的坑了&amp;hellip; 使用hexo搭建, 主题为new-vno, 托管于github-pages. 搭建hexo 在你的平台上安装好nodejs, 然后使用npm安装hexo</description>
+    </item>
+    
+  </channel>
+</rss>

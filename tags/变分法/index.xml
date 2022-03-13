@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>变分法 on Origami404 的 Blog</title>
+    <link>https://blog.origami404.top/tags/%E5%8F%98%E5%88%86%E6%B3%95/</link>
+    <description>Recent content in 变分法 on Origami404 的 Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 31 Jan 2020 17:00:00 +0800</lastBuildDate><atom:link href="https://blog.origami404.top/tags/%E5%8F%98%E5%88%86%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>变分学基本定理</title>
+      <link>https://blog.origami404.top/post/2020-01-basic-of-calculus-of-variations/</link>
+      <pubDate>Fri, 31 Jan 2020 17:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/post/2020-01-basic-of-calculus-of-variations/</guid>
+      <description>在试卷现实生活中, 总是会碰到一些泛函上的最优化问题. 它们大多可以归为以下形式: 在函数集合 $$ \left{ x(t)\ | \ x(t_1) = y_1, x(t_2) = y_2, x^{(k)} 存在 \right} $$ 中, 求一个函数$x(t)$使得泛函$I[x(\centerdot)]$的积分: $$</description>
+    </item>
+    
+  </channel>
+</rss>

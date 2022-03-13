@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Arch on Origami404 的 Blog</title>
+    <link>https://blog.origami404.top/tags/arch/</link>
+    <description>Recent content in Arch on Origami404 的 Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 29 Jan 2020 19:30:00 +0800</lastBuildDate><atom:link href="https://blog.origami404.top/tags/arch/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Arch Alacritty 配置</title>
+      <link>https://blog.origami404.top/linux-conf/2020-01-arch-alacritty/</link>
+      <pubDate>Wed, 29 Jan 2020 19:30:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/linux-conf/2020-01-arch-alacritty/</guid>
+      <description>应某人推荐, 终端模拟器使用了Alacritty, 特此记录. oh-my-zsh主题用了ys 主题使用了darcula 注意, 因为我用的是Awesome WM, 不自带合成器效果, 需要安装compton之后, Alac</description>
+    </item>
+    
+    <item>
+      <title>Arch AwesomeWM 配置</title>
+      <link>https://blog.origami404.top/linux-conf/2020-01-arch-awesome-wm/</link>
+      <pubDate>Wed, 29 Jan 2020 19:30:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/linux-conf/2020-01-arch-awesome-wm/</guid>
+      <description>配个awesome. 主要痛点有: 任务栏在上面, 并且有一堆很讨厌的东西, 比如什么启动菜单啊, 当前任务啊, 键盘键位等 默认layout居然是floating, 理解不能 tag居然是全部显示然后有东西就有个点,</description>
+    </item>
+    
+    <item>
+      <title>Arch CLI工具 安装记录</title>
+      <link>https://blog.origami404.top/linux-conf/2020-01-arch-install-cli/</link>
+      <pubDate>Wed, 29 Jan 2020 19:30:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/linux-conf/2020-01-arch-install-cli/</guid>
+      <description>接着上文, 记录一些常用的CLI工具 首先装sudo并新建用户 pacman -S sudo useradd -m -g wheel origami 安装一堆工具 pacman -S base-devel git cmake 装个v2ray并启动, ss实在太容易被ban了. proxychains可以通过替换动态链接库的方法来强迫</description>
+    </item>
+    
+    <item>
+      <title>Arch GUI 配置</title>
+      <link>https://blog.origami404.top/linux-conf/2020-01-arch-install-gui/</link>
+      <pubDate>Wed, 29 Jan 2020 19:30:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/linux-conf/2020-01-arch-install-gui/</guid>
+      <description>安装 桌面环境这次选择了X+awesome, wayland现在还是太折腾了, 并且还有输入法这一个大坑. 用过i3之后对浮动式wm就再也提不起兴趣, 同时因为用了一阵子i3, 决定换个口味, 试试配一个aweso</description>
+    </item>
+    
+    <item>
+      <title>Arch LightDM 配置</title>
+      <link>https://blog.origami404.top/linux-conf/2020-01-arch-lightdm/</link>
+      <pubDate>Wed, 29 Jan 2020 19:30:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/linux-conf/2020-01-arch-lightdm/</guid>
+      <description>简要名词介绍 WM: Windows Manager, 用于登录之后管理窗口的玩意 DM: Display Manager, 提供登录之前跟登录界面 Greeter: 用来提供登录界面, 依赖于特定的DM 安装 LightDM sudo pacman -S lightdm lightdm-webkit2-greeter 安装完编辑/etc/lightdm/lightdm.conf文件, 先找到[S</description>
+    </item>
+    
+    <item>
+      <title>Arch Nvidia 闭源驱动 配置</title>
+      <link>https://blog.origami404.top/linux-conf/2020-01-arch-nvidia/</link>
+      <pubDate>Wed, 29 Jan 2020 19:30:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/linux-conf/2020-01-arch-nvidia/</guid>
+      <description>其实开源驱动已经很好了, 但是颜色看起来总是怪怪的&amp;hellip; 白色跟浅浅的黄白之间的交界简直awful&amp;hellip;令人窒息, 特别是每次打开google都得看一次, 辣眼睛. 一开始以为是颜色深度的问</description>
+    </item>
+    
+    <item>
+      <title>Arch 上 RIMI 输入法的配置</title>
+      <link>https://blog.origami404.top/linux-conf/2020-01-arch-rime/</link>
+      <pubDate>Wed, 29 Jan 2020 19:30:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/linux-conf/2020-01-arch-rime/</guid>
+      <description>TODO. 搜狗挺香, 可惜人总是想折腾的. TODO. 安装</description>
+    </item>
+    
+    <item>
+      <title>Arch 安装记录</title>
+      <link>https://blog.origami404.top/linux-conf/2020-01-arch-install-basic/</link>
+      <pubDate>Wed, 29 Jan 2020 19:30:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/linux-conf/2020-01-arch-install-basic/</guid>
+      <description>简单记录一下安装arch时需要的命令. (虽然install.txt里都有了) install.txt复读机 如果你还不知道Arch是什么, 可以戳这里看看维基 打开作弊指南 install.txt 为了方便安装, 在启动完arch镜像</description>
+    </item>
+    
+  </channel>
+</rss>

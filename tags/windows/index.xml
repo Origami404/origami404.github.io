@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Windows on Origami404 的 Blog</title>
+    <link>https://blog.origami404.top/tags/windows/</link>
+    <description>Recent content in Windows on Origami404 的 Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 08 Apr 2020 09:45:00 +0800</lastBuildDate><atom:link href="https://blog.origami404.top/tags/windows/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Win10重装与MSR分区</title>
+      <link>https://blog.origami404.top/post/2020-04-win10-and-msr/</link>
+      <pubDate>Wed, 08 Apr 2020 09:45:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/post/2020-04-win10-and-msr/</guid>
+      <description>前言 大概1月底, 辣鸡win10的更新就更不上去了, 然后我折腾了好久&amp;hellip;包括各种系统检查啊手动安装啊, 无果. 最后在3月决定干脆删了重装&amp;hellip; 重装过程中遇到了大大小小的问题, 写个文章</description>
+    </item>
+    
+  </channel>
+</rss>

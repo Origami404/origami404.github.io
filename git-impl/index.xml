@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Git-impls on Origami404 的 Blog</title>
+    <link>https://blog.origami404.top/git-impl/</link>
+    <description>Recent content in Git-impls on Origami404 的 Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 21 Feb 2021 22:00:00 +0800</lastBuildDate><atom:link href="https://blog.origami404.top/git-impl/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Git Command: Git 的数据使用方式</title>
+      <link>https://blog.origami404.top/git-impl/2021-02-git-impl-command/</link>
+      <pubDate>Sun, 21 Feb 2021 22:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/git-impl/2021-02-git-impl-command/</guid>
+      <description>此文章施工中&amp;hellip; 现在让我们来使用上面我们写好的 Git Object 来实现常用的 Git 命令吧. Spec 我们要实现的命令有这些: 创建仓库: $ git init [path] # [path]: 在 [path] 下创建一个包含必要目录结构的 .git 目录, 默认为 . (当前目录) 泛用 Object 文</description>
+    </item>
+    
+    <item>
+      <title>Git Index: Git 的暂存区</title>
+      <link>https://blog.origami404.top/git-impl/2021-02-git-impl-index/</link>
+      <pubDate>Sat, 20 Feb 2021 22:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/git-impl/2021-02-git-impl-index/</guid>
+      <description>此文章施工中&amp;hellip; 二进制格式 前后顺序均按从低位到高位. &amp;lt;index&amp;gt; ::= &amp;lt;header/12-byte&amp;gt; &amp;lt;entries/8k-byte&amp;gt; &amp;lt;extensions&amp;gt; &amp;lt;checksum&amp;gt; &amp;lt;header&amp;gt; ::= &amp;lt;signature/4-byte&amp;gt; &amp;lt;version/4-byte&amp;gt; &amp;lt;entry_cnt/32-bit&amp;gt; &amp;lt;signature&amp;gt; ::= b&#39;DIRC&#39; &amp;lt;version&amp;gt; ::= (0002, 0003, 0004) in ASCII format &amp;lt;entry_cnt&amp;gt; ::= the amount of entries below in u32 format &amp;lt;entries&amp;gt; ::= [&amp;lt;entry&amp;gt; &amp;lt;padding&amp;gt;] &amp;lt;entry&amp;gt; ::= &amp;lt;c_time/32-bit&amp;gt; &amp;lt;c_time_ns/32-bit&amp;gt; &amp;lt;m_time/32-bit&amp;gt; &amp;lt;m_time_ns/32-bit&amp;gt; &amp;lt;dev/32-bit&amp;gt; &amp;lt;ino/32-bit&amp;gt; &amp;lt;mode/32-bit&amp;gt; &amp;lt;uid/32-bit&amp;gt; &amp;lt;gid/32-bit&amp;gt; &amp;lt;file_size/32-bit&amp;gt; &amp;lt;sha-1/20-byte&amp;gt; &amp;lt;flags/16-bit&amp;gt; &amp;lt;path_name&amp;gt; &amp;lt;c_time&amp;gt; ::= 以秒为单位的最后一次文件元信息</description>
+    </item>
+    
+    <item>
+      <title>Git 实现: Object 文件</title>
+      <link>https://blog.origami404.top/git-impl/2021-02-git-impl-object-file/</link>
+      <pubDate>Fri, 19 Feb 2021 22:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/git-impl/2021-02-git-impl-object-file/</guid>
+      <description>导读 本文先介绍了一些方便查看 Git Object 文件 二进制内容的命令行工具, 其次分别介绍了 4 种 Object: Blob, Commit, Tree, Tag. 每一种 Object 按&amp;quot;概念模型&amp;quot;与&amp;quot;二进制格式&amp;quot;分隔, 前者主要介绍其储存了那些抽象</description>
+    </item>
+    
+    <item>
+      <title>Git 实现: 目录 &amp; 前言 &amp; Git repo</title>
+      <link>https://blog.origami404.top/git-impl/2021-02-git-impl-content/</link>
+      <pubDate>Fri, 19 Feb 2021 22:00:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/git-impl/2021-02-git-impl-content/</guid>
+      <description>前言 写这篇文章一开始主要是受到了 Write Yourself a Git, 深入理解Git实现原理 这两篇文章的激励. 俗话说学会使用轮子的最佳方法就是造一个轮子(其实是我刚刚说的), 而在使用 Python 实现的过程中又多少碰到了点前面两篇文章没有覆盖</description>
+    </item>
+    
+  </channel>
+</rss>

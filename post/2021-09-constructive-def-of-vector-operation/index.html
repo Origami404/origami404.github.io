@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="zh-hans">
+
+<head>
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.92.2" />
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png" />
+<link rel="manifest" href="icons/site.webmanifest" />
+<link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#8aa2d3" />
+<link rel="shortcut icon" href="icons/favicon.ico" />
+<meta name="theme-color" content="#ffffff" />
+
+
+<title>矢量运算与高阶线性结构的构造性定义 - Origami404 的 Blog</title>
+
+
+<meta name="author" content="Origami404" />
+
+
+<meta name="description" content="有空的话就随便逛逛吧 www" />
+
+
+<meta name="keywords" content="数学, 线代, 新观点" />
+
+
+<meta property="og:title" content="矢量运算与高阶线性结构的构造性定义" />
+<meta name="twitter:title" content="矢量运算与高阶线性结构的构造性定义" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.origami404.top/post/2021-09-constructive-def-of-vector-operation/" /><meta property="og:description" content="前言 上大学了, 终于有大段的时间来整理数学和物理学内容了. 本文有其思想上的参考: 3b1b: 发明新数学是怎样一种体验？ &ldquo;最原始的&quot;双线性二元运算 让我们来考虑矢量的运算吧! 假如我们需要在线性空" />
+<meta name="twitter:description" content="前言 上大学了, 终于有大段的时间来整理数学和物理学内容了. 本文有其思想上的参考: 3b1b: 发明新数学是怎样一种体验？ &ldquo;最原始的&quot;双线性二元运算 让我们来考虑矢量的运算吧! 假如我们需要在线性空" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://blog.origami404.top/img/og.png" /><meta property="article:published_time" content="2021-09-30T19:30:00+08:00" /><meta property="article:modified_time" content="2021-09-30T19:30:00+08:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+
+<link rel="stylesheet" href="https://blog.origami404.top/assets/css/fuji.min.css" />
+
+
+
+
+
+
+
+
+</head>
+
+<body
+  data-theme="auto"
+  data-theme-auto='true'
+  >
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
+
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="https://blog.origami404.top/">Origami404 的 Blog</a>
+            
+            <span class="title-sub">有空的话就随便逛逛吧 www</span>
+            
+        </div>
+    </div>
+</header>
+
+    <main>
+        <div class="container-lg clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="https://blog.origami404.top/post/2021-09-constructive-def-of-vector-operation/">矢量运算与高阶线性结构的构造性定义</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2021-09-30</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;1651 字</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E6%95%B0%E5%AD%A6">数学</a>&nbsp;<a href="/tags/%E7%BA%BF%E4%BB%A3">线代</a>&nbsp;<a href="/tags/%E6%96%B0%E8%A7%82%E7%82%B9">新观点</a>&nbsp;</span>
+
+    </div>
+    
+    <div class="post-content markdown-body">
+        <h2 id="前言">前言</h2>
+<p>上大学了, 终于有大段的时间来整理数学和物理学内容了.</p>
+<p>本文有其思想上的参考: <a href="https://www.bilibili.com/video/BV1Gs411R7Yo" target="_blank">3b1b: 发明新数学是怎样一种体验？</a></p>
+<h2 id="最原始的双线性二元运算">&ldquo;最原始的&quot;双线性二元运算</h2>
+<p>让我们来考虑矢量的运算吧!</p>
+<p>假如我们需要在线性空间 $\mathbb{V}$ 上定义二元运算, 显然我们会希望这个运算至少是线性的, 否则为啥我们要在线性空间上搞呢. 同时如果一个二元运算是双线性的(就是说对于两个操作数而言它都是线性的), 那么我们只需要对 $\mathbb{V}$ 的基底定义此运算即可.</p>
+<p>换句话说, 对于双线性运算 $\mathbf{a} \otimes \mathbf{b}$, 我们可以将其按基底展开:</p>
+<p>$$
+\begin{aligned}
+\mathbf{a} \otimes \mathbf{b}
+&amp;= (\sum_{i=1}^n a_i \mathbf{e_i}) \otimes (\sum_{i=1}^n b_i \mathbf{e_i}) \
+&amp;= \sum_{i=1}^n \sum_{j=1}^n a_i b_j (\mathbf{e_i} \otimes \mathbf{e_j})
+\end{aligned}
+$$</p>
+<p>那么, 我们只需要定义所有的 $\mathbf{e_i} \otimes \mathbf{e_j}$ (一共 $n^2$ 个) 即可.</p>
+<blockquote>
+<p>等等, 这都啥跟啥啊????</p>
+</blockquote>
+<!-- more -->
+<h2 id="抽象的开始-mathbbr2">抽象的开始: $\mathbb{R}^2$</h2>
+<p>下面我们来举一个具体点的例子. 考虑 $\mathbb{R}^2$ 上的正交归一基 $\mathbf{i}, \mathbf{j}$, 上面的式子化成:</p>
+<p>$$
+\begin{aligned}
+\mathbf{a} \otimes \mathbf{b}
+&amp;= (a_1 \mathbf{i} + a_2 \mathbf{j}) \otimes (b_1 \mathbf{i} + b_2 \mathbf{j}) \
+&amp;= a_1 b_1 (\mathbf{i} \otimes \mathbf{i}) + a_1 b_2 (\mathbf{i} \otimes \mathbf{j}) \
+&amp;+ a_2 b_1 (\mathbf{j} \otimes \mathbf{i}) + a_2 b_2 (\mathbf{j} \otimes \mathbf{j})
+\end{aligned}
+$$</p>
+<p>注意我们并没有要求 $\otimes$ 是交换的, 故一般来讲 $\mathbf{i} \otimes \mathbf{j} \neq \mathbf{j} \otimes \mathbf{i}$.</p>
+<p>现在我们可以来<strong>定义</strong>我们的 &ldquo;运算&rdquo; 了.</p>
+<h3 id="内积">内积</h3>
+<p>我们先来一个最简单的, 我们如下定义基底之间的 $\otimes$:</p>
+<p>$$
+\begin{aligned}
+&amp; \mathbf{i} \otimes \mathbf{i} = 1  &amp;\mathbf{i} \otimes \mathbf{j} = 0\
+&amp; \mathbf{j} \otimes \mathbf{i} = 0  &amp;\mathbf{j} \otimes \mathbf{j} = 1
+\end{aligned}
+$$</p>
+<p>代入上面的式子, 我们就得到了<strong>内积</strong>(inner product), 又叫数量积, 点积:</p>
+<p>$$
+\begin{aligned}
+\mathbf{a} \otimes \mathbf{b} = a_1 b_1 + a_2 b_2
+\end{aligned}
+$$</p>
+<p>这个运算有其专有的符号, 我们记作 $\mathbb{a} \cdot \mathbb{b}$.</p>
+<p>同时, 由我们的定义可以看出, 点积具有交换律</p>
+<h3 id="高中叉乘-二维有向面积">高中叉乘 (二维有向面积)</h3>
+<p>相信大家在高中的解析几何的结论里都记过矢量叉乘求三角形面积的结论吧. 现在我们来定义一个叉乘.</p>
+<blockquote>
+<p>不严谨警告: 叉乘严格来说只在三维空间有定义(原因下文会讲), 所以这里定义出的两个二维矢量的&quot;叉乘&quot;应该是两个三维矢量$(a_1, a_2, 0)$, $(a_1, a_2, 0)$之间叉乘的结果的模.</p>
+</blockquote>
+<p>如下定义基底之间的 $\otimes$:</p>
+<p>$$
+\begin{aligned}
+&amp; \mathbf{i} \otimes \mathbf{i} = 0   &amp;\mathbf{i} \otimes \mathbf{j} = 1\
+&amp; \mathbf{j} \otimes \mathbf{i} = -1  &amp;\mathbf{j} \otimes \mathbf{j} = 0
+\end{aligned}
+$$</p>
+<p>代入上面的式子, 我们有:</p>
+<p>$$
+\begin{aligned}
+\mathbf{a} \otimes \mathbf{b} = a_1 b_2 - a_2 b_1
+\end{aligned}
+$$</p>
+<p>这个就是我们的二维假叉乘. 它同时也跟行列式有关, 事实上:</p>
+<p>$$
+\mathbf{a} \otimes \mathbf{b} =
+\begin{vmatrix}
+a_1 &amp; b_1 \
+a_2 &amp; b_2
+\end{vmatrix}
+= a_1 b_2 - a_2 b_1
+$$</p>
+<p>原因等讲完外代数就有了.</p>
+<h3 id="真的叉乘">真的叉乘</h3>
+<blockquote>
+<p>不知道叉乘的快去学</p>
+</blockquote>
+<blockquote>
+<p>我们先暂时来到 $\mathbb{R}^3$ 来看看真的叉乘. (现在我们的基底是 $\mathbf{i},\ \mathbf{j},\ \mathbf{k}$ 了)</p>
+</blockquote>
+<p>首先我们要玩大一点, 为啥我们的$\otimes$出来的结果一定得是是一个数呢? 假如我们塞其他的对象进去会怎么样?</p>
+<p>如下定义基底之间的 $\otimes$:</p>
+<p>$$
+\begin{aligned}</p>
+<p>&amp; \mathbf{i} \otimes \mathbf{i} = \mathbf{0}  \quad
+&amp; \mathbf{i} \otimes \mathbf{j} = \mathbf{k}  \quad
+&amp; \mathbf{i} \otimes \mathbf{k} = \mathbf{j}  \</p>
+<p>&amp; \mathbf{j} \otimes \mathbf{i} = -\mathbf{k} \quad
+&amp; \mathbf{j} \otimes \mathbf{j} = \mathbf{0}  \quad
+&amp; \mathbf{j} \otimes \mathbf{k} = \mathbf{i}  \</p>
+<p>&amp; \mathbf{k} \otimes \mathbf{i} = -\mathbf{j} \quad
+&amp; \mathbf{k} \otimes \mathbf{j} = -\mathbf{i} \quad
+&amp; \mathbf{k} \otimes \mathbf{k} = \mathbf{0}  \</p>
+<p>\end{aligned}
+$$</p>
+<p>也就是说, 我们进行一个基底的轮换, 那么我们就会有三维的叉积:</p>
+<p>$$
+\begin{aligned}
+\mathbf{a} \otimes \mathbf{b} =
+&amp; -a_1 b_1\mathbf{0} + a_1 b_2\mathbf{k} - a_1 b_3\mathbf{j} \
+&amp; -a_2 b_1\mathbf{k} - a_2 b_2\mathbf{0} + a_2 b_3\mathbf{i} \
+&amp; +a_3 b_1\mathbf{j} - a_3 b_2\mathbf{i} - a_3 b_3\mathbf{0} \
+= &amp;(a_2 b_3-a_3 b_2)\mathbf{i} + (a_3 b_1-a_1 b_3)\mathbf{j} + (a_1 b_2-a_2 b_1)\mathbf{k} \
+\end{aligned}
+$$</p>
+<p>叉积有其专有的符号: $\mathbf{a} \times \mathbf{b}$, 并且有一个非常重要的性质: 反交换律:</p>
+<p>$$
+\mathbf{a} \times \mathbf{b} = - \mathbf{b} \times \mathbf{a}
+$$</p>
+<p>(交换后符号取反)</p>
+<blockquote>
+<p>好的, 现在我们回到 $\mathbf{R}^2$</p>
+</blockquote>
+<h3 id="张量积">张量积</h3>
+<p>我们可以偷懒一点: 为什么一定要算呢?</p>
+<p>我们干脆就承认下面这些:</p>
+<p>$$
+\begin{aligned}
+&amp; \mathbf{i} \otimes \mathbf{i}  &amp;\mathbf{i} \otimes \mathbf{j}\
+&amp; \mathbf{j} \otimes \mathbf{i}  &amp;\mathbf{j} \otimes \mathbf{j}
+\end{aligned}
+$$</p>
+<p>是独立的对象好了. 就好像 $\Delta x$ 是一块的一样, 上面的四个东西也分别是四个一块的对象.</p>
+<p>现在我们会发现, 所有 $\mathbf{a} \otimes \mathbf{b}$ 都是上面的四个东西的线性组合, 也就是说我们去到了一个新的空间, 这个空间是一个四维的线性空间.</p>
+<h3 id="外积楔积-wedge-product">外积/楔积 (wedge product)</h3>
+<p>我们如下定义:</p>
+<p>$$
+\begin{aligned}
+&amp; \mathbf{i} \otimes \mathbf{i} = 0<br>
+&amp; \mathbf{i} \otimes \mathbf{j} = \mathbf{i} \otimes \mathbf{j} \</p>
+<pre><code>&amp; \mathbf{j} \otimes \mathbf{i} = -\mathbf{i} \otimes \mathbf{j} 
+&amp; \mathbf{j} \otimes \mathbf{j} = 0
+</code></pre>
+<p>\end{aligned}
+$$</p>
+<p>换句话讲, 我们构建一个新的由不同基底组成的对象, 并且让它 <strong>对基底的顺序敏感</strong>, 在基底顺序为自然排列的时候就是正的, 每换一下相邻两个基底的顺序就是负的.</p>
+<p>这种运算有其独有的名字, 外积/楔积 (wedge product), 记作 $\mathbf{i} \wedge \mathbf{j}$. 像这种具有反交换律且有双线性的性质被称为交替双线性.</p>
+<p>楔积可以用来定义行列式.</p>
+<h3 id="对称积我自己起的名字-一种具有对称双线性的运算">对称积(我自己起的名字, 一种具有对称双线性的运算)</h3>
+<p>$$
+\begin{aligned}
+&amp; \mathbf{i} \otimes \mathbf{i} = 0<br>
+&amp; \mathbf{i} \otimes \mathbf{j} = \mathbf{i} \otimes \mathbf{j} \</p>
+<pre><code>&amp; \mathbf{j} \otimes \mathbf{i} = \mathbf{i} \otimes \mathbf{j} 
+&amp; \mathbf{j} \otimes \mathbf{j} = 0
+</code></pre>
+<p>\end{aligned}
+$$</p>
+<p>同上构建新的由不同基底组成的对象, 并且让其对基底的顺序 <strong>不</strong> 敏感, 也就是说让其具有交换性.</p>
+<p>这种运算暂时还没有名字, 但是其具有的交换律并且有双线性的性质被称为对称双线性.</p>
+<p>这种运算可以拿来定义积和式. <a href="https://zh.wikipedia.org/wiki/%E7%A7%AF%E5%92%8C%E5%BC%8F" target="_blank">维基百科: 积和式</a></p>
+
+    </div>
+</article>
+
+
+<div class="license markdown-body">
+    <blockquote>
+        <p>除特殊注明部分，本站内容采用 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
+               target="_blank">CC BY-NC-SA 4.0</a> 进行许可。</p>
+    </blockquote>
+</div>
+
+
+
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>页面</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>链接</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Origami404" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://wiki.hitsz.org" target="_blank"><span>HITsz LUG wiki</span></a>
+            </li>
+            
+            <li>
+                <a href="https://space.bilibili.com/1124374292" target="_blank"><span>bilibili</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>标签</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/arch/">Arch</a>
+            </span>
+            
+            <span>
+                <a href="/tags/arm/">ARM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/c/">C</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">Docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">Git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/haskell/">Haskell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/https/">HTTPS</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux-%E5%B7%A5%E5%85%B7/">linux 工具</a>
+            </span>
+            
+            <span>
+                <a href="/tags/llvm/">LLVM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mgit/">mgit</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/windows/">Windows</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%8F%98%E5%88%86%E6%B3%95/">变分法</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9B%BE%E8%AE%BA/">图论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9F%9F%E5%90%8D/">域名</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%AF%BC%E8%AE%BA/">导论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%88%91%E4%BC%9A%E7%86%9F%E7%BB%83%E5%9C%B0%E5%AE%89%E8%A3%85xxx%E7%B3%BB%E5%88%97/">我会熟练地安装xxx系列</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%8A%98%E8%85%BE/">折腾</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%95%B0%E5%AD%A6/">数学</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%96%B0%E8%A7%82%E7%82%B9/">新观点</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AE%A1%E7%90%86/">服务器管理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%AF%95%E6%98%87%E6%9D%AF/">毕昇杯</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%B1%87%E7%BC%96/">汇编</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%90%86%E8%AE%BA%E7%89%A9%E7%90%86/">理论物理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BA%BF%E4%BB%A3/">线代</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E7%A8%8B/">编程</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%89%8D%E7%AB%AF/">编译前端</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%87%AA%E7%95%99%E5%9C%B0/">自留地</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%BD%AE%E5%AD%90/">轮子</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E9%9D%9E%E6%8A%80%E6%9C%AF/">非技术</a>
+            </span>
+            
+        </div>
+    </div>
+    <div class="sidebar-item sidebar-toc">
+        <h3>目录</h3><nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#最原始的双线性二元运算">&ldquo;最原始的&quot;双线性二元运算</a></li>
+    <li><a href="#抽象的开始-mathbbr2">抽象的开始: $\mathbb{R}^2$</a>
+      <ul>
+        <li><a href="#内积">内积</a></li>
+        <li><a href="#高中叉乘-二维有向面积">高中叉乘 (二维有向面积)</a></li>
+        <li><a href="#真的叉乘">真的叉乘</a></li>
+        <li><a href="#张量积">张量积</a></li>
+        <li><a href="#外积楔积-wedge-product">外积/楔积 (wedge product)</a></li>
+        <li><a href="#对称积我自己起的名字-一种具有对称双线性的运算">对称积(我自己起的名字, 一种具有对称双线性的运算)</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+</aside>
+
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>页面</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>链接</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Origami404" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://wiki.hitsz.org" target="_blank"><span>HITsz LUG wiki</span></a>
+            </li>
+            
+            <li>
+                <a href="https://space.bilibili.com/1124374292" target="_blank"><span>bilibili</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>标签</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/arch/">Arch</a>
+            </span>
+            
+            <span>
+                <a href="/tags/arm/">ARM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/c/">C</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">Docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">Git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/haskell/">Haskell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/https/">HTTPS</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux-%E5%B7%A5%E5%85%B7/">linux 工具</a>
+            </span>
+            
+            <span>
+                <a href="/tags/llvm/">LLVM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mgit/">mgit</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/windows/">Windows</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%8F%98%E5%88%86%E6%B3%95/">变分法</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9B%BE%E8%AE%BA/">图论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9F%9F%E5%90%8D/">域名</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%AF%BC%E8%AE%BA/">导论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%88%91%E4%BC%9A%E7%86%9F%E7%BB%83%E5%9C%B0%E5%AE%89%E8%A3%85xxx%E7%B3%BB%E5%88%97/">我会熟练地安装xxx系列</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%8A%98%E8%85%BE/">折腾</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%95%B0%E5%AD%A6/">数学</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%96%B0%E8%A7%82%E7%82%B9/">新观点</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AE%A1%E7%90%86/">服务器管理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%AF%95%E6%98%87%E6%9D%AF/">毕昇杯</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%B1%87%E7%BC%96/">汇编</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%90%86%E8%AE%BA%E7%89%A9%E7%90%86/">理论物理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BA%BF%E4%BB%A3/">线代</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E7%A8%8B/">编程</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%89%8D%E7%AB%AF/">编译前端</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%87%AA%E7%95%99%E5%9C%B0/">自留地</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%BD%AE%E5%AD%90/">轮子</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E9%9D%9E%E6%8A%80%E6%9C%AF/">非技术</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <h3>目录</h3>
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#最原始的双线性二元运算">&ldquo;最原始的&quot;双线性二元运算</a></li>
+    <li><a href="#抽象的开始-mathbbr2">抽象的开始: $\mathbb{R}^2$</a>
+      <ul>
+        <li><a href="#内积">内积</a></li>
+        <li><a href="#高中叉乘-二维有向面积">高中叉乘 (二维有向面积)</a></li>
+        <li><a href="#真的叉乘">真的叉乘</a></li>
+        <li><a href="#张量积">张量积</a></li>
+        <li><a href="#外积楔积-wedge-product">外积/楔积 (wedge product)</a></li>
+        <li><a href="#对称积我自己起的名字-一种具有对称双线性的运算">对称积(我自己起的名字, 一种具有对称双线性的运算)</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2019-2022
+                <a href="https://blog.origami404.top/">Origami404</a>
+                
+                | 基于 <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 构建
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+
+
+</body>
+
+</html>

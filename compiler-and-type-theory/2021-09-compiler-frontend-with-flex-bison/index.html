@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="zh-hans">
+
+<head>
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.92.2" />
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png" />
+<link rel="manifest" href="icons/site.webmanifest" />
+<link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#8aa2d3" />
+<link rel="shortcut icon" href="icons/favicon.ico" />
+<meta name="theme-color" content="#ffffff" />
+
+
+<title>基于Bison和Flex的编译器前端实现 - Origami404 的 Blog</title>
+
+
+<meta name="author" content="Origami404" />
+
+
+<meta name="description" content="有空的话就随便逛逛吧 www" />
+
+
+<meta name="keywords" content="编译原理, 编译前端, C, linux 工具" />
+
+
+<meta property="og:title" content="基于Bison和Flex的编译器前端实现" />
+<meta name="twitter:title" content="基于Bison和Flex的编译器前端实现" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.origami404.top/compiler-and-type-theory/2021-09-compiler-frontend-with-flex-bison/" /><meta property="og:description" content="前言 最近被某学长介绍了毕昇杯编译器比赛, 有点感兴趣, 遂开始用 C 自己实现, 然后就: 还是 Java 香! 本文记录了我用 Bison 和 Flex 来构建 SysY2021 语言前端的尝试. Show me the code. 前置声明: 大体的代码架构和使用方法在最后, 可以交叉着看. lex" />
+<meta name="twitter:description" content="前言 最近被某学长介绍了毕昇杯编译器比赛, 有点感兴趣, 遂开始用 C 自己实现, 然后就: 还是 Java 香! 本文记录了我用 Bison 和 Flex 来构建 SysY2021 语言前端的尝试. Show me the code. 前置声明: 大体的代码架构和使用方法在最后, 可以交叉着看. lex" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://blog.origami404.top/img/og.png" /><meta property="article:published_time" content="2021-09-05T22:00:00+08:00" /><meta property="article:modified_time" content="2021-09-05T22:00:00+08:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+
+<link rel="stylesheet" href="https://blog.origami404.top/assets/css/fuji.min.css" />
+
+
+
+
+
+
+
+
+</head>
+
+<body
+  data-theme="auto"
+  data-theme-auto='true'
+  >
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
+
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="https://blog.origami404.top/">Origami404 的 Blog</a>
+            
+            <span class="title-sub">有空的话就随便逛逛吧 www</span>
+            
+        </div>
+    </div>
+</header>
+
+    <main>
+        <div class="container-lg clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="https://blog.origami404.top/compiler-and-type-theory/2021-09-compiler-frontend-with-flex-bison/">基于Bison和Flex的编译器前端实现</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2021-09-05</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;3930 字</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86">编译原理</a>&nbsp;<a href="/tags/%E7%BC%96%E8%AF%91%E5%89%8D%E7%AB%AF">编译前端</a>&nbsp;<a href="/tags/c">C</a>&nbsp;<a href="/tags/linux-%E5%B7%A5%E5%85%B7">linux 工具</a>&nbsp;</span>
+
+    </div>
+    
+    <div class="post-content markdown-body">
+        <h2 id="前言">前言</h2>
+<p>最近被某学长介绍了<a href="https://compiler.educg.net/" target="_blank">毕昇杯</a>编译器比赛, 有点感兴趣, 遂开始用 C 自己实现, 然后就:</p>
+<blockquote>
+<p><strong>还是 Java 香!</strong></p>
+</blockquote>
+<p>本文记录了我用 Bison 和 Flex 来构建 <a href="https://gitlab.eduxiji.net/nscscc/compiler2021/-/blob/master/SysY%E8%AF%AD%E8%A8%80%E5%AE%9A%E4%B9%89.pdf" target="_blank">SysY2021</a> 语言前端的尝试.</p>
+<!-- more -->
+<h2 id="show-me-the-code">Show me the code.</h2>
+<p>前置声明: 大体的代码架构和使用方法在最后, 可以交叉着看.</p>
+<h3 id="lex">lex</h3>
+<p>Lex 可以将输入按照正则表达式匹配然后执行对应的代码. 这个代码一般是直接返回对应 token 的类型; 如果一个 token 还有附加信息, 那么你也可以在代码里把它保存在哪个全局变量里面.</p>
+<p>它会生成一个文件:</p>
+<ul>
+<li><code>lex.yy.c</code>: 包含了 yylex() 的定义</li>
+</ul>
+<pre><code class="language-c">/* src/frontend/lexer.lex */
+/* ==========================================================
+ * 一个 lex 文件大概由三部分组成
+ * 第一部分是下面这个被 %{ ... %} 框起来的部分
+ * 这里可以写一些 C 代码, 它们会被原封不动的拷贝进生成的 C 文件里
+ * 一般是写头文件和一些下面要用到的函数                          
+ * ========================================================== */
+%{
+#include &quot;util.h&quot;
+#include &quot;ast.h&quot;
+/* 这个是 Yacc 自动生成的头文件, 包含了 Lex 应该返回的枚举的定义和 yylval */
+#include &quot;parser.tab.h&quot;
+%}
+
+/* ==========================================================
+ * 第二部分就是用来放传递给 lex 的选项的部分
+ * 选项以%开头, 紧跟着选项名, 后接参数                       
+ * ========================================================== */
+
+/* 这个选项表示不需要使用 yywarp */
+%option noyywrap
+
+/* 这个选项表示 C_COMMENT 是一个状态 */
+%x C_COMMENT
+
+/* ==========================================================
+ * 第三部分就是每一个 token 的定义
+ * 包含在 %% ... %% 内
+ * 每一行都按如下格式: &lt;正则表达式&gt; &lt;动作&gt;
+ * 一般来讲每当读完一个 token, &lt;动作&gt; 部分就应该 return 一个 int 值, 它将作为 yylex() 的返回值
+ * 对于携带特殊信息的 token, 我们一般把值存进全局变量 yylval 里供程序的其他部分使用          
+ * ========================================================== */
+%%
+/* 忽略空白 */
+&quot; &quot; { continue; }
+\t  { continue; }
+\n  { continue; }
+
+/* 处理单行注释 */
+&quot;\\&quot;.*\n        { continue; }
+
+
+
+/* 处理 C 风格的注释 */
+/* 这是 lex 暴露出来的给我们手动控制 DFA 节点的写法 */
+
+/* 当碰到 &quot;/*&quot; 时就进入 C_COMMENT 状态 */
+&quot;/*&quot;            { BEGIN(C_COMMENT); }
+
+/* 当在状态 C_COMMENT 并且碰到 &quot;*/&quot; &quot; 时就回到正常状态 INITIAL (lex 自己提供的) */
+&lt;C_COMMENT&gt;&quot;*/&quot; { BEGIN(INITIAL); }
+
+/* 当在状态 C_COMMENT 时, 输入一切字符都当不存在 */
+&lt;C_COMMENT&gt;.    { continue; }
+
+/* 这里的状态处理没有考虑嵌套注释; 如果要支持的话可以在全局变量里保存一个变量 level 表示注释的层级,
+ * 每次碰到新的 &quot;/*&quot; 就 level++, &quot;*/&quot; &quot; 就 level--; 当 level == 0 时才退出 C_COMMENT 状态 */
+
+
+
+
+/* 关键字 */
+const { return T_CONST; }
+int   { return T_INT;   }
+void  { return T_VOID;  }
+
+if    { return T_IF;    }
+else  { return T_ELSE;  }
+while { return T_WHILE; }
+
+break     { return T_BREAK;    }
+continue  { return T_CONTINUE; }
+return    { return T_RETURN;   }
+
+/* 符号, 对于特殊的字符可以用双引号括起来, 这样它们不会被当成正则表达式里的元字符, 也不需要转义 */
+&quot;,&quot;  { return T_COMMA;         }
+&quot;;&quot;  { return T_SEMICOCLON;    }
+&quot;(&quot;  { return T_PAREN_LEFT;    }
+&quot;)&quot;  { return T_PAREN_RIGHT;   }
+&quot;[&quot;  { return T_SQU_LEFT;  }
+&quot;]&quot;  { return T_SQU_RIGHT; }
+&quot;{&quot;  { return T_CURLY_LEFT;    }
+&quot;}&quot;  { return T_CURLY_RIGHT;   }
+
+&quot;=&quot;  { return T_ASSIGN; }
+
+&quot;+&quot;  { return T_ADD;     }
+&quot;-&quot;  { return T_SUB;   }
+&quot;*&quot;  { return T_MUL;     }
+&quot;/&quot;  { return T_DIV;  }
+&quot;%&quot;  { return T_MOD;     }
+
+&quot;==&quot;  { return T_EQ;         }
+&quot;!=&quot;  { return T_NOT_EQ;     }
+/* 如果有多个匹配, lex 会匹配比较靠前的规则 */
+&quot;&lt;=&quot;  { return T_LESS_EQ;    }
+&quot;&gt;=&quot;  { return T_GREATER_EQ; }
+&quot;&lt;&quot;   { return T_LESS;       }
+&quot;&gt;&quot;   { return T_GREATER;    }
+
+&quot;!&quot;   { return T_LOG_NOT; }
+&quot;&amp;&amp;&quot;  { return T_LOG_AND; }
+&quot;||&quot;  { return T_LOG_OR;  }
+
+putf  { return T_PUTF;    }
+
+/* 标识符 */
+[a-zA-Z_][0-9a-zA-Z_]* { yylval.sval = String(yytext); return T_IDENT; }
+
+/* 数字, 十进制, 八进制和十六进制字面量 */
+[1-9][0-9]*            { yylval.ival = (int)strtol(yytext, 0, 0); return T_NUM; }
+0[0-7]*                { yylval.ival = (int)strtol(yytext, 0, 0); return T_NUM; }
+0(x|X)[0-9a-fA-F]*     { yylval.ival = (int)strtol(yytext, 0, 0); return T_NUM; }
+ 
+/* 字符串字面量 */
+&quot;\&quot;&quot;.*&quot;\&quot;&quot;             { yylval.sval = String(yytext); return T_STR; }
+
+/* 对于不符合以上任何匹配的, 做一个错误处理 */
+.                      { panic(&quot;Unknown token: %s&quot;, yytext); }
+%%
+</code></pre>
+<p>另外, 如果你需要在别的对正则表达式有内建支持的语言(比如Python)里快速做一个 lexer 的话, 你可以这样干:</p>
+<pre><code class="language-python">import re
+from itertools import starmap
+from typing import *
+
+def sub_regax(token_type: str, reg: str) -&gt; str:
+    # 命名组合, 参见: https://docs.python.org/zh-cn/3/library/re.html#regular-expression-syntax
+    return f'(?P&lt;{token_type}&gt;{reg})'
+
+# token 类型要求首字母大写, token 附加数据的要求首字母小写
+lexer_rules = [
+    ('LeftBracket',  r'\('                          ),
+    ('RightBracket', r'\)'                          ),
+    ('Number',       r'(?P&lt;num&gt;[0-9]+)'             ),
+    ('String',       r'&quot;(?P&lt;str&gt;.*?)&quot;'              ),
+    ('Identifier',   r'(?P&lt;id&gt;[a-zA-Z][a-zA-Z0-9]*)')
+]
+
+# 直接把所有 token 对应的正则表达式都并起来, 然后编译一个大的
+# 并且希望你那个语言的正则表达式的编译可以生成最优的 DFA
+lexer_reg = re.compile('|'.join(starmap(sub_regax, lexer_rules)))
+
+# 找到 d 里面 第一个 d[key] 不为 None 且首字母大写的, 并且返回 key
+def get_key(d: dict[str, Union[str, Any]]) -&gt; str:
+    for k, v in d.items():
+        if v and k[0].isupper(): 
+            return k
+    raise RuntimeError(f'All value in dict is none: {d}')
+
+def regenize(inputs: Iterable[str]) -&gt; Iterable[tuple[str, Any]]:
+    for input in inputs:
+        for tok_match in lexer_reg.finditer(input):
+            # tok_match.groupdict() 返回一个 dict, 里面大概是这样的: 
+            # {'LeftBracket': None, 'RightBracket': None, 'Number': None, 'String': None, 'Identifier': 'sad0', 'num': None, 'id': 'sad0', 'str': None}
+            type = get_key(tok_match.groupdict())
+            if type in ['LeftBracket', 'RightBracket']:
+                yield (type, None)
+            elif type == 'Number':
+                yield (type, tok_match.group('num'))
+            elif type == 'String':
+                yield (type, tok_match.group('str'))
+            elif type == 'Identifier':
+                yield (type, tok_match.group('id'))
+            else:
+                raise RuntimeError(f'Unknown token type: {type}')
+
+if __name__ == '__main__':
+    prog = '(define (p2 x) (mul x x)) \n (p2 234)'
+    for tok, data in regenize(prog.split('\n')):
+        print(tok, data)
+
+    # Output: 
+    '''
+        LeftBracket None
+        Identifier define
+        LeftBracket None
+        Identifier p2
+        Identifier x
+        RightBracket None
+        LeftBracket None
+        Identifier mul
+        Identifier x
+        Identifier x
+        RightBracket None
+        RightBracket None
+        LeftBracket None
+        Identifier p2
+        Number 234
+        RightBracket None
+    '''
+</code></pre>
+<h3 id="yacc">yacc</h3>
+<p>YACC 实现了一个 LALR(1) 的 <a href="https://zh.wikipedia.org/wiki/%E8%AF%AD%E6%B3%95%E5%88%B6%E5%AF%BC%E7%BF%BB%E8%AF%91" target="_blank">SDT</a> 的 parser. 每一个 Non-terminal, 在 reduce 的时候, 都会执行 reduce 成那个符号的规则对应的语义动作. 每一个 Non-terminal 都有且仅有一个属性, 这个属性可以在语义动作里通过 $ 来获取.</p>
+<p>在内存充裕的现代, 我们一般可以直接生成整颗 AST 保存在内存中, 所以一般来讲 YACC 的语义动作里都是构建 AST 的代码.</p>
+<p>它会生成两个文件:</p>
+<ul>
+<li><code>parser.tab.h</code>: 定义了所有 terminal 的枚举, 声明了 yyparser() 和 yylval, 一般我们会让 lex 和要调用 yyparser 的文件包含这个文件</li>
+<li><code>parser.tab.c</code>: 定义了 yyparser() 和 yylval</li>
+</ul>
+<pre><code class="language-c">/* src/frontend/parser.y */
+/* ==========================================================
+ * 一个 yacc 文件跟 lex 文件一样由三个部分组成
+ * %{ ... %} ... %% ... %%
+ * 三个部分作用也大同小异
+ * 区别就在于 yacc 有很多选项可以调, 所以中间部分比较长                         
+ * ========================================================== */
+%{
+#include &quot;util.h&quot;
+#include &quot;ast.h&quot;
+#include &quot;parser.tab.h&quot;
+
+/* 声明 yylex() 函数 */
+extern int yylex();
+
+/* 当出现错误时 yacc 生成的函数会调用这个东西 */
+#define yyerror(s) panic(&quot;Yacc error: %s&quot;, s);
+
+/* 如果 YYDEBUG 为 1, 那么 yacc 生成的 parser 在运行时会输出很多信息 */
+#ifdef DEBUG
+#   undef YYDEBUG
+#   define YYDEBUG 1
+#else
+#   undef YYDEBUG
+#   define YYDEBUG 0
+#endif
+
+/* 用来保存最后结果供外界使用的变量 */
+extern Ast_List result;
+%}
+
+/* ==========================================================
+ * 第二部分, 在这里要写:       
+ *     1) yylval 的类型
+ *     2) 各个 token(terminal) 对应于 yylval 的哪个 field
+ *     3) 各个 symbol(non-terminal) 对应于 yylval 的哪个 field
+ *     4) 起始规则
+ * ========================================================== */
+
+/* 设置 yylval 为枚举类型, 有下面的这些 field */
+%union {
+    int ival;
+    string sval;
+
+    Ast_Node node;
+    Ast_List node_list;
+}
+
+/* 设置 token 的相关属性和别名
+ * %token &lt;&lt;yylval 的 field 名&gt;&gt; [&lt;token 的枚举名&gt; [&quot;&lt;token 名字的替代&gt;&quot;]]+ */
+/* 这里设置了 &quot;如果 lexer 读到一个标识符, 那么 yylex() 应该返回一个 T_IDENT, 并且在 yylval 里的 sval 域将会有一个值; 
+ * 在下文的规则里见到 &quot;identifier&quot; 就当成终结符号 标识符&quot; */
+/* 要注意这里的 &lt;token 名字的替代&gt;必须用双引号而不是单引号, 单引号的字符(比如'c')会被当成数字
+ * 意思就变成了 &quot;当 yylex() 返回 'c' 时就意味着获得了这个 token&quot; 而不是设置别名
+ * 因此, Yacc 为 token 生成的枚举类型里首个枚举值是以 256 开始的 */
+%token &lt;sval&gt; T_IDENT &quot;identifier&quot; T_STR &quot;string literal&quot; T_PUTF &quot;putf&quot;
+%token &lt;ival&gt; T_NUM   &quot;number literal&quot; 
+
+/* 这里设置了 &quot;如果 lexer 读到一个const, 那么 yylex() 应该返回一个 T_CONST, 并且此时 yylval 里不确定有啥; 
+ * 在下文的规则里见到 &quot;const&quot; 就当成终结符号 const&quot; */
+%token T_CONST &quot;const&quot;  T_INT    &quot;int&quot;     T_VOID     &quot;void&quot;
+%token T_IF    &quot;if&quot;     T_ELSE   &quot;else&quot;    T_WHILE    &quot;while&quot;
+%token T_BREAK &quot;break&quot;  T_RETURN &quot;return&quot;  T_CONTINUE &quot;continue&quot;
+
+%token T_COMMA      &quot;,&quot;   T_SEMICOCLON  &quot;;&quot;
+%token T_PAREN_LEFT &quot;(&quot;   T_PAREN_RIGHT &quot;)&quot;
+%token T_SQU_LEFT   &quot;[&quot;   T_SQU_RIGHT   &quot;]&quot;
+%token T_CURLY_LEFT &quot;{&quot;   T_CURLY_RIGHT &quot;}&quot;
+
+%token T_ASSIGN &quot;=&quot;
+%token T_ADD &quot;+&quot; T_SUB &quot;-&quot; T_MUL &quot;*&quot; T_DIV &quot;/&quot; T_MOD &quot;%&quot;
+
+%token T_EQ      &quot;==&quot;  T_NOT_EQ &quot;!=&quot;  T_LESS       &quot;&lt;&quot;
+%token T_LESS_EQ &quot;&lt;=&quot;  T_GREATER &quot;&gt;&quot;  T_GREATER_EQ &quot;&gt;=&quot; 
+
+%token T_LOG_NOT &quot;!&quot; T_LOG_AND &quot;&amp;&amp;&quot; T_LOG_OR &quot;||&quot;
+
+
+/* 设置 non-terminal 的相关属性 */
+/* 这里设置 Non-terminal CompUnit 的规则求值之后在 yylval 的 node_list 域里有一个合法的值 */
+%type &lt;node_list&gt; CompUnit
+
+%type &lt;node&gt; FuncDef FuncParam
+%type &lt;node_list&gt; FuncParamList
+
+%type &lt;node&gt; Decl
+
+%type &lt;node&gt; DefOne
+%type &lt;node_list&gt; DefAny
+
+%type &lt;node&gt; InitVal
+%type &lt;node_list&gt; ArrInit
+
+%type &lt;node&gt; Stmt Block IfStmt WhileStmt PutfForm
+%type &lt;node_list&gt; BlockItemList
+
+%type &lt;node&gt; PrimaryExp UnaryExp MulExp AddExp 
+%type &lt;node&gt; RelExp EqExp LAndExp LOrExp Cond Exp
+%type &lt;node&gt; LVal
+%type &lt;node_list&gt; ArrIdx FuncArgs
+
+/* 设置起始规则为 CompUnit 对应的规则 */
+%start CompUnit
+
+%%
+/* ==========================================================
+ * 第三部分, 在这里要写各个 Non-terminal 对应的产生式
+ * 只支持基本的 BNF, 不支持 EBNF
+ * ========================================================== */
+
+/* 规则是, 如果碰到了 Decl CompUnit, 就规约成一个 CompUnit, 同时执行后面的语义动作
+ * 语义动作里, 用 $$ 指代产生式头代表的变量, $n 表示产生式体里第 n 个元素代表的变量
+ * 这里的语义动作会&quot;大概&quot;被翻译成: yylval.node_list = result = cons_Ast(yylval.node, yylval.node_list);
+ * 单独拎一个 result 出来是因为当 yyparse() 函数结束之后 yylval 会被回收, 
+ * 也就是说不能通过 yylval 获取最后的结果了, 所以最后的结果要另外存一份 */
+CompUnit: Decl CompUnit     { $$ = result = cons_Ast($1, $2);  }
+        | FuncDef CompUnit  { $$ = result = cons_Ast($1, $2);  } 
+        | /* empty */       { $$ = result = 0;                 }
+        ; 
+
+//---------------- Declaration &amp; Definition ----------------------------
+/* 在产生式体里只有一个 Block 的情况下, 可以用$&lt;Non-terminal名字&gt;来指代那个元素的变量
+ * 这里的语义动作会&quot;大概&quot;被翻译成: yylval.node = ast_FuncDef(FRT_INT, yylval.sval, yylval.node, yylval.node);
+ * 产生式体里的每一个 Symbol 都有它自己的 yylval, 用$塞进去的那个都是保存着那个 Symbol 当时被求出的那个的 yylval 的值 */
+FuncDef: &quot;int&quot;  T_IDENT &quot;(&quot; FuncParamList &quot;)&quot; Block { $$ = ast_FuncDef(FRT_INT, $2, $4, $Block);  }
+       | &quot;void&quot; T_IDENT &quot;(&quot; FuncParamList &quot;)&quot; Block { $$ = ast_FuncDef(FRT_VOID, $2, $4, $Block); }
+       ;
+FuncParamList: FuncParam                   { $$ = cons_Ast($1, 0);   }
+             | FuncParam &quot;,&quot; FuncParamList { $$ = cons_Ast($1, $3);  }
+             | /* empty */                 { $$ = 0;                 }
+             ;
+FuncParam: &quot;int&quot; LVal { $$ = $LVal; }
+         ;
+
+Decl: &quot;const&quot; &quot;int&quot; DefAny &quot;;&quot; { $$ = ast_Decl(true, $DefAny);  }
+    | &quot;int&quot; DefAny &quot;;&quot;         { $$ = ast_Decl(false, $DefAny); }
+    ; 
+
+DefOne: LVal                       { $$ = ast_VarDef($1, 0);  }
+      | LVal &quot;=&quot; InitVal           { $$ = ast_VarDef($1, $3); }
+      ;
+
+DefAny: DefOne                     { $$ = cons_Ast($1, 0);   }
+      | DefOne &quot;,&quot; DefAny          { $$ = cons_Ast($1, $3);  }
+      ;
+
+InitVal: Exp                    { $$ = ast_InitExp($Exp); }
+       | &quot;{&quot; ArrInit &quot;}&quot;        { $$ = ast_InitArr($2);   }
+       ;
+ArrInit: InitVal                { $$ = cons_Ast($1, 0);   }
+       | InitVal &quot;,&quot; ArrInit    { $$ = cons_Ast($1, $3);  }
+       ;   
+
+//---------------------------- Stmt ---------------------------
+
+/* 语义动作留空的话, 它默认是: { $$ = $1; } */
+Stmt: Block
+    | IfStmt
+    | WhileStmt
+    | PutfForm   
+    | Exp &quot;;&quot;             { $$ = ast_StmtExp($Exp);       }
+    | LVal &quot;=&quot; Exp &quot;;&quot;    { $$ = ast_StmtAssign($1, $3);  }
+    | &quot;;&quot;                 { $$ = ast_StmtEmpty();         }
+    | &quot;break&quot;      &quot;;&quot;    { $$ = ast_StmtBreak();         }
+    | &quot;continue&quot;   &quot;;&quot;    { $$ = ast_StmtContinue();      }
+    | &quot;return&quot;     &quot;;&quot;    { $$ = ast_StmtReturn(0);       }
+    | &quot;return&quot; Exp &quot;;&quot;    { $$ = ast_StmtReturn($Exp);    }
+    ;
+
+Block: &quot;{&quot; BlockItemList &quot;}&quot;        { $$ = ast_Block($2); }
+     ;
+BlockItemList: Decl BlockItemList   { $$ = cons_Ast($1, $2);  }
+             | Stmt BlockItemList   { $$ = cons_Ast($1, $2);  }
+             | /* Empty */          { $$ = 0;                 }
+             ;
+
+IfStmt: &quot;if&quot; &quot;(&quot; Cond &quot;)&quot; Stmt             { $$ = ast_StmtIf($Cond, $5, 0);  }
+      | &quot;if&quot; &quot;(&quot; Cond &quot;)&quot; Stmt &quot;else&quot; Stmt { $$ = ast_StmtIf($Cond, $5, $7); }
+      ;
+
+WhileStmt: &quot;while&quot; &quot;(&quot; Cond &quot;)&quot; Stmt { $$ = ast_StmtWhile($Cond, $Stmt); }
+         ;
+
+PutfForm: &quot;putf&quot; &quot;(&quot; T_STR &quot;,&quot; FuncArgs &quot;)&quot; &quot;;&quot; { $$ = ast_ExpPutf($3, $5); }
+        ; 
+
+//----------------- Expression ---------------------------- 
+
+Exp : AddExp;
+Cond: LOrExp;
+
+/* 可以看到, 如果在上面第二部分对每一个终结符设置了好看的别名的话, 就能极大地提高规则的可读性
+ * 比如这条规则我们就不用写 LOrExp T_OR LAndExp 而可以向下面这样写 */
+LOrExp: LAndExp
+      | LOrExp &quot;||&quot; LAndExp { $$ = ast_ExpOp(OP_LOG_OR, $1, $3); }
+      ;
+
+LAndExp: EqExp
+       | LAndExp &quot;&amp;&amp;&quot; EqExp { $$ = ast_ExpOp(OP_LOG_AND, $1, $3); }
+       ;
+
+EqExp: RelExp
+     | EqExp &quot;==&quot; RelExp { $$ = ast_ExpOp(OP_EQ,     $1, $3); }
+     | EqExp &quot;!=&quot; RelExp { $$ = ast_ExpOp(OP_NOT_EQ, $1, $3); }
+     ; 
+
+RelExp: AddExp
+      | RelExp &quot;&lt;&quot;  AddExp { $$ = ast_ExpOp(OP_LESS,       $1, $3); }
+      | RelExp &quot;&lt;=&quot; AddExp { $$ = ast_ExpOp(OP_LESS_EQ,    $1, $3); }
+      | RelExp &quot;&gt;&quot;  AddExp { $$ = ast_ExpOp(OP_GREATER,    $1, $3); }
+      | RelExp &quot;&gt;=&quot; AddExp { $$ = ast_ExpOp(OP_GREATER_EQ, $1, $3); }
+      ;
+
+AddExp: MulExp
+      | AddExp &quot;+&quot; MulExp  { $$ = ast_ExpOp(OP_ADD, $1, $3); }
+      | AddExp &quot;-&quot; MulExp  { $$ = ast_ExpOp(OP_SUB, $1, $3); }
+      ; 
+
+MulExp: UnaryExp
+      | MulExp &quot;*&quot; UnaryExp   { $$ = ast_ExpOp(OP_MUL, $1, $3); }
+      | MulExp &quot;/&quot; UnaryExp   { $$ = ast_ExpOp(OP_DIV, $1, $3); }  
+      | MulExp &quot;%&quot; UnaryExp   { $$ = ast_ExpOp(OP_MOD, $1, $3); }
+      ;
+
+UnaryExp: PrimaryExp               
+        | T_IDENT &quot;(&quot; FuncArgs &quot;)&quot; { $$ = ast_ExpCall($1, $3);          }
+        | &quot;+&quot; UnaryExp             { $$ = ast_ExpOp(OP_SUB, $2, 0);     }
+        | &quot;-&quot; UnaryExp             { $$ = ast_ExpOp(OP_ADD, $2, 0);     }
+        | &quot;!&quot; UnaryExp             { $$ = ast_ExpOp(OP_LOG_NOT, $2, 0); }
+        ;       
+
+PrimaryExp: &quot;(&quot; Exp &quot;)&quot;   { $$ = $2;              }
+          | LVal          { $$ = ast_ExpLval($1); }
+          | T_NUM         { $$ = ast_ExpNum($1);  }
+          ;
+
+LVal: T_IDENT ArrIdx { $$ = ast_Lval($1, $2); }
+    ;
+
+ArrIdx: ArrIdx &quot;[&quot; Exp &quot;]&quot;   { $$ = cons_Ast($3, $1);  }
+      | /* empty */          { $$ = 0;                     }
+      ;
+
+FuncArgs: Exp                { $$ = cons_Ast($1, 0);   }
+        | Exp &quot;,&quot; FuncArgs   { $$ = cons_Ast($1, $3);  }
+        | /* empty */        { $$ = 0;                 }
+        ;
+
+</code></pre>
+<h3 id="使用方法">使用方法</h3>
+<p>我选择的目录结构大概是这样的:</p>
+<pre><code class="language-bash">.
+├── build.sh
+└── src
+    ├── ast.h              # AST 对应的构造函数
+    ├── frontend
+    │   ├── lexer.lex      # 我们写的 Lex 文件
+    │   ├── lex.yy.c       # Lex 生成的文件
+    │   ├── parser.tab.c   # Yacc 生成的文件
+    │   ├── parser.tab.h   # Yacc 生成的文件
+    │   └── parser.y       # 我们写的 Yacc 文件
+    ├── main.c             
+    └── util.h             # 杂项工具
+</code></pre>
+<p>主函数:</p>
+<pre><code class="language-c">// main.c
+#include &quot;util.h&quot;
+#include &quot;ast.h&quot;
+#include &quot;frontend/parser.tab.h&quot;
+
+// 定义最后的结果
+Ast_List result;
+
+int main(int argc, char **argv) {
+    // 调用此函数从 STDIN 解析输入并根据输入匹配的规则执行对应的语义动作
+    yyparse();
+    // 查看输出
+    ast_dump_list(stdout, result);
+}
+</code></pre>
+<p>构建脚本:</p>
+<pre><code class="language-bash"># build.sh
+#!bash
+cd SysY2021/src
+
+# 生成前端
+cd frontend
+# 生成 lex.yy.c
+flex lexer.lex
+# 生成 parser.tab.c 和 parser.tab.h
+bison -d parser.y 
+cd ..
+
+if [ $1 == &quot;production&quot; ]
+then
+    addition_flag=&quot;-O2&quot;
+else
+    addition_flag=&quot;-Wall -g -DDEBUG&quot;
+fi
+
+# 全部编译起来并且链接
+# ref: https://unix.stackexchange.com/a/19656
+for c_file in $(find . | grep &quot;.*\.c$&quot;) 
+do
+    gcc -std=c11 ${addition_flag} -c -I$PWD -o ${c_file%.c}.o $c_file
+done
+
+gcc -std=c11 ${addition_flag} $(find . | grep &quot;.*\.o$&quot;) -o ../ssyc
+</code></pre>
+<p>执行:</p>
+<pre><code class="language-bash">./build.sh &amp;&amp; ./ssyc
+</code></pre>
+<p>并且输入一段 SysY 语言程序, 就可以看到它对应的输出了.</p>
+<h2 id="参考">参考</h2>
+<h3 id="flexbison">Flex/Bison</h3>
+<p>基本使用: <a href="http://www.calvinneo.com/2016/07/29/flex%E5%92%8Cbison%E4%BD%BF%E7%94%A8/" target="_blank">calvin/flex和bison使用</a></p>
+<p>比较详细, 介绍了一些C语言接口: <a href="https://tldp.org/HOWTO/Lex-YACC-HOWTO.html" target="_blank">TLDP/Lex-YACC-HOWTO</a></p>
+<p>官方 Bison 文档: <a href="https://www.gnu.org/software/bison/manual/html_node/index.html#SEC_Contents" target="_blank">Bison Manual</a></p>
+<h3 id="杂项-yystype">杂项: YYSTYPE</h3>
+<p>来源: <a href="https://www.gnu.org/software/bison/manual/html_node/Value-Type.html" target="_blank">Bison Manual/Value-Type</a></p>
+<p>建议使用:</p>
+<pre><code class="language-yacc">%define api.value.type {double}
+
+or
+
+%define api.value.type {struct semantic_type}
+</code></pre>
+<p>来代替</p>
+<pre><code class="language-c">#define YYSTYPE double
+</code></pre>
+<p>以获得更好的Bison体验.</p>
+
+    </div>
+</article>
+
+
+<div class="license markdown-body">
+    <blockquote>
+        <p>除特殊注明部分，本站内容采用 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
+               target="_blank">CC BY-NC-SA 4.0</a> 进行许可。</p>
+    </blockquote>
+</div>
+
+
+
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>页面</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>链接</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Origami404" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://wiki.hitsz.org" target="_blank"><span>HITsz LUG wiki</span></a>
+            </li>
+            
+            <li>
+                <a href="https://space.bilibili.com/1124374292" target="_blank"><span>bilibili</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>标签</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/arch/">Arch</a>
+            </span>
+            
+            <span>
+                <a href="/tags/arm/">ARM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/c/">C</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">Docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">Git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/haskell/">Haskell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/https/">HTTPS</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux-%E5%B7%A5%E5%85%B7/">linux 工具</a>
+            </span>
+            
+            <span>
+                <a href="/tags/llvm/">LLVM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mgit/">mgit</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/windows/">Windows</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%8F%98%E5%88%86%E6%B3%95/">变分法</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9B%BE%E8%AE%BA/">图论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9F%9F%E5%90%8D/">域名</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%AF%BC%E8%AE%BA/">导论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%88%91%E4%BC%9A%E7%86%9F%E7%BB%83%E5%9C%B0%E5%AE%89%E8%A3%85xxx%E7%B3%BB%E5%88%97/">我会熟练地安装xxx系列</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%8A%98%E8%85%BE/">折腾</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%95%B0%E5%AD%A6/">数学</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%96%B0%E8%A7%82%E7%82%B9/">新观点</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AE%A1%E7%90%86/">服务器管理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%AF%95%E6%98%87%E6%9D%AF/">毕昇杯</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%B1%87%E7%BC%96/">汇编</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%90%86%E8%AE%BA%E7%89%A9%E7%90%86/">理论物理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BA%BF%E4%BB%A3/">线代</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E7%A8%8B/">编程</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%89%8D%E7%AB%AF/">编译前端</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%87%AA%E7%95%99%E5%9C%B0/">自留地</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%BD%AE%E5%AD%90/">轮子</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E9%9D%9E%E6%8A%80%E6%9C%AF/">非技术</a>
+            </span>
+            
+        </div>
+    </div>
+    <div class="sidebar-item sidebar-toc">
+        <h3>目录</h3><nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#show-me-the-code">Show me the code.</a>
+      <ul>
+        <li><a href="#lex">lex</a></li>
+        <li><a href="#yacc">yacc</a></li>
+        <li><a href="#使用方法">使用方法</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考">参考</a>
+      <ul>
+        <li><a href="#flexbison">Flex/Bison</a></li>
+        <li><a href="#杂项-yystype">杂项: YYSTYPE</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+</aside>
+
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>页面</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>链接</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Origami404" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://wiki.hitsz.org" target="_blank"><span>HITsz LUG wiki</span></a>
+            </li>
+            
+            <li>
+                <a href="https://space.bilibili.com/1124374292" target="_blank"><span>bilibili</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>标签</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/arch/">Arch</a>
+            </span>
+            
+            <span>
+                <a href="/tags/arm/">ARM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/c/">C</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">Docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">Git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/haskell/">Haskell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/https/">HTTPS</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux-%E5%B7%A5%E5%85%B7/">linux 工具</a>
+            </span>
+            
+            <span>
+                <a href="/tags/llvm/">LLVM</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mgit/">mgit</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/windows/">Windows</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%8F%98%E5%88%86%E6%B3%95/">变分法</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9B%BE%E8%AE%BA/">图论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%9F%9F%E5%90%8D/">域名</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%AF%BC%E8%AE%BA/">导论</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%88%91%E4%BC%9A%E7%86%9F%E7%BB%83%E5%9C%B0%E5%AE%89%E8%A3%85xxx%E7%B3%BB%E5%88%97/">我会熟练地安装xxx系列</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%8A%98%E8%85%BE/">折腾</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%95%B0%E5%AD%A6/">数学</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%96%B0%E8%A7%82%E7%82%B9/">新观点</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AE%A1%E7%90%86/">服务器管理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%AF%95%E6%98%87%E6%9D%AF/">毕昇杯</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E6%B1%87%E7%BC%96/">汇编</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%90%86%E8%AE%BA%E7%89%A9%E7%90%86/">理论物理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BA%BF%E4%BB%A3/">线代</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E7%A8%8B/">编程</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%89%8D%E7%AB%AF/">编译前端</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%87%AA%E7%95%99%E5%9C%B0/">自留地</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E8%BD%AE%E5%AD%90/">轮子</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E9%9D%9E%E6%8A%80%E6%9C%AF/">非技术</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <h3>目录</h3>
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#show-me-the-code">Show me the code.</a>
+      <ul>
+        <li><a href="#lex">lex</a></li>
+        <li><a href="#yacc">yacc</a></li>
+        <li><a href="#使用方法">使用方法</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考">参考</a>
+      <ul>
+        <li><a href="#flexbison">Flex/Bison</a></li>
+        <li><a href="#杂项-yystype">杂项: YYSTYPE</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2019-2022
+                <a href="https://blog.origami404.top/">Origami404</a>
+                
+                | 基于 <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 构建
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+
+
+</body>
+
+</html>
