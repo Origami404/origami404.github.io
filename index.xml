@@ -44,7 +44,7 @@
     </item>
     
     <item>
-      <title>LLVM Kaleidoscope 第 7 章：可变量</title>
+      <title>LLVM Kaleidoscope 第 8 章：编译到目标文件</title>
       <link>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-8/</link>
       <pubDate>Tue, 18 Jan 2022 22:00:00 +0800</pubDate>
       
@@ -302,15 +302,6 @@
       
       <guid>https://blog.origami404.top/linux-conf/2020-01-arch-nvidia/</guid>
       <description>其实开源驱动已经很好了, 但是颜色看起来总是怪怪的&amp;hellip; 白色跟浅浅的黄白之间的交界简直awful&amp;hellip;令人窒息, 特别是每次打开google都得看一次, 辣眼睛. 一开始以为是颜色深度的问</description>
-    </item>
-    
-    <item>
-      <title>Arch 上 RIMI 输入法的配置</title>
-      <link>https://blog.origami404.top/linux-conf/2020-01-arch-rime/</link>
-      <pubDate>Wed, 29 Jan 2020 19:30:00 +0800</pubDate>
-      
-      <guid>https://blog.origami404.top/linux-conf/2020-01-arch-rime/</guid>
-      <description>TODO. 搜狗挺香, 可惜人总是想折腾的. TODO. 安装</description>
     </item>
     
     <item>
