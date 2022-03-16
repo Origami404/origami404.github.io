@@ -37,8 +37,26 @@
 <meta property="og:title" content="变分学基本定理" />
 <meta name="twitter:title" content="变分学基本定理" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.origami404.top/post/2020-01-basic-of-calculus-of-variations/" /><meta property="og:description" content="在试卷现实生活中, 总是会碰到一些泛函上的最优化问题. 它们大多可以归为以下形式: 在函数集合 $$ \left{ x(t)\ | \ x(t_1) = y_1, x(t_2) = y_2, x^{(k)} 存在 \right} $$ 中, 求一个函数$x(t)$使得泛函$I[x(\centerdot)]$的积分: $$" />
-<meta name="twitter:description" content="在试卷现实生活中, 总是会碰到一些泛函上的最优化问题. 它们大多可以归为以下形式: 在函数集合 $$ \left{ x(t)\ | \ x(t_1) = y_1, x(t_2) = y_2, x^{(k)} 存在 \right} $$ 中, 求一个函数$x(t)$使得泛函$I[x(\centerdot)]$的积分: $$" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
+<meta property="og:url" content="https://blog.origami404.top/post/2020-01-basic-of-calculus-of-variations/" /><meta property="og:description" content="在试卷现实生活中, 总是会碰到一些泛函上的最优化问题. 它们大多可以归为以下形式:
+在函数集合
+$$
+\left\{ x(t) \ \Big| \ x(t_1) = y_1, x(t_2) = y_2, x^{(k)} 存在 \right\}
+$$
+中, 求一个函数 $x(t)$ 使得泛函 $I[x(\centerdot)]$ 的积分:
+$$
+S = \int_{t_1}^{t_2} I[x, x&#39;, t] \ \mathrm{d}x
+$$
+有极值." />
+<meta name="twitter:description" content="在试卷现实生活中, 总是会碰到一些泛函上的最优化问题. 它们大多可以归为以下形式:
+在函数集合
+$$
+\left\{ x(t) \ \Big| \ x(t_1) = y_1, x(t_2) = y_2, x^{(k)} 存在 \right\}
+$$
+中, 求一个函数 $x(t)$ 使得泛函 $I[x(\centerdot)]$ 的积分:
+$$
+S = \int_{t_1}^{t_2} I[x, x&#39;, t] \ \mathrm{d}x
+$$
+有极值." /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://blog.origami404.top/img/og.png" /><meta property="article:published_time" content="2020-01-31T17:00:00+08:00" /><meta property="article:modified_time" content="2020-01-31T17:00:00+08:00" />
 
@@ -111,7 +129,7 @@
     <div class="post-item post-meta">
         <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-01-31</span>
 
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;1196 字</span>
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;1012 字</span>
 
 <span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E7%90%86%E8%AE%BA%E7%89%A9%E7%90%86">理论物理</a>&nbsp;<a href="/tags/%E5%8F%98%E5%88%86%E6%B3%95">变分法</a>&nbsp;</span>
 
@@ -121,18 +139,17 @@
         <p>在<del>试卷</del>现实生活中, 总是会碰到一些泛函上的最优化问题. 它们大多可以归为以下形式:</p>
 <p>在函数集合</p>
 <p>$$
-\left{ x(t)\ | \ x(t_1) = y_1, x(t_2) = y_2, x^{(k)} 存在 \right}
+\left\{ x(t) \ \Big| \ x(t_1) = y_1, x(t_2) = y_2, x^{(k)} 存在 \right\}
 $$</p>
-<p>中, 求一个函数$x(t)$使得泛函$I[x(\centerdot)]$的积分:</p>
+<p>中, 求一个函数 $x(t)$ 使得泛函 $I[x(\centerdot)]$ 的积分:</p>
 <p>$$
-S = \int_{t_1}^{t_2} I[x, x', t]\ \mathrm{d}x
+S = \int_{t_1}^{t_2} I[x, x', t] \ \mathrm{d}x
 $$</p>
 <p>有极值.</p>
-<!-- more -->
-<p>我们知道, 一个连续函数$x(t)$的在某个值$t$有极值的必要条件是$x'(t) = 0$, 这被称为<a href="https://zh.wikipedia.org/wiki/%E8%B4%B9%E9%A9%AC%E5%BC%95%E7%90%86" target="_blank">费马引理</a> (强烈建议先去看看它的证明, 其证明的思想有助于理解下文).</p>
+<p>我们知道, 一个连续函数 $x(t)$ 的在某个值 $t$ 有极值的必要条件是 $x'(t) = 0$, 这被称为<a href="https://zh.wikipedia.org/wiki/%E8%B4%B9%E9%A9%AC%E5%BC%95%E7%90%86" target="_blank">费马引理</a> (强烈建议先去看看它的证明, 其证明的思想有助于理解下文).</p>
 <p>那么对于泛函, 这个必要条件是什么呢?</p>
-<p>在微积分中, 我们的一般思考方法是取极值附近的一个微元$\mathrm{d}x$, 然后利用函数的连续性去取得极值的必要条件, 在泛函中我们能否也去考虑一个极值函数附近的<strong>某种&quot;微元&quot;</strong>, 即对于对应极值函数的一个小小的偏移函数, 借此来研究极值函数符合的条件呢?</p>
-<p>我们来(随便)构造一个函数$\mathrm{\eta}(t)$, 令其连续且存在k次导数, 并且还要在两端点为0, 不妨令:</p>
+<p>在微积分中, 我们的一般思考方法是取极值附近的一个微元 $\mathrm{d}x$, 然后利用函数的连续性去取得极值的必要条件, 在泛函中我们能否也去考虑一个极值函数附近的<strong>某种&quot;微元&quot;</strong>, 即对于对应极值函数的一个小小的偏移函数, 借此来研究极值函数符合的条件呢?</p>
+<p>我们来(随便)构造一个函数 $\mathrm{\eta}(t)$, 令其连续且存在 $k$ 次导数, 并且还要在两端点为 $0$, 不妨令:</p>
 <p>$$
 \eta(t) = (t - t_1)^{2k} (t - t_2)^{2k}
 $$</p>
@@ -141,12 +158,12 @@ $$</p>
 <p>$$let\ (k=1, t_1=1, t_2=2)$$</p>
 <p>显然它符合我们的要求, 并且图像看起来就像肿了一个小包, 也挺符合我们对&quot;偏移函数&quot;的认知(大概?)</p>
 <p>有了偏移函数还不够, 我们在泛函中没办法搞到像在实数集一样的序性质, 也就没办法用费马引理的老路子, 那咋办啊?</p>
-<p>既然我们都已经有偏移函数了, 不妨引入一个实数$\alpha$, 它能控制&quot;偏移的量&quot;, 这就把泛函的偏移归结为实数的偏移,然后我们就能用费马引理愉快(?)地玩耍了.</p>
-<p>我们先随便找一个函数$x_0$, 并令它偏移一下变成$x = x_0 + \alpha \eta$, 然后我们的$S$就从一个<strong>关于$x$的泛函</strong>变成了一个<strong>关于$\alpha$的函数</strong>:</p>
+<p>既然我们都已经有偏移函数了, 不妨引入一个实数 $\alpha$, 它能控制&quot;偏移的量&quot;, 这就把泛函的偏移归结为实数的偏移,然后我们就能用费马引理愉快(?)地玩耍了.</p>
+<p>我们先随便找一个函数 $x_0$, 并令它偏移一下变成 $x = x_0 + \alpha \eta$, 然后我们的 $S$ 就从一个<strong>关于 $x$ 的泛函</strong>变成了一个<strong>关于 $\alpha$ 的函数</strong>:</p>
 <p>$$
 S(\alpha) = \int_{t_1}^{t_2} I[x_0 + \alpha \mathrm{\eta}, x_0' + \alpha \mathrm{\eta}, t]\ \mathrm{d}t
 $$</p>
-<p>当这个函数$S(\alpha)$有极值时我们必有: $\mathrm{d}S/\mathrm{d}\alpha = 0$. 我们对$\alpha$求导, 有:</p>
+<p>当这个函数 $S(\alpha)$ 有极值时我们必有: $\mathrm{d}S/\mathrm{d}\alpha = 0$. 我们对 $\alpha$ 求导, 有:</p>
 <p>$$
 \frac{\mathrm{d}S}{\mathrm{d}\alpha} = \int_{t_1}^{t_2} \frac{\mathrm{d}}{\mathrm{d}\alpha} I[x_0 + \alpha \mathrm{\eta}, x_0' + \alpha \mathrm{\eta}, t] \ \mathrm{d}t
 $$</p>
@@ -154,57 +171,51 @@ $$</p>
 <p>$$
 \frac{\mathrm{d}I}{\mathrm{d}\alpha} = \frac{\partial I}{\partial x} \frac{\mathrm{d}x}{\mathrm{d}\alpha} + \frac{\partial I}{\partial x'} \frac{\mathrm{d}x'}{\mathrm{d}\alpha} + \frac{\partial I}{\partial t} \frac{\mathrm{d}t}{\mathrm{d}\alpha}
 $$</p>
-<p>注意到最后一项中$t$并不依赖于$\alpha$, 所以原式化为:</p>
+<p>注意到最后一项中 $t$ 并不依赖于 $\alpha$, 所以原式化为:</p>
 <p>$$
 \frac{\mathrm{d} S}{\mathrm{d} \alpha}
-= \int_{t_1}^{t_2} \Big(
-\frac{\partial I}{\partial x} \eta</p>
-<ul>
-<li>\frac{\partial I}{\partial x'} \eta'
-\Big) \mathrm{d}t
-$$</li>
-</ul>
-<p>我们想办法把$\eta$凑出来, 由$\eta$的任意性逼着搞出某个玩意为0. 什么玩意能把$\eta'$变成$\eta$呢? 当然是我们可爱的分部积分. 于是我们把第二项拉出来分部积一下:</p>
-<p>$$
-\int_{t_1}^{t_2} \frac{\partial I}{\partial x'} \eta'
-= \frac{\partial I}{\partial x'} \eta \Big|^{t_2}_{t_1}</p>
-<ul>
-<li>\int_{t_1}^{t_2} \Big(\frac{\mathrm{d}}{\mathrm{d}t} \frac{\partial I}{\partial x'}\Big) \eta \ \mathrm{d}t
-$$</li>
-</ul>
-<p>代入回去, 并注意到我们在定义$\eta$时让两端点的$\eta$值为$0$了, 所以把分部出来的第一项略去, 有:</p>
-<p>$$
-\frac{\mathrm{d} S}{\mathrm{d} \alpha}
-= \int_{t_1}^{t_2} \Big(
-\frac{\partial I}{\partial x}</p>
-<ul>
-<li>\frac{\mathrm{d}}{\mathrm{d}t} \frac{\partial I}{\partial x'}
-\Big) \eta \ \mathrm{d}t
-$$</li>
-</ul>
-<p>如果此时的函数$x$令$S$有了极值的话, 我们就会有$\mathrm{d}S/\mathrm{d}\alpha = 0$, 即:</p>
-<p>$$
-\int_{t_1}^{t_2} \Big(
-\frac{\partial I}{\partial x}</p>
-<ul>
-<li>\frac{\mathrm{d}}{\mathrm{d}t} \frac{\partial I}{\partial x'}
-\Big) \eta \ \mathrm{d}t = 0
-$$</li>
-</ul>
-<p>由$\eta$的任意性, 我们就必有:</p>
+= \int_{t_1}^{t_2} \left(
+\frac{\partial I}{\partial x} \eta
++ \frac{\partial I}{\partial x'} \eta'
+\right) \ \mathrm{d} t
+$$</p>
+<p>我们想办法把 $\eta$ 凑出来, 由 $\eta$ 的任意性逼着搞出某个玩意为0. 什么玩意能把 $\eta'$ 变成 $\eta$ 呢? 当然是我们可爱的分部积分. 于是我们把第二项拉出来分部积一下:</p>
+
+$$\int_{t_1}^{t_2} \frac{\partial I}{\partial x&#39;} \eta&#39;
+  = \frac{\partial I}{\partial x&#39;} \eta \big|^{t_2}_{t_1}
+  - \int_{t_1}^{t_2} \left( \frac{\mathrm{d}}{\mathrm{d}t} \frac{\partial I}{\partial x&#39;} \right) \eta \ \mathrm{d}t$$
+
+
+<p>代入回去, 并注意到我们在定义 $\eta$ 时让两端点的 $\eta$ 值为 $0$ 了, 所以把分部出来的第一项略去, 有:</p>
+
+$$\frac{\mathrm{d} S}{\mathrm{d} \alpha}
+= \int_{t_1}^{t_2} \left(
+    \frac{\partial I}{\partial x}
+  - \frac{\mathrm{d}}{\mathrm{d}t} \frac{\partial I}{\partial x&#39;}
+\right) \eta \, \mathrm{d}t$$
+
+
+<p>如果此时的函数 $x$ 令 $S$ 有了极值的话, 我们就会有 $\mathrm{d}S/\mathrm{d}\alpha = 0$, 即:</p>
+
+$$\int_{t_1}^{t_2} \left(
+    \frac{\partial I}{\partial x}
+  - \frac{\mathrm{d}}{\mathrm{d}t} \frac{\partial I}{\partial x&#39;}
+\right) \eta \ \mathrm{d}t = 0$$
+
+
+<p>由 $\eta$ 的任意性, 我们就必有:</p>
 <p>$$
 \frac{\partial I}{\partial x}  - \frac{\mathrm{d}}{\mathrm{d}t} \frac{\partial I}{\partial x'} = 0
 $$</p>
-<p>综上, 当函数x使得</p>
+<p>综上, 当函数 $x$ 使得</p>
 <p>$$
 S = \int_{t_1}^{t_2} I[x, x', t]\ \mathrm{d}x
 $$</p>
 <p>有极值时, 此函数必然满足:</p>
 <p>$$
-\frac{\partial I}{\partial x}  - \frac{\mathrm{d}}{\mathrm{d}t} \frac{\partial I}{\partial x'} = 0
+\frac{\partial I}{\partial x} - \frac{\mathrm{d}}{\mathrm{d}t} \frac{\partial I}{\partial x'} = 0
 $$</p>
 <p>此条件称为<strong>欧拉-拉格朗日方程</strong>.</p>
-
     </div>
 </article>
 
@@ -655,20 +666,26 @@ $$</p>
     
 <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
 
 
 
 <script defer src="/assets/js/fuji.min.js"></script>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" />
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
-<script
-  defer
-  src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"
-  onload="renderMathInElement(document.body);"
-></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/auto-render.min.js"></script>
+<script>
+  renderMathInElement(document.querySelector('div.content'), {
+    delimiters: [
+      { left: '$$', right: '$$', display: true },
+      { left: '\\[', right: '\\]', display: true },
+      { left: '$', right: '$', display: false },
+      { left: '\\(', right: '\\)', display: false },
+    ],
+  });
+</script>
 
 
 

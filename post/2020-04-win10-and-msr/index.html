@@ -37,8 +37,14 @@
 <meta property="og:title" content="Win10重装与MSR分区" />
 <meta name="twitter:title" content="Win10重装与MSR分区" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.origami404.top/post/2020-04-win10-and-msr/" /><meta property="og:description" content="前言 大概1月底, 辣鸡win10的更新就更不上去了, 然后我折腾了好久&hellip;包括各种系统检查啊手动安装啊, 无果. 最后在3月决定干脆删了重装&hellip; 重装过程中遇到了大大小小的问题, 写个文章" />
-<meta name="twitter:description" content="前言 大概1月底, 辣鸡win10的更新就更不上去了, 然后我折腾了好久&hellip;包括各种系统检查啊手动安装啊, 无果. 最后在3月决定干脆删了重装&hellip; 重装过程中遇到了大大小小的问题, 写个文章" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
+<meta property="og:url" content="https://blog.origami404.top/post/2020-04-win10-and-msr/" /><meta property="og:description" content="前言
+大概1月底, 辣鸡win10的更新就更不上去了, 然后我折腾了好久&hellip;包括各种系统检查啊手动安装啊, 无果. 最后在3月决定干脆删了重装&hellip;
+重装过程中遇到了大大小小的问题, 写个文章记录一下.
+3月的事拖到4月写, 咕咕咕实锤" />
+<meta name="twitter:description" content="前言
+大概1月底, 辣鸡win10的更新就更不上去了, 然后我折腾了好久&hellip;包括各种系统检查啊手动安装啊, 无果. 最后在3月决定干脆删了重装&hellip;
+重装过程中遇到了大大小小的问题, 写个文章记录一下.
+3月的事拖到4月写, 咕咕咕实锤" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://blog.origami404.top/img/og.png" /><meta property="article:published_time" content="2020-04-08T09:45:00+08:00" /><meta property="article:modified_time" content="2020-04-08T09:45:00+08:00" />
 
@@ -122,7 +128,6 @@
 <p>大概1月底, 辣鸡win10的更新就更不上去了, 然后我折腾了好久&hellip;包括各种系统检查啊手动安装啊, 无果. 最后在3月决定干脆删了重装&hellip;</p>
 <p>重装过程中遇到了大大小小的问题, 写个文章记录一下.</p>
 <p><del>3月的事拖到4月写, 咕咕咕实锤</del></p>
-<!-- more -->
 <h2 id="wsl--wim">WSL &amp; WIM</h2>
 <p>删系统之前要干吗呢? 当然是备份.</p>
 <p>现在都2020年了, 当然不能再用ghost了, 我们当然要选择简洁好用的<code>dism++</code>打一个wim镜像啦!</p>
@@ -163,7 +168,6 @@
 <li>装Win10的时候记得在那个分区前新建一个128M的MSR分区</li>
 <li>辣鸡Windows</li>
 </ul>
-
     </div>
 </article>
 
@@ -628,20 +632,26 @@
     
 <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
 
 
 
 <script defer src="/assets/js/fuji.min.js"></script>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" />
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
-<script
-  defer
-  src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"
-  onload="renderMathInElement(document.body);"
-></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/auto-render.min.js"></script>
+<script>
+  renderMathInElement(document.querySelector('div.content'), {
+    delimiters: [
+      { left: '$$', right: '$$', display: true },
+      { left: '\\[', right: '\\]', display: true },
+      { left: '$', right: '$', display: false },
+      { left: '\\(', right: '\\)', display: false },
+    ],
+  });
+</script>
 
 
 

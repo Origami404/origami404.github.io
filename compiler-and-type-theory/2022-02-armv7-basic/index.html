@@ -37,8 +37,54 @@
 <meta property="og:title" content="毕昇杯专用 ARMv7 汇编急救" />
 <meta name="twitter:title" content="毕昇杯专用 ARMv7 汇编急救" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.origami404.top/compiler-and-type-theory/2022-02-armv7-basic/" /><meta property="og:description" content="总览 主要参考文章: https://thinkingeek.com/arm-assembler-raspberry-pi/ 绝大部分示例代码都是从此文章抄来的 这篇参考文章偏向于使用 ARM 汇编进行开发的入门, 期望读者水平为学过 C, 还教了一些算法啥的. 作者还有一本书, 200来页, 书比网站上的更加系统, 建议看书. 当" />
-<meta name="twitter:description" content="总览 主要参考文章: https://thinkingeek.com/arm-assembler-raspberry-pi/ 绝大部分示例代码都是从此文章抄来的 这篇参考文章偏向于使用 ARM 汇编进行开发的入门, 期望读者水平为学过 C, 还教了一些算法啥的. 作者还有一本书, 200来页, 书比网站上的更加系统, 建议看书. 当" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
+<meta property="og:url" content="https://blog.origami404.top/compiler-and-type-theory/2022-02-armv7-basic/" /><meta property="og:description" content="总览
+
+主要参考文章: https://thinkingeek.com/arm-assembler-raspberry-pi/
+绝大部分示例代码都是从此文章抄来的
+这篇参考文章偏向于使用 ARM 汇编进行开发的入门, 期望读者水平为学过 C, 还教了一些算法啥的. 作者还有一本书, 200来页, 书比网站上的更加系统, 建议看书.
+当然如果我写错了什么, 那当然是我的问题, 不关作者事.
+
+这是一份对 ARMv7 汇编的急救指南, 目的是以最快速度提供 &ldquo;实现一个 target 到 ARMv7 的 C 编译器&rdquo; 所需要的 ARM 汇编知识. 本文章假设读者熟悉汇编语言与 C, 至少看过 CSAPP 的第 4 章, 并且了解一些编译技术.
+本文章 没有 :
+
+任何对 不同模式 的介绍与说明 (也就是只考虑 User 模式)
+任何对 浮点运算 的介绍与说明
+对一些指令的完全介绍, 比如 ldm/stm
+对规范的完整解释
+
+本文章的介绍顺序大体按照那本书里的顺序, 为了方便查阅, 根据主题分类索引如下:
+
+总览 &amp; 框架: 基本架构
+寄存器: 寄存器
+分支: 分支, 控制结构的翻译, 条件执行
+内存与取址模式: 内存, 基本取址模式, load/store 特有的取址
+函数: 函数, 但不含栈, 函数, 但不含局部变量, 函数, 齐活了
+动手实践: 用 GDB 调试汇编程序, 用 GCC 交叉编译 C 代码到 ARMv7 可执行文件并反编译
+" />
+<meta name="twitter:description" content="总览
+
+主要参考文章: https://thinkingeek.com/arm-assembler-raspberry-pi/
+绝大部分示例代码都是从此文章抄来的
+这篇参考文章偏向于使用 ARM 汇编进行开发的入门, 期望读者水平为学过 C, 还教了一些算法啥的. 作者还有一本书, 200来页, 书比网站上的更加系统, 建议看书.
+当然如果我写错了什么, 那当然是我的问题, 不关作者事.
+
+这是一份对 ARMv7 汇编的急救指南, 目的是以最快速度提供 &ldquo;实现一个 target 到 ARMv7 的 C 编译器&rdquo; 所需要的 ARM 汇编知识. 本文章假设读者熟悉汇编语言与 C, 至少看过 CSAPP 的第 4 章, 并且了解一些编译技术.
+本文章 没有 :
+
+任何对 不同模式 的介绍与说明 (也就是只考虑 User 模式)
+任何对 浮点运算 的介绍与说明
+对一些指令的完全介绍, 比如 ldm/stm
+对规范的完整解释
+
+本文章的介绍顺序大体按照那本书里的顺序, 为了方便查阅, 根据主题分类索引如下:
+
+总览 &amp; 框架: 基本架构
+寄存器: 寄存器
+分支: 分支, 控制结构的翻译, 条件执行
+内存与取址模式: 内存, 基本取址模式, load/store 特有的取址
+函数: 函数, 但不含栈, 函数, 但不含局部变量, 函数, 齐活了
+动手实践: 用 GDB 调试汇编程序, 用 GCC 交叉编译 C 代码到 ARMv7 可执行文件并反编译
+" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://blog.origami404.top/img/og.png" /><meta property="article:published_time" content="2022-02-13T21:00:00+08:00" /><meta property="article:modified_time" content="2022-02-13T21:00:00+08:00" />
 
@@ -142,7 +188,6 @@
 <li>函数: <a href="#%e5%87%bd%e6%95%b0">函数, 但不含栈</a>, <a href="#%e6%a0%88">函数, 但不含局部变量</a>, <a href="#%e5%b1%80%e9%83%a8%e5%8f%98%e9%87%8f">函数, 齐活了</a></li>
 <li>动手实践: <a href="#gdb">用 GDB 调试汇编程序</a>, <a href="#%e5%8a%a8%e6%89%8b%e8%bf%87%e7%a8%8b">用 GCC 交叉编译 C 代码到 ARMv7 可执行文件并反编译</a></li>
 </ul>
-<!-- more -->
 <h2 id="基本架构">基本架构</h2>
 <h3 id="第一个程序--如何运行">第一个程序 &amp; 如何运行</h3>
 <p>下面是一个返回值为 <code>2</code> 的简单的汇编程序：</p>
@@ -1016,7 +1061,6 @@ int fib(int x) {
   34:	e8bd8070 	pop	{r4, r5, r6, pc}
 
 </code></pre>
-
     </div>
 </article>
 
@@ -1609,20 +1653,26 @@ int fib(int x) {
     
 <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
 
 
 
 <script defer src="/assets/js/fuji.min.js"></script>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" />
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
-<script
-  defer
-  src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"
-  onload="renderMathInElement(document.body);"
-></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/auto-render.min.js"></script>
+<script>
+  renderMathInElement(document.querySelector('div.content'), {
+    delimiters: [
+      { left: '$$', right: '$$', display: true },
+      { left: '\\[', right: '\\]', display: true },
+      { left: '$', right: '$', display: false },
+      { left: '\\(', right: '\\)', display: false },
+    ],
+  });
+</script>
 
 
 

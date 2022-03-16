@@ -37,8 +37,42 @@
 <meta property="og:title" content="矢量运算与高阶线性结构的构造性定义" />
 <meta name="twitter:title" content="矢量运算与高阶线性结构的构造性定义" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.origami404.top/post/2021-09-constructive-def-of-vector-operation/" /><meta property="og:description" content="前言 上大学了, 终于有大段的时间来整理数学和物理学内容了. 本文有其思想上的参考: 3b1b: 发明新数学是怎样一种体验？ &ldquo;最原始的&quot;双线性二元运算 让我们来考虑矢量的运算吧! 假如我们需要在线性空" />
-<meta name="twitter:description" content="前言 上大学了, 终于有大段的时间来整理数学和物理学内容了. 本文有其思想上的参考: 3b1b: 发明新数学是怎样一种体验？ &ldquo;最原始的&quot;双线性二元运算 让我们来考虑矢量的运算吧! 假如我们需要在线性空" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
+<meta property="og:url" content="https://blog.origami404.top/post/2021-09-constructive-def-of-vector-operation/" /><meta property="og:description" content="前言
+上大学了, 终于有大段的时间来整理数学和物理学内容了.
+本文有其思想上的参考: 3b1b: 发明新数学是怎样一种体验？
+&ldquo;最原始的&quot;双线性二元运算
+让我们来考虑矢量的运算吧!
+假如我们需要在线性空间 $\mathbb{V}$ 上定义二元运算, 显然我们会希望这个运算至少是线性的, 否则为啥我们要在线性空间上搞呢. 同时如果一个二元运算是双线性的(就是说对于两个操作数而言它都是线性的), 那么我们只需要对 $\mathbb{V}$ 的基底定义此运算即可.
+换句话说, 对于双线性运算 $\mathbf{a} \otimes \mathbf{b}$, 我们可以将其按基底展开:
+$$
+\begin{aligned}
+\mathbf{a} \otimes \mathbf{b}
+&amp;= (\sum_{i=1}^n a_i \mathbf{e_i}) \otimes (\sum_{i=1}^n b_i \mathbf{e_i}) \\
+&amp;= \sum_{i=1}^n \sum_{j=1}^n a_i b_j (\mathbf{e_i} \otimes \mathbf{e_j})
+\end{aligned}
+$$
+那么, 我们只需要定义所有的 $\mathbf{e_i} \otimes \mathbf{e_j}$ (一共 $n^2$ 个) 即可.
+
+等等, 这都啥跟啥啊????
+" />
+<meta name="twitter:description" content="前言
+上大学了, 终于有大段的时间来整理数学和物理学内容了.
+本文有其思想上的参考: 3b1b: 发明新数学是怎样一种体验？
+&ldquo;最原始的&quot;双线性二元运算
+让我们来考虑矢量的运算吧!
+假如我们需要在线性空间 $\mathbb{V}$ 上定义二元运算, 显然我们会希望这个运算至少是线性的, 否则为啥我们要在线性空间上搞呢. 同时如果一个二元运算是双线性的(就是说对于两个操作数而言它都是线性的), 那么我们只需要对 $\mathbb{V}$ 的基底定义此运算即可.
+换句话说, 对于双线性运算 $\mathbf{a} \otimes \mathbf{b}$, 我们可以将其按基底展开:
+$$
+\begin{aligned}
+\mathbf{a} \otimes \mathbf{b}
+&amp;= (\sum_{i=1}^n a_i \mathbf{e_i}) \otimes (\sum_{i=1}^n b_i \mathbf{e_i}) \\
+&amp;= \sum_{i=1}^n \sum_{j=1}^n a_i b_j (\mathbf{e_i} \otimes \mathbf{e_j})
+\end{aligned}
+$$
+那么, 我们只需要定义所有的 $\mathbf{e_i} \otimes \mathbf{e_j}$ (一共 $n^2$ 个) 即可.
+
+等等, 这都啥跟啥啊????
+" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://blog.origami404.top/img/og.png" /><meta property="article:published_time" content="2021-09-30T19:30:00+08:00" /><meta property="article:modified_time" content="2021-09-30T19:30:00+08:00" />
 
@@ -128,7 +162,7 @@
 <p>$$
 \begin{aligned}
 \mathbf{a} \otimes \mathbf{b}
-&amp;= (\sum_{i=1}^n a_i \mathbf{e_i}) \otimes (\sum_{i=1}^n b_i \mathbf{e_i}) \
+&amp;= (\sum_{i=1}^n a_i \mathbf{e_i}) \otimes (\sum_{i=1}^n b_i \mathbf{e_i}) \\
 &amp;= \sum_{i=1}^n \sum_{j=1}^n a_i b_j (\mathbf{e_i} \otimes \mathbf{e_j})
 \end{aligned}
 $$</p>
@@ -136,14 +170,13 @@ $$</p>
 <blockquote>
 <p>等等, 这都啥跟啥啊????</p>
 </blockquote>
-<!-- more -->
 <h2 id="抽象的开始-mathbbr2">抽象的开始: $\mathbb{R}^2$</h2>
 <p>下面我们来举一个具体点的例子. 考虑 $\mathbb{R}^2$ 上的正交归一基 $\mathbf{i}, \mathbf{j}$, 上面的式子化成:</p>
 <p>$$
 \begin{aligned}
 \mathbf{a} \otimes \mathbf{b}
-&amp;= (a_1 \mathbf{i} + a_2 \mathbf{j}) \otimes (b_1 \mathbf{i} + b_2 \mathbf{j}) \
-&amp;= a_1 b_1 (\mathbf{i} \otimes \mathbf{i}) + a_1 b_2 (\mathbf{i} \otimes \mathbf{j}) \
+&amp;= (a_1 \mathbf{i} + a_2 \mathbf{j}) \otimes (b_1 \mathbf{i} + b_2 \mathbf{j}) \\
+&amp;= a_1 b_1 (\mathbf{i} \otimes \mathbf{i}) + a_1 b_2 (\mathbf{i} \otimes \mathbf{j}) \\
 &amp;+ a_2 b_1 (\mathbf{j} \otimes \mathbf{i}) + a_2 b_2 (\mathbf{j} \otimes \mathbf{j})
 \end{aligned}
 $$</p>
@@ -153,7 +186,7 @@ $$</p>
 <p>我们先来一个最简单的, 我们如下定义基底之间的 $\otimes$:</p>
 <p>$$
 \begin{aligned}
-&amp; \mathbf{i} \otimes \mathbf{i} = 1  &amp;\mathbf{i} \otimes \mathbf{j} = 0\
+&amp; \mathbf{i} \otimes \mathbf{i} = 1  &amp;\mathbf{i} \otimes \mathbf{j} = 0\\
 &amp; \mathbf{j} \otimes \mathbf{i} = 0  &amp;\mathbf{j} \otimes \mathbf{j} = 1
 \end{aligned}
 $$</p>
@@ -173,7 +206,7 @@ $$</p>
 <p>如下定义基底之间的 $\otimes$:</p>
 <p>$$
 \begin{aligned}
-&amp; \mathbf{i} \otimes \mathbf{i} = 0   &amp;\mathbf{i} \otimes \mathbf{j} = 1\
+&amp; \mathbf{i} \otimes \mathbf{i} = 0   &amp;\mathbf{i} \otimes \mathbf{j} = 1\\
 &amp; \mathbf{j} \otimes \mathbf{i} = -1  &amp;\mathbf{j} \otimes \mathbf{j} = 0
 \end{aligned}
 $$</p>
@@ -187,7 +220,7 @@ $$</p>
 <p>$$
 \mathbf{a} \otimes \mathbf{b} =
 \begin{vmatrix}
-a_1 &amp; b_1 \
+a_1 &amp; b_1 \\
 a_2 &amp; b_2
 \end{vmatrix}
 = a_1 b_2 - a_2 b_1
@@ -203,26 +236,26 @@ $$</p>
 <p>首先我们要玩大一点, 为啥我们的$\otimes$出来的结果一定得是是一个数呢? 假如我们塞其他的对象进去会怎么样?</p>
 <p>如下定义基底之间的 $\otimes$:</p>
 <p>$$
-\begin{aligned}</p>
-<p>&amp; \mathbf{i} \otimes \mathbf{i} = \mathbf{0}  \quad
+\begin{aligned}
+&amp; \mathbf{i} \otimes \mathbf{i} = \mathbf{0}  \quad
 &amp; \mathbf{i} \otimes \mathbf{j} = \mathbf{k}  \quad
-&amp; \mathbf{i} \otimes \mathbf{k} = \mathbf{j}  \</p>
-<p>&amp; \mathbf{j} \otimes \mathbf{i} = -\mathbf{k} \quad
+&amp; \mathbf{i} \otimes \mathbf{k} = \mathbf{j}  \\
+&amp; \mathbf{j} \otimes \mathbf{i} = -\mathbf{k} \quad
 &amp; \mathbf{j} \otimes \mathbf{j} = \mathbf{0}  \quad
-&amp; \mathbf{j} \otimes \mathbf{k} = \mathbf{i}  \</p>
-<p>&amp; \mathbf{k} \otimes \mathbf{i} = -\mathbf{j} \quad
+&amp; \mathbf{j} \otimes \mathbf{k} = \mathbf{i}  \\
+&amp; \mathbf{k} \otimes \mathbf{i} = -\mathbf{j} \quad
 &amp; \mathbf{k} \otimes \mathbf{j} = -\mathbf{i} \quad
-&amp; \mathbf{k} \otimes \mathbf{k} = \mathbf{0}  \</p>
-<p>\end{aligned}
+&amp; \mathbf{k} \otimes \mathbf{k} = \mathbf{0}  \\
+\end{aligned}
 $$</p>
 <p>也就是说, 我们进行一个基底的轮换, 那么我们就会有三维的叉积:</p>
 <p>$$
 \begin{aligned}
 \mathbf{a} \otimes \mathbf{b} =
-&amp; -a_1 b_1\mathbf{0} + a_1 b_2\mathbf{k} - a_1 b_3\mathbf{j} \
-&amp; -a_2 b_1\mathbf{k} - a_2 b_2\mathbf{0} + a_2 b_3\mathbf{i} \
-&amp; +a_3 b_1\mathbf{j} - a_3 b_2\mathbf{i} - a_3 b_3\mathbf{0} \
-= &amp;(a_2 b_3-a_3 b_2)\mathbf{i} + (a_3 b_1-a_1 b_3)\mathbf{j} + (a_1 b_2-a_2 b_1)\mathbf{k} \
+&amp; -a_1 b_1\mathbf{0} + a_1 b_2\mathbf{k} - a_1 b_3\mathbf{j} \\
+&amp; -a_2 b_1\mathbf{k} - a_2 b_2\mathbf{0} + a_2 b_3\mathbf{i} \\
+&amp; +a_3 b_1\mathbf{j} - a_3 b_2\mathbf{i} - a_3 b_3\mathbf{0} \\
+= &amp;(a_2 b_3-a_3 b_2)\mathbf{i} + (a_3 b_1-a_1 b_3)\mathbf{j} + (a_1 b_2-a_2 b_1)\mathbf{k} \\
 \end{aligned}
 $$</p>
 <p>叉积有其专有的符号: $\mathbf{a} \times \mathbf{b}$, 并且有一个非常重要的性质: 反交换律:</p>
@@ -238,7 +271,7 @@ $$</p>
 <p>我们干脆就承认下面这些:</p>
 <p>$$
 \begin{aligned}
-&amp; \mathbf{i} \otimes \mathbf{i}  &amp;\mathbf{i} \otimes \mathbf{j}\
+&amp; \mathbf{i} \otimes \mathbf{i}  &amp;\mathbf{i} \otimes \mathbf{j}\\
 &amp; \mathbf{j} \otimes \mathbf{i}  &amp;\mathbf{j} \otimes \mathbf{j}
 \end{aligned}
 $$</p>
@@ -248,12 +281,11 @@ $$</p>
 <p>我们如下定义:</p>
 <p>$$
 \begin{aligned}
-&amp; \mathbf{i} \otimes \mathbf{i} = 0<br>
-&amp; \mathbf{i} \otimes \mathbf{j} = \mathbf{i} \otimes \mathbf{j} \</p>
-<pre><code>&amp; \mathbf{j} \otimes \mathbf{i} = -\mathbf{i} \otimes \mathbf{j} 
+&amp; \mathbf{i} \otimes \mathbf{i} = 0
+&amp; \mathbf{i} \otimes \mathbf{j} = \mathbf{i} \otimes \mathbf{j} \\
+&amp; \mathbf{j} \otimes \mathbf{i} = -\mathbf{i} \otimes \mathbf{j}
 &amp; \mathbf{j} \otimes \mathbf{j} = 0
-</code></pre>
-<p>\end{aligned}
+\end{aligned}
 $$</p>
 <p>换句话讲, 我们构建一个新的由不同基底组成的对象, 并且让它 <strong>对基底的顺序敏感</strong>, 在基底顺序为自然排列的时候就是正的, 每换一下相邻两个基底的顺序就是负的.</p>
 <p>这种运算有其独有的名字, 外积/楔积 (wedge product), 记作 $\mathbf{i} \wedge \mathbf{j}$. 像这种具有反交换律且有双线性的性质被称为交替双线性.</p>
@@ -261,17 +293,15 @@ $$</p>
 <h3 id="对称积我自己起的名字-一种具有对称双线性的运算">对称积(我自己起的名字, 一种具有对称双线性的运算)</h3>
 <p>$$
 \begin{aligned}
-&amp; \mathbf{i} \otimes \mathbf{i} = 0<br>
-&amp; \mathbf{i} \otimes \mathbf{j} = \mathbf{i} \otimes \mathbf{j} \</p>
-<pre><code>&amp; \mathbf{j} \otimes \mathbf{i} = \mathbf{i} \otimes \mathbf{j} 
+&amp; \mathbf{i} \otimes \mathbf{i} = 0
+&amp; \mathbf{i} \otimes \mathbf{j} = \mathbf{i} \otimes \mathbf{j} \\
+&amp; \mathbf{j} \otimes \mathbf{i} = \mathbf{i} \otimes \mathbf{j}
 &amp; \mathbf{j} \otimes \mathbf{j} = 0
-</code></pre>
-<p>\end{aligned}
+\end{aligned}
 $$</p>
 <p>同上构建新的由不同基底组成的对象, 并且让其对基底的顺序 <strong>不</strong> 敏感, 也就是说让其具有交换性.</p>
 <p>这种运算暂时还没有名字, 但是其具有的交换律并且有双线性的性质被称为对称双线性.</p>
 <p>这种运算可以拿来定义积和式. <a href="https://zh.wikipedia.org/wiki/%E7%A7%AF%E5%92%8C%E5%BC%8F" target="_blank">维基百科: 积和式</a></p>
-
     </div>
 </article>
 
@@ -752,20 +782,26 @@ $$</p>
     
 <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
 
 
 
 <script defer src="/assets/js/fuji.min.js"></script>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" />
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
-<script
-  defer
-  src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"
-  onload="renderMathInElement(document.body);"
-></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/auto-render.min.js"></script>
+<script>
+  renderMathInElement(document.querySelector('div.content'), {
+    delimiters: [
+      { left: '$$', right: '$$', display: true },
+      { left: '\\[', right: '\\]', display: true },
+      { left: '$', right: '$', display: false },
+      { left: '\\(', right: '\\)', display: false },
+    ],
+  });
+</script>
 
 
 

@@ -13,7 +13,7 @@
       <pubDate>Wed, 29 Jan 2020 19:30:00 +0800</pubDate>
       
       <guid>https://blog.origami404.top/linux-conf/2020-01-arch-alacritty/</guid>
-      <description>应某人推荐, 终端模拟器使用了Alacritty, 特此记录. oh-my-zsh主题用了ys 主题使用了darcula 注意, 因为我用的是Awesome WM, 不自带合成器效果, 需要安装compton之后, Alac</description>
+      <description>&lt;p&gt;应某人推荐, 终端模拟器使用了&lt;code&gt;Alacritty&lt;/code&gt;, 特此记录.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -22,7 +22,15 @@
       <pubDate>Wed, 29 Jan 2020 19:30:00 +0800</pubDate>
       
       <guid>https://blog.origami404.top/linux-conf/2020-01-arch-awesome-wm/</guid>
-      <description>配个awesome. 主要痛点有: 任务栏在上面, 并且有一堆很讨厌的东西, 比如什么启动菜单啊, 当前任务啊, 键盘键位等 默认layout居然是floating, 理解不能 tag居然是全部显示然后有东西就有个点,</description>
+      <description>&lt;p&gt;配个awesome.&lt;/p&gt;
+&lt;p&gt;主要痛点有:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;任务栏在上面, 并且有一堆很讨厌的东西, 比如什么启动菜单啊, 当前任务啊, 键盘键位等&lt;/li&gt;
+&lt;li&gt;默认layout居然是floating, 理解不能&lt;/li&gt;
+&lt;li&gt;tag居然是全部显示然后有东西就有个点, 这样看起来很累&lt;/li&gt;
+&lt;li&gt;快捷键不合我口味&lt;/li&gt;
+&lt;li&gt;壁纸有点丑啊&amp;hellip;&lt;/li&gt;
+&lt;/ul&gt;</description>
     </item>
     
     <item>
@@ -31,7 +39,7 @@
       <pubDate>Wed, 29 Jan 2020 19:30:00 +0800</pubDate>
       
       <guid>https://blog.origami404.top/linux-conf/2020-01-arch-install-cli/</guid>
-      <description>接着上文, 记录一些常用的CLI工具 首先装sudo并新建用户 pacman -S sudo useradd -m -g wheel origami 安装一堆工具 pacman -S base-devel git cmake 装个v2ray并启动, ss实在太容易被ban了. proxychains可以通过替换动态链接库的方法来强迫</description>
+      <description>&lt;p&gt;接着&lt;a href=&#34;../Arch%20%e5%ae%89%e8%a3%85%e8%ae%b0%e5%bd%95&#34;&gt;上文&lt;/a&gt;, 记录一些常用的CLI工具&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -40,7 +48,10 @@
       <pubDate>Wed, 29 Jan 2020 19:30:00 +0800</pubDate>
       
       <guid>https://blog.origami404.top/linux-conf/2020-01-arch-install-gui/</guid>
-      <description>安装 桌面环境这次选择了X+awesome, wayland现在还是太折腾了, 并且还有输入法这一个大坑. 用过i3之后对浮动式wm就再也提不起兴趣, 同时因为用了一阵子i3, 决定换个口味, 试试配一个aweso</description>
+      <description>&lt;h2 id=&#34;安装&#34;&gt;安装&lt;/h2&gt;
+&lt;p&gt;桌面环境这次选择了X+awesome, wayland现在还是太折腾了, 并且还有输入法这一个大坑. 用过i3之后对浮动式wm就再也提不起兴趣, 同时因为用了一阵子i3, 决定换个口味, 试试配一个awesome.&lt;/p&gt;
+&lt;p&gt;dm用的是lightdm, greeter用了lightdm-webkit2-greeter(因为好看2333), 主题选择了&lt;a href=&#34;https://github.com/Litarvan/lightdm-webkit-theme-litarvan&#34; target=&#34;_blank&#34;&gt;这一个&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;终端模拟器用了alacritty, 主题选了&lt;a href=&#34;https://github.com/dracula/alacritty&#34; target=&#34;_blank&#34;&gt;这一个&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -49,7 +60,12 @@
       <pubDate>Wed, 29 Jan 2020 19:30:00 +0800</pubDate>
       
       <guid>https://blog.origami404.top/linux-conf/2020-01-arch-lightdm/</guid>
-      <description>简要名词介绍 WM: Windows Manager, 用于登录之后管理窗口的玩意 DM: Display Manager, 提供登录之前跟登录界面 Greeter: 用来提供登录界面, 依赖于特定的DM 安装 LightDM sudo pacman -S lightdm lightdm-webkit2-greeter 安装完编辑/etc/lightdm/lightdm.conf文件, 先找到[S</description>
+      <description>&lt;h2 id=&#34;简要名词介绍&#34;&gt;简要名词介绍&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;WM: Windows Manager, 用于登录之后管理窗口的玩意&lt;/li&gt;
+&lt;li&gt;DM: Display Manager, 提供登录之前跟登录界面&lt;/li&gt;
+&lt;li&gt;Greeter: 用来提供登录界面, 依赖于特定的DM&lt;/li&gt;
+&lt;/ul&gt;</description>
     </item>
     
     <item>
@@ -58,7 +74,10 @@
       <pubDate>Wed, 29 Jan 2020 19:30:00 +0800</pubDate>
       
       <guid>https://blog.origami404.top/linux-conf/2020-01-arch-nvidia/</guid>
-      <description>其实开源驱动已经很好了, 但是颜色看起来总是怪怪的&amp;hellip; 白色跟浅浅的黄白之间的交界简直awful&amp;hellip;令人窒息, 特别是每次打开google都得看一次, 辣眼睛. 一开始以为是颜色深度的问</description>
+      <description>&lt;p&gt;其实开源驱动已经很好了, 但是颜色看起来总是怪怪的&amp;hellip;&lt;/p&gt;
+&lt;p&gt;白色跟浅浅的黄白之间的交界简直awful&amp;hellip;令人窒息, 特别是每次打开google都得看一次, 辣眼睛.&lt;/p&gt;
+&lt;p&gt;一开始以为是颜色深度的问题, 因为win下是32位, 开源驱动下是24位, 但是怎么搞都搞不上32位, 遂放弃.&lt;/p&gt;
+&lt;p&gt;后来一狠心, 装了闭源驱动, 发现并不是颜色深度的问题, 而是一个叫Color Range的玩意的问题, 于是特此记录.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -67,7 +86,15 @@
       <pubDate>Wed, 29 Jan 2020 19:30:00 +0800</pubDate>
       
       <guid>https://blog.origami404.top/linux-conf/2020-01-arch-install-basic/</guid>
-      <description>简单记录一下安装arch时需要的命令. (虽然install.txt里都有了) install.txt复读机 如果你还不知道Arch是什么, 可以戳这里看看维基 打开作弊指南 install.txt 为了方便安装, 在启动完arch镜像</description>
+      <description>&lt;p&gt;简单记录一下安装arch时需要的命令. (虽然&lt;code&gt;install.txt&lt;/code&gt;里都有了)&lt;/p&gt;
+&lt;p&gt;&lt;del&gt;&lt;code&gt;install.txt&lt;/code&gt;复读机&lt;/del&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;如果你还不知道Arch是什么, 可以&lt;a href=&#34;https://zh.wikipedia.org/zh-hans/Arch_Linux&#34; target=&#34;_blank&#34;&gt;戳这里看看维基&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;打开作弊指南-installtxt&#34;&gt;打开&lt;del&gt;作弊指南&lt;/del&gt; install.txt&lt;/h2&gt;
+&lt;p&gt;为了方便安装, 在启动完arch镜像后, &lt;code&gt;/root&lt;/code&gt;下有一个&lt;code&gt;install.txt&lt;/code&gt;, 打开就是安装所需的大部分步骤, 然后就可以一边看着一边抄了.&lt;/p&gt;
+&lt;p&gt;一开始我用&lt;code&gt;Ctrl+Alt+F2&lt;/code&gt;开多一个虚拟终端然后在&lt;code&gt;F1&lt;/code&gt;和&lt;code&gt;F2&lt;/code&gt;之间切换着抄, 后来&lt;code&gt;vim&lt;/code&gt;支持虚拟终端之后就直接&lt;code&gt;vim&lt;/code&gt;抄美滋滋.&lt;/p&gt;
+&lt;p&gt;具体做法是用&lt;code&gt;vim&lt;/code&gt;打开&lt;code&gt;install.txt&lt;/code&gt;之后, 在&lt;code&gt;normal&lt;/code&gt;模式下键入&lt;code&gt;:term&lt;/code&gt;就可以打开一个终端. 然后按&lt;code&gt;Ctrl+Shift+h/j/k/l&lt;/code&gt;就可以挪终端位置, 挪到喜欢的位置就可以开抄(?)了.&lt;/p&gt;</description>
     </item>
     
   </channel>

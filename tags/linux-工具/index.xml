@@ -13,7 +13,12 @@
       <pubDate>Sun, 05 Sep 2021 22:00:00 +0800</pubDate>
       
       <guid>https://blog.origami404.top/compiler-and-type-theory/2021-09-compiler-frontend-with-flex-bison/</guid>
-      <description>前言 最近被某学长介绍了毕昇杯编译器比赛, 有点感兴趣, 遂开始用 C 自己实现, 然后就: 还是 Java 香! 本文记录了我用 Bison 和 Flex 来构建 SysY2021 语言前端的尝试. Show me the code. 前置声明: 大体的代码架构和使用方法在最后, 可以交叉着看. lex</description>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;最近被某学长介绍了&lt;a href=&#34;https://compiler.educg.net/&#34; target=&#34;_blank&#34;&gt;毕昇杯&lt;/a&gt;编译器比赛, 有点感兴趣, 遂开始用 C 自己实现, 然后就:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;还是 Java 香!&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;本文记录了我用 Bison 和 Flex 来构建 &lt;a href=&#34;https://gitlab.eduxiji.net/nscscc/compiler2021/-/blob/master/SysY%E8%AF%AD%E8%A8%80%E5%AE%9A%E4%B9%89.pdf&#34; target=&#34;_blank&#34;&gt;SysY2021&lt;/a&gt; 语言前端的尝试.&lt;/p&gt;</description>
     </item>
     
   </channel>

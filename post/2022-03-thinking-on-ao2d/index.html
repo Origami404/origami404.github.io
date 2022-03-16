@@ -37,8 +37,8 @@
 <meta property="og:title" content="娱乐至死, 但信息时代" />
 <meta name="twitter:title" content="娱乐至死, 但信息时代" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.origami404.top/post/2022-03-thinking-on-ao2d/" /><meta property="og:description" content="波兹曼认为, 电报, 摄影术和电视消解了信息的上下文, 使之成为割裂的片段, 妨碍了深入的思考. 而在当下, 这种消解似乎愈演愈烈 &ndash; 如果说电视节目至少还要半小时一集的话, 短视频就只要几十秒钟了. 但是, 基于超文本的" />
-<meta name="twitter:description" content="波兹曼认为, 电报, 摄影术和电视消解了信息的上下文, 使之成为割裂的片段, 妨碍了深入的思考. 而在当下, 这种消解似乎愈演愈烈 &ndash; 如果说电视节目至少还要半小时一集的话, 短视频就只要几十秒钟了. 但是, 基于超文本的" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
+<meta property="og:url" content="https://blog.origami404.top/post/2022-03-thinking-on-ao2d/" /><meta property="og:description" content="" />
+<meta name="twitter:description" content="" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://blog.origami404.top/img/og.png" /><meta property="article:published_time" content="2022-03-15T21:59:34+08:00" /><meta property="article:modified_time" content="2022-03-15T21:59:34+08:00" />
 
@@ -127,7 +127,6 @@
 <p>其实这篇文章便是信息碎片化在我身上的绝佳体现: 这什么意识流奇妙文章. 我一直想用破折号 <code>--</code> 连接子句, 这何尝不是一种 &ldquo;ok, &hellip; now&rdquo;? 不过值得庆幸的是, 对于技术类文章我似乎仍(部分)保持住了铅字的优良传统 &ndash; 至少它们还是逻辑统一, 并且能首尾呼应的. 似乎我应该尝试去训练如何像表达技术一样去表达自己的思想了, 这篇文章实在是太糟糕了.</p>
 <p>曾经, 我只是想将博客作为技术沉淀输出的平台, 抱持着&quot;能顺带帮到别人的话就最好了的&quot;想法, 所以我很少往博客里写非技术类文章. 但是在看到了许多优秀的博主的博客之后, 我逐渐意识到, 有时候自己的心路, 自己的选择, 也能给予别人很大的感触与温暖. 所以至少现在的我, 觉得也许需要写点自己了. 即使这篇文章超烂的, 我也斗胆把它留着, 毕竟第一步总是值得纪念的, 不是吗? <del>如果打扰到 RSS 用户的话也请不要取关 qwq</del></p>
 <p>不过, 开始输出情绪跟倾向, 而不是基于理性的论证与思考, 又何尝不是一种娱乐至死呢.</p>
-
     </div>
 </article>
 
@@ -578,20 +577,26 @@
     
 <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
 
 
 
 <script defer src="/assets/js/fuji.min.js"></script>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" />
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
-<script
-  defer
-  src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"
-  onload="renderMathInElement(document.body);"
-></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/auto-render.min.js"></script>
+<script>
+  renderMathInElement(document.querySelector('div.content'), {
+    delimiters: [
+      { left: '$$', right: '$$', display: true },
+      { left: '\\[', right: '\\]', display: true },
+      { left: '$', right: '$', display: false },
+      { left: '\\(', right: '\\)', display: false },
+    ],
+  });
+</script>
 
 
 

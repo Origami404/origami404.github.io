@@ -121,7 +121,8 @@
 
   </div>
   <div class="post-item post-summary markdown-body">
-    背景 想调整一下分区大小, 结果一不小心删掉了 ESP&hellip; 前置知识 ESP, 全称EFI System Partition, 是一个在物理硬盘主分区表上的特殊分区, 它: 是 FAT 格式的; (可以是 FAT16/FAT32 ) 与操作系统无关, 而是 UEFI 固件用来寻找引导器的存储空间 一般分区表会使用
+    <h2 id="背景">背景</h2>
+<p>想调整一下分区大小, 结果一不小心删掉了 ESP&hellip;</p>
   </div>
 </div>
 
@@ -138,7 +139,15 @@
 
   </div>
   <div class="post-item post-summary markdown-body">
-    前言 &amp; Anbox 简介 最近换回了 Manjaro 和 Xfce, 打算认认真真地开始将 Linux 作为日常生活系统而不仅仅是开发系统来用了. 然而在日常生活中, 总归是逃不掉某国产IM的 :(. 为了实现以 Manjaro 作为生活主力系统的目标, (同时也为了以后说不定能愉快
+    <h2 id="前言--anbox-简介">前言 &amp; Anbox 简介</h2>
+<p>最近换回了 Manjaro 和 Xfce, 打算认认真真地开始将 Linux 作为日常生活系统而不仅仅是开发系统来用了. 然而在日常生活中, 总归是逃不掉某国产IM的 :(. 为了实现以 Manjaro 作为生活主力系统的目标, (同时也为了以后说不定能愉快地打游戏), 决定安装一个能跑安卓应用的东西. 于是我的 Anbox 之旅就在完全搞不懂 Android x86 是什么玩意的情况下展开了.</p>
+<p><a href="https://anbox.io/" target="_blank">Anbox 官网</a>上的介绍:</p>
+<blockquote>
+<p>Anbox: Android in a Box
+Run Android applications on any GNU/Linux operating system.
+Anbox puts the Android operating system into a container, abstracts hardware access and integrates core system services into a GNU/Linux system. Every Android application will be integrated with your operating system like any other native application.</p>
+</blockquote>
+<p>简单来讲就类似 docker , 利用 LXD 技术在 Linux 系统里新建一个全新的容器, 然后直接去跑一个 Android x86. 好处嘛就是跑得比虚拟机快, 集成度比虚拟机好. 坏处嘛就是兼容性还是有待提高&hellip;</p>
   </div>
 </div>
 
@@ -155,7 +164,8 @@
 
   </div>
   <div class="post-item post-summary markdown-body">
-    前言 时隔半年再次开始学Haskell, 然后在配环境中度过了一个哭笑不得的下午&hellip; Haskell环境是啥呢&hellip;? 按我不完全的理解, 主要有: 一个编译器, 比如ghc; 它还附带一个RE
+    <h2 id="前言">前言</h2>
+<p>时隔半年再次开始学<code>Haskell</code>, 然后在配环境中度过了一个哭笑不得的下午&hellip;</p>
   </div>
 </div>
 
@@ -172,7 +182,10 @@
 
   </div>
   <div class="post-item post-summary markdown-body">
-    前言 大概1月底, 辣鸡win10的更新就更不上去了, 然后我折腾了好久&hellip;包括各种系统检查啊手动安装啊, 无果. 最后在3月决定干脆删了重装&hellip; 重装过程中遇到了大大小小的问题, 写个文章
+    <h2 id="前言">前言</h2>
+<p>大概1月底, 辣鸡win10的更新就更不上去了, 然后我折腾了好久&hellip;包括各种系统检查啊手动安装啊, 无果. 最后在3月决定干脆删了重装&hellip;</p>
+<p>重装过程中遇到了大大小小的问题, 写个文章记录一下.</p>
+<p><del>3月的事拖到4月写, 咕咕咕实锤</del></p>
   </div>
 </div>
 
@@ -189,7 +202,7 @@
 
   </div>
   <div class="post-item post-summary markdown-body">
-    应某人推荐, 终端模拟器使用了Alacritty, 特此记录. oh-my-zsh主题用了ys 主题使用了darcula 注意, 因为我用的是Awesome WM, 不自带合成器效果, 需要安装compton之后, Alac
+    <p>应某人推荐, 终端模拟器使用了<code>Alacritty</code>, 特此记录.</p>
   </div>
 </div>
 
@@ -206,7 +219,15 @@
 
   </div>
   <div class="post-item post-summary markdown-body">
-    配个awesome. 主要痛点有: 任务栏在上面, 并且有一堆很讨厌的东西, 比如什么启动菜单啊, 当前任务啊, 键盘键位等 默认layout居然是floating, 理解不能 tag居然是全部显示然后有东西就有个点,
+    <p>配个awesome.</p>
+<p>主要痛点有:</p>
+<ul>
+<li>任务栏在上面, 并且有一堆很讨厌的东西, 比如什么启动菜单啊, 当前任务啊, 键盘键位等</li>
+<li>默认layout居然是floating, 理解不能</li>
+<li>tag居然是全部显示然后有东西就有个点, 这样看起来很累</li>
+<li>快捷键不合我口味</li>
+<li>壁纸有点丑啊&hellip;</li>
+</ul>
   </div>
 </div>
 
@@ -223,7 +244,7 @@
 
   </div>
   <div class="post-item post-summary markdown-body">
-    接着上文, 记录一些常用的CLI工具 首先装sudo并新建用户 pacman -S sudo useradd -m -g wheel origami 安装一堆工具 pacman -S base-devel git cmake 装个v2ray并启动, ss实在太容易被ban了. proxychains可以通过替换动态链接库的方法来强迫
+    <p>接着<a href="../Arch%20%e5%ae%89%e8%a3%85%e8%ae%b0%e5%bd%95">上文</a>, 记录一些常用的CLI工具</p>
   </div>
 </div>
 
@@ -240,7 +261,10 @@
 
   </div>
   <div class="post-item post-summary markdown-body">
-    安装 桌面环境这次选择了X+awesome, wayland现在还是太折腾了, 并且还有输入法这一个大坑. 用过i3之后对浮动式wm就再也提不起兴趣, 同时因为用了一阵子i3, 决定换个口味, 试试配一个aweso
+    <h2 id="安装">安装</h2>
+<p>桌面环境这次选择了X+awesome, wayland现在还是太折腾了, 并且还有输入法这一个大坑. 用过i3之后对浮动式wm就再也提不起兴趣, 同时因为用了一阵子i3, 决定换个口味, 试试配一个awesome.</p>
+<p>dm用的是lightdm, greeter用了lightdm-webkit2-greeter(因为好看2333), 主题选择了<a href="https://github.com/Litarvan/lightdm-webkit-theme-litarvan" target="_blank">这一个</a>.</p>
+<p>终端模拟器用了alacritty, 主题选了<a href="https://github.com/dracula/alacritty" target="_blank">这一个</a></p>
   </div>
 </div>
 
@@ -257,7 +281,12 @@
 
   </div>
   <div class="post-item post-summary markdown-body">
-    简要名词介绍 WM: Windows Manager, 用于登录之后管理窗口的玩意 DM: Display Manager, 提供登录之前跟登录界面 Greeter: 用来提供登录界面, 依赖于特定的DM 安装 LightDM sudo pacman -S lightdm lightdm-webkit2-greeter 安装完编辑/etc/lightdm/lightdm.conf文件, 先找到[S
+    <h2 id="简要名词介绍">简要名词介绍</h2>
+<ul>
+<li>WM: Windows Manager, 用于登录之后管理窗口的玩意</li>
+<li>DM: Display Manager, 提供登录之前跟登录界面</li>
+<li>Greeter: 用来提供登录界面, 依赖于特定的DM</li>
+</ul>
   </div>
 </div>
 
@@ -274,7 +303,10 @@
 
   </div>
   <div class="post-item post-summary markdown-body">
-    其实开源驱动已经很好了, 但是颜色看起来总是怪怪的&hellip; 白色跟浅浅的黄白之间的交界简直awful&hellip;令人窒息, 特别是每次打开google都得看一次, 辣眼睛. 一开始以为是颜色深度的问
+    <p>其实开源驱动已经很好了, 但是颜色看起来总是怪怪的&hellip;</p>
+<p>白色跟浅浅的黄白之间的交界简直awful&hellip;令人窒息, 特别是每次打开google都得看一次, 辣眼睛.</p>
+<p>一开始以为是颜色深度的问题, 因为win下是32位, 开源驱动下是24位, 但是怎么搞都搞不上32位, 遂放弃.</p>
+<p>后来一狠心, 装了闭源驱动, 发现并不是颜色深度的问题, 而是一个叫Color Range的玩意的问题, 于是特此记录.</p>
   </div>
 </div>
 
@@ -719,20 +751,26 @@
     
 <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
 
 
 
 <script defer src="/assets/js/fuji.min.js"></script>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" />
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
-<script
-  defer
-  src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"
-  onload="renderMathInElement(document.body);"
-></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/auto-render.min.js"></script>
+<script>
+  renderMathInElement(document.querySelector('div.content'), {
+    delimiters: [
+      { left: '$$', right: '$$', display: true },
+      { left: '\\[', right: '\\]', display: true },
+      { left: '$', right: '$', display: false },
+      { left: '\\(', right: '\\)', display: false },
+    ],
+  });
+</script>
 
 
 

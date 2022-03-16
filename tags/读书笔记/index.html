@@ -121,7 +121,11 @@
 
   </div>
   <div class="post-item post-summary markdown-body">
-    前言 &amp; 介绍 Category Theory for Programmers, 顾名思义, 是一本关于范畴论的书, 但是偏向CS而非数学. 书的$\LaTeX$代码以GPL-3.0公布在GitHub, 有两个版本, 一个以C++作为辅助说明语言, 另一个是Scala. 作为一
+    <h2 id="前言--介绍">前言 &amp; 介绍</h2>
+<p><code>Category Theory for Programmers</code>, 顾名思义, 是一本关于范畴论的书, 但是偏向CS而非数学.</p>
+<p>书的$\LaTeX$代码以<code>GPL-3.0</code>公布在<a href="https://github.com/hmemcpy/milewski-ctfp-pdf" target="_blank">GitHub</a>, 有两个版本, 一个以<code>C++</code>作为辅助说明语言, 另一个是<code>Scala</code>.</p>
+<p>作为一个蒟蒻OI党当然是选择<code>C++</code>版啦.</p>
+<p>本文(如果不咕咕咕的话)会持续更新, 大概记录一些摘录或者感想或者我不知道的东西&hellip;</p>
   </div>
 </div>
 
@@ -558,20 +562,26 @@
     
 <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
 
 
 
 <script defer src="/assets/js/fuji.min.js"></script>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" />
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
-<script
-  defer
-  src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"
-  onload="renderMathInElement(document.body);"
-></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/auto-render.min.js"></script>
+<script>
+  renderMathInElement(document.querySelector('div.content'), {
+    delimiters: [
+      { left: '$$', right: '$$', display: true },
+      { left: '\\[', right: '\\]', display: true },
+      { left: '$', right: '$', display: false },
+      { left: '\\(', right: '\\)', display: false },
+    ],
+  });
+</script>
 
 
 

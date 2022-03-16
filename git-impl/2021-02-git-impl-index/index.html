@@ -37,8 +37,12 @@
 <meta property="og:title" content="Git Index: Git 的暂存区" />
 <meta name="twitter:title" content="Git Index: Git 的暂存区" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.origami404.top/git-impl/2021-02-git-impl-index/" /><meta property="og:description" content="此文章施工中&hellip; 二进制格式 前后顺序均按从低位到高位. &lt;index&gt; ::= &lt;header/12-byte&gt; &lt;entries/8k-byte&gt; &lt;extensions&gt; &lt;checksum&gt; &lt;header&gt; ::= &lt;signature/4-byte&gt; &lt;version/4-byte&gt; &lt;entry_cnt/32-bit&gt; &lt;signature&gt; ::= b&#39;DIRC&#39; &lt;version&gt; ::= (0002, 0003, 0004) in ASCII format &lt;entry_cnt&gt; ::= the amount of entries below in u32 format &lt;entries&gt; ::= [&lt;entry&gt; &lt;padding&gt;] &lt;entry&gt; ::= &lt;c_time/32-bit&gt; &lt;c_time_ns/32-bit&gt; &lt;m_time/32-bit&gt; &lt;m_time_ns/32-bit&gt; &lt;dev/32-bit&gt; &lt;ino/32-bit&gt; &lt;mode/32-bit&gt; &lt;uid/32-bit&gt; &lt;gid/32-bit&gt; &lt;file_size/32-bit&gt; &lt;sha-1/20-byte&gt; &lt;flags/16-bit&gt; &lt;path_name&gt; &lt;c_time&gt; ::= 以秒为单位的最后一次文件元信息" />
-<meta name="twitter:description" content="此文章施工中&hellip; 二进制格式 前后顺序均按从低位到高位. &lt;index&gt; ::= &lt;header/12-byte&gt; &lt;entries/8k-byte&gt; &lt;extensions&gt; &lt;checksum&gt; &lt;header&gt; ::= &lt;signature/4-byte&gt; &lt;version/4-byte&gt; &lt;entry_cnt/32-bit&gt; &lt;signature&gt; ::= b&#39;DIRC&#39; &lt;version&gt; ::= (0002, 0003, 0004) in ASCII format &lt;entry_cnt&gt; ::= the amount of entries below in u32 format &lt;entries&gt; ::= [&lt;entry&gt; &lt;padding&gt;] &lt;entry&gt; ::= &lt;c_time/32-bit&gt; &lt;c_time_ns/32-bit&gt; &lt;m_time/32-bit&gt; &lt;m_time_ns/32-bit&gt; &lt;dev/32-bit&gt; &lt;ino/32-bit&gt; &lt;mode/32-bit&gt; &lt;uid/32-bit&gt; &lt;gid/32-bit&gt; &lt;file_size/32-bit&gt; &lt;sha-1/20-byte&gt; &lt;flags/16-bit&gt; &lt;path_name&gt; &lt;c_time&gt; ::= 以秒为单位的最后一次文件元信息" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
+<meta property="og:url" content="https://blog.origami404.top/git-impl/2021-02-git-impl-index/" /><meta property="og:description" content="此文章施工中&hellip;
+二进制格式
+前后顺序均按从低位到高位." />
+<meta name="twitter:description" content="此文章施工中&hellip;
+二进制格式
+前后顺序均按从低位到高位." /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://blog.origami404.top/img/og.png" /><meta property="article:published_time" content="2021-02-20T22:00:00+08:00" /><meta property="article:modified_time" content="2021-02-20T22:00:00+08:00" />
 
@@ -121,7 +125,6 @@
         <p><strong>此文章施工中&hellip;</strong></p>
 <h2 id="二进制格式">二进制格式</h2>
 <p>前后顺序<strong>均按从低位到高位</strong>.</p>
-<!-- more -->
 <pre><code>&lt;index&gt;     ::= &lt;header/12-byte&gt; &lt;entries/8k-byte&gt; &lt;extensions&gt; &lt;checksum&gt;
 
 &lt;header&gt;    ::= &lt;signature/4-byte&gt; &lt;version/4-byte&gt; &lt;entry_cnt/32-bit&gt;
@@ -331,7 +334,6 @@ c822 c701 1d2f dc6e 5c97 68
 <p>Stage/2-bit 的含义参考: <a href="https://mincong.io/2018/04/28/git-index/#1-understand-index-via-git-ls-files" target="_blank">描述了其对应的高层术语 Slot</a>, <a href="https://stackoverflow.com/questions/21309490/how-do-contents-of-git-index-evolve-during-a-merge-and-whats-in-the-index-afte" target="_blank">SO: 解释了其用途</a></p>
 <p>实现参考: <a href="https://github.com/dulwich/dulwich/blob/2cf84bf9ca358655849761d81d1fe2b96e8952ed/dulwich/index.py" target="_blank">Dulwich index.py</a>, <a href="https://github.com/sbp/gin/blob/master/gin" target="_blank">Gin</a></p>
 </blockquote>
-
     </div>
 </article>
 
@@ -794,20 +796,26 @@ c822 c701 1d2f dc6e 5c97 68
     
 <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
 
 
 
 <script defer src="/assets/js/fuji.min.js"></script>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" />
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
-<script
-  defer
-  src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"
-  onload="renderMathInElement(document.body);"
-></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/auto-render.min.js"></script>
+<script>
+  renderMathInElement(document.querySelector('div.content'), {
+    delimiters: [
+      { left: '$$', right: '$$', display: true },
+      { left: '\\[', right: '\\]', display: true },
+      { left: '$', right: '$', display: false },
+      { left: '\\(', right: '\\)', display: false },
+    ],
+  });
+</script>
 
 
 

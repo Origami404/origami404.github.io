@@ -13,7 +13,24 @@
       <pubDate>Thu, 30 Sep 2021 19:30:00 +0800</pubDate>
       
       <guid>https://blog.origami404.top/post/2021-09-constructive-def-of-vector-operation/</guid>
-      <description>前言 上大学了, 终于有大段的时间来整理数学和物理学内容了. 本文有其思想上的参考: 3b1b: 发明新数学是怎样一种体验？ &amp;ldquo;最原始的&amp;quot;双线性二元运算 让我们来考虑矢量的运算吧! 假如我们需要在线性空</description>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;上大学了, 终于有大段的时间来整理数学和物理学内容了.&lt;/p&gt;
+&lt;p&gt;本文有其思想上的参考: &lt;a href=&#34;https://www.bilibili.com/video/BV1Gs411R7Yo&#34; target=&#34;_blank&#34;&gt;3b1b: 发明新数学是怎样一种体验？&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;最原始的双线性二元运算&#34;&gt;&amp;ldquo;最原始的&amp;quot;双线性二元运算&lt;/h2&gt;
+&lt;p&gt;让我们来考虑矢量的运算吧!&lt;/p&gt;
+&lt;p&gt;假如我们需要在线性空间 $\mathbb{V}$ 上定义二元运算, 显然我们会希望这个运算至少是线性的, 否则为啥我们要在线性空间上搞呢. 同时如果一个二元运算是双线性的(就是说对于两个操作数而言它都是线性的), 那么我们只需要对 $\mathbb{V}$ 的基底定义此运算即可.&lt;/p&gt;
+&lt;p&gt;换句话说, 对于双线性运算 $\mathbf{a} \otimes \mathbf{b}$, 我们可以将其按基底展开:&lt;/p&gt;
+&lt;p&gt;$$
+\begin{aligned}
+\mathbf{a} \otimes \mathbf{b}
+&amp;amp;= (\sum_{i=1}^n a_i \mathbf{e_i}) \otimes (\sum_{i=1}^n b_i \mathbf{e_i}) \\
+&amp;amp;= \sum_{i=1}^n \sum_{j=1}^n a_i b_j (\mathbf{e_i} \otimes \mathbf{e_j})
+\end{aligned}
+$$&lt;/p&gt;
+&lt;p&gt;那么, 我们只需要定义所有的 $\mathbf{e_i} \otimes \mathbf{e_j}$ (一共 $n^2$ 个) 即可.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;等等, 这都啥跟啥啊????&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
     
     <item>
@@ -22,7 +39,13 @@
       <pubDate>Mon, 27 Sep 2021 19:30:00 +0800</pubDate>
       
       <guid>https://blog.origami404.top/post/2021-09-determinant-begin-from-wedge-product/</guid>
-      <description>前置 这篇文章有些前置知识我默认读者是知道的, 比如矢量和线性空间(wiki, 知乎)的概念. 具体来讲, 我希望读者能完全理解这句话: &amp;ldquo;基底通过线性组合张成线性空间&amp;rdquo;. 但更加重要的是,</description>
+      <description>&lt;h2 id=&#34;前置&#34;&gt;前置&lt;/h2&gt;
+&lt;p&gt;这篇文章有些前置知识我默认读者是知道的, 比如矢量和线性空间(&lt;a href=&#34;https://zh.wikipedia.org/wiki/%E5%90%91%E9%87%8F%E7%A9%BA%E9%97%B4&#34; target=&#34;_blank&#34;&gt;wiki&lt;/a&gt;, &lt;a href=&#34;https://www.zhihu.com/question/24086219&#34; target=&#34;_blank&#34;&gt;知乎&lt;/a&gt;)的概念. 具体来讲, 我希望读者能完全理解这句话: &amp;ldquo;基底通过线性组合张成线性空间&amp;rdquo;. 但更加重要的是, 我希望读者能够放开胆子, 接受并批判地思考与新的语言与概念. 文中有些地方我特意没有使用书本的符号, 为的就是让读者直接判断他自己到底是在跟着文章思路走还是靠课本里记下的结论硬看. 通过这篇文章, 我希望能有更多人开始 &amp;ldquo;思考&amp;rdquo; 和 &amp;ldquo;创造&amp;rdquo; 数学, 穿过数学高冷的表面, 看到数学定义背后的 &amp;ldquo;动机&amp;rdquo; 和 &amp;ldquo;深意&amp;rdquo;, 最终享受数学, 而不是只是跟着课本学点计算.&lt;/p&gt;
+&lt;p&gt;要知道, 数学家也是人. 一旦你觉得有什么东西是反人类的, 它背后一定是有自己的逻辑. 这里的逻辑, 是数学定义背后数学家们思考的内在的直觉的&lt;strong&gt;人的&lt;/strong&gt;逻辑, 而不完全是死的客观精准的数理逻辑.&lt;/p&gt;
+&lt;p&gt;建议餐前食用: &lt;a href=&#34;https://www.bilibili.com/video/BV1Gs411R7Yo&#34; target=&#34;_blank&#34;&gt;3b1b: 发明新数学是怎样一种体验？&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;餐后或餐中可以结合: &lt;a href=&#34;https://www.bilibili.com/video/BV1ys411472E&#34; target=&#34;_blank&#34;&gt;3b1b: 线性代数的本质&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;比起纯粹的几何直观, 我更看重一种 &amp;ldquo;符号上的直观&amp;rdquo;, 也就是说, 你得把这一套数学符号, 当作与生俱来的, 自然的东西. 所谓直观学习, 不是把所有东西都归纳成你的 &amp;ldquo;直观&amp;rdquo;, 而是让你能把更多的东西变成你的直观.&lt;/p&gt;
+&lt;p&gt;鸡汤灌得够多了, 让我们开始吧.&lt;/p&gt;</description>
     </item>
     
   </channel>

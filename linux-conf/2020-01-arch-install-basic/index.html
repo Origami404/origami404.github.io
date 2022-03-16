@@ -37,8 +37,24 @@
 <meta property="og:title" content="Arch 安装记录" />
 <meta name="twitter:title" content="Arch 安装记录" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.origami404.top/linux-conf/2020-01-arch-install-basic/" /><meta property="og:description" content="简单记录一下安装arch时需要的命令. (虽然install.txt里都有了) install.txt复读机 如果你还不知道Arch是什么, 可以戳这里看看维基 打开作弊指南 install.txt 为了方便安装, 在启动完arch镜像" />
-<meta name="twitter:description" content="简单记录一下安装arch时需要的命令. (虽然install.txt里都有了) install.txt复读机 如果你还不知道Arch是什么, 可以戳这里看看维基 打开作弊指南 install.txt 为了方便安装, 在启动完arch镜像" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
+<meta property="og:url" content="https://blog.origami404.top/linux-conf/2020-01-arch-install-basic/" /><meta property="og:description" content="简单记录一下安装arch时需要的命令. (虽然install.txt里都有了)
+install.txt复读机
+
+如果你还不知道Arch是什么, 可以戳这里看看维基
+
+打开作弊指南 install.txt
+为了方便安装, 在启动完arch镜像后, /root下有一个install.txt, 打开就是安装所需的大部分步骤, 然后就可以一边看着一边抄了.
+一开始我用Ctrl&#43;Alt&#43;F2开多一个虚拟终端然后在F1和F2之间切换着抄, 后来vim支持虚拟终端之后就直接vim抄美滋滋.
+具体做法是用vim打开install.txt之后, 在normal模式下键入:term就可以打开一个终端. 然后按Ctrl&#43;Shift&#43;h/j/k/l就可以挪终端位置, 挪到喜欢的位置就可以开抄(?)了." />
+<meta name="twitter:description" content="简单记录一下安装arch时需要的命令. (虽然install.txt里都有了)
+install.txt复读机
+
+如果你还不知道Arch是什么, 可以戳这里看看维基
+
+打开作弊指南 install.txt
+为了方便安装, 在启动完arch镜像后, /root下有一个install.txt, 打开就是安装所需的大部分步骤, 然后就可以一边看着一边抄了.
+一开始我用Ctrl&#43;Alt&#43;F2开多一个虚拟终端然后在F1和F2之间切换着抄, 后来vim支持虚拟终端之后就直接vim抄美滋滋.
+具体做法是用vim打开install.txt之后, 在normal模式下键入:term就可以打开一个终端. 然后按Ctrl&#43;Shift&#43;h/j/k/l就可以挪终端位置, 挪到喜欢的位置就可以开抄(?)了." /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://blog.origami404.top/img/og.png" /><meta property="article:published_time" content="2020-01-29T19:30:00+08:00" /><meta property="article:modified_time" content="2020-01-29T19:30:00+08:00" />
 
@@ -127,7 +143,6 @@
 <p>为了方便安装, 在启动完arch镜像后, <code>/root</code>下有一个<code>install.txt</code>, 打开就是安装所需的大部分步骤, 然后就可以一边看着一边抄了.</p>
 <p>一开始我用<code>Ctrl+Alt+F2</code>开多一个虚拟终端然后在<code>F1</code>和<code>F2</code>之间切换着抄, 后来<code>vim</code>支持虚拟终端之后就直接<code>vim</code>抄美滋滋.</p>
 <p>具体做法是用<code>vim</code>打开<code>install.txt</code>之后, 在<code>normal</code>模式下键入<code>:term</code>就可以打开一个终端. 然后按<code>Ctrl+Shift+h/j/k/l</code>就可以挪终端位置, 挪到喜欢的位置就可以开抄(?)了.</p>
-<!-- more -->
 <h2 id="正常流程-准备pre-installtion">正常流程: 准备(pre-installtion)</h2>
 <h3 id="村通网">村通网</h3>
 <p>看看网络通不通, 可以<code>ping</code>一下<code>baidu.com</code>什么的.</p>
@@ -221,7 +236,6 @@ systemctl enable dhcpcd
 </code></pre>
 <p>重启, 应该就能进入系统了.</p>
 <p>接下的配置可以看<a href="../Arch%20CLI%e5%b7%a5%e5%85%b7%20%e5%ae%89%e8%a3%85%e8%ae%b0%e5%bd%95">这里</a>.</p>
-
     </div>
 </article>
 
@@ -700,20 +714,26 @@ systemctl enable dhcpcd
     
 <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
 
 
 
 <script defer src="/assets/js/fuji.min.js"></script>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" />
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
-<script
-  defer
-  src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"
-  onload="renderMathInElement(document.body);"
-></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/auto-render.min.js"></script>
+<script>
+  renderMathInElement(document.querySelector('div.content'), {
+    delimiters: [
+      { left: '$$', right: '$$', display: true },
+      { left: '\\[', right: '\\]', display: true },
+      { left: '$', right: '$', display: false },
+      { left: '\\(', right: '\\)', display: false },
+    ],
+  });
+</script>
 
 
 

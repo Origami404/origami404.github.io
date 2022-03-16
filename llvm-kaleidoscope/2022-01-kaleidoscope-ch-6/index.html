@@ -37,8 +37,14 @@
 <meta property="og:title" content="LLVM Kaleidoscope 第 6 章：扩展语言：自定义运算符" />
 <meta name="twitter:title" content="LLVM Kaleidoscope 第 6 章：扩展语言：自定义运算符" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-6/" /><meta property="og:description" content="6.1 前言 欢迎来到 我的第一个基于 LLVM 的语言前端 教程第六章。麻雀虽小，五脏俱全，现在我们已经有了一个相对完备的小型函数式编程语言。但目前我们的语言还有一个大缺点：它缺少很多有用的运算符 (比如除法和逻辑非，我们" />
-<meta name="twitter:description" content="6.1 前言 欢迎来到 我的第一个基于 LLVM 的语言前端 教程第六章。麻雀虽小，五脏俱全，现在我们已经有了一个相对完备的小型函数式编程语言。但目前我们的语言还有一个大缺点：它缺少很多有用的运算符 (比如除法和逻辑非，我们" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
+<meta property="og:url" content="https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-6/" /><meta property="og:description" content="6.1 前言
+欢迎来到 我的第一个基于 LLVM 的语言前端 教程第六章。麻雀虽小，五脏俱全，现在我们已经有了一个相对完备的小型函数式编程语言。但目前我们的语言还有一个大缺点：它缺少很多有用的运算符 (比如除法和逻辑非，我们甚至还没有除了小于之外的任何比较运算符！)
+本章将会讨论如何让语言支持自定义运算符。诚然，自定义运算符可能让我们的语言变得丑陋 &ndash; 但同时它也能给予我们的语言强大的表达力。自创语言的醍醐味就在于你可以 (并且需要！) 做出你自己的判断，不论是好是坏。本教程将选择允许用户自定义运算符，同时在实现它的过程中讨论一些有趣的语法解析技术。
+在本教程的结尾，我们将编写一个渲染曼德博集合的 Kaleidoscope 程序。它同时也会作为一个示范，告诉你 Kaleidoscope 的强大之处，以及如何使用 Kaleidoscope 做出更多有趣的事情。" />
+<meta name="twitter:description" content="6.1 前言
+欢迎来到 我的第一个基于 LLVM 的语言前端 教程第六章。麻雀虽小，五脏俱全，现在我们已经有了一个相对完备的小型函数式编程语言。但目前我们的语言还有一个大缺点：它缺少很多有用的运算符 (比如除法和逻辑非，我们甚至还没有除了小于之外的任何比较运算符！)
+本章将会讨论如何让语言支持自定义运算符。诚然，自定义运算符可能让我们的语言变得丑陋 &ndash; 但同时它也能给予我们的语言强大的表达力。自创语言的醍醐味就在于你可以 (并且需要！) 做出你自己的判断，不论是好是坏。本教程将选择允许用户自定义运算符，同时在实现它的过程中讨论一些有趣的语法解析技术。
+在本教程的结尾，我们将编写一个渲染曼德博集合的 Kaleidoscope 程序。它同时也会作为一个示范，告诉你 Kaleidoscope 的强大之处，以及如何使用 Kaleidoscope 做出更多有趣的事情。" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://blog.origami404.top/img/og.png" /><meta property="article:published_time" content="2022-01-17T22:00:00+08:00" /><meta property="article:modified_time" content="2022-01-17T22:00:00+08:00" />
 
@@ -1794,7 +1800,6 @@ int main() {
   return 0;
 }
 </code></pre>
-
     </div>
 </article>
 
@@ -2263,20 +2268,26 @@ int main() {
     
 <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
 
 
 
 <script defer src="/assets/js/fuji.min.js"></script>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" />
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
-<script
-  defer
-  src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"
-  onload="renderMathInElement(document.body);"
-></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/auto-render.min.js"></script>
+<script>
+  renderMathInElement(document.querySelector('div.content'), {
+    delimiters: [
+      { left: '$$', right: '$$', display: true },
+      { left: '\\[', right: '\\]', display: true },
+      { left: '$', right: '$', display: false },
+      { left: '\\(', right: '\\)', display: false },
+    ],
+  });
+</script>
 
 
 

@@ -37,8 +37,12 @@
 <meta property="og:title" content="LLVM Kaleidoscope 第 0 章 我的第一个基于 LLVM 的语言前端" />
 <meta name="twitter:title" content="LLVM Kaleidoscope 第 0 章 我的第一个基于 LLVM 的语言前端" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-0/" /><meta property="og:description" content="前置技能： 本教程要求你有 C&#43;&#43; 基础，但你并不需要先去做一个编译器再来看这个教程。 欢迎来到“我的第一个基于 LLVM 的语言前端”教程。在本教程我们将会自己动手实现一个简单的语言，你将会看到这有多简单以及有趣。在接下" />
-<meta name="twitter:description" content="前置技能： 本教程要求你有 C&#43;&#43; 基础，但你并不需要先去做一个编译器再来看这个教程。 欢迎来到“我的第一个基于 LLVM 的语言前端”教程。在本教程我们将会自己动手实现一个简单的语言，你将会看到这有多简单以及有趣。在接下" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
+<meta property="og:url" content="https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-0/" /><meta property="og:description" content="前置技能： 本教程要求你有 C&#43;&#43; 基础，但你并不需要先去做一个编译器再来看这个教程。
+欢迎来到“我的第一个基于 LLVM 的语言前端”教程。在本教程我们将会自己动手实现一个简单的语言，你将会看到这有多简单以及有趣。在接下来的教程里，你将会快速而确切地学习到使用 LLVM 来生成程序的方法。
+本教程引入了一门简单的叫 Kaleidoscope(万花筒) 的语言。在接下来的几章内，我们将会一步步向你展示构建它的过程。在这个过程中我们会介绍一系列的语言设计与 LLVM 思想，给予你实现这门语言的程序的详细代码，并尽量减少各种各样的细节。我们强烈建议你跟着教程一起动手，在我们给予的代码的基础上去 hack，去实验，去探索新的可能。" />
+<meta name="twitter:description" content="前置技能： 本教程要求你有 C&#43;&#43; 基础，但你并不需要先去做一个编译器再来看这个教程。
+欢迎来到“我的第一个基于 LLVM 的语言前端”教程。在本教程我们将会自己动手实现一个简单的语言，你将会看到这有多简单以及有趣。在接下来的教程里，你将会快速而确切地学习到使用 LLVM 来生成程序的方法。
+本教程引入了一门简单的叫 Kaleidoscope(万花筒) 的语言。在接下来的几章内，我们将会一步步向你展示构建它的过程。在这个过程中我们会介绍一系列的语言设计与 LLVM 思想，给予你实现这门语言的程序的详细代码，并尽量减少各种各样的细节。我们强烈建议你跟着教程一起动手，在我们给予的代码的基础上去 hack，去实验，去探索新的可能。" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://blog.origami404.top/img/og.png" /><meta property="article:published_time" content="2022-01-15T22:00:00+08:00" /><meta property="article:modified_time" content="2022-01-15T22:00:00+08:00" />
 
@@ -121,7 +125,6 @@
         <p><strong>前置技能：</strong> 本教程要求你有 C++ 基础，但你并不需要先去做一个编译器再来看这个教程。</p>
 <p>欢迎来到“我的第一个基于 LLVM 的语言前端”教程。在本教程我们将会自己动手实现一个简单的语言，你将会看到这有多简单以及有趣。在接下来的教程里，你将会快速而确切地学习到使用 LLVM 来生成程序的方法。</p>
 <p>本教程引入了一门简单的叫 <code>Kaleidoscope</code>(万花筒) 的语言。在接下来的几章内，我们将会一步步向你展示构建它的过程。在这个过程中我们会介绍一系列的语言设计与 LLVM 思想，给予你实现这门语言的程序的详细代码，并尽量减少各种各样的细节。我们强烈建议你跟着教程一起动手，在我们给予的代码的基础上去 hack，去实验，去探索新的可能。</p>
-<!-- more -->
 <p><strong>警告：</strong> 为了专注于教授编译技术与 LLVM，本教程 <strong>不会</strong> 展示最佳的工程实践代码。比如说，我们的代码将会到处全局变量，并且不使用<a href="https://en.wikipedia.org/wiki/Visitor_pattern" target="_blank">访问者模式</a> (来从 AST 生成代码/干其他活). 这种风格有助于我们保持代码简单并且专注于主题。</p>
 <p>本教程分为以下几章，分别介绍了不同领域的内容。如果你想跳过某些章节的话，请随意：</p>
 <blockquote>
@@ -140,7 +143,6 @@
 <li><a href="">第十章：结语与其他 (未翻译)</a>: 本章讨论扩展语言的不同方式，借此串联起整个教程。本章还包括了指向特定主题的&quot;指针&quot;, 比如 GC，异常，调试与对 &ldquo;意大利面条式调用栈 (spaghetti stacks)&rdquo; 的支持。</li>
 </ul>
 <p>当教程介绍后，我们将写出大概 1000 行少一点的代码 (不计空白与注释). 仅仅是使用这么少的代码，我们就能实现一个不平凡的语言的编译器，包括了一个手写的 lexer, parser, AST 与代码生成 &ndash; 同时支持 JIT 与静态代码生成！这一千行代码所实现的广泛功能只是 LLVM 力量的冰山一角 &ndash; 这正是 LLVM 在语言设计者与优化者里如此流行的原因。</p>
-
     </div>
 </article>
 
@@ -591,20 +593,26 @@
     
 <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
 
 
 
 <script defer src="/assets/js/fuji.min.js"></script>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" />
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
-<script
-  defer
-  src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"
-  onload="renderMathInElement(document.body);"
-></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/auto-render.min.js"></script>
+<script>
+  renderMathInElement(document.querySelector('div.content'), {
+    delimiters: [
+      { left: '$$', right: '$$', display: true },
+      { left: '\\[', right: '\\]', display: true },
+      { left: '$', right: '$', display: false },
+      { left: '\\(', right: '\\)', display: false },
+    ],
+  });
+</script>
 
 
 

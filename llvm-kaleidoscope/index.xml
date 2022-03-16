@@ -13,7 +13,10 @@
       <pubDate>Fri, 21 Jan 2022 22:00:00 +0800</pubDate>
       
       <guid>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-7/</guid>
-      <description>7.1 前言 欢迎来到 我的第一个基于 LLVM 的语言前端 教程第七章。在前六章我们构建了一门小而强的函数式编程语言, 从中我们学到了如何去解析程序文本，构建与表示 AST，生成 LLVM IR 以及优化冗余代码和实现即时编译。 尽管 Kaleidoscope 作为</description>
+      <description>&lt;h2 id=&#34;71-前言&#34;&gt;7.1 前言&lt;/h2&gt;
+&lt;p&gt;欢迎来到 &lt;a href=&#34;https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-0&#34;&gt;我的第一个基于 LLVM 的语言前端&lt;/a&gt; 教程第七章。在前六章我们构建了一门小而强的&lt;a href=&#34;http://en.wikipedia.org/wiki/Functional_programming&#34; target=&#34;_blank&#34;&gt;函数式编程语言&lt;/a&gt;, 从中我们学到了如何去解析程序文本，构建与表示 AST，生成 LLVM IR 以及优化冗余代码和实现即时编译。&lt;/p&gt;
+&lt;p&gt;尽管 Kaleidoscope 作为一门函数式语言已经足够优秀，但事实上其函数式特性使得为其生成 LLVM IR 显得 &amp;ldquo;过于简单&amp;rdquo; 了。特别是，函数式的风格令我们特别容易直接构建出 SSA 形式的 LLVM IR &amp;ndash; 而 SSA 经常将那些想用 LLVM 实现一门包含变量的命令式语言的初学者挡在门外。&lt;/p&gt;
+&lt;p&gt;幸运的是，你并不需要直接在前端生成 SSA form: 尽管偶尔结果出人意料，但 LLVM 提供了非常健壮的 SSA 构建支持。&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -22,7 +25,8 @@
       <pubDate>Tue, 18 Jan 2022 22:00:00 +0800</pubDate>
       
       <guid>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-8/</guid>
-      <description>8.1 前言 欢迎来到 我的第一个基于 LLVM 的语言前端 教程第八章。本章将描述如何将我们实现的语言编译到目标文件 (object file)。 8.2 选择目标平台 LLVM 对交叉编译 (cross-compilation) 有原生支持，你既可以编译到你当前的机器架构上，也可以很轻松地编</description>
+      <description>&lt;h2 id=&#34;81-前言&#34;&gt;8.1 前言&lt;/h2&gt;
+&lt;p&gt;欢迎来到 &lt;a href=&#34;https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-0&#34;&gt;我的第一个基于 LLVM 的语言前端&lt;/a&gt; 教程第八章。本章将描述如何将我们实现的语言编译到目标文件 (object file)。&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -31,7 +35,10 @@
       <pubDate>Mon, 17 Jan 2022 22:00:00 +0800</pubDate>
       
       <guid>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-6/</guid>
-      <description>6.1 前言 欢迎来到 我的第一个基于 LLVM 的语言前端 教程第六章。麻雀虽小，五脏俱全，现在我们已经有了一个相对完备的小型函数式编程语言。但目前我们的语言还有一个大缺点：它缺少很多有用的运算符 (比如除法和逻辑非，我们</description>
+      <description>&lt;h2 id=&#34;61-前言&#34;&gt;6.1 前言&lt;/h2&gt;
+&lt;p&gt;欢迎来到 &lt;a href=&#34;https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-0&#34;&gt;我的第一个基于 LLVM 的语言前端&lt;/a&gt; 教程第六章。麻雀虽小，五脏俱全，现在我们已经有了一个相对完备的小型函数式编程语言。但目前我们的语言还有一个大缺点：它缺少很多有用的运算符 (比如除法和逻辑非，我们甚至还没有除了小于之外的任何比较运算符！)&lt;/p&gt;
+&lt;p&gt;本章将会讨论如何让语言支持自定义运算符。诚然，自定义运算符可能让我们的语言变得丑陋 &amp;ndash; 但同时它也能给予我们的语言强大的表达力。自创语言的醍醐味就在于你可以 (并且需要！) 做出你自己的判断，不论是好是坏。本教程将选择允许用户自定义运算符，同时在实现它的过程中讨论一些有趣的语法解析技术。&lt;/p&gt;
+&lt;p&gt;在本教程的结尾，我们将编写一个渲染&lt;a href=&#34;https://en.wikipedia.org/wiki/Mandelbrot_set&#34; target=&#34;_blank&#34;&gt;曼德博集合&lt;/a&gt;的 &lt;a href=&#34;#65-%e6%8b%89%e5%87%ba%e6%9d%a5%e6%ba%9c%e6%ba%9c&#34;&gt;Kaleidoscope 程序&lt;/a&gt;。它同时也会作为一个示范，告诉你 Kaleidoscope 的强大之处，以及如何使用 Kaleidoscope 做出更多有趣的事情。&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -40,7 +47,18 @@
       <pubDate>Sat, 15 Jan 2022 22:00:00 +0800</pubDate>
       
       <guid>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-1/</guid>
-      <description>本教程原文于 LLVM Tutorial. 网上现见有一些翻译： 连城 翻译的：用 LLVM 开发新语言: 比较老，里面的警告还是在警告 LLVM 2.7 版的，而且只有前三章，但其翻译被众多网友引用。 LLVM 中文网 翻译的：LLVM 开发新语言: 翻译来源不能确定，并且</description>
+      <description>&lt;p&gt;本教程原文于 &lt;a href=&#34;https://llvm.org/docs/tutorial/&#34; target=&#34;_blank&#34;&gt;LLVM Tutorial&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;网上现见有一些翻译：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/liancheng&#34; target=&#34;_blank&#34;&gt;连城&lt;/a&gt; 翻译的：&lt;a href=&#34;https://llvm-tutorial-cn.readthedocs.io/en/latest/&#34; target=&#34;_blank&#34;&gt;用 LLVM 开发新语言&lt;/a&gt;: 比较老，里面的警告还是在警告 LLVM 2.7 版的，而且只有前三章，但其翻译被众多网友引用。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://llvm.liuxfe.com/&#34; target=&#34;_blank&#34;&gt;LLVM 中文网&lt;/a&gt; 翻译的：&lt;a href=&#34;https://llvm.liuxfe.com/tutorial/langimpl/&#34; target=&#34;_blank&#34;&gt;LLVM 开发新语言&lt;/a&gt;: 翻译来源不能确定，并且同样只有前三章 + 第四章开头。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;作为一个编译技术的入门菜鸟，我很感谢上面这些 (以及千千万万的) 无私付出的翻译者。&lt;/p&gt;
+&lt;p&gt;鄙人最近又开始了学习编译技术的学习，在学习之余，也想为社区做一份贡献。于是我斗胆尝试翻译一下本篇教程，重点在之前译者没有翻译的章节上，尽量保证在今年 4 月前翻译完成整个教程。&lt;/p&gt;
+&lt;p&gt;因本人水平有限，如有错误，请多多指正、包涵。如有勘误，欢迎提出 issue/pr 于此 &lt;a href=&#34;https://github.com/hitszlug/wiki&#34; target=&#34;_blank&#34;&gt;仓库&lt;/a&gt;. 也可以直接联系本人 Origami404 at foxmail.com&lt;/p&gt;
+&lt;p&gt;本翻译同时也发布在 &lt;a href=&#34;https://wiki.hitsz.org/llvm-kaleidoscope/ch--1/&#34; target=&#34;_blank&#34;&gt;HITsz LUG wiki&lt;/a&gt; 上.&lt;/p&gt;
+&lt;p&gt;本翻译使用 CC BY-NC-SA 4.0 协议发布到公共领域.&lt;/p&gt;
+&lt;p&gt;目录位于 &lt;a href=&#34;https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-0&#34;&gt;这里&lt;/a&gt;.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -49,7 +67,9 @@
       <pubDate>Sat, 15 Jan 2022 22:00:00 +0800</pubDate>
       
       <guid>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-0/</guid>
-      <description>前置技能： 本教程要求你有 C++ 基础，但你并不需要先去做一个编译器再来看这个教程。 欢迎来到“我的第一个基于 LLVM 的语言前端”教程。在本教程我们将会自己动手实现一个简单的语言，你将会看到这有多简单以及有趣。在接下</description>
+      <description>&lt;p&gt;&lt;strong&gt;前置技能：&lt;/strong&gt; 本教程要求你有 C++ 基础，但你并不需要先去做一个编译器再来看这个教程。&lt;/p&gt;
+&lt;p&gt;欢迎来到“我的第一个基于 LLVM 的语言前端”教程。在本教程我们将会自己动手实现一个简单的语言，你将会看到这有多简单以及有趣。在接下来的教程里，你将会快速而确切地学习到使用 LLVM 来生成程序的方法。&lt;/p&gt;
+&lt;p&gt;本教程引入了一门简单的叫 &lt;code&gt;Kaleidoscope&lt;/code&gt;(万花筒) 的语言。在接下来的几章内，我们将会一步步向你展示构建它的过程。在这个过程中我们会介绍一系列的语言设计与 LLVM 思想，给予你实现这门语言的程序的详细代码，并尽量减少各种各样的细节。我们强烈建议你跟着教程一起动手，在我们给予的代码的基础上去 hack，去实验，去探索新的可能。&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -58,7 +78,14 @@
       <pubDate>Sat, 15 Jan 2022 22:00:00 +0800</pubDate>
       
       <guid>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-1/</guid>
-      <description>暂未翻译，敬请参阅连城大佬的译文. 译文较老，请与原文对比以确保自己的代码是更新之后的。 本教程其他翻译将基于新版本教程。 下一章在此。</description>
+      <description>&lt;p&gt;暂未翻译，敬请参阅连城大佬的&lt;a href=&#34;https://llvm-tutorial-cn.readthedocs.io/en/latest/chapter-1.html#id15&#34; target=&#34;_blank&#34;&gt;译文&lt;/a&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;译文较老，请与原文对比以确保自己的代码是更新之后的。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;本教程其他翻译将基于新版本教程。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;下一章&lt;a href=&#34;https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-2&#34;&gt;在此&lt;/a&gt;。&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -67,7 +94,14 @@
       <pubDate>Sat, 15 Jan 2022 22:00:00 +0800</pubDate>
       
       <guid>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-2/</guid>
-      <description>暂未翻译，敬请参阅连城大佬的译文. 译文较老，请与原文对比以确保自己的代码是更新之后的。 本教程其他翻译将基于新版本教程。 下一章在此。</description>
+      <description>&lt;p&gt;暂未翻译，敬请参阅连城大佬的&lt;a href=&#34;https://llvm-tutorial-cn.readthedocs.io/en/latest/chapter-2.html&#34; target=&#34;_blank&#34;&gt;译文&lt;/a&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;译文较老，请与原文对比以确保自己的代码是更新之后的。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;本教程其他翻译将基于新版本教程。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;下一章&lt;a href=&#34;https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-3&#34;&gt;在此&lt;/a&gt;。&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -76,7 +110,14 @@
       <pubDate>Sat, 15 Jan 2022 22:00:00 +0800</pubDate>
       
       <guid>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-3/</guid>
-      <description>暂未翻译，敬请参阅连城大佬的译文. 译文较老，请与原文对比以确保自己的代码是更新之后的。 本教程其他翻译将基于新版本教程。 下一章在此。</description>
+      <description>&lt;p&gt;暂未翻译，敬请参阅连城大佬的&lt;a href=&#34;https://llvm-tutorial-cn.readthedocs.io/en/latest/chapter-3.html&#34; target=&#34;_blank&#34;&gt;译文&lt;/a&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;译文较老，请与原文对比以确保自己的代码是更新之后的。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;本教程其他翻译将基于新版本教程。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;下一章&lt;a href=&#34;https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-4&#34;&gt;在此&lt;/a&gt;。&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -85,7 +126,8 @@
       <pubDate>Sat, 15 Jan 2022 22:00:00 +0800</pubDate>
       
       <guid>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-4/</guid>
-      <description>4.1 前言 欢迎来到 我的第一个基于 LLVM 的语言前端 教程第四章。前三章描述了一门简单语言的实现与生成 LLVM IR 的过程，而本章将要描述两种新技术 &amp;ndash; 增加优化器 (optimizer) 与 JIT 编译器支持 &amp;ndash; 它们将会告诉你如何生成优雅高效的中间代码。 4.2 平</description>
+      <description>&lt;h2 id=&#34;41-前言&#34;&gt;4.1 前言&lt;/h2&gt;
+&lt;p&gt;欢迎来到 &lt;a href=&#34;https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-0&#34;&gt;我的第一个基于 LLVM 的语言前端&lt;/a&gt; 教程第四章。前三章描述了一门简单语言的实现与生成 LLVM IR 的过程，而本章将要描述两种新技术 &amp;ndash; 增加优化器 (optimizer) 与 JIT 编译器支持 &amp;ndash; 它们将会告诉你如何生成优雅高效的中间代码。&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -94,7 +136,8 @@
       <pubDate>Sat, 15 Jan 2022 22:00:00 +0800</pubDate>
       
       <guid>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-5/</guid>
-      <description>5.1 前言 欢迎来到 我的第一个基于 LLVM 的语言前端 教程第五章。前四章描述了一门简单语言的实现，生成 LLVM IR 并优化，随后即时编译到本地代码的过程。不幸的是，至少到目前为止，Kaleidoscope 还不堪大用：它没有控</description>
+      <description>&lt;h2 id=&#34;51-前言&#34;&gt;5.1 前言&lt;/h2&gt;
+&lt;p&gt;欢迎来到 &lt;a href=&#34;https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-0&#34;&gt;我的第一个基于 LLVM 的语言前端&lt;/a&gt; 教程第五章。前四章描述了一门简单语言的实现，生成 LLVM IR 并优化，随后即时编译到本地代码的过程。不幸的是，至少到目前为止，Kaleidoscope 还不堪大用：它没有控制流结构 (除了函数调用与返回). 这意味着你不能用它写出带条件分支的代码，这显著地影响了 Kaleidoscope 的威力。在本章，我们将扩展 Kaleidoscope，使其支持 if/then/else 表达式和一个简单的 for 循环。&lt;/p&gt;</description>
     </item>
     
   </channel>

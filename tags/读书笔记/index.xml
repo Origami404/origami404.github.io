@@ -13,7 +13,11 @@
       <pubDate>Thu, 16 Apr 2020 22:00:00 +0800</pubDate>
       
       <guid>https://blog.origami404.top/compiler-and-type-theory/2020-04-notes-on-category-theory-for-programmers/</guid>
-      <description>前言 &amp;amp; 介绍 Category Theory for Programmers, 顾名思义, 是一本关于范畴论的书, 但是偏向CS而非数学. 书的$\LaTeX$代码以GPL-3.0公布在GitHub, 有两个版本, 一个以C++作为辅助说明语言, 另一个是Scala. 作为一</description>
+      <description>&lt;h2 id=&#34;前言--介绍&#34;&gt;前言 &amp;amp; 介绍&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;Category Theory for Programmers&lt;/code&gt;, 顾名思义, 是一本关于范畴论的书, 但是偏向CS而非数学.&lt;/p&gt;
+&lt;p&gt;书的$\LaTeX$代码以&lt;code&gt;GPL-3.0&lt;/code&gt;公布在&lt;a href=&#34;https://github.com/hmemcpy/milewski-ctfp-pdf&#34; target=&#34;_blank&#34;&gt;GitHub&lt;/a&gt;, 有两个版本, 一个以&lt;code&gt;C++&lt;/code&gt;作为辅助说明语言, 另一个是&lt;code&gt;Scala&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;作为一个蒟蒻OI党当然是选择&lt;code&gt;C++&lt;/code&gt;版啦.&lt;/p&gt;
+&lt;p&gt;本文(如果不咕咕咕的话)会持续更新, 大概记录一些摘录或者感想或者我不知道的东西&amp;hellip;&lt;/p&gt;</description>
     </item>
     
   </channel>

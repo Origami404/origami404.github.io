@@ -117,7 +117,14 @@
 
     </div>
     <div class="post-item post-summary markdown-body">
-        暂未翻译，敬请参阅连城大佬的译文. 译文较老，请与原文对比以确保自己的代码是更新之后的。 本教程其他翻译将基于新版本教程。 下一章在此。
+        <p>暂未翻译，敬请参阅连城大佬的<a href="https://llvm-tutorial-cn.readthedocs.io/en/latest/chapter-2.html" target="_blank">译文</a>.</p>
+<blockquote>
+<p>译文较老，请与原文对比以确保自己的代码是更新之后的。</p>
+</blockquote>
+<blockquote>
+<p>本教程其他翻译将基于新版本教程。</p>
+</blockquote>
+<p>下一章<a href="/llvm-kaleidoscope/2022-01-kaleidoscope-ch-3">在此</a>。</p>
     </div>
 </div>
 
@@ -134,7 +141,14 @@
 
     </div>
     <div class="post-item post-summary markdown-body">
-        暂未翻译，敬请参阅连城大佬的译文. 译文较老，请与原文对比以确保自己的代码是更新之后的。 本教程其他翻译将基于新版本教程。 下一章在此。
+        <p>暂未翻译，敬请参阅连城大佬的<a href="https://llvm-tutorial-cn.readthedocs.io/en/latest/chapter-3.html" target="_blank">译文</a>.</p>
+<blockquote>
+<p>译文较老，请与原文对比以确保自己的代码是更新之后的。</p>
+</blockquote>
+<blockquote>
+<p>本教程其他翻译将基于新版本教程。</p>
+</blockquote>
+<p>下一章<a href="/llvm-kaleidoscope/2022-01-kaleidoscope-ch-4">在此</a>。</p>
     </div>
 </div>
 
@@ -151,7 +165,8 @@
 
     </div>
     <div class="post-item post-summary markdown-body">
-        4.1 前言 欢迎来到 我的第一个基于 LLVM 的语言前端 教程第四章。前三章描述了一门简单语言的实现与生成 LLVM IR 的过程，而本章将要描述两种新技术 &ndash; 增加优化器 (optimizer) 与 JIT 编译器支持 &ndash; 它们将会告诉你如何生成优雅高效的中间代码。 4.2 平
+        <h2 id="41-前言">4.1 前言</h2>
+<p>欢迎来到 <a href="/llvm-kaleidoscope/2022-01-kaleidoscope-ch-0">我的第一个基于 LLVM 的语言前端</a> 教程第四章。前三章描述了一门简单语言的实现与生成 LLVM IR 的过程，而本章将要描述两种新技术 &ndash; 增加优化器 (optimizer) 与 JIT 编译器支持 &ndash; 它们将会告诉你如何生成优雅高效的中间代码。</p>
     </div>
 </div>
 
@@ -168,7 +183,8 @@
 
     </div>
     <div class="post-item post-summary markdown-body">
-        5.1 前言 欢迎来到 我的第一个基于 LLVM 的语言前端 教程第五章。前四章描述了一门简单语言的实现，生成 LLVM IR 并优化，随后即时编译到本地代码的过程。不幸的是，至少到目前为止，Kaleidoscope 还不堪大用：它没有控
+        <h2 id="51-前言">5.1 前言</h2>
+<p>欢迎来到 <a href="/llvm-kaleidoscope/2022-01-kaleidoscope-ch-0">我的第一个基于 LLVM 的语言前端</a> 教程第五章。前四章描述了一门简单语言的实现，生成 LLVM IR 并优化，随后即时编译到本地代码的过程。不幸的是，至少到目前为止，Kaleidoscope 还不堪大用：它没有控制流结构 (除了函数调用与返回). 这意味着你不能用它写出带条件分支的代码，这显著地影响了 Kaleidoscope 的威力。在本章，我们将扩展 Kaleidoscope，使其支持 if/then/else 表达式和一个简单的 for 循环。</p>
     </div>
 </div>
 
@@ -185,7 +201,24 @@
 
     </div>
     <div class="post-item post-summary markdown-body">
-        前言 上大学了, 终于有大段的时间来整理数学和物理学内容了. 本文有其思想上的参考: 3b1b: 发明新数学是怎样一种体验？ &ldquo;最原始的&quot;双线性二元运算 让我们来考虑矢量的运算吧! 假如我们需要在线性空
+        <h2 id="前言">前言</h2>
+<p>上大学了, 终于有大段的时间来整理数学和物理学内容了.</p>
+<p>本文有其思想上的参考: <a href="https://www.bilibili.com/video/BV1Gs411R7Yo" target="_blank">3b1b: 发明新数学是怎样一种体验？</a></p>
+<h2 id="最原始的双线性二元运算">&ldquo;最原始的&quot;双线性二元运算</h2>
+<p>让我们来考虑矢量的运算吧!</p>
+<p>假如我们需要在线性空间 $\mathbb{V}$ 上定义二元运算, 显然我们会希望这个运算至少是线性的, 否则为啥我们要在线性空间上搞呢. 同时如果一个二元运算是双线性的(就是说对于两个操作数而言它都是线性的), 那么我们只需要对 $\mathbb{V}$ 的基底定义此运算即可.</p>
+<p>换句话说, 对于双线性运算 $\mathbf{a} \otimes \mathbf{b}$, 我们可以将其按基底展开:</p>
+<p>$$
+\begin{aligned}
+\mathbf{a} \otimes \mathbf{b}
+&amp;= (\sum_{i=1}^n a_i \mathbf{e_i}) \otimes (\sum_{i=1}^n b_i \mathbf{e_i}) \\
+&amp;= \sum_{i=1}^n \sum_{j=1}^n a_i b_j (\mathbf{e_i} \otimes \mathbf{e_j})
+\end{aligned}
+$$</p>
+<p>那么, 我们只需要定义所有的 $\mathbf{e_i} \otimes \mathbf{e_j}$ (一共 $n^2$ 个) 即可.</p>
+<blockquote>
+<p>等等, 这都啥跟啥啊????</p>
+</blockquote>
     </div>
 </div>
 
@@ -196,13 +229,19 @@
     <div class="post-item post-meta">
         <span><i class="iconfont icon-today-sharp"></i>&nbsp;2021-09-27</span>
 
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;5291 字</span>
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;5294 字</span>
 
 <span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E6%95%B0%E5%AD%A6">数学</a>&nbsp;<a href="/tags/%E7%BA%BF%E4%BB%A3">线代</a>&nbsp;<a href="/tags/%E6%96%B0%E8%A7%82%E7%82%B9">新观点</a>&nbsp;</span>
 
     </div>
     <div class="post-item post-summary markdown-body">
-        前置 这篇文章有些前置知识我默认读者是知道的, 比如矢量和线性空间(wiki, 知乎)的概念. 具体来讲, 我希望读者能完全理解这句话: &ldquo;基底通过线性组合张成线性空间&rdquo;. 但更加重要的是,
+        <h2 id="前置">前置</h2>
+<p>这篇文章有些前置知识我默认读者是知道的, 比如矢量和线性空间(<a href="https://zh.wikipedia.org/wiki/%E5%90%91%E9%87%8F%E7%A9%BA%E9%97%B4" target="_blank">wiki</a>, <a href="https://www.zhihu.com/question/24086219" target="_blank">知乎</a>)的概念. 具体来讲, 我希望读者能完全理解这句话: &ldquo;基底通过线性组合张成线性空间&rdquo;. 但更加重要的是, 我希望读者能够放开胆子, 接受并批判地思考与新的语言与概念. 文中有些地方我特意没有使用书本的符号, 为的就是让读者直接判断他自己到底是在跟着文章思路走还是靠课本里记下的结论硬看. 通过这篇文章, 我希望能有更多人开始 &ldquo;思考&rdquo; 和 &ldquo;创造&rdquo; 数学, 穿过数学高冷的表面, 看到数学定义背后的 &ldquo;动机&rdquo; 和 &ldquo;深意&rdquo;, 最终享受数学, 而不是只是跟着课本学点计算.</p>
+<p>要知道, 数学家也是人. 一旦你觉得有什么东西是反人类的, 它背后一定是有自己的逻辑. 这里的逻辑, 是数学定义背后数学家们思考的内在的直觉的<strong>人的</strong>逻辑, 而不完全是死的客观精准的数理逻辑.</p>
+<p>建议餐前食用: <a href="https://www.bilibili.com/video/BV1Gs411R7Yo" target="_blank">3b1b: 发明新数学是怎样一种体验？</a></p>
+<p>餐后或餐中可以结合: <a href="https://www.bilibili.com/video/BV1ys411472E" target="_blank">3b1b: 线性代数的本质</a></p>
+<p>比起纯粹的几何直观, 我更看重一种 &ldquo;符号上的直观&rdquo;, 也就是说, 你得把这一套数学符号, 当作与生俱来的, 自然的东西. 所谓直观学习, 不是把所有东西都归纳成你的 &ldquo;直观&rdquo;, 而是让你能把更多的东西变成你的直观.</p>
+<p>鸡汤灌得够多了, 让我们开始吧.</p>
     </div>
 </div>
 
@@ -219,7 +258,12 @@
 
     </div>
     <div class="post-item post-summary markdown-body">
-        前言 最近被某学长介绍了毕昇杯编译器比赛, 有点感兴趣, 遂开始用 C 自己实现, 然后就: 还是 Java 香! 本文记录了我用 Bison 和 Flex 来构建 SysY2021 语言前端的尝试. Show me the code. 前置声明: 大体的代码架构和使用方法在最后, 可以交叉着看. lex
+        <h2 id="前言">前言</h2>
+<p>最近被某学长介绍了<a href="https://compiler.educg.net/" target="_blank">毕昇杯</a>编译器比赛, 有点感兴趣, 遂开始用 C 自己实现, 然后就:</p>
+<blockquote>
+<p><strong>还是 Java 香!</strong></p>
+</blockquote>
+<p>本文记录了我用 Bison 和 Flex 来构建 <a href="https://gitlab.eduxiji.net/nscscc/compiler2021/-/blob/master/SysY%E8%AF%AD%E8%A8%80%E5%AE%9A%E4%B9%89.pdf" target="_blank">SysY2021</a> 语言前端的尝试.</p>
     </div>
 </div>
 
@@ -236,7 +280,8 @@
 
     </div>
     <div class="post-item post-summary markdown-body">
-        此文章施工中&hellip; 现在让我们来使用上面我们写好的 Git Object 来实现常用的 Git 命令吧. Spec 我们要实现的命令有这些: 创建仓库: $ git init [path] # [path]: 在 [path] 下创建一个包含必要目录结构的 .git 目录, 默认为 . (当前目录) 泛用 Object 文
+        <p><strong>此文章施工中&hellip;</strong></p>
+<p>现在让我们来使用上面我们写好的 Git Object 来实现常用的 Git 命令吧.</p>
     </div>
 </div>
 
@@ -253,7 +298,9 @@
 
     </div>
     <div class="post-item post-summary markdown-body">
-        此文章施工中&hellip; 二进制格式 前后顺序均按从低位到高位. &lt;index&gt; ::= &lt;header/12-byte&gt; &lt;entries/8k-byte&gt; &lt;extensions&gt; &lt;checksum&gt; &lt;header&gt; ::= &lt;signature/4-byte&gt; &lt;version/4-byte&gt; &lt;entry_cnt/32-bit&gt; &lt;signature&gt; ::= b'DIRC' &lt;version&gt; ::= (0002, 0003, 0004) in ASCII format &lt;entry_cnt&gt; ::= the amount of entries below in u32 format &lt;entries&gt; ::= [&lt;entry&gt; &lt;padding&gt;] &lt;entry&gt; ::= &lt;c_time/32-bit&gt; &lt;c_time_ns/32-bit&gt; &lt;m_time/32-bit&gt; &lt;m_time_ns/32-bit&gt; &lt;dev/32-bit&gt; &lt;ino/32-bit&gt; &lt;mode/32-bit&gt; &lt;uid/32-bit&gt; &lt;gid/32-bit&gt; &lt;file_size/32-bit&gt; &lt;sha-1/20-byte&gt; &lt;flags/16-bit&gt; &lt;path_name&gt; &lt;c_time&gt; ::= 以秒为单位的最后一次文件元信息
+        <p><strong>此文章施工中&hellip;</strong></p>
+<h2 id="二进制格式">二进制格式</h2>
+<p>前后顺序<strong>均按从低位到高位</strong>.</p>
     </div>
 </div>
 
@@ -270,7 +317,9 @@
 
     </div>
     <div class="post-item post-summary markdown-body">
-        导读 本文先介绍了一些方便查看 Git Object 文件 二进制内容的命令行工具, 其次分别介绍了 4 种 Object: Blob, Commit, Tree, Tag. 每一种 Object 按&quot;概念模型&quot;与&quot;二进制格式&quot;分隔, 前者主要介绍其储存了那些抽象
+        <h2 id="导读">导读</h2>
+<p>本文先介绍了一些方便查看 Git Object 文件 二进制内容的命令行工具, 其次分别介绍了 4 种 Object: <code>Blob</code>, <code>Commit</code>, <code>Tree</code>, <code>Tag</code>.</p>
+<p>每一种 <code>Object</code> 按&quot;概念模型&quot;与&quot;二进制格式&quot;分隔, 前者主要介绍其储存了那些抽象信息, 后者则专注于其二进制储存格式.</p>
     </div>
 </div>
 <div class="pagination"><div class="pag-first">
@@ -721,20 +770,26 @@
     
 <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
 
 
 
 <script defer src="/assets/js/fuji.min.js"></script>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" />
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
-<script
-  defer
-  src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"
-  onload="renderMathInElement(document.body);"
-></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/auto-render.min.js"></script>
+<script>
+  renderMathInElement(document.querySelector('div.content'), {
+    delimiters: [
+      { left: '$$', right: '$$', display: true },
+      { left: '\\[', right: '\\]', display: true },
+      { left: '$', right: '$', display: false },
+      { left: '\\(', right: '\\)', display: false },
+    ],
+  });
+</script>
 
 
 

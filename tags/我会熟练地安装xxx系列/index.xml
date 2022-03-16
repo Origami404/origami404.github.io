@@ -13,7 +13,8 @@
       <pubDate>Tue, 14 Apr 2020 22:00:00 +0800</pubDate>
       
       <guid>https://blog.origami404.top/post/2020-04-haskell-dev-in-win10/</guid>
-      <description>前言 时隔半年再次开始学Haskell, 然后在配环境中度过了一个哭笑不得的下午&amp;hellip; Haskell环境是啥呢&amp;hellip;? 按我不完全的理解, 主要有: 一个编译器, 比如ghc; 它还附带一个RE</description>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;时隔半年再次开始学&lt;code&gt;Haskell&lt;/code&gt;, 然后在配环境中度过了一个哭笑不得的下午&amp;hellip;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -22,7 +23,10 @@
       <pubDate>Wed, 08 Apr 2020 09:45:00 +0800</pubDate>
       
       <guid>https://blog.origami404.top/post/2020-04-win10-and-msr/</guid>
-      <description>前言 大概1月底, 辣鸡win10的更新就更不上去了, 然后我折腾了好久&amp;hellip;包括各种系统检查啊手动安装啊, 无果. 最后在3月决定干脆删了重装&amp;hellip; 重装过程中遇到了大大小小的问题, 写个文章</description>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;大概1月底, 辣鸡win10的更新就更不上去了, 然后我折腾了好久&amp;hellip;包括各种系统检查啊手动安装啊, 无果. 最后在3月决定干脆删了重装&amp;hellip;&lt;/p&gt;
+&lt;p&gt;重装过程中遇到了大大小小的问题, 写个文章记录一下.&lt;/p&gt;
+&lt;p&gt;&lt;del&gt;3月的事拖到4月写, 咕咕咕实锤&lt;/del&gt;&lt;/p&gt;</description>
     </item>
     
   </channel>

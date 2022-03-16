@@ -37,8 +37,24 @@
 <meta property="og:title" content="Anbox 踩坑 &amp; Manjaro 下的内核编译" />
 <meta name="twitter:title" content="Anbox 踩坑 &amp; Manjaro 下的内核编译" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.origami404.top/post/2020-10-anbox-and-compile-kernel/" /><meta property="og:description" content="前言 &amp; Anbox 简介 最近换回了 Manjaro 和 Xfce, 打算认认真真地开始将 Linux 作为日常生活系统而不仅仅是开发系统来用了. 然而在日常生活中, 总归是逃不掉某国产IM的 :(. 为了实现以 Manjaro 作为生活主力系统的目标, (同时也为了以后说不定能愉快" />
-<meta name="twitter:description" content="前言 &amp; Anbox 简介 最近换回了 Manjaro 和 Xfce, 打算认认真真地开始将 Linux 作为日常生活系统而不仅仅是开发系统来用了. 然而在日常生活中, 总归是逃不掉某国产IM的 :(. 为了实现以 Manjaro 作为生活主力系统的目标, (同时也为了以后说不定能愉快" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
+<meta property="og:url" content="https://blog.origami404.top/post/2020-10-anbox-and-compile-kernel/" /><meta property="og:description" content="前言 &amp; Anbox 简介
+最近换回了 Manjaro 和 Xfce, 打算认认真真地开始将 Linux 作为日常生活系统而不仅仅是开发系统来用了. 然而在日常生活中, 总归是逃不掉某国产IM的 :(. 为了实现以 Manjaro 作为生活主力系统的目标, (同时也为了以后说不定能愉快地打游戏), 决定安装一个能跑安卓应用的东西. 于是我的 Anbox 之旅就在完全搞不懂 Android x86 是什么玩意的情况下展开了.
+Anbox 官网上的介绍:
+
+Anbox: Android in a Box
+Run Android applications on any GNU/Linux operating system.
+Anbox puts the Android operating system into a container, abstracts hardware access and integrates core system services into a GNU/Linux system. Every Android application will be integrated with your operating system like any other native application.
+
+简单来讲就类似 docker , 利用 LXD 技术在 Linux 系统里新建一个全新的容器, 然后直接去跑一个 Android x86. 好处嘛就是跑得比虚拟机快, 集成度比虚拟机好. 坏处嘛就是兼容性还是有待提高&hellip;" />
+<meta name="twitter:description" content="前言 &amp; Anbox 简介
+最近换回了 Manjaro 和 Xfce, 打算认认真真地开始将 Linux 作为日常生活系统而不仅仅是开发系统来用了. 然而在日常生活中, 总归是逃不掉某国产IM的 :(. 为了实现以 Manjaro 作为生活主力系统的目标, (同时也为了以后说不定能愉快地打游戏), 决定安装一个能跑安卓应用的东西. 于是我的 Anbox 之旅就在完全搞不懂 Android x86 是什么玩意的情况下展开了.
+Anbox 官网上的介绍:
+
+Anbox: Android in a Box
+Run Android applications on any GNU/Linux operating system.
+Anbox puts the Android operating system into a container, abstracts hardware access and integrates core system services into a GNU/Linux system. Every Android application will be integrated with your operating system like any other native application.
+
+简单来讲就类似 docker , 利用 LXD 技术在 Linux 系统里新建一个全新的容器, 然后直接去跑一个 Android x86. 好处嘛就是跑得比虚拟机快, 集成度比虚拟机好. 坏处嘛就是兼容性还是有待提高&hellip;" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://blog.origami404.top/img/og.png" /><meta property="article:published_time" content="2020-10-02T23:22:00+08:00" /><meta property="article:modified_time" content="2020-10-02T23:22:00+08:00" />
 
@@ -127,7 +143,6 @@ Run Android applications on any GNU/Linux operating system.
 Anbox puts the Android operating system into a container, abstracts hardware access and integrates core system services into a GNU/Linux system. Every Android application will be integrated with your operating system like any other native application.</p>
 </blockquote>
 <p>简单来讲就类似 docker , 利用 LXD 技术在 Linux 系统里新建一个全新的容器, 然后直接去跑一个 Android x86. 好处嘛就是跑得比虚拟机快, 集成度比虚拟机好. 坏处嘛就是兼容性还是有待提高&hellip;</p>
-<!-- more -->
 <h2 id="安装">安装</h2>
 <h3 id="安装之前">安装之前&hellip;</h3>
 <p>确保您的内核支持 <code>/dev/ashmem</code> 和 <code>/dev/binder</code>, 如果没有, 请参照: <a href="#%e6%9b%bf%e6%8d%a2%e5%86%85%e6%a0%b8"></a></p>
@@ -231,7 +246,6 @@ makepkg
 <p>然后重启.</p>
 <h2 id="最后">最后</h2>
 <p><code>deepin.com.qq.office</code> 跟 <code>deepin.com.wechat2</code> 真香! 结果又花了几个小时的时间折腾了没意义的东西呢!</p>
-
     </div>
 </article>
 
@@ -718,20 +732,26 @@ makepkg
     
 <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
 
 
 
 <script defer src="/assets/js/fuji.min.js"></script>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" />
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
-<script
-  defer
-  src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"
-  onload="renderMathInElement(document.body);"
-></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/auto-render.min.js"></script>
+<script>
+  renderMathInElement(document.querySelector('div.content'), {
+    delimiters: [
+      { left: '$$', right: '$$', display: true },
+      { left: '\\[', right: '\\]', display: true },
+      { left: '$', right: '$', display: false },
+      { left: '\\(', right: '\\)', display: false },
+    ],
+  });
+</script>
 
 
 

@@ -121,7 +121,8 @@
 
   </div>
   <div class="post-item post-summary markdown-body">
-    此文章施工中&hellip; 现在让我们来使用上面我们写好的 Git Object 来实现常用的 Git 命令吧. Spec 我们要实现的命令有这些: 创建仓库: $ git init [path] # [path]: 在 [path] 下创建一个包含必要目录结构的 .git 目录, 默认为 . (当前目录) 泛用 Object 文
+    <p><strong>此文章施工中&hellip;</strong></p>
+<p>现在让我们来使用上面我们写好的 Git Object 来实现常用的 Git 命令吧.</p>
   </div>
 </div>
 
@@ -138,7 +139,9 @@
 
   </div>
   <div class="post-item post-summary markdown-body">
-    此文章施工中&hellip; 二进制格式 前后顺序均按从低位到高位. &lt;index&gt; ::= &lt;header/12-byte&gt; &lt;entries/8k-byte&gt; &lt;extensions&gt; &lt;checksum&gt; &lt;header&gt; ::= &lt;signature/4-byte&gt; &lt;version/4-byte&gt; &lt;entry_cnt/32-bit&gt; &lt;signature&gt; ::= b'DIRC' &lt;version&gt; ::= (0002, 0003, 0004) in ASCII format &lt;entry_cnt&gt; ::= the amount of entries below in u32 format &lt;entries&gt; ::= [&lt;entry&gt; &lt;padding&gt;] &lt;entry&gt; ::= &lt;c_time/32-bit&gt; &lt;c_time_ns/32-bit&gt; &lt;m_time/32-bit&gt; &lt;m_time_ns/32-bit&gt; &lt;dev/32-bit&gt; &lt;ino/32-bit&gt; &lt;mode/32-bit&gt; &lt;uid/32-bit&gt; &lt;gid/32-bit&gt; &lt;file_size/32-bit&gt; &lt;sha-1/20-byte&gt; &lt;flags/16-bit&gt; &lt;path_name&gt; &lt;c_time&gt; ::= 以秒为单位的最后一次文件元信息
+    <p><strong>此文章施工中&hellip;</strong></p>
+<h2 id="二进制格式">二进制格式</h2>
+<p>前后顺序<strong>均按从低位到高位</strong>.</p>
   </div>
 </div>
 
@@ -155,7 +158,9 @@
 
   </div>
   <div class="post-item post-summary markdown-body">
-    导读 本文先介绍了一些方便查看 Git Object 文件 二进制内容的命令行工具, 其次分别介绍了 4 种 Object: Blob, Commit, Tree, Tag. 每一种 Object 按&quot;概念模型&quot;与&quot;二进制格式&quot;分隔, 前者主要介绍其储存了那些抽象
+    <h2 id="导读">导读</h2>
+<p>本文先介绍了一些方便查看 Git Object 文件 二进制内容的命令行工具, 其次分别介绍了 4 种 Object: <code>Blob</code>, <code>Commit</code>, <code>Tree</code>, <code>Tag</code>.</p>
+<p>每一种 <code>Object</code> 按&quot;概念模型&quot;与&quot;二进制格式&quot;分隔, 前者主要介绍其储存了那些抽象信息, 后者则专注于其二进制储存格式.</p>
   </div>
 </div>
 
@@ -172,7 +177,14 @@
 
   </div>
   <div class="post-item post-summary markdown-body">
-    前言 写这篇文章一开始主要是受到了 Write Yourself a Git, 深入理解Git实现原理 这两篇文章的激励. 俗话说学会使用轮子的最佳方法就是造一个轮子(其实是我刚刚说的), 而在使用 Python 实现的过程中又多少碰到了点前面两篇文章没有覆盖
+    <h2 id="前言">前言</h2>
+<p>写这篇文章一开始主要是受到了 <a href="https://wyag.thb.lt/" target="_blank">Write Yourself a Git</a>, <a href="https://zhuanlan.zhihu.com/p/45510461" target="_blank">深入理解Git实现原理</a> 这两篇文章的激励. 俗话说学会使用轮子的最佳方法就是造一个轮子(<del>其实是我刚刚说的</del>), 而在使用 Python 实现的过程中又多少碰到了点前面两篇文章没有覆盖到的细节点, 特记录于此, 以飨读者.</p>
+<p>本文章介绍顺序是先介绍其存储用的数据结构, 分别按其概念模型(包含了什么信息, 为什么要这样设计)及其二进制格式(储存在文件系统中的格式)来介绍; 随后再描述如何实现 Git 的常用功能.</p>
+<p>本文章不是 Git 的教程, 如果读者对 Git 的操作并非十分了解的话可以参考 ProGit, 一本非常好的 Git 教材.</p>
+<p>本文对于细节扣得有点多, 可能并不适合只想理解 Git 底层模型的读者.</p>
+<p><del>或者也可以像我一样现学现写</del>.</p>
+<p>本文的配套代码及 Markdown 源码一同发布于 <a href="https://github.com/Origami404/mgit" target="_blank">GitHub: mgit</a>, 可以配套查看. (顺着 Commit 看我怎么挣扎着理解的说不定别有一番乐趣).</p>
+<p>由于作者水平有限, 时间亦有限, 错漏难免, 还请大佬指正.</p>
   </div>
 </div>
 
@@ -609,20 +621,26 @@
     
 <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
 
 
 
 <script defer src="/assets/js/fuji.min.js"></script>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" />
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
-<script
-  defer
-  src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"
-  onload="renderMathInElement(document.body);"
-></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/auto-render.min.js"></script>
+<script>
+  renderMathInElement(document.querySelector('div.content'), {
+    delimiters: [
+      { left: '$$', right: '$$', display: true },
+      { left: '\\[', right: '\\]', display: true },
+      { left: '$', right: '$', display: false },
+      { left: '\\(', right: '\\)', display: false },
+    ],
+  });
+</script>
 
 
 

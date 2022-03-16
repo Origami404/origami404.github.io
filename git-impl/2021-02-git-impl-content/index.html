@@ -37,8 +37,22 @@
 <meta property="og:title" content="Git 实现: 目录 &amp; 前言 &amp; Git repo" />
 <meta name="twitter:title" content="Git 实现: 目录 &amp; 前言 &amp; Git repo" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.origami404.top/git-impl/2021-02-git-impl-content/" /><meta property="og:description" content="前言 写这篇文章一开始主要是受到了 Write Yourself a Git, 深入理解Git实现原理 这两篇文章的激励. 俗话说学会使用轮子的最佳方法就是造一个轮子(其实是我刚刚说的), 而在使用 Python 实现的过程中又多少碰到了点前面两篇文章没有覆盖" />
-<meta name="twitter:description" content="前言 写这篇文章一开始主要是受到了 Write Yourself a Git, 深入理解Git实现原理 这两篇文章的激励. 俗话说学会使用轮子的最佳方法就是造一个轮子(其实是我刚刚说的), 而在使用 Python 实现的过程中又多少碰到了点前面两篇文章没有覆盖" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
+<meta property="og:url" content="https://blog.origami404.top/git-impl/2021-02-git-impl-content/" /><meta property="og:description" content="前言
+写这篇文章一开始主要是受到了 Write Yourself a Git, 深入理解Git实现原理 这两篇文章的激励. 俗话说学会使用轮子的最佳方法就是造一个轮子(其实是我刚刚说的), 而在使用 Python 实现的过程中又多少碰到了点前面两篇文章没有覆盖到的细节点, 特记录于此, 以飨读者.
+本文章介绍顺序是先介绍其存储用的数据结构, 分别按其概念模型(包含了什么信息, 为什么要这样设计)及其二进制格式(储存在文件系统中的格式)来介绍; 随后再描述如何实现 Git 的常用功能.
+本文章不是 Git 的教程, 如果读者对 Git 的操作并非十分了解的话可以参考 ProGit, 一本非常好的 Git 教材.
+本文对于细节扣得有点多, 可能并不适合只想理解 Git 底层模型的读者.
+或者也可以像我一样现学现写.
+本文的配套代码及 Markdown 源码一同发布于 GitHub: mgit, 可以配套查看. (顺着 Commit 看我怎么挣扎着理解的说不定别有一番乐趣).
+由于作者水平有限, 时间亦有限, 错漏难免, 还请大佬指正." />
+<meta name="twitter:description" content="前言
+写这篇文章一开始主要是受到了 Write Yourself a Git, 深入理解Git实现原理 这两篇文章的激励. 俗话说学会使用轮子的最佳方法就是造一个轮子(其实是我刚刚说的), 而在使用 Python 实现的过程中又多少碰到了点前面两篇文章没有覆盖到的细节点, 特记录于此, 以飨读者.
+本文章介绍顺序是先介绍其存储用的数据结构, 分别按其概念模型(包含了什么信息, 为什么要这样设计)及其二进制格式(储存在文件系统中的格式)来介绍; 随后再描述如何实现 Git 的常用功能.
+本文章不是 Git 的教程, 如果读者对 Git 的操作并非十分了解的话可以参考 ProGit, 一本非常好的 Git 教材.
+本文对于细节扣得有点多, 可能并不适合只想理解 Git 底层模型的读者.
+或者也可以像我一样现学现写.
+本文的配套代码及 Markdown 源码一同发布于 GitHub: mgit, 可以配套查看. (顺着 Commit 看我怎么挣扎着理解的说不定别有一番乐趣).
+由于作者水平有限, 时间亦有限, 错漏难免, 还请大佬指正." /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://blog.origami404.top/img/og.png" /><meta property="article:published_time" content="2021-02-19T22:00:00+08:00" /><meta property="article:modified_time" content="2021-02-19T22:00:00+08:00" />
 
@@ -126,7 +140,6 @@
 <p><del>或者也可以像我一样现学现写</del>.</p>
 <p>本文的配套代码及 Markdown 源码一同发布于 <a href="https://github.com/Origami404/mgit" target="_blank">GitHub: mgit</a>, 可以配套查看. (顺着 Commit 看我怎么挣扎着理解的说不定别有一番乐趣).</p>
 <p>由于作者水平有限, 时间亦有限, 错漏难免, 还请大佬指正.</p>
-<!-- more -->
 <h2 id="目录">目录</h2>
 <ol>
 <li>目录 &amp; 前言 &amp; Git repo</li>
@@ -200,7 +213,6 @@
 <p>一句话: 用相对路径 import 的文件就不要运行. 要运行的文件就不要用相对路径.</p>
 <p>可以将用相对路径的文件<code>xxx.py</code>放进包里, 然后在包外<code>run_xxx.py</code>内使用包名引用. 此时必须使用<code>python -m run_xxx.py</code>.</p>
 <p>下一篇: <a href="Object%20%e6%96%87%e4%bb%b6.md">Object 文件</a></p>
-
     </div>
 </article>
 
@@ -675,20 +687,26 @@
     
 <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
 
 
 
 <script defer src="/assets/js/fuji.min.js"></script>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" />
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
-<script
-  defer
-  src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"
-  onload="renderMathInElement(document.body);"
-></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/auto-render.min.js"></script>
+<script>
+  renderMathInElement(document.querySelector('div.content'), {
+    delimiters: [
+      { left: '$$', right: '$$', display: true },
+      { left: '\\[', right: '\\]', display: true },
+      { left: '$', right: '$', display: false },
+      { left: '\\(', right: '\\)', display: false },
+    ],
+  });
+</script>
 
 
 

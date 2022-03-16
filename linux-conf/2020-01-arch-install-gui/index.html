@@ -37,8 +37,14 @@
 <meta property="og:title" content="Arch GUI 配置" />
 <meta name="twitter:title" content="Arch GUI 配置" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.origami404.top/linux-conf/2020-01-arch-install-gui/" /><meta property="og:description" content="安装 桌面环境这次选择了X&#43;awesome, wayland现在还是太折腾了, 并且还有输入法这一个大坑. 用过i3之后对浮动式wm就再也提不起兴趣, 同时因为用了一阵子i3, 决定换个口味, 试试配一个aweso" />
-<meta name="twitter:description" content="安装 桌面环境这次选择了X&#43;awesome, wayland现在还是太折腾了, 并且还有输入法这一个大坑. 用过i3之后对浮动式wm就再也提不起兴趣, 同时因为用了一阵子i3, 决定换个口味, 试试配一个aweso" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
+<meta property="og:url" content="https://blog.origami404.top/linux-conf/2020-01-arch-install-gui/" /><meta property="og:description" content="安装
+桌面环境这次选择了X&#43;awesome, wayland现在还是太折腾了, 并且还有输入法这一个大坑. 用过i3之后对浮动式wm就再也提不起兴趣, 同时因为用了一阵子i3, 决定换个口味, 试试配一个awesome.
+dm用的是lightdm, greeter用了lightdm-webkit2-greeter(因为好看2333), 主题选择了这一个.
+终端模拟器用了alacritty, 主题选了这一个" />
+<meta name="twitter:description" content="安装
+桌面环境这次选择了X&#43;awesome, wayland现在还是太折腾了, 并且还有输入法这一个大坑. 用过i3之后对浮动式wm就再也提不起兴趣, 同时因为用了一阵子i3, 决定换个口味, 试试配一个awesome.
+dm用的是lightdm, greeter用了lightdm-webkit2-greeter(因为好看2333), 主题选择了这一个.
+终端模拟器用了alacritty, 主题选了这一个" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://blog.origami404.top/img/og.png" /><meta property="article:published_time" content="2020-01-29T19:30:00+08:00" /><meta property="article:modified_time" content="2020-01-29T19:30:00+08:00" />
 
@@ -122,7 +128,6 @@
 <p>桌面环境这次选择了X+awesome, wayland现在还是太折腾了, 并且还有输入法这一个大坑. 用过i3之后对浮动式wm就再也提不起兴趣, 同时因为用了一阵子i3, 决定换个口味, 试试配一个awesome.</p>
 <p>dm用的是lightdm, greeter用了lightdm-webkit2-greeter(因为好看2333), 主题选择了<a href="https://github.com/Litarvan/lightdm-webkit-theme-litarvan" target="_blank">这一个</a>.</p>
 <p>终端模拟器用了alacritty, 主题选了<a href="https://github.com/dracula/alacritty" target="_blank">这一个</a></p>
-<!-- more -->
 <p>首先pacman一波操作(scrot可以在CLI下截图)</p>
 <pre><code class="language-bash">sudo pacman -S xorg compton scrot
 </code></pre>
@@ -148,7 +153,6 @@
 <p>最后放截图:</p>
 <p><img class="img-zoomable" src="https://i.loli.net/2020/01/28/23XRdTQwxc4mNol.png" alt="2020-01-28-203617_1920x1080_scrot.png" />
 </p>
-
     </div>
 </article>
 
@@ -607,20 +611,26 @@
     
 <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
 
 
 
 <script defer src="/assets/js/fuji.min.js"></script>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" />
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
-<script
-  defer
-  src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"
-  onload="renderMathInElement(document.body);"
-></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/auto-render.min.js"></script>
+<script>
+  renderMathInElement(document.querySelector('div.content'), {
+    delimiters: [
+      { left: '$$', right: '$$', display: true },
+      { left: '\\[', right: '\\]', display: true },
+      { left: '$', right: '$', display: false },
+      { left: '\\(', right: '\\)', display: false },
+    ],
+  });
+</script>
 
 
 

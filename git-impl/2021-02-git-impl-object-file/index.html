@@ -37,8 +37,12 @@
 <meta property="og:title" content="Git 实现: Object 文件" />
 <meta name="twitter:title" content="Git 实现: Object 文件" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.origami404.top/git-impl/2021-02-git-impl-object-file/" /><meta property="og:description" content="导读 本文先介绍了一些方便查看 Git Object 文件 二进制内容的命令行工具, 其次分别介绍了 4 种 Object: Blob, Commit, Tree, Tag. 每一种 Object 按&quot;概念模型&quot;与&quot;二进制格式&quot;分隔, 前者主要介绍其储存了那些抽象" />
-<meta name="twitter:description" content="导读 本文先介绍了一些方便查看 Git Object 文件 二进制内容的命令行工具, 其次分别介绍了 4 种 Object: Blob, Commit, Tree, Tag. 每一种 Object 按&quot;概念模型&quot;与&quot;二进制格式&quot;分隔, 前者主要介绍其储存了那些抽象" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
+<meta property="og:url" content="https://blog.origami404.top/git-impl/2021-02-git-impl-object-file/" /><meta property="og:description" content="导读
+本文先介绍了一些方便查看 Git Object 文件 二进制内容的命令行工具, 其次分别介绍了 4 种 Object: Blob, Commit, Tree, Tag.
+每一种 Object 按&quot;概念模型&quot;与&quot;二进制格式&quot;分隔, 前者主要介绍其储存了那些抽象信息, 后者则专注于其二进制储存格式." />
+<meta name="twitter:description" content="导读
+本文先介绍了一些方便查看 Git Object 文件 二进制内容的命令行工具, 其次分别介绍了 4 种 Object: Blob, Commit, Tree, Tag.
+每一种 Object 按&quot;概念模型&quot;与&quot;二进制格式&quot;分隔, 前者主要介绍其储存了那些抽象信息, 后者则专注于其二进制储存格式." /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://blog.origami404.top/img/og.png" /><meta property="article:published_time" content="2021-02-19T22:00:00+08:00" /><meta property="article:modified_time" content="2021-02-19T22:00:00+08:00" />
 
@@ -121,7 +125,6 @@
         <h2 id="导读">导读</h2>
 <p>本文先介绍了一些方便查看 Git Object 文件 二进制内容的命令行工具, 其次分别介绍了 4 种 Object: <code>Blob</code>, <code>Commit</code>, <code>Tree</code>, <code>Tag</code>.</p>
 <p>每一种 <code>Object</code> 按&quot;概念模型&quot;与&quot;二进制格式&quot;分隔, 前者主要介绍其储存了那些抽象信息, 后者则专注于其二进制储存格式.</p>
-<!-- more -->
 <h2 id="一些命令行工具">一些命令行工具</h2>
 <p>根据<a href="https://stackoverflow.com/a/28753259" target="_blank">SO上的一个回答</a>, 在 Bash 中定义以下函数:</p>
 <pre><code class="language-bash">zlipd() (printf &quot;\x1f\x8b\x08\x00\x00\x00\x00\x00&quot; |cat - $@ |gzip -dc 2&gt; /dev/null)
@@ -708,7 +711,6 @@ $ zlipd .git/objects/80/4d54e8fc16d18edccd6a8469e6584800e2c936 | xxd
 00000010: 2e74 7874 0081 c545 efeb e5f5 7d4c ab2b  .txt...E....}L.+
 00000020: a9ec 294c 4b0c adf6 72                   ..)LK...r
 </code></pre>
-
     </div>
 </article>
 
@@ -1245,20 +1247,26 @@ $ zlipd .git/objects/80/4d54e8fc16d18edccd6a8469e6584800e2c936 | xxd
     
 <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
 
 
 
 <script defer src="/assets/js/fuji.min.js"></script>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" />
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
-<script
-  defer
-  src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"
-  onload="renderMathInElement(document.body);"
-></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/auto-render.min.js"></script>
+<script>
+  renderMathInElement(document.querySelector('div.content'), {
+    delimiters: [
+      { left: '$$', right: '$$', display: true },
+      { left: '\\[', right: '\\]', display: true },
+      { left: '$', right: '$', display: false },
+      { left: '\\(', right: '\\)', display: false },
+    ],
+  });
+</script>
 
 
 

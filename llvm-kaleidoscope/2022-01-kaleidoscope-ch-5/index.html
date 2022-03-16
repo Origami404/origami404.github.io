@@ -37,8 +37,10 @@
 <meta property="og:title" content="LLVM Kaleidoscope 第 5 章 扩展语言：控制流" />
 <meta name="twitter:title" content="LLVM Kaleidoscope 第 5 章 扩展语言：控制流" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-5/" /><meta property="og:description" content="5.1 前言 欢迎来到 我的第一个基于 LLVM 的语言前端 教程第五章。前四章描述了一门简单语言的实现，生成 LLVM IR 并优化，随后即时编译到本地代码的过程。不幸的是，至少到目前为止，Kaleidoscope 还不堪大用：它没有控" />
-<meta name="twitter:description" content="5.1 前言 欢迎来到 我的第一个基于 LLVM 的语言前端 教程第五章。前四章描述了一门简单语言的实现，生成 LLVM IR 并优化，随后即时编译到本地代码的过程。不幸的是，至少到目前为止，Kaleidoscope 还不堪大用：它没有控" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
+<meta property="og:url" content="https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-5/" /><meta property="og:description" content="5.1 前言
+欢迎来到 我的第一个基于 LLVM 的语言前端 教程第五章。前四章描述了一门简单语言的实现，生成 LLVM IR 并优化，随后即时编译到本地代码的过程。不幸的是，至少到目前为止，Kaleidoscope 还不堪大用：它没有控制流结构 (除了函数调用与返回). 这意味着你不能用它写出带条件分支的代码，这显著地影响了 Kaleidoscope 的威力。在本章，我们将扩展 Kaleidoscope，使其支持 if/then/else 表达式和一个简单的 for 循环。" />
+<meta name="twitter:description" content="5.1 前言
+欢迎来到 我的第一个基于 LLVM 的语言前端 教程第五章。前四章描述了一门简单语言的实现，生成 LLVM IR 并优化，随后即时编译到本地代码的过程。不幸的是，至少到目前为止，Kaleidoscope 还不堪大用：它没有控制流结构 (除了函数调用与返回). 这意味着你不能用它写出带条件分支的代码，这显著地影响了 Kaleidoscope 的威力。在本章，我们将扩展 Kaleidoscope，使其支持 if/then/else 表达式和一个简单的 for 循环。" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://blog.origami404.top/img/og.png" /><meta property="article:published_time" content="2022-01-15T22:00:00+08:00" /><meta property="article:modified_time" content="2022-01-15T22:00:00+08:00" />
 
@@ -120,7 +122,6 @@
     <div class="post-content markdown-body">
         <h2 id="51-前言">5.1 前言</h2>
 <p>欢迎来到 <a href="/llvm-kaleidoscope/2022-01-kaleidoscope-ch-0">我的第一个基于 LLVM 的语言前端</a> 教程第五章。前四章描述了一门简单语言的实现，生成 LLVM IR 并优化，随后即时编译到本地代码的过程。不幸的是，至少到目前为止，Kaleidoscope 还不堪大用：它没有控制流结构 (除了函数调用与返回). 这意味着你不能用它写出带条件分支的代码，这显著地影响了 Kaleidoscope 的威力。在本章，我们将扩展 Kaleidoscope，使其支持 if/then/else 表达式和一个简单的 for 循环。</p>
-<!-- more -->
 <h2 id="52-ifthenelse">5.2 If/Then/Else</h2>
 <p>实现 if/then/else 比较简单。要做的事情主要是把这个&quot;新概念&quot; 教给 lexer, parser, AST 与 LLVM 中间代码生成器。本节同时也是一个极好的展示如何 &ldquo;养大&rdquo; 一门语言，用新点子扩展它的例子。</p>
 <p>在我们动手之前，先来看看讨论一下我们 <strong>想要</strong> 什么。我们想要的基本上就是这样：</p>
@@ -1590,7 +1591,6 @@ int main() {
   return 0;
 }
 </code></pre>
-
     </div>
 </article>
 
@@ -2087,20 +2087,26 @@ int main() {
     
 <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
 
 
 
 <script defer src="/assets/js/fuji.min.js"></script>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" />
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
-<script
-  defer
-  src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"
-  onload="renderMathInElement(document.body);"
-></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/auto-render.min.js"></script>
+<script>
+  renderMathInElement(document.querySelector('div.content'), {
+    delimiters: [
+      { left: '$$', right: '$$', display: true },
+      { left: '\\[', right: '\\]', display: true },
+      { left: '$', right: '$', display: false },
+      { left: '\\(', right: '\\)', display: false },
+    ],
+  });
+</script>
 
 
 

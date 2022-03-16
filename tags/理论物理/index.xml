@@ -13,7 +13,16 @@
       <pubDate>Fri, 31 Jan 2020 17:00:00 +0800</pubDate>
       
       <guid>https://blog.origami404.top/post/2020-01-basic-of-calculus-of-variations/</guid>
-      <description>在试卷现实生活中, 总是会碰到一些泛函上的最优化问题. 它们大多可以归为以下形式: 在函数集合 $$ \left{ x(t)\ | \ x(t_1) = y_1, x(t_2) = y_2, x^{(k)} 存在 \right} $$ 中, 求一个函数$x(t)$使得泛函$I[x(\centerdot)]$的积分: $$</description>
+      <description>&lt;p&gt;在&lt;del&gt;试卷&lt;/del&gt;现实生活中, 总是会碰到一些泛函上的最优化问题. 它们大多可以归为以下形式:&lt;/p&gt;
+&lt;p&gt;在函数集合&lt;/p&gt;
+&lt;p&gt;$$
+\left\{ x(t) \ \Big| \ x(t_1) = y_1, x(t_2) = y_2, x^{(k)} 存在 \right\}
+$$&lt;/p&gt;
+&lt;p&gt;中, 求一个函数 $x(t)$ 使得泛函 $I[x(\centerdot)]$ 的积分:&lt;/p&gt;
+&lt;p&gt;$$
+S = \int_{t_1}^{t_2} I[x, x&#39;, t] \ \mathrm{d}x
+$$&lt;/p&gt;
+&lt;p&gt;有极值.&lt;/p&gt;</description>
     </item>
     
   </channel>

@@ -37,8 +37,8 @@
 <meta property="og:title" content="Arch CLI工具 安装记录" />
 <meta name="twitter:title" content="Arch CLI工具 安装记录" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.origami404.top/linux-conf/2020-01-arch-install-cli/" /><meta property="og:description" content="接着上文, 记录一些常用的CLI工具 首先装sudo并新建用户 pacman -S sudo useradd -m -g wheel origami 安装一堆工具 pacman -S base-devel git cmake 装个v2ray并启动, ss实在太容易被ban了. proxychains可以通过替换动态链接库的方法来强迫" />
-<meta name="twitter:description" content="接着上文, 记录一些常用的CLI工具 首先装sudo并新建用户 pacman -S sudo useradd -m -g wheel origami 安装一堆工具 pacman -S base-devel git cmake 装个v2ray并启动, ss实在太容易被ban了. proxychains可以通过替换动态链接库的方法来强迫" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
+<meta property="og:url" content="https://blog.origami404.top/linux-conf/2020-01-arch-install-cli/" /><meta property="og:description" content="接着上文, 记录一些常用的CLI工具" />
+<meta name="twitter:description" content="接着上文, 记录一些常用的CLI工具" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://blog.origami404.top/img/og.png" /><meta property="article:published_time" content="2020-01-29T19:30:00+08:00" /><meta property="article:modified_time" content="2020-01-29T19:30:00+08:00" />
 
@@ -119,7 +119,6 @@
     
     <div class="post-content markdown-body">
         <p>接着<a href="../Arch%20%e5%ae%89%e8%a3%85%e8%ae%b0%e5%bd%95">上文</a>, 记录一些常用的CLI工具</p>
-<!-- more -->
 <p>首先装<code>sudo</code>并新建用户</p>
 <pre><code class="language-bash">pacman -S sudo 
 useradd -m -g wheel origami
@@ -141,7 +140,6 @@ systemctl start v2ray
 sh -c &quot;$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&quot;
 </code></pre>
 <p>CLI工具要配置的不多, 接下来就是<a href="../Arch%20GUI%20%e9%85%8d%e7%bd%ae">GUI工具</a>了</p>
-
     </div>
 </article>
 
@@ -592,20 +590,26 @@ sh -c &quot;$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/maste
     
 <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
 
 
 
 <script defer src="/assets/js/fuji.min.js"></script>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" />
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
-<script
-  defer
-  src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"
-  onload="renderMathInElement(document.body);"
-></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/auto-render.min.js"></script>
+<script>
+  renderMathInElement(document.querySelector('div.content'), {
+    delimiters: [
+      { left: '$$', right: '$$', display: true },
+      { left: '\\[', right: '\\]', display: true },
+      { left: '$', right: '$', display: false },
+      { left: '\\(', right: '\\)', display: false },
+    ],
+  });
+</script>
 
 
 

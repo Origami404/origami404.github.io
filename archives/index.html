@@ -157,7 +157,7 @@
   <div class="post-item post-meta-archive">
     <span><i class="iconfont icon-today-sharp"></i>&nbsp;2022-02-03</span>
 
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;6613 字</span>
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;6724 字</span>
 
 <span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E5%9F%9F%E5%90%8D">域名</a>&nbsp;<a href="/tags/https">HTTPS</a>&nbsp;<a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AE%A1%E7%90%86">服务器管理</a>&nbsp;<a href="/tags/docker">Docker</a>&nbsp;</span>
 
@@ -325,7 +325,7 @@
   <div class="post-item post-meta-archive">
     <span><i class="iconfont icon-today-sharp"></i>&nbsp;2021-09-27</span>
 
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;5291 字</span>
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;5294 字</span>
 
 <span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E6%95%B0%E5%AD%A6">数学</a>&nbsp;<a href="/tags/%E7%BA%BF%E4%BB%A3">线代</a>&nbsp;<a href="/tags/%E6%96%B0%E8%A7%82%E7%82%B9">新观点</a>&nbsp;</span>
 
@@ -493,7 +493,7 @@
   <div class="post-item post-meta-archive">
     <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-01-31</span>
 
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;1196 字</span>
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;1012 字</span>
 
 <span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E7%90%86%E8%AE%BA%E7%89%A9%E7%90%86">理论物理</a>&nbsp;<a href="/tags/%E5%8F%98%E5%88%86%E6%B3%95">变分法</a>&nbsp;</span>
 
@@ -1048,13 +1048,19 @@
 
 <script defer src="/assets/js/fuji.min.js"></script>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" />
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
-<script
-  defer
-  src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"
-  onload="renderMathInElement(document.body);"
-></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/auto-render.min.js"></script>
+<script>
+  renderMathInElement(document.querySelector('div.content'), {
+    delimiters: [
+      { left: '$$', right: '$$', display: true },
+      { left: '\\[', right: '\\]', display: true },
+      { left: '$', right: '$', display: false },
+      { left: '\\(', right: '\\)', display: false },
+    ],
+  });
+</script>
 
 
 

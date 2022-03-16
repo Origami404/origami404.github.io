@@ -13,7 +13,30 @@
       <pubDate>Sun, 13 Feb 2022 21:00:00 +0800</pubDate>
       
       <guid>https://blog.origami404.top/compiler-and-type-theory/2022-02-armv7-basic/</guid>
-      <description>总览 主要参考文章: https://thinkingeek.com/arm-assembler-raspberry-pi/ 绝大部分示例代码都是从此文章抄来的 这篇参考文章偏向于使用 ARM 汇编进行开发的入门, 期望读者水平为学过 C, 还教了一些算法啥的. 作者还有一本书, 200来页, 书比网站上的更加系统, 建议看书. 当</description>
+      <description>&lt;h2 id=&#34;总览&#34;&gt;总览&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;主要参考文章: &lt;a href=&#34;https://thinkingeek.com/arm-assembler-raspberry-pi/&#34; target=&#34;_blank&#34;&gt;https://thinkingeek.com/arm-assembler-raspberry-pi/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;绝大部分示例代码都是从此文章抄来的&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;这篇参考文章偏向于使用 ARM 汇编进行开发的入门, 期望读者水平为学过 C, 还教了一些算法啥的. 作者还有一本书, 200来页, 书比网站上的更加系统, 建议看书.&lt;/p&gt;
+&lt;p&gt;当然如果我写错了什么, 那当然是我的问题, 不关作者事.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这是一份对 ARMv7 汇编的急救指南, 目的是以最快速度提供 &amp;ldquo;实现一个 target 到 ARMv7 的 C 编译器&amp;rdquo; 所需要的 ARM 汇编知识. 本文章假设读者熟悉汇编语言与 C, 至少看过 CSAPP 的第 4 章, 并且了解一些编译技术.&lt;/p&gt;
+&lt;p&gt;本文章 &lt;strong&gt;没有&lt;/strong&gt; :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;任何对 &lt;strong&gt;不同模式&lt;/strong&gt; 的介绍与说明 (也就是只考虑 User 模式)&lt;/li&gt;
+&lt;li&gt;任何对 &lt;strong&gt;浮点运算&lt;/strong&gt; 的介绍与说明&lt;/li&gt;
+&lt;li&gt;对一些指令的完全介绍, 比如 ldm/stm&lt;/li&gt;
+&lt;li&gt;对规范的完整解释&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;本文章的介绍顺序大体按照那本书里的顺序, 为了方便查阅, 根据主题分类索引如下:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;总览 &amp;amp; 框架: &lt;a href=&#34;#%e5%9f%ba%e6%9c%ac%e6%9e%b6%e6%9e%84&#34;&gt;基本架构&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;寄存器: &lt;a href=&#34;#%e5%af%84%e5%ad%98%e5%99%a8&#34;&gt;寄存器&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;分支: &lt;a href=&#34;#%e5%88%86%e6%94%af-branching&#34;&gt;分支&lt;/a&gt;, &lt;a href=&#34;#%e5%ae%9e%e7%8e%b0%e6%8e%a7%e5%88%b6%e6%b5%81&#34;&gt;控制结构的翻译&lt;/a&gt;, &lt;a href=&#34;#%e6%9d%a1%e4%bb%b6%e6%89%a7%e8%a1%8c&#34;&gt;条件执行&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;内存与取址模式: &lt;a href=&#34;#%e5%86%85%e5%ad%98&#34;&gt;内存&lt;/a&gt;, &lt;a href=&#34;#%e6%9b%b4%e7%b4%a7%e5%87%91%e7%9a%84%e6%8c%87%e4%bb%a4--%e5%8f%96%e5%9d%80%e6%a8%a1%e5%bc%8f&#34;&gt;基本取址模式&lt;/a&gt;, &lt;a href=&#34;#%e6%95%b0%e7%bb%84%e4%b8%8e%e7%bb%93%e6%9e%84%e4%bd%93&#34;&gt;load/store 特有的取址&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;函数: &lt;a href=&#34;#%e5%87%bd%e6%95%b0&#34;&gt;函数, 但不含栈&lt;/a&gt;, &lt;a href=&#34;#%e6%a0%88&#34;&gt;函数, 但不含局部变量&lt;/a&gt;, &lt;a href=&#34;#%e5%b1%80%e9%83%a8%e5%8f%98%e9%87%8f&#34;&gt;函数, 齐活了&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;动手实践: &lt;a href=&#34;#gdb&#34;&gt;用 GDB 调试汇编程序&lt;/a&gt;, &lt;a href=&#34;#%e5%8a%a8%e6%89%8b%e8%bf%87%e7%a8%8b&#34;&gt;用 GCC 交叉编译 C 代码到 ARMv7 可执行文件并反编译&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
     </item>
     
   </channel>

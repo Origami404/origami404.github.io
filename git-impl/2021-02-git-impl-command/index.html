@@ -37,8 +37,10 @@
 <meta property="og:title" content="Git Command: Git 的数据使用方式" />
 <meta name="twitter:title" content="Git Command: Git 的数据使用方式" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.origami404.top/git-impl/2021-02-git-impl-command/" /><meta property="og:description" content="此文章施工中&hellip; 现在让我们来使用上面我们写好的 Git Object 来实现常用的 Git 命令吧. Spec 我们要实现的命令有这些: 创建仓库: $ git init [path] # [path]: 在 [path] 下创建一个包含必要目录结构的 .git 目录, 默认为 . (当前目录) 泛用 Object 文" />
-<meta name="twitter:description" content="此文章施工中&hellip; 现在让我们来使用上面我们写好的 Git Object 来实现常用的 Git 命令吧. Spec 我们要实现的命令有这些: 创建仓库: $ git init [path] # [path]: 在 [path] 下创建一个包含必要目录结构的 .git 目录, 默认为 . (当前目录) 泛用 Object 文" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
+<meta property="og:url" content="https://blog.origami404.top/git-impl/2021-02-git-impl-command/" /><meta property="og:description" content="此文章施工中&hellip;
+现在让我们来使用上面我们写好的 Git Object 来实现常用的 Git 命令吧." />
+<meta name="twitter:description" content="此文章施工中&hellip;
+现在让我们来使用上面我们写好的 Git Object 来实现常用的 Git 命令吧." /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://blog.origami404.top/img/og.png" /><meta property="article:published_time" content="2021-02-21T22:00:00+08:00" /><meta property="article:modified_time" content="2021-02-21T22:00:00+08:00" />
 
@@ -120,7 +122,6 @@
     <div class="post-content markdown-body">
         <p><strong>此文章施工中&hellip;</strong></p>
 <p>现在让我们来使用上面我们写好的 Git Object 来实现常用的 Git 命令吧.</p>
-<!-- more -->
 <h2 id="spec">Spec</h2>
 <p>我们要实现的命令有这些:</p>
 <h3 id="创建仓库">创建仓库:</h3>
@@ -145,7 +146,6 @@ ebf4a6068f1c4176bf8db06771445b4d994f2199
 # &lt;type&gt;: 按照类型输出 data 的原始内容
 # &lt;object&gt;: 可以唯一确定某个 Object 的指示符, 具体见下文
 </code></pre>
-
     </div>
 </article>
 
@@ -614,20 +614,26 @@ ebf4a6068f1c4176bf8db06771445b4d994f2199
     
 <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
 
 
 
 <script defer src="/assets/js/fuji.min.js"></script>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" />
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
-<script
-  defer
-  src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"
-  onload="renderMathInElement(document.body);"
-></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/auto-render.min.js"></script>
+<script>
+  renderMathInElement(document.querySelector('div.content'), {
+    delimiters: [
+      { left: '$$', right: '$$', display: true },
+      { left: '\\[', right: '\\]', display: true },
+      { left: '$', right: '$', display: false },
+      { left: '\\(', right: '\\)', display: false },
+    ],
+  });
+</script>
 
 
 

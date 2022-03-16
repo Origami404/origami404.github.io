@@ -13,7 +13,8 @@
       <pubDate>Thu, 03 Feb 2022 10:00:00 +0800</pubDate>
       
       <guid>https://blog.origami404.top/post/2022-02-domain-and-server-management/</guid>
-      <description>域名是什么? 域名 , Domain Name, 是一个可以写在 url 里的名字. 我们知道, 当下互联网上(同一个网络内)的实体是靠 IP 地址来唯一标识的. 完成域名到 IP 地址转换的系统称为 DNS. DNS 的主要构成部分是大大小小的 DNS 服务器. DNS 服务器接受客</description>
+      <description>&lt;p&gt;记录一下当我买了一个域名之后前前后后的折腾结果, 包含很多概论性的讲解, 应该对还没有配过 HTTPS 的小伙伴有一定的帮助.&lt;/p&gt;
+&lt;p&gt;本文的定位大概就是 &amp;ldquo;没吃过猪肉, 还没见过猪跑吗&amp;rdquo; 中的 &amp;ldquo;猪跑&amp;rdquo; 吧.&lt;/p&gt;</description>
     </item>
     
   </channel>

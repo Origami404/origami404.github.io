@@ -37,8 +37,20 @@
 <meta property="og:title" content="从外代数出发的行列式理论" />
 <meta name="twitter:title" content="从外代数出发的行列式理论" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.origami404.top/post/2021-09-determinant-begin-from-wedge-product/" /><meta property="og:description" content="前置 这篇文章有些前置知识我默认读者是知道的, 比如矢量和线性空间(wiki, 知乎)的概念. 具体来讲, 我希望读者能完全理解这句话: &ldquo;基底通过线性组合张成线性空间&rdquo;. 但更加重要的是," />
-<meta name="twitter:description" content="前置 这篇文章有些前置知识我默认读者是知道的, 比如矢量和线性空间(wiki, 知乎)的概念. 具体来讲, 我希望读者能完全理解这句话: &ldquo;基底通过线性组合张成线性空间&rdquo;. 但更加重要的是," /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
+<meta property="og:url" content="https://blog.origami404.top/post/2021-09-determinant-begin-from-wedge-product/" /><meta property="og:description" content="前置
+这篇文章有些前置知识我默认读者是知道的, 比如矢量和线性空间(wiki, 知乎)的概念. 具体来讲, 我希望读者能完全理解这句话: &ldquo;基底通过线性组合张成线性空间&rdquo;. 但更加重要的是, 我希望读者能够放开胆子, 接受并批判地思考与新的语言与概念. 文中有些地方我特意没有使用书本的符号, 为的就是让读者直接判断他自己到底是在跟着文章思路走还是靠课本里记下的结论硬看. 通过这篇文章, 我希望能有更多人开始 &ldquo;思考&rdquo; 和 &ldquo;创造&rdquo; 数学, 穿过数学高冷的表面, 看到数学定义背后的 &ldquo;动机&rdquo; 和 &ldquo;深意&rdquo;, 最终享受数学, 而不是只是跟着课本学点计算.
+要知道, 数学家也是人. 一旦你觉得有什么东西是反人类的, 它背后一定是有自己的逻辑. 这里的逻辑, 是数学定义背后数学家们思考的内在的直觉的人的逻辑, 而不完全是死的客观精准的数理逻辑.
+建议餐前食用: 3b1b: 发明新数学是怎样一种体验？
+餐后或餐中可以结合: 3b1b: 线性代数的本质
+比起纯粹的几何直观, 我更看重一种 &ldquo;符号上的直观&rdquo;, 也就是说, 你得把这一套数学符号, 当作与生俱来的, 自然的东西. 所谓直观学习, 不是把所有东西都归纳成你的 &ldquo;直观&rdquo;, 而是让你能把更多的东西变成你的直观.
+鸡汤灌得够多了, 让我们开始吧." />
+<meta name="twitter:description" content="前置
+这篇文章有些前置知识我默认读者是知道的, 比如矢量和线性空间(wiki, 知乎)的概念. 具体来讲, 我希望读者能完全理解这句话: &ldquo;基底通过线性组合张成线性空间&rdquo;. 但更加重要的是, 我希望读者能够放开胆子, 接受并批判地思考与新的语言与概念. 文中有些地方我特意没有使用书本的符号, 为的就是让读者直接判断他自己到底是在跟着文章思路走还是靠课本里记下的结论硬看. 通过这篇文章, 我希望能有更多人开始 &ldquo;思考&rdquo; 和 &ldquo;创造&rdquo; 数学, 穿过数学高冷的表面, 看到数学定义背后的 &ldquo;动机&rdquo; 和 &ldquo;深意&rdquo;, 最终享受数学, 而不是只是跟着课本学点计算.
+要知道, 数学家也是人. 一旦你觉得有什么东西是反人类的, 它背后一定是有自己的逻辑. 这里的逻辑, 是数学定义背后数学家们思考的内在的直觉的人的逻辑, 而不完全是死的客观精准的数理逻辑.
+建议餐前食用: 3b1b: 发明新数学是怎样一种体验？
+餐后或餐中可以结合: 3b1b: 线性代数的本质
+比起纯粹的几何直观, 我更看重一种 &ldquo;符号上的直观&rdquo;, 也就是说, 你得把这一套数学符号, 当作与生俱来的, 自然的东西. 所谓直观学习, 不是把所有东西都归纳成你的 &ldquo;直观&rdquo;, 而是让你能把更多的东西变成你的直观.
+鸡汤灌得够多了, 让我们开始吧." /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://blog.origami404.top/img/og.png" /><meta property="article:published_time" content="2021-09-27T19:30:00+08:00" /><meta property="article:modified_time" content="2021-09-27T19:30:00+08:00" />
 
@@ -111,7 +123,7 @@
     <div class="post-item post-meta">
         <span><i class="iconfont icon-today-sharp"></i>&nbsp;2021-09-27</span>
 
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;5291 字</span>
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;5294 字</span>
 
 <span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E6%95%B0%E5%AD%A6">数学</a>&nbsp;<a href="/tags/%E7%BA%BF%E4%BB%A3">线代</a>&nbsp;<a href="/tags/%E6%96%B0%E8%A7%82%E7%82%B9">新观点</a>&nbsp;</span>
 
@@ -125,7 +137,6 @@
 <p>餐后或餐中可以结合: <a href="https://www.bilibili.com/video/BV1ys411472E" target="_blank">3b1b: 线性代数的本质</a></p>
 <p>比起纯粹的几何直观, 我更看重一种 &ldquo;符号上的直观&rdquo;, 也就是说, 你得把这一套数学符号, 当作与生俱来的, 自然的东西. 所谓直观学习, 不是把所有东西都归纳成你的 &ldquo;直观&rdquo;, 而是让你能把更多的东西变成你的直观.</p>
 <p>鸡汤灌得够多了, 让我们开始吧.</p>
-<!-- more -->
 <h2 id="楔积">楔积</h2>
 <p>对一个 $n$ 维的空间, 什么是它里面一个&quot;几何体&quot;的&quot;体积&quot;呢?</p>
 <blockquote>
@@ -159,7 +170,7 @@
 <p>换句话讲, 我们让楔积是一个 <strong>双线性运算</strong>:</p>
 <p>$$
 \begin{aligned}
-(\alpha a + \beta b) \wedge c = \alpha (a \wedge c) + \beta (b \wedge c) \
+(\alpha a + \beta b) \wedge c = \alpha (a \wedge c) + \beta (b \wedge c) \\
 c \wedge (\alpha a + \beta b) = \alpha (c \wedge a) + \beta (c \wedge b)
 \end{aligned}
 $$</p>
@@ -180,51 +191,51 @@ $$</p>
 <p>$$
 \begin{aligned}
 a_1 \wedge a_2 \wedge a_3 &hellip; \wedge a_n
-&amp;=      (a_{11} e_1 + a_{12} e_2 + a_{13} e_3 + &hellip; + a_{1n} e_n) \
-&amp;\wedge (a_{21} e_1 + a_{22} e_2 + a_{23} e_3 + &hellip; + a_{2n} e_n) \
-&amp;\wedge (a_{31} e_1 + a_{32} e_2 + a_{33} e_3 + &hellip; + a_{3n} e_n) \
-&amp;&hellip;\
-&amp;\wedge (a_{n1} e_1 + a_{n2} e_2 + a_{n3} e_3 + &hellip; + a_{nn} e_n) \
+&amp;=      (a_{11} e_1 + a_{12} e_2 + a_{13} e_3 + &hellip; + a_{1n} e_n) \\
+&amp;\wedge (a_{21} e_1 + a_{22} e_2 + a_{23} e_3 + &hellip; + a_{2n} e_n) \\
+&amp;\wedge (a_{31} e_1 + a_{32} e_2 + a_{33} e_3 + &hellip; + a_{3n} e_n) \\
+&amp;&hellip;\\
+&amp;\wedge (a_{n1} e_1 + a_{n2} e_2 + a_{n3} e_3 + &hellip; + a_{nn} e_n) \\
 \end{aligned}
 $$</p>
 <p>根据乘法分配律, 我们理论上可以得到 $n^n$ 个项, 也就是说, 我们可以在第一行里的 $n$ 个分量里挑一个项, 第二行的 $n$ 个分量里挑一个项, 第三行&hellip;, 一直挑 $n$ 次.</p>
 <p>但是, 如果我们在挑元素的时候, 在不同的两行中挑中了同一列的分量(见下红色字的选法), 也就是说, 我们这一次挑出来乘起来的项里, 出现了一个 $e_i \wedge e_i$; 这样的话, 这一项就会变成 $0$, 相当于没有了, 所以我们在下面直接忽略这些项.</p>
 <p>$$
 \begin{aligned}
-&amp;\quad\ (\textcolor{red}{a_{11} e_1} + a_{12} e_2 + a_{13} e_3 + &hellip; + a_{1n} e_n) \
-&amp;\wedge (a_{21} e_1 + \textcolor{red}{a_{22} e_2} + a_{23} e_3 + &hellip; + a_{2n} e_n) \
-&amp;\wedge (a_{31} e_1 + \textcolor{red}{a_{32} e_2} + a_{33} e_3 + &hellip; + a_{3n} e_n) \
-&amp;&hellip;\
-&amp;\wedge (a_{n1} e_1 + a_{n2} e_2 + \textcolor{red}{a_{n3} e_3} + &hellip; + a_{nn} e_n) \
+&amp;\quad\ (\textcolor{red}{a_{11} e_1} + a_{12} e_2 + a_{13} e_3 + &hellip; + a_{1n} e_n) \\
+&amp;\wedge (a_{21} e_1 + \textcolor{red}{a_{22} e_2} + a_{23} e_3 + &hellip; + a_{2n} e_n) \\
+&amp;\wedge (a_{31} e_1 + \textcolor{red}{a_{32} e_2} + a_{33} e_3 + &hellip; + a_{3n} e_n) \\
+&amp;&hellip;\\
+&amp;\wedge (a_{n1} e_1 + a_{n2} e_2 + \textcolor{red}{a_{n3} e_3} + &hellip; + a_{nn} e_n) \\
 \end{aligned}
 $$</p>
 <p>我们在挑元素的时候干脆就直接挑不在同一列的元素就好了. 也就是说, 类似于<a href="https://zh.wikipedia.org/wiki/%E8%BB%8A_%28%E5%9C%8B%E9%9A%9B%E8%B1%A1%E6%A3%8B%29" target="_blank">往国际象棋盘上摆车</a>一样地选的话, 我们一共就能选出 $n!$ 这么多个项. 也就是说, 我们类似下面这样选:</p>
 <p>$$
 \begin{aligned}
-&amp;\quad\ (\textcolor{aqua}{a_{11} e_1} + a_{12} e_2 + a_{13} e_3 + &hellip; + a_{1n} e_n) \
-&amp;\wedge (a_{21} e_1 + \textcolor{aqua}{a_{22} e_2} + a_{23} e_3 + &hellip; + a_{2n} e_n) \
-&amp;\wedge (a_{31} e_1 + a_{32} e_2 + \textcolor{aqua}{a_{33} e_3} + &hellip; + a_{3n} e_n) \
-&amp;&hellip;\
-&amp;\wedge (a_{n1} e_1 + a_{n2} e_2 + a_{n3} e_3 + &hellip; + \textcolor{aqua}{a_{nn} e_n}) \
+&amp;\quad\ (\textcolor{aqua}{a_{11} e_1} + a_{12} e_2 + a_{13} e_3 + &hellip; + a_{1n} e_n) \\
+&amp;\wedge (a_{21} e_1 + \textcolor{aqua}{a_{22} e_2} + a_{23} e_3 + &hellip; + a_{2n} e_n) \\
+&amp;\wedge (a_{31} e_1 + a_{32} e_2 + \textcolor{aqua}{a_{33} e_3} + &hellip; + a_{3n} e_n) \\
+&amp;&hellip;\\
+&amp;\wedge (a_{n1} e_1 + a_{n2} e_2 + a_{n3} e_3 + &hellip; + \textcolor{aqua}{a_{nn} e_n}) \\
 \end{aligned}
 $$</p>
 <p>或者这样地:</p>
 <p>$$
 \begin{aligned}
-&amp;\quad\ (\textcolor{aqua}{a_{11} e_1} + a_{12} e_2 + a_{13} e_3 + &hellip; + a_{1n} e_n) \
-&amp;\wedge (a_{21} e_1 + a_{22} e_2 + \textcolor{aqua}{a_{23} e_3} + &hellip; + a_{2n} e_n) \
-&amp;\wedge (a_{31} e_1 + \textcolor{aqua}{a_{32} e_2} + a_{33} e_3 + &hellip; + a_{3n} e_n) \
-&amp;&hellip;\
-&amp;\wedge (a_{n1} e_1 + a_{n2} e_2 + a_{n3} e_3 + &hellip; + \textcolor{aqua}{a_{nn} e_n}) \
+&amp;\quad\ (\textcolor{aqua}{a_{11} e_1} + a_{12} e_2 + a_{13} e_3 + &hellip; + a_{1n} e_n) \\
+&amp;\wedge (a_{21} e_1 + a_{22} e_2 + \textcolor{aqua}{a_{23} e_3} + &hellip; + a_{2n} e_n) \\
+&amp;\wedge (a_{31} e_1 + \textcolor{aqua}{a_{32} e_2} + a_{33} e_3 + &hellip; + a_{3n} e_n) \\
+&amp;&hellip;\\
+&amp;\wedge (a_{n1} e_1 + a_{n2} e_2 + a_{n3} e_3 + &hellip; + \textcolor{aqua}{a_{nn} e_n}) \\
 \end{aligned}
 $$</p>
 <p>把它们按顺序来, 我们就能拿到下面的这些:</p>
 <p>$$
 \begin{aligned}
-&amp;\quad\ a_{11} a_{22} a_{33} &hellip; a_{nn} (e_1 \wedge e_2 \wedge e_3 \wedge &hellip; \wedge e_n) \
-&amp;+      a_{12} a_{21} a_{33} &hellip; a_{nn} (e_2 \wedge e_1 \wedge e_3 \wedge &hellip; \wedge e_n) \
-&amp;+      a_{11} a_{23} a_{32} &hellip; a_{nn} (e_1 \wedge e_3 \wedge e_2 \wedge &hellip; \wedge e_n) \
-&amp;&hellip; \
+&amp;\quad\ a_{11} a_{22} a_{33} &hellip; a_{nn} (e_1 \wedge e_2 \wedge e_3 \wedge &hellip; \wedge e_n) \\
+&amp;+      a_{12} a_{21} a_{33} &hellip; a_{nn} (e_2 \wedge e_1 \wedge e_3 \wedge &hellip; \wedge e_n) \\
+&amp;+      a_{11} a_{23} a_{32} &hellip; a_{nn} (e_1 \wedge e_3 \wedge e_2 \wedge &hellip; \wedge e_n) \\
+&amp;&hellip; \\
 &amp;+      a_{1n} a_{2 (n-1)} a_{3 (n-2)} &hellip; a_{n1} (e_n \wedge e_{n-1} \wedge e_{n-2} \wedge &hellip; \wedge e_1)
 \end{aligned}
 $$</p>
@@ -232,7 +243,7 @@ $$</p>
 <h3 id="转化为自然超平行体">转化为自然超平行体</h3>
 <p>我们来举个例子. 假如我们有一个单位体, 它跟自然体只差了一个相邻的 <strong>交换</strong>:</p>
 <p>$$
-e_1 \wedge \textcolor{aqua}{e_3 \wedge e_2} \wedge e_4 \wedge &hellip; \wedge e_n \
+e_1 \wedge \textcolor{aqua}{e_3 \wedge e_2} \wedge e_4 \wedge &hellip; \wedge e_n \\
 e_1 \wedge e_2 \wedge e_3 \wedge e_4 \wedge &hellip; \wedge e_n
 $$</p>
 <p>那么我们可以用<code>[反交换律]</code>把上面的单位体换成自然体:</p>
@@ -254,15 +265,15 @@ $$</p>
 <p>$$
 \begin{aligned}
 a_1 \wedge a_2 \wedge a_3 &hellip; \wedge a_n
-&amp;=      (a_{11} e_1 + a_{12} e_2 + a_{13} e_3 + &hellip; + a_{1n} e_n) \
-&amp;\wedge (a_{21} e_1 + a_{22} e_2 + a_{23} e_3 + &hellip; + a_{2n} e_n) \
-&amp;\wedge (a_{31} e_1 + a_{32} e_2 + a_{33} e_3 + &hellip; + a_{3n} e_n) \
-&amp;&hellip;\
-&amp;\wedge (a_{n1} e_1 + a_{n2} e_2 + a_{n3} e_3 + &hellip; + a_{nn} e_n) \
-&amp;= \sum_{p_1 p_2 p_3 &hellip; p_n} a_{1p1} a_{2p2} a_{3p3} &hellip; a_{np_n} (e_{p_1} \wedge e_{p_2} \wedge e_{p_3} \wedge &hellip; \wedge e_{p_n}) \
-&amp;= \sum_{p_1 p_2 p_3 &hellip; p_n} a_{1p1} a_{2p2} a_{3p3} &hellip; a_{np_n} (-1)^{\pi(p_1 p_2 p_3 &hellip; p_n)} (e_1 \wedge e_2 \wedge e_3 \wedge &hellip; \wedge e_n) \
-&amp;= \sum_{p_1 p_2 p_3 &hellip; p_n} (-1)^{\pi(p_1 p_2 p_3 &hellip; p_n)} a_{1p1} a_{2p2} a_{3p3} &hellip; a_{np_n} (e_1 \wedge e_2 \wedge e_3 \wedge &hellip; \wedge e_n) \</p>
-<p>\end{aligned}
+&amp;=      (a_{11} e_1 + a_{12} e_2 + a_{13} e_3 + &hellip; + a_{1n} e_n) \\
+&amp;\wedge (a_{21} e_1 + a_{22} e_2 + a_{23} e_3 + &hellip; + a_{2n} e_n) \\
+&amp;\wedge (a_{31} e_1 + a_{32} e_2 + a_{33} e_3 + &hellip; + a_{3n} e_n) \\
+&amp;&hellip;\\
+&amp;\wedge (a_{n1} e_1 + a_{n2} e_2 + a_{n3} e_3 + &hellip; + a_{nn} e_n) \\
+&amp;= \sum_{p_1 p_2 p_3 &hellip; p_n} a_{1p1} a_{2p2} a_{3p3} &hellip; a_{np_n} (e_{p_1} \wedge e_{p_2} \wedge e_{p_3} \wedge &hellip; \wedge e_{p_n}) \\
+&amp;= \sum_{p_1 p_2 p_3 &hellip; p_n} a_{1p1} a_{2p2} a_{3p3} &hellip; a_{np_n} (-1)^{\pi(p_1 p_2 p_3 &hellip; p_n)} (e_1 \wedge e_2 \wedge e_3 \wedge &hellip; \wedge e_n) \\
+&amp;= \sum_{p_1 p_2 p_3 &hellip; p_n} (-1)^{\pi(p_1 p_2 p_3 &hellip; p_n)} a_{1p1} a_{2p2} a_{3p3} &hellip; a_{np_n} (e_1 \wedge e_2 \wedge e_3 \wedge &hellip; \wedge e_n) \\
+\end{aligned}
 $$</p>
 <p>第一个等号是对 $a_i$ 按分量展开; 第二个等号就是上面说的 &ldquo;选分量&rdquo; 的过程(我们暂时从上往下按行选, 在行里选列, 于是 $p_i$ 就代表了我们在第 $i$ 行选了哪一列); 第三个等号是我们上面说的&quot;把单位体换自然体&quot;; 第四个等号是把$(-1)$挪到前面使得式子好看. 于是最终, 我们从有向体积出发, 得到了行列式的书本定义.</p>
 <blockquote>
@@ -278,8 +289,8 @@ $$</p>
 <p>我们现在先来习惯一下一些符号:</p>
 <p>$$
 \begin{aligned}
-A &amp;= \bigwedge_{i=1}^{n} a_i \
-&amp;= \bigwedge_{i=1}^{n} \sum_{j=1}^{n} a_{ij} e_j \
+A &amp;= \bigwedge_{i=1}^{n} a_i \\
+&amp;= \bigwedge_{i=1}^{n} \sum_{j=1}^{n} a_{ij} e_j \\
 &amp;= \sum_{\forall p} (-1)^{\pi(p)} \prod_{p_i \in p} a_{i p_i} (\bigwedge_{i=1}^n e_i)
 \end{aligned}
 $$</p>
@@ -296,17 +307,17 @@ $$</p>
 <p>因此我们有:</p>
 <p>$$
 \begin{aligned}
-A &amp;= \bigwedge_{i=1}^{n} a_i \
-&amp;= (-1)^{\pi(q)} \bigwedge_{q_i \in q} a_{q_i} \
-&amp;= (-1)^{\pi(q)} \bigwedge_{q_i \in q} \sum_{j=1}^n a_{q_i j} e_j \
-&amp;= (-1)^{\pi(q)} \sum_{\forall p} (-1)^{\pi(p)} \prod_{\substack{p_i \in p\q_i \in q}} a_{q_i p_i} (\bigwedge_{i=1}^n e_i) \
-&amp;= \sum_{\forall p} (-1)^{\pi(q) + \pi(p)} \prod_{\substack{p_i \in p\q_i \in q}} a_{q_i p_i} (\bigwedge_{i=1}^n e_i) \
+A &amp;= \bigwedge_{i=1}^{n} a_i \\
+&amp;= (-1)^{\pi(q)} \bigwedge_{q_i \in q} a_{q_i} \\
+&amp;= (-1)^{\pi(q)} \bigwedge_{q_i \in q} \sum_{j=1}^n a_{q_i j} e_j \\
+&amp;= (-1)^{\pi(q)} \sum_{\forall p} (-1)^{\pi(p)} \prod_{\substack{p_i \in p\ q_i \in q}} a_{q_i p_i} (\bigwedge_{i=1}^n e_i) \\
+&amp;= \sum_{\forall p} (-1)^{\pi(q) + \pi(p)} \prod_{\substack{p_i \in p\ q_i \in q}} a_{q_i p_i} (\bigwedge_{i=1}^n e_i) \\
 \end{aligned}
 $$</p>
 <p>上式中, 第一个等号是定义展开, 第二个等号是把行换成你想要的顺序, 第三个等号是分量展开, 第四个等号是选完分量之后, 第五个等号是把 $(-1)^{\pi(q)}$ 乘进求和号里面并跟里面原来有的$(-1)^{\pi(p)}$ 合并.</p>
 <p>所以我们有课本里头广义的行列式定义: 对任意<strong>你选定的$q$</strong>, 我们有:</p>
 <p>$$
-D_n = \sum_{\forall p} (-1)^{\pi(q) + \pi(p)} \prod_{\substack{p_i \in p\q_i \in q}} a_{q_i p_i}
+D_n = \sum_{\forall p} (-1)^{\pi(q) + \pi(p)} \prod_{\substack{p_i \in p\ q_i \in q}} a_{q_i p_i}
 $$</p>
 <p>行列式的初等变换有:</p>
 <ul>
@@ -330,45 +341,45 @@ $$</p>
 
 $$
 \begin{pmatrix}
-    a_{11} \\
-    a_{12} \\
-    a_{13} \\
-    .\\
-    .\\
-    .\\
-    a_{1n}\\
+    a_{11} \\\\
+    a_{12} \\\\
+    a_{13} \\\\
+    .\\\\
+    .\\\\
+    .\\\\
+    a_{1n}\\\\
 \end{pmatrix}
 \wedge
 \begin{pmatrix}
-    a_{21} \\
-    a_{22} \\
-    a_{23} \\
-    .\\
-    .\\
-    .\\
-    a_{2n}\\
+    a_{21} \\\\
+    a_{22} \\\\
+    a_{23} \\\\
+    .\\\\
+    .\\\\
+    .\\\\
+    a_{2n}\\\\
 \end{pmatrix}
 \wedge
 \begin{pmatrix}
-    a_{31} \\
-    a_{32} \\
-    a_{33} \\
-    .\\
-    .\\
-    .\\
-    a_{3n}\\
+    a_{31} \\\\
+    a_{32} \\\\
+    a_{33} \\\\
+    .\\\\
+    .\\\\
+    .\\\\
+    a_{3n}\\\\
 \end{pmatrix}
 \wedge
 ...
 \wedge
 \begin{pmatrix}
-    a_{n1} \\
-    a_{n2} \\
-    a_{n3} \\
-    .\\
-    .\\
-    .\\
-    a_{nn}\\
+    a_{n1} \\\\
+    a_{n2} \\\\
+    a_{n3} \\\\
+    .\\\\
+    .\\\\
+    .\\\\
+    a_{nn}\\\\
 \end{pmatrix}
 $$ -->
 <h3 id="转置-1">转置</h3>
@@ -384,7 +395,6 @@ $$ -->
 <p>大学水课多了, 于是就开始写了.</p>
 <p>另一个灵感来自于一本神奇的书: <a href="https://book.douban.com/subject/26651221/" target="_blank">线性代数的几何意义</a>. 这本书全书全是各种图图图, 讲解了很多线代相关对象的几何意义, 但可能是篇幅所限, 它 <strong>并没有解释为什么这些几何意义能跟对象的代数形式联系到一块</strong>, 它只是告诉你, 这些性质可以从几何直观来理解, 这我觉得是不够的.</p>
 <p>咕咕咕</p>
-
     </div>
 </article>
 
@@ -885,20 +895,26 @@ $$ -->
     
 <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
 
 
 
 <script defer src="/assets/js/fuji.min.js"></script>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" />
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
-<script
-  defer
-  src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"
-  onload="renderMathInElement(document.body);"
-></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/auto-render.min.js"></script>
+<script>
+  renderMathInElement(document.querySelector('div.content'), {
+    delimiters: [
+      { left: '$$', right: '$$', display: true },
+      { left: '\\[', right: '\\]', display: true },
+      { left: '$', right: '$', display: false },
+      { left: '\\(', right: '\\)', display: false },
+    ],
+  });
+</script>
 
 
 

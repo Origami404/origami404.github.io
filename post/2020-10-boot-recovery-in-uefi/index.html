@@ -37,8 +37,10 @@
 <meta property="og:title" content="UEFI下的引导恢复" />
 <meta name="twitter:title" content="UEFI下的引导恢复" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.origami404.top/post/2020-10-boot-recovery-in-uefi/" /><meta property="og:description" content="背景 想调整一下分区大小, 结果一不小心删掉了 ESP&hellip; 前置知识 ESP, 全称EFI System Partition, 是一个在物理硬盘主分区表上的特殊分区, 它: 是 FAT 格式的; (可以是 FAT16/FAT32 ) 与操作系统无关, 而是 UEFI 固件用来寻找引导器的存储空间 一般分区表会使用" />
-<meta name="twitter:description" content="背景 想调整一下分区大小, 结果一不小心删掉了 ESP&hellip; 前置知识 ESP, 全称EFI System Partition, 是一个在物理硬盘主分区表上的特殊分区, 它: 是 FAT 格式的; (可以是 FAT16/FAT32 ) 与操作系统无关, 而是 UEFI 固件用来寻找引导器的存储空间 一般分区表会使用" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
+<meta property="og:url" content="https://blog.origami404.top/post/2020-10-boot-recovery-in-uefi/" /><meta property="og:description" content="背景
+想调整一下分区大小, 结果一不小心删掉了 ESP&hellip;" />
+<meta name="twitter:description" content="背景
+想调整一下分区大小, 结果一不小心删掉了 ESP&hellip;" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://blog.origami404.top/img/og.png" /><meta property="article:published_time" content="2020-10-31T23:22:00+08:00" /><meta property="article:modified_time" content="2020-10-31T23:22:00+08:00" />
 
@@ -120,7 +122,6 @@
     <div class="post-content markdown-body">
         <h2 id="背景">背景</h2>
 <p>想调整一下分区大小, 结果一不小心删掉了 ESP&hellip;</p>
-<!-- more -->
 <h2 id="前置知识">前置知识</h2>
 <p>ESP, 全称EFI System Partition, 是一个在物理硬盘主分区表上的特殊分区, 它:</p>
 <ul>
@@ -155,7 +156,6 @@ grub-mkconfig -o /boot/grub/grub.cfg
 </ol>
 <h2 id="最后">最后</h2>
 <p>祈祷并重启. 完好的系统又回来啦.</p>
-
     </div>
 </article>
 
@@ -624,20 +624,26 @@ grub-mkconfig -o /boot/grub/grub.cfg
     
 <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
 
 
 
 <script defer src="/assets/js/fuji.min.js"></script>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" />
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
-<script
-  defer
-  src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"
-  onload="renderMathInElement(document.body);"
-></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/auto-render.min.js"></script>
+<script>
+  renderMathInElement(document.querySelector('div.content'), {
+    delimiters: [
+      { left: '$$', right: '$$', display: true },
+      { left: '\\[', right: '\\]', display: true },
+      { left: '$', right: '$', display: false },
+      { left: '\\(', right: '\\)', display: false },
+    ],
+  });
+</script>
 
 
 
