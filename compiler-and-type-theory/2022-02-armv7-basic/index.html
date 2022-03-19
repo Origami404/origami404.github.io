@@ -191,7 +191,7 @@
 <h2 id="基本架构">基本架构</h2>
 <h3 id="第一个程序--如何运行">第一个程序 &amp; 如何运行</h3>
 <p>下面是一个返回值为 <code>2</code> 的简单的汇编程序：</p>
-<pre><code class="language-arm">/* -- first.s */
+<pre><code class="language-armasm">/* -- first.s */
 /* 这是注释 */
 .global main   /* 一个程序的入口(entry) 必须是全局的(global) */
 .func main     /* 标记 label ’main’ 为一个函数  */
@@ -226,7 +226,7 @@ rm $1.o
 <p>它们的英文是 label: instruction parameters comments</p>
 </blockquote>
 <p>它们全都是可选的, 不一定都会出现. 特别地, 只有单独标号的一行将标号绑定到下一行, 这样子就可以将多个标号绑定到同一行上:</p>
-<pre><code class="language-arm">A:  mov r0, #1 /* 标号 A 绑定到这条指令 */
+<pre><code class="language-armasm">A:  mov r0, #1 /* 标号 A 绑定到这条指令 */
 B: 
     mov r0, #2 /* 标号 B 绑定到这条指令 */
 C:
@@ -249,7 +249,7 @@ E:
 </ul>
 <p>关于 <code>fp</code>, 一般是 <code>r11</code>, 但是官方貌似没有指定, 我看到的也有用 <code>r7</code> 的, 所以你随便挑一个就好了.</p>
 <p>下面的例子展示了寄存器的基本用法:</p>
-<pre><code class="language-arm">/* -- sum01.s */
+<pre><code class="language-armasm">/* -- sum01.s */
 .global main
 
 main:
@@ -265,14 +265,14 @@ main:
 <p>当从内存读/存数据时, 地址的计算方式(即取址模式, addressing mode)有很多种, 本章只介绍一种: 通过寄存器取址.</p>
 <p>汇编里的标号实质上被实现为这行汇编代码对应的二进制码在可执行文件里的地址. 所以我们可以把标号当作 &ldquo;地址的立即数&rdquo; 来看.</p>
 <p>我们可以使用汇编器指令来申请大块内存:</p>
-<pre><code class="language-arm">.balign 4       @ 对齐到 4 字节, Byte ALIGN
+<pre><code class="language-armasm">.balign 4       @ 对齐到 4 字节, Byte ALIGN
 myvar1:         @ 标号, 接下来就可以通过该标号获得数据的地址
     .word 3     @ 留出 1 个 &quot;word&quot; 的空白 (32bit) 并将其设为补码 3
 </code></pre>
 <p>程序的数据一般会跟代码分开放在内存的不同区域(节, section). 使用 <code>.data</code> 让汇编器把下面的东西放在数据节(data section)里, 使用 <code>.text</code> 让汇编器把下面的东西放在代码节(text section)里.</p>
 <h3 id="load">Load</h3>
 <p>下面的程序定义两个内存中的变量 <code>myvar1</code> 和 <code>myvar2</code>, 分别赋予其初始值 3 和 4, 然后取其值, 相加, 返回作为错误码.</p>
-<pre><code class="language-arm">/* -- load01.s */
+<pre><code class="language-armasm">/* -- load01.s */
 
 /* -- Data section */
 .data
@@ -451,7 +451,7 @@ Continuing.
 <p>改变 pc 的值的过程称为分支(Branching). 中文一般也叫跳转, 虽然跳转对应的英文应该是 jump.</p>
 <h3 id="无条件跳转">无条件跳转</h3>
 <p>单独使用 <code>b &lt;label&gt;</code> 指令来进行无条件跳转.</p>
-<pre><code class="language-arm">/* -- branch01.s */
+<pre><code class="language-armasm">/* -- branch01.s */
 .text
 .global main
 main:
@@ -559,7 +559,7 @@ end:
 </tbody>
 </table>
 <p>上面的这些缩写可以拿来跟 <code>b</code> 指令组合变成 <code>bXX</code> 指令, 例如下面这个程序:</p>
-<pre><code class="language-arm">/* -- compare01.s */
+<pre><code class="language-armasm">/* -- compare01.s */
 .text
 .global main
 main:
@@ -581,7 +581,7 @@ end:
 <p>更优的实现(具有更少跳转语句)参见龙书</p>
 </blockquote>
 <h3 id="ifthenelse">if/then/else</h3>
-<pre><code class="language-arm">if_eval: 
+<pre><code class="language-armasm">if_eval: 
     /* 求值条件, 并根据条件生成 cmp */
 bXX else /* 合适的 bXX 用于跳转 */
 then_part: 
@@ -593,7 +593,7 @@ end_of_if:
 </code></pre>
 <p>具体实现与短路的实现可以看龙书.</p>
 <h3 id="while">while</h3>
-<pre><code class="language-arm">while_condition: 
+<pre><code class="language-armasm">while_condition: 
     /* 生成条件 E */
     bXX end_of_loop  /* 如果 E 是假的, 跳转 */
     /* 生成循环体 */
@@ -640,14 +640,14 @@ step:
 <li><code>ROR #n/Rsource3</code>: 向右旋转, 类似 <code>LSR</code>, 但右 n 位被推到左 n 位去</li>
 </ul>
 <p>举几个例子:</p>
-<pre><code class="language-arm">mov r1, r2, LSL #1      @ r1 &lt;- (r2*2)
+<pre><code class="language-armasm">mov r1, r2, LSL #1      @ r1 &lt;- (r2*2)
 mov r1, r2, LSL #2      @ r1 &lt;- (r2*4)
 mov r1, r3, ASR #3      @ r1 &lt;- (r3/8)
 mov r3, #4
 mov r1, r2, LSL r3      @ r1 &lt;- (r2*16)
 </code></pre>
 <p>更复杂的乘法:</p>
-<pre><code class="language-arm">add r1, r2, r2, LSL #1      @ r1 &lt;- r2 + (r2*2) equivalent to r1 &lt;- r1*3
+<pre><code class="language-armasm">add r1, r2, r2, LSL #1      @ r1 &lt;- r2 + (r2*2) equivalent to r1 &lt;- r1*3
 add r1, r2, r2, LSL #2      @ r1 &lt;- r2 + (r2*4) equivalent to r1 &lt;- r1*5
 sub r1, r2, r2, LSL #3      /* r1 &lt;- r2 - (r2*8) equivalent to r1 &lt;- r2*(-7) */
 rsb r1, r2, r2, LSL #3      /* r1 &lt;- (r2*8) - r2 equivalent to r1 &lt;- r2*7 */
@@ -664,7 +664,7 @@ struct my_struct {
 } b;
 char s[] = &quot;This is a string&quot;;
 </code></pre>
-<pre><code class="language-arm">/* -- array01.s */
+<pre><code class="language-armasm">/* -- array01.s */
 .data
 a:
     .skip 400       @ 预留 400 byte 的内存空间, 即 sizeof(a)
@@ -683,7 +683,7 @@ S:
 </ol>
 <p>其中 (1) 适合类似 <code>a[N]</code>, <code>N</code> 为常数的索引, 也适合于结构体里取成员. (3) 适合于 <code>a[i]</code>, <code>i</code> 是变量的索引. 假如 <code>a</code> 是 i32 类型的数组, 那么只要 <code>[a, i, LSL #4]</code> 就可以了.</p>
 <p>例子:</p>
-<pre><code class="language-arm">str r2, [r1, #+12]          @ *(r1 + 12) &lt;- r2
+<pre><code class="language-armasm">str r2, [r1, #+12]          @ *(r1 + 12) &lt;- r2
 str r2, [r1, +r3]           @ *(r1 + r3) &lt;- r2
 str r2, [r1, +r2, LSL #2]   @ *(r1 + r2*4) &lt;- r2
 </code></pre>
@@ -694,7 +694,7 @@ str r2, [r1, +r2, LSL #2]   @ *(r1 + r2*4) &lt;- r2
 }
 </code></pre>
 <p>如果正常地按照字面意思来翻译的话, 我们会翻译成这样:</p>
-<pre><code class="language-arm">/* 假设 r0 存了 a 的首地址, r1 存了 n 的值 */
+<pre><code class="language-armasm">/* 假设 r0 存了 a 的首地址, r1 存了 n 的值 */
 /* 用 r2 来当 i */
 
 mov r2, #0
@@ -709,7 +709,7 @@ loop:
 loop_end:
 </code></pre>
 <p>但是仔细想想, 我们并不需要每一次访问元素都算一次地址, 我们可能可以这样实现:</p>
-<pre><code class="language-arm">/* 假设 r0 一开始存了 a 的首地址, r1 存了 n 的值 */
+<pre><code class="language-armasm">/* 假设 r0 一开始存了 a 的首地址, r1 存了 n 的值 */
 
 mov r2, #0
 loop:
@@ -769,7 +769,7 @@ loop_end:
 <h3 id="返回值">返回值</h3>
 <p>对于 32bit 的基础类型, 比如 C 的 char, short, int, long, 返回值存于 <code>r0</code>; 对于 64 位的基础类型, 返回值存于 <code>r0</code> 与 <code>r1</code>; 对于其他任何长度大于 32 bit 的类型, 返回值存于栈上.</p>
 <h3 id="实例-hello-world-调用-c-标准库函数">实例: Hello World (调用 C 标准库函数)</h3>
-<pre><code class="language-arm">/* -- hello01.s */
+<pre><code class="language-armasm">/* -- hello01.s */
 .data
 
 greeting:
@@ -809,7 +809,7 @@ address_of_return: .word return
 </ul>
 <p>在 Linux ARM 上, 栈向低地址方向增长.</p>
 <p>入栈/出栈理论上的操作如下:</p>
-<pre><code class="language-arm">sub sp, sp, #8  /* sp ← sp - 8. 扩大当前栈帧 8 byte */
+<pre><code class="language-armasm">sub sp, sp, #8  /* sp ← sp - 8. 扩大当前栈帧 8 byte */
 str lr, [sp]    /* *sp ← lr */
 ... // 函数的其他代码 ...
 ldr lr, [sp]    /* lr ← *sp */
@@ -818,14 +818,14 @@ add sp, sp, #8  /* sp ← sp + 8. /* 减小当前栈帧 8 byte
 bx lr
 </code></pre>
 <p>使用索引模式, 代码简化如下:</p>
-<pre><code class="language-arm">str lr, [sp, #-8]!  /* preindex: sp ← sp - 8; *sp ← lr */
+<pre><code class="language-armasm">str lr, [sp, #-8]!  /* preindex: sp ← sp - 8; *sp ← lr */
 ... // Code of the function
 ldr lr, [sp], #+8   /* postindex; lr ← *sp; sp ← sp + 8 */
 bx lr
 </code></pre>
 <h3 id="阶乘程序">阶乘程序</h3>
 <p>下面的程序实现了阶乘:</p>
-<pre><code class="language-arm">/* -- factorial01.s */
+<pre><code class="language-armasm">/* -- factorial01.s */
 .data
 
 message1: .asciz &quot;Type a number: &quot;
@@ -897,13 +897,13 @@ address_of_format: .word format
 <p>GNU as 给我们提供了两个助记符: <code>push {r4, lr}</code> 与 <code>pop {r4, lr}</code></p>
 <h2 id="条件执行">条件执行</h2>
 <p>对大部分指令, 在它后面加条件后缀(<code>eq</code>, <code>ne</code>, &hellip;)即可:</p>
-<pre><code class="language-arm">mp r2, #0                   @ Compare r2 and 0
+<pre><code class="language-armasm">mp r2, #0                   @ Compare r2 and 0
 moveq r1, r1, ASR #1        @ if r2 == 0, r1 &lt;- r1 &gt;&gt; 1. [r1 &lt;- r1/2]
 addne r1, r1, r1, LSL #1    @ if r2 != 0, r1&lt;-r1+(r1&lt;&lt;1). [r1 &lt;- 3*r1]
 addne r1, r1, #1            @ if r2 != 0, r1 &lt;- r1 + 1
 </code></pre>
 <p>需要注意的是, 一般的指令并不会改变 cpsr 的状态, 只有 <code>cmp</code> 跟加了后缀 <code>s</code> 的指令会改变 cpsr.</p>
-<pre><code class="language-arm">/* for (int i = 100 ; i &gt;= 0; i--) */
+<pre><code class="language-armasm">/* for (int i = 100 ; i &gt;= 0; i--) */
 mov r1, #100
 loop:
     /* do something */
@@ -981,7 +981,7 @@ arm-linux-gnueabihf-objdump -drwCS arm_stackframe.armv7.O0.o &gt; arm_stackframe
 <blockquote>
 <p>参数解释参见: <a href="https://stackoverflow.com/a/1289907" target="_blank">https://stackoverflow.com/a/1289907</a></p>
 </blockquote>
-<pre><code class="language-arm">
+<pre><code class="language-armasm">
 arm_stackframe.armv7.O0.o:     file format elf32-littlearm
 
 
@@ -1030,7 +1030,7 @@ Disassembly of section .text:
 
 </code></pre>
 <p>顺带一提 <code>O1</code> 优化的版本如下:</p>
-<pre><code class="language-arm">
+<pre><code class="language-armasm">
 arm_stackframe.armv7.O1.o:     file format elf32-littlearm
 
 
