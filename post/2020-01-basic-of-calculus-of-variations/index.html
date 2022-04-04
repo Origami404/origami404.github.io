@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta http-equiv="Cache-Control" content="no-transform" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-<meta name="generator" content="Hugo 0.92.2" />
+<meta name="generator" content="Hugo 0.95.0" />
 
 
 
@@ -44,7 +44,7 @@ $$
 $$
 中, 求一个函数 $x(t)$ 使得泛函 $I[x(\centerdot)]$ 的积分:
 $$
-S = \int_{t_1}^{t_2} I[x, x&#39;, t] \ \mathrm{d}x
+S = \int_{t_1}^{t_2} I[x, x&rsquo;, t] \ \mathrm{d}x
 $$
 有极值." />
 <meta name="twitter:description" content="在试卷现实生活中, 总是会碰到一些泛函上的最优化问题. 它们大多可以归为以下形式:
@@ -54,7 +54,7 @@ $$
 $$
 中, 求一个函数 $x(t)$ 使得泛函 $I[x(\centerdot)]$ 的积分:
 $$
-S = \int_{t_1}^{t_2} I[x, x&#39;, t] \ \mathrm{d}x
+S = \int_{t_1}^{t_2} I[x, x&rsquo;, t] \ \mathrm{d}x
 $$
 有极值." /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -143,10 +143,10 @@ $$
 $$</p>
 <p>中, 求一个函数 $x(t)$ 使得泛函 $I[x(\centerdot)]$ 的积分:</p>
 <p>$$
-S = \int_{t_1}^{t_2} I[x, x', t] \ \mathrm{d}x
+S = \int_{t_1}^{t_2} I[x, x&rsquo;, t] \ \mathrm{d}x
 $$</p>
 <p>有极值.</p>
-<p>我们知道, 一个连续函数 $x(t)$ 的在某个值 $t$ 有极值的必要条件是 $x'(t) = 0$, 这被称为<a href="https://zh.wikipedia.org/wiki/%E8%B4%B9%E9%A9%AC%E5%BC%95%E7%90%86" target="_blank">费马引理</a> (强烈建议先去看看它的证明, 其证明的思想有助于理解下文).</p>
+<p>我们知道, 一个连续函数 $x(t)$ 的在某个值 $t$ 有极值的必要条件是 $x&rsquo;(t) = 0$, 这被称为<a href="https://zh.wikipedia.org/wiki/%E8%B4%B9%E9%A9%AC%E5%BC%95%E7%90%86" target="_blank">费马引理</a> (强烈建议先去看看它的证明, 其证明的思想有助于理解下文).</p>
 <p>那么对于泛函, 这个必要条件是什么呢?</p>
 <p>在微积分中, 我们的一般思考方法是取极值附近的一个微元 $\mathrm{d}x$, 然后利用函数的连续性去取得极值的必要条件, 在泛函中我们能否也去考虑一个极值函数附近的<strong>某种&quot;微元&quot;</strong>, 即对于对应极值函数的一个小小的偏移函数, 借此来研究极值函数符合的条件呢?</p>
 <p>我们来(随便)构造一个函数 $\mathrm{\eta}(t)$, 令其连续且存在 $k$ 次导数, 并且还要在两端点为 $0$, 不妨令:</p>
@@ -161,25 +161,25 @@ $$</p>
 <p>既然我们都已经有偏移函数了, 不妨引入一个实数 $\alpha$, 它能控制&quot;偏移的量&quot;, 这就把泛函的偏移归结为实数的偏移,然后我们就能用费马引理愉快(?)地玩耍了.</p>
 <p>我们先随便找一个函数 $x_0$, 并令它偏移一下变成 $x = x_0 + \alpha \eta$, 然后我们的 $S$ 就从一个<strong>关于 $x$ 的泛函</strong>变成了一个<strong>关于 $\alpha$ 的函数</strong>:</p>
 <p>$$
-S(\alpha) = \int_{t_1}^{t_2} I[x_0 + \alpha \mathrm{\eta}, x_0' + \alpha \mathrm{\eta}, t]\ \mathrm{d}t
+S(\alpha) = \int_{t_1}^{t_2} I[x_0 + \alpha \mathrm{\eta}, x_0&rsquo; + \alpha \mathrm{\eta}, t]\ \mathrm{d}t
 $$</p>
 <p>当这个函数 $S(\alpha)$ 有极值时我们必有: $\mathrm{d}S/\mathrm{d}\alpha = 0$. 我们对 $\alpha$ 求导, 有:</p>
 <p>$$
-\frac{\mathrm{d}S}{\mathrm{d}\alpha} = \int_{t_1}^{t_2} \frac{\mathrm{d}}{\mathrm{d}\alpha} I[x_0 + \alpha \mathrm{\eta}, x_0' + \alpha \mathrm{\eta}, t] \ \mathrm{d}t
+\frac{\mathrm{d}S}{\mathrm{d}\alpha} = \int_{t_1}^{t_2} \frac{\mathrm{d}}{\mathrm{d}\alpha} I[x_0 + \alpha \mathrm{\eta}, x_0&rsquo; + \alpha \mathrm{\eta}, t] \ \mathrm{d}t
 $$</p>
 <p>利用多元函数的全微分, 有:</p>
 <p>$$
-\frac{\mathrm{d}I}{\mathrm{d}\alpha} = \frac{\partial I}{\partial x} \frac{\mathrm{d}x}{\mathrm{d}\alpha} + \frac{\partial I}{\partial x'} \frac{\mathrm{d}x'}{\mathrm{d}\alpha} + \frac{\partial I}{\partial t} \frac{\mathrm{d}t}{\mathrm{d}\alpha}
+\frac{\mathrm{d}I}{\mathrm{d}\alpha} = \frac{\partial I}{\partial x} \frac{\mathrm{d}x}{\mathrm{d}\alpha} + \frac{\partial I}{\partial x&rsquo;} \frac{\mathrm{d}x&rsquo;}{\mathrm{d}\alpha} + \frac{\partial I}{\partial t} \frac{\mathrm{d}t}{\mathrm{d}\alpha}
 $$</p>
 <p>注意到最后一项中 $t$ 并不依赖于 $\alpha$, 所以原式化为:</p>
 <p>$$
 \frac{\mathrm{d} S}{\mathrm{d} \alpha}
 = \int_{t_1}^{t_2} \left(
 \frac{\partial I}{\partial x} \eta
-+ \frac{\partial I}{\partial x'} \eta'
++ \frac{\partial I}{\partial x&rsquo;} \eta&rsquo;
 \right) \ \mathrm{d} t
 $$</p>
-<p>我们想办法把 $\eta$ 凑出来, 由 $\eta$ 的任意性逼着搞出某个玩意为0. 什么玩意能把 $\eta'$ 变成 $\eta$ 呢? 当然是我们可爱的分部积分. 于是我们把第二项拉出来分部积一下:</p>
+<p>我们想办法把 $\eta$ 凑出来, 由 $\eta$ 的任意性逼着搞出某个玩意为0. 什么玩意能把 $\eta&rsquo;$ 变成 $\eta$ 呢? 当然是我们可爱的分部积分. 于是我们把第二项拉出来分部积一下:</p>
 
 $$\int_{t_1}^{t_2} \frac{\partial I}{\partial x&#39;} \eta&#39;
   = \frac{\partial I}{\partial x&#39;} \eta \big|^{t_2}_{t_1}
@@ -205,15 +205,15 @@ $$\int_{t_1}^{t_2} \left(
 
 <p>由 $\eta$ 的任意性, 我们就必有:</p>
 <p>$$
-\frac{\partial I}{\partial x}  - \frac{\mathrm{d}}{\mathrm{d}t} \frac{\partial I}{\partial x'} = 0
+\frac{\partial I}{\partial x}  - \frac{\mathrm{d}}{\mathrm{d}t} \frac{\partial I}{\partial x&rsquo;} = 0
 $$</p>
 <p>综上, 当函数 $x$ 使得</p>
 <p>$$
-S = \int_{t_1}^{t_2} I[x, x', t]\ \mathrm{d}x
+S = \int_{t_1}^{t_2} I[x, x&rsquo;, t]\ \mathrm{d}x
 $$</p>
 <p>有极值时, 此函数必然满足:</p>
 <p>$$
-\frac{\partial I}{\partial x} - \frac{\mathrm{d}}{\mathrm{d}t} \frac{\partial I}{\partial x'} = 0
+\frac{\partial I}{\partial x} - \frac{\mathrm{d}}{\mathrm{d}t} \frac{\partial I}{\partial x&rsquo;} = 0
 $$</p>
 <p>此条件称为<strong>欧拉-拉格朗日方程</strong>.</p>
     </div>

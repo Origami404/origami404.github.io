@@ -43,10 +43,10 @@
     
     <item>
       <title>LLVM Kaleidoscope 第 -1 章 翻译者的话</title>
-      <link>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-1/</link>
+      <link>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch--1/</link>
       <pubDate>Sat, 15 Jan 2022 22:00:00 +0800</pubDate>
       
-      <guid>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-1/</guid>
+      <guid>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch--1/</guid>
       <description>&lt;p&gt;本教程原文于 &lt;a href=&#34;https://llvm.org/docs/tutorial/&#34; target=&#34;_blank&#34;&gt;LLVM Tutorial&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;网上现见有一些翻译：&lt;/p&gt;
 &lt;ul&gt;

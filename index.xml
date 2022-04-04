@@ -115,10 +115,10 @@
     
     <item>
       <title>LLVM Kaleidoscope 第 -1 章 翻译者的话</title>
-      <link>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-1/</link>
+      <link>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch--1/</link>
       <pubDate>Sat, 15 Jan 2022 22:00:00 +0800</pubDate>
       
-      <guid>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-1/</guid>
+      <guid>https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch--1/</guid>
       <description>&lt;p&gt;本教程原文于 &lt;a href=&#34;https://llvm.org/docs/tutorial/&#34; target=&#34;_blank&#34;&gt;LLVM Tutorial&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;网上现见有一些翻译：&lt;/p&gt;
 &lt;ul&gt;
@@ -407,7 +407,7 @@ Anbox puts the Android operating system into a container, abstracts hardware acc
 $$&lt;/p&gt;
 &lt;p&gt;中, 求一个函数 $x(t)$ 使得泛函 $I[x(\centerdot)]$ 的积分:&lt;/p&gt;
 &lt;p&gt;$$
-S = \int_{t_1}^{t_2} I[x, x&#39;, t] \ \mathrm{d}x
+S = \int_{t_1}^{t_2} I[x, x&amp;rsquo;, t] \ \mathrm{d}x
 $$&lt;/p&gt;
 &lt;p&gt;有极值.&lt;/p&gt;</description>
     </item>

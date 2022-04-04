@@ -20,7 +20,7 @@
 $$&lt;/p&gt;
 &lt;p&gt;中, 求一个函数 $x(t)$ 使得泛函 $I[x(\centerdot)]$ 的积分:&lt;/p&gt;
 &lt;p&gt;$$
-S = \int_{t_1}^{t_2} I[x, x&#39;, t] \ \mathrm{d}x
+S = \int_{t_1}^{t_2} I[x, x&amp;rsquo;, t] \ \mathrm{d}x
 $$&lt;/p&gt;
 &lt;p&gt;有极值.&lt;/p&gt;</description>
     </item>
