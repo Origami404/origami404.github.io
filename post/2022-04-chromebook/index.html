@@ -22,7 +22,7 @@
 <meta name="theme-color" content="#ffffff" />
 
 
-<title>我阅读网文的信息熵速率 - Origami404 的 Blog</title>
+<title>HP Chromebook 13G1 刷机记录 - Origami404 的 Blog</title>
 
 
 <meta name="author" content="Origami404" />
@@ -31,14 +31,18 @@
 <meta name="description" content="有空的话就随便逛逛吧 www" />
 
 
+<meta name="keywords" content="折腾, 刷机, 我会熟练地安装xxx系列" />
 
-<meta property="og:title" content="我阅读网文的信息熵速率" />
-<meta name="twitter:title" content="我阅读网文的信息熵速率" />
+
+<meta property="og:title" content="HP Chromebook 13G1 刷机记录" />
+<meta name="twitter:title" content="HP Chromebook 13G1 刷机记录" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.origami404.top/post/2020-03-entropy-rate-of-novel/" /><meta property="og:description" content="最近身体不适, 于是荒废了很多时间来看网文, 现在看完了来无聊来测测我的阅读速率. 以此掩盖我看小说摸鱼 21 小时的事实" />
-<meta name="twitter:description" content="最近身体不适, 于是荒废了很多时间来看网文, 现在看完了来无聊来测测我的阅读速率. 以此掩盖我看小说摸鱼 21 小时的事实" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
+<meta property="og:url" content="https://blog.origami404.top/post/2022-04-chromebook/" /><meta property="og:description" content="前言
+拿到 Chromebook, 我直接到手就&hellip; 才怪! 我体验了原版 ChromeOS 一两个月, 作为网课机还是很香的. 不过为了自由跟折腾, 我还是决定来刷一个 Debian. 下面是我的刷机记录." />
+<meta name="twitter:description" content="前言
+拿到 Chromebook, 我直接到手就&hellip; 才怪! 我体验了原版 ChromeOS 一两个月, 作为网课机还是很香的. 不过为了自由跟折腾, 我还是决定来刷一个 Debian. 下面是我的刷机记录." /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://blog.origami404.top/img/og.png" /><meta property="article:published_time" content="2022-03-19T22:30:25+08:00" /><meta property="article:modified_time" content="2022-03-19T22:30:25+08:00" />
+<meta name="twitter:image" content="https://blog.origami404.top/img/og.png" /><meta property="article:published_time" content="2022-04-20T01:13:06+00:00" /><meta property="article:modified_time" content="2022-04-20T01:13:06+00:00" />
 
 
 <style>
@@ -104,49 +108,110 @@
 <article>
     
     <h2 class="post-item post-title">
-        <a href="https://blog.origami404.top/post/2020-03-entropy-rate-of-novel/">我阅读网文的信息熵速率</a>
+        <a href="https://blog.origami404.top/post/2022-04-chromebook/">HP Chromebook 13G1 刷机记录</a>
     </h2>
     <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2022-03-19</span>
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2022-04-20</span>
 
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;397 字</span>
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;1620 字</span>
 
-<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;无标签</span>
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E6%8A%98%E8%85%BE">折腾</a>&nbsp;<a href="/tags/%E5%88%B7%E6%9C%BA">刷机</a>&nbsp;<a href="/tags/%E6%88%91%E4%BC%9A%E7%86%9F%E7%BB%83%E5%9C%B0%E5%AE%89%E8%A3%85xxx%E7%B3%BB%E5%88%97">我会熟练地安装xxx系列</a>&nbsp;</span>
 
     </div>
     
     <div class="post-content markdown-body">
-        <p>最近身体不适, 于是荒废了很多时间来看网文, 现在看完了来无聊来测测我的阅读速率. <del>以此掩盖我看小说摸鱼 21 小时的事实</del></p>
-<h2 id="基本情况数据">基本情况/数据</h2>
-<p>小说本身:</p>
+        <h2 id="前言">前言</h2>
+<p>拿到 Chromebook, 我直接到手就&hellip; 才怪! 我体验了原版 ChromeOS 一两个月, 作为网课机还是很香的. 不过为了自由跟折腾, 我还是决定来刷一个 Debian. 下面是我的刷机记录.</p>
+<h2 id="开启-chromeos-的开发者模式">开启 ChromeOS 的开发者模式</h2>
+<p>根据 Google 搜索的第一个结果, 按如下步骤即可开启开发者模式:</p>
+<p><strong>开启开发者模式会清除 ChromeOS 所有的数据, 请提前做好备份</strong></p>
+<ul>
+<li>启动 Chromebook</li>
+<li>同时按住 Esc, 刷新键跟电源键, 直到屏幕变化</li>
+<li>当屏幕上出现 &ldquo;Chrome OS is missing or damaged. Please insert USB stick&rdquo; 提示时, 按 Ctrl+D</li>
+<li>如果有其他提示的话, 按 Enter</li>
+<li>设备会自动重启并启动 Chromebook 初始设置</li>
+<li>当开机遇到白屏提示 &ldquo;OS verification is off&rdquo; 时, 按 Ctrl+D 跳过即可</li>
+</ul>
+<p>参考: <a href="https://www.xda-developers.com/how-to-turn-on-chrome-os-developer-mode/" target="_blank">https://www.xda-developers.com/how-to-turn-on-chrome-os-developer-mode/</a></p>
+<h2 id="解除-hardware-write-protect">解除 Hardware Write Protect</h2>
+<p>如果你像我一样并不知道这个是什么的话, 顺着网上的教程, 你可能会直接快进到第三步, 然后得到一个报错:</p>
+<pre><code>Hardware write-protect enabled, cannot flash Full ROM firmware.
+</code></pre>
 <blockquote>
-<p>大小单位均为 byte</p>
+<p>图来自视频</p>
 </blockquote>
+<p><img class="img-zoomable" src="https://user-images.githubusercontent.com/29816865/164576831-f42ee301-a497-445a-9262-98aee9de1bbd.png" alt="提示图" />
+</p>
+<p>根据 MrChromebox Wiki 上的说法, 根据产出时间的不同, 解除 Hardware WP 的方法大体上有三种:</p>
 <ul>
-<li>阅读的小说: 彩虹之门 重生之超级战舰</li>
-<li>GBK 编码大小: 6,812,306 (lzma 压缩后: 2,235,155)</li>
-<li>UTF-8 编码大小: 10,173,587 (lzma 压缩后: 2,348,648)</li>
-<li>字数: 中文字符 2967369, 非空白字符 3284508, 总字符 3451021</li>
+<li>通过一个跳线/开关解除: 这适用于 2013 Chromebook Pixel 之前的设备 (2012 - 2013)</li>
+<li>通过扭开一个螺丝解除: Pre-CR50 设备 (2014 - 2017), 包括所有的 Haswell, Broadwell, Baytrail, Skylake, Braswell 架构的设备</li>
+<li>通过拔掉电池启动或是 <code>CCD</code> 命令行工具解除: CR50 设备 (2017 - now), 包括所有的 Kabylake, Apollolake 架构的设备</li>
 </ul>
-<p>我的阅读速度:</p>
+<p>HP Chromebook 13 g1 (13g1) 不够新也不够旧, 要采用第二种方法解除. 具体的拆机流程可以参照参考里视频, 这里给出文字描述版.</p>
+<p>首先长按电源键 <strong>关闭电源</strong> (安全第一!), 然后把 Chromebook 翻到背面, 撕掉两条防滑条. 要注意防滑条是两层的, 一层橡胶垫一层黑色的有点脆的纸, 撕开一端时注意看看那层纸有没有被一起弄起来. 撕开之后能看到五个隐藏的螺丝(貌似是上三下二, 一个五个). 然后扭开外面的六个螺丝, 把背板撬开, 就能看到 Chromebook 的里面了.</p>
+<p><img class="img-zoomable" src="https://user-images.githubusercontent.com/29816865/164577752-b848b313-fa47-4d61-bb0f-104f69a7c4ea.png" alt="螺丝位置" />
+</p>
+<p>随后在标注位置找到所谓的 &ldquo;Hardware write-protect screw&rdquo;, 扭开之后, 随便找个地方放好扭出来的螺丝即可.</p>
+<p><img class="img-zoomable" src="https://user-images.githubusercontent.com/29816865/164577760-2a05ebc8-d94d-4207-ae42-3f59bfa7c7db.png" alt="螺丝位置" />
+</p>
+<p>然后再把底盖盖回去就完事了. 运气好的话防滑垫还能粘回去, 不过一般会发生因为撕防滑垫导致防滑垫发生塑性形变, 变长一点点, 从而塞不下原来的框框里, 导致防滑垫两边凸出来的惨剧 :(</p>
+<p>参考:</p>
 <ul>
-<li>该书在我的阅读器上共有 4301 页</li>
-<li>我的平均阅读速度是 200 页每小时</li>
+<li>拆机视频: <a href="https://www.youtube.com/watch?v=GLSyBENA9W8" target="_blank">https://www.youtube.com/watch?v=GLSyBENA9W8</a></li>
+<li>MrChromebox Wiki: <a href="https://wiki.mrChromebox.tech/Firmware_Write_Protect" target="_blank">https://wiki.mrChromebox.tech/Firmware_Write_Protect</a></li>
 </ul>
-<p>根据<a href="https://zhuanlan.zhihu.com/p/89958871" target="_blank">此知乎文章</a>中提到的数据, 中文字平均信息熵为 9.53, 那么计算得到:</p>
+<h2 id="刷入第三方-uefi-固件">刷入第三方 UEFI 固件</h2>
+<p>请出大名鼎鼎的 <a href="https://mrchromebox.tech/" target="_blank">MrChromebox</a>.</p>
+<p>按 Ctrl+Alt+T, 打开 crosh. 输入 shell 进入 shell, 随后以 <strong>非 root 用户</strong> (不过一般都不是 root 啦) 执行如下命令:</p>
+<pre><code class="language-sh">cd; curl -LO mrchromebox.tech/firmware-util.sh &amp;&amp; sudo bash firmware-util.sh
+</code></pre>
+<p>如果产生了一个 &rsquo;noexec&rsquo; 错误, 那么就执行下面的三行版本 (把脚本移到了 <code>/usr/local/bin</code> 并且设了 755 权限):</p>
+<pre><code class="language-sh">cd; curl -LO mrchromebox.tech/firmware-util.sh
+sudo install -Dt /usr/local/bin -m 755 firmware-util.sh
+sudo firmware-util.sh
+</code></pre>
+<p>如果报了一些证书错误之类的 (certificate related errors), 那么在 curl 里加入 <code>-k</code> 参数来略过 SSL 证书检查.</p>
+<pre><code class="language-sh">cd; curl -LOk mrchromebox.tech/firmware-util.sh &amp;&amp; sudo bash firmware-util.sh
+</code></pre>
+<p>脚本下载成功并执行之后, 如同上面的提示图在选单里选 2 刷入新的 UEFI 固件即可.</p>
+<p><strong>刷入之后将不能再启动 ChromeOS, 请提前做好备份</strong></p>
+<blockquote>
+<p>当然你在刷完之后的系统里再运行这个脚本, 然后刷回原版 BIOS, 然后再刷回 ChromeOS, 就能回到咕噜咕噜的怀抱了.</p>
+</blockquote>
+<h2 id="安装想要装的系统">安装想要装的系统</h2>
+<p>直接按正常的装系统的方式装系统就可以了, 跟其他电脑一模一样.</p>
+<p>系统推荐:</p>
 <ul>
-<li>平均中文字数阅读速度: 138 千字每小时, 或者 38.33 字每秒, 或者 365.29 bit/s</li>
-<li>平均字数阅读速度: 153 千字每小时, 或者 42.5 字每秒, 或者 (假设空白标点与中文同信息熵) 406.3 bit/s</li>
-<li>平均 GBK 阅读速度: 309 KiB/h, 或者 88.0 byte/s, 或者 704.0 bit/s</li>
-<li>平均 UTF-8 阅读速度: 462 KiB/h, 或者 131.4 byte/s, 或者 1051.3 bit/s</li>
-<li>平均 lzma 压缩阅读速度(总量取两种编码平均值): 104 KiB/h, 或者 29.6 byte/s, 或者 236.8 bit/s</li>
+<li>ChromeOS, 原装正版</li>
+<li>GalliumOS, 一个为 Chromebook 设备设计的轻量级 Linux 发行版. 基于 Xubuntu 制作, 采用xfce桌面环境, 与 ChromeOS 在界面上相仿</li>
+<li>FydeOS, 国产 ChromeOS, 据说做了不少本地化工作</li>
+<li>Debian, 好!</li>
 </ul>
-<h2 id="感想">感想</h2>
-<ul>
-<li>这小说真好看</li>
-<li>我目前阅读速度应该取 365.3 bit/s 比较合适</li>
-<li>也许可以每隔五年测量一下网文阅读速度以获得信息接受速度与年龄的关系?</li>
-</ul>
+<p>系统 <strong>不</strong> 推荐: Windows</p>
+<p>我直接盲选 Debian + Xfce4 桌面.</p>
+<h2 id="声卡驱动">声卡驱动</h2>
+<p>在努力翻了一个横跨五年, 整整 500 楼的 <a href="https://github.com/GalliumOS/galliumos-distro/issues/379" target="_blank">issue</a> 之后, 我找到了修好声卡驱动的方法.</p>
+<p>具体步骤跟此 issue 中的 <a href="https://github.com/GalliumOS/galliumos-distro/issues/379#issuecomment-652747113" target="_blank">此层</a> 以及其 <a href="https://github.com/GalliumOS/galliumos-distro/issues/379#issuecomment-651564026" target="_blank">引用层</a> 大体相同:</p>
+<p>首先下载两个 zip, 分别是驱动跟配置文件: <a href="https://github.com/GalliumOS/galliumos-distro/files/4849695/dfw_sst.bin.zip" target="_blank">dfw_sst.bin.zip</a>, <a href="https://github.com/GalliumOS/galliumos-distro/files/4849677/sklnau8825adi.zip" target="_blank">sklnau8825adi.zip</a></p>
+<p>然后解压出来 <code>dfw_sst.bin</code> 跟一个文件夹 <code>sklnau8825adi</code>, 执行下面的命令:</p>
+<pre><code class="language-sh">sudo cp dfw_sst.bin /lib/firmware/intel
+sudo ln -s dsp_fw_release_v969.bin dsp_fw_release.bin
+sudo cp -r sklnau8825adi /usr/share/alsa/ucm2
+</code></pre>
+<p>然后编辑 <code>/etc/default/grub</code>, 在 <code>GRUB_CMDLINE_LINUX_DEFAULT</code> 配置项中增加 <code>intel_iommu=off</code>, 然后执行:</p>
+<pre><code>sudo update-grub
+</code></pre>
+<p>基本上就是有人去 ChromeOS 里把驱动抓了出来(<code>dfw_sst.bin</code>), 然后又写好了给 pulseaudio 的配置文件(<code>sklnau8825adi</code>). 经过测试之后又发现这个驱动跟牙膏厂的 iommu 冲突了, 然后就加个内核启动参数. 一番折腾就差不多了.</p>
+<p>重启之后, 在面板里点音量的小喇叭图标打开混音器配置, 配置里修改对应的 &ldquo;侧写&rdquo;(为啥叫这名啊 ?_? ) 应该就能把声音导到扬声器/耳机里了.</p>
+<p><img class="img-zoomable" src="https://user-images.githubusercontent.com/29816865/164580801-da3e225b-096c-4144-8a7a-b9de28221fe9.png" alt="&amp;ldquo;侧写&amp;rdquo;" />
+</p>
+<p>比如像上图那样就是扬声器出声.</p>
+<p>如果执行了上面的步骤还是不行的话, 可以试试这个 Repo: <a href="https://github.com/windirt/chromebook_sound" target="_blank">https://github.com/windirt/chromebook_sound</a>, 不过这个 repo 看起来很玄学就是了.</p>
+<h2 id="总结">总结</h2>
+<p>Debian 香! 折腾了这一套下来终于刷到 Dabian 了. 续航跟 ChromeOS 差不多(甚至还久点), 只要不装到 SD Card 上就可以正常休眠 (SD Card 休眠的时候有几率被硬件 umount), 虽然 32 G 有点小, 不过基本也够用了, 远程开发还是爽的.</p>
+<p><del>那么现在来做被我推后好几天的作业吧 XD</del></p>
     </div>
 </article>
 
@@ -262,6 +327,10 @@
             </span>
             
             <span>
+                <a href="/tags/%E5%88%B7%E6%9C%BA/">刷机</a>
+            </span>
+            
+            <span>
                 <a href="/tags/%E5%8F%98%E5%88%86%E6%B3%95/">变分法</a>
             </span>
             
@@ -358,8 +427,13 @@
     <div class="sidebar-item sidebar-toc">
         <h3>目录</h3><nav id="TableOfContents">
   <ul>
-    <li><a href="#基本情况数据">基本情况/数据</a></li>
-    <li><a href="#感想">感想</a></li>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#开启-chromeos-的开发者模式">开启 ChromeOS 的开发者模式</a></li>
+    <li><a href="#解除-hardware-write-protect">解除 Hardware Write Protect</a></li>
+    <li><a href="#刷入第三方-uefi-固件">刷入第三方 UEFI 固件</a></li>
+    <li><a href="#安装想要装的系统">安装想要装的系统</a></li>
+    <li><a href="#声卡驱动">声卡驱动</a></li>
+    <li><a href="#总结">总结</a></li>
   </ul>
 </nav></div>
 </aside>
@@ -478,6 +552,10 @@
             </span>
             
             <span>
+                <a href="/tags/%E5%88%B7%E6%9C%BA/">刷机</a>
+            </span>
+            
+            <span>
                 <a href="/tags/%E5%8F%98%E5%88%86%E6%B3%95/">变分法</a>
             </span>
             
@@ -578,8 +656,13 @@
         <h3>目录</h3>
         <nav id="TableOfContents">
   <ul>
-    <li><a href="#基本情况数据">基本情况/数据</a></li>
-    <li><a href="#感想">感想</a></li>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#开启-chromeos-的开发者模式">开启 ChromeOS 的开发者模式</a></li>
+    <li><a href="#解除-hardware-write-protect">解除 Hardware Write Protect</a></li>
+    <li><a href="#刷入第三方-uefi-固件">刷入第三方 UEFI 固件</a></li>
+    <li><a href="#安装想要装的系统">安装想要装的系统</a></li>
+    <li><a href="#声卡驱动">声卡驱动</a></li>
+    <li><a href="#总结">总结</a></li>
   </ul>
 </nav>
     </div>

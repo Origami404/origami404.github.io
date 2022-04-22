@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>我会熟练地安装xxx系列 on Origami404 的 Blog</title>
-    <link>https://blog.origami404.top/tags/%E6%88%91%E4%BC%9A%E7%86%9F%E7%BB%83%E5%9C%B0%E5%AE%89%E8%A3%85xxx%E7%B3%BB%E5%88%97/</link>
-    <description>Recent content in 我会熟练地安装xxx系列 on Origami404 的 Blog</description>
+    <title>刷机 on Origami404 的 Blog</title>
+    <link>https://blog.origami404.top/tags/%E5%88%B7%E6%9C%BA/</link>
+    <description>Recent content in 刷机 on Origami404 的 Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 20 Apr 2022 01:13:06 +0000</lastBuildDate><atom:link href="https://blog.origami404.top/tags/%E6%88%91%E4%BC%9A%E7%86%9F%E7%BB%83%E5%9C%B0%E5%AE%89%E8%A3%85xxx%E7%B3%BB%E5%88%97/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 20 Apr 2022 01:13:06 +0000</lastBuildDate><atom:link href="https://blog.origami404.top/tags/%E5%88%B7%E6%9C%BA/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>HP Chromebook 13G1 刷机记录</title>
       <link>https://blog.origami404.top/post/2022-04-chromebook/</link>
@@ -28,28 +28,6 @@
 &lt;p&gt;在刷机的过程中, 我参考了很多教程, 发现刷机的方法简直多姿多彩, 很多教程走的路都不同. 于是我决定总结一下各种刷机方法的 &amp;ldquo;路径交汇点&amp;rdquo;, 并且在分享本人刷机路径的同时尝试描述其他的可选项, 让读者在将本文与其他教程交叉参阅时心中有数.&lt;/p&gt;
 &lt;p&gt;鉴于我初学路由器刷机不过三天, 出错或偏颇恐怕在所难免, 欢迎大佬发邮件指正.&lt;/p&gt;
 &lt;p&gt;本文假设读者具有基本的 Linux 与计算机网络知识.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Win10下Haskell开发环境的配置</title>
-      <link>https://blog.origami404.top/post/2020-04-haskell-dev-in-win10/</link>
-      <pubDate>Tue, 14 Apr 2020 22:00:00 +0800</pubDate>
-      
-      <guid>https://blog.origami404.top/post/2020-04-haskell-dev-in-win10/</guid>
-      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
-&lt;p&gt;时隔半年再次开始学&lt;code&gt;Haskell&lt;/code&gt;, 然后在配环境中度过了一个哭笑不得的下午&amp;hellip;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Win10重装与MSR分区</title>
-      <link>https://blog.origami404.top/post/2020-04-win10-and-msr/</link>
-      <pubDate>Wed, 08 Apr 2020 09:45:00 +0800</pubDate>
-      
-      <guid>https://blog.origami404.top/post/2020-04-win10-and-msr/</guid>
-      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
-&lt;p&gt;大概1月底, 辣鸡win10的更新就更不上去了, 然后我折腾了好久&amp;hellip;包括各种系统检查啊手动安装啊, 无果. 最后在3月决定干脆删了重装&amp;hellip;&lt;/p&gt;
-&lt;p&gt;重装过程中遇到了大大小小的问题, 写个文章记录一下.&lt;/p&gt;
-&lt;p&gt;&lt;del&gt;3月的事拖到4月写, 咕咕咕实锤&lt;/del&gt;&lt;/p&gt;</description>
     </item>
     
   </channel>

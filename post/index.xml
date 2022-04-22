@@ -6,13 +6,47 @@
     <description>Recent content in Posts on Origami404 的 Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 19 Mar 2022 22:30:25 +0800</lastBuildDate><atom:link href="https://blog.origami404.top/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 20 Apr 2022 01:13:06 +0000</lastBuildDate><atom:link href="https://blog.origami404.top/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>HP Chromebook 13G1 刷机记录</title>
+      <link>https://blog.origami404.top/post/2022-04-chromebook/</link>
+      <pubDate>Wed, 20 Apr 2022 01:13:06 +0000</pubDate>
+      
+      <guid>https://blog.origami404.top/post/2022-04-chromebook/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;拿到 Chromebook, 我直接到手就&amp;hellip; 才怪! 我体验了原版 ChromeOS 一两个月, 作为网课机还是很香的. 不过为了自由跟折腾, 我还是决定来刷一个 Debian. 下面是我的刷机记录.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>红米 AC2100 刷机记录</title>
+      <link>https://blog.origami404.top/post/2022-04-route/</link>
+      <pubDate>Wed, 20 Apr 2022 01:12:56 +0000</pubDate>
+      
+      <guid>https://blog.origami404.top/post/2022-04-route/</guid>
+      <description>&lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;
+&lt;p&gt;入手了一个 Redmi AC 2100, 我直接到手就刷 &amp;hellip; 然后就折腾了整整两天.&lt;/p&gt;
+&lt;p&gt;在刷机的过程中, 我参考了很多教程, 发现刷机的方法简直多姿多彩, 很多教程走的路都不同. 于是我决定总结一下各种刷机方法的 &amp;ldquo;路径交汇点&amp;rdquo;, 并且在分享本人刷机路径的同时尝试描述其他的可选项, 让读者在将本文与其他教程交叉参阅时心中有数.&lt;/p&gt;
+&lt;p&gt;鉴于我初学路由器刷机不过三天, 出错或偏颇恐怕在所难免, 欢迎大佬发邮件指正.&lt;/p&gt;
+&lt;p&gt;本文假设读者具有基本的 Linux 与计算机网络知识.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>访问校内服务的错误方法</title>
+      <link>https://blog.origami404.top/post/2022-04-visit-intranet-the-wrong-way/</link>
+      <pubDate>Mon, 04 Apr 2022 21:30:51 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/post/2022-04-visit-intranet-the-wrong-way/</guid>
+      <description>&lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;
+&lt;p&gt;好消息: 我校数据结构课程有 OJ 辣!&lt;/p&gt;
+&lt;p&gt;坏消息: OJ 搭在校内, 然而现在疫情在上网课 :(&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>我阅读网文的信息熵速率</title>
-      <link>https://blog.origami404.top/post/2020-03-entropy-rate-of-novel/</link>
+      <link>https://blog.origami404.top/post/2022-03-entropy-rate-of-novel/</link>
       <pubDate>Sat, 19 Mar 2022 22:30:25 +0800</pubDate>
       
-      <guid>https://blog.origami404.top/post/2020-03-entropy-rate-of-novel/</guid>
+      <guid>https://blog.origami404.top/post/2022-03-entropy-rate-of-novel/</guid>
       <description>&lt;p&gt;最近身体不适, 于是荒废了很多时间来看网文, 现在看完了来无聊来测测我的阅读速率. &lt;del&gt;以此掩盖我看小说摸鱼 21 小时的事实&lt;/del&gt;&lt;/p&gt;</description>
     </item>
     
