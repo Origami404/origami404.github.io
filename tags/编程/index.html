@@ -38,7 +38,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://blog.origami404.top/tags/%E7%BC%96%E7%A8%8B/" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://blog.origami404.top/img/og.png" /><meta property="og:updated_time" content="2020-07-21T11:30:00+08:00" />
+<meta name="twitter:image" content="https://blog.origami404.top/img/og.png" /><meta property="og:updated_time" content="2022-05-03T11:30:00+08:00" />
 
 
 <style>
@@ -107,6 +107,34 @@
 </div>
 
 
+
+<div class="post">
+  <h2 class="post-item post-title">
+    <a href="https://blog.origami404.top/compiler-and-type-theory/2022-05-py-annotation-2/">Python 类型标注之追本溯源</a>
+  </h2>
+  <div class="post-item post-meta">
+    <span><i class="iconfont icon-today-sharp"></i>&nbsp;2022-05-03</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;4352 字</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;<a href="/tags/python">Python</a>&nbsp;</span>
+
+  </div>
+  <div class="post-item post-summary markdown-body">
+    <h2 id="前言">前言</h2>
+<p>本文是 <a href="./2020-07-python-and-type-annotations.md">Python 与 Type Annotations</a> 的续作. 主要是回顾在那篇文章之前的 Python 类型标注(即 Python 3.6 以及之前版本), 并不过多涉及新的类型标注使用. 主要作用是追本溯源, 固实基础. 接下来我应该还会出一篇介绍这两年来 Python 在类型标注方面的新进展.</p>
+<p>本来呢是想两篇写成一篇的, 但是发现光是回顾历史就占据了过多篇幅, 索性分为两篇, 一篇往前, 一篇往后, 也是一件美事.</p>
+<p>所谓类型标注之本, 在下面的 PEP 里:</p>
+<ul>
+<li><a href="https://peps.python.org/pep-3107/" target="_blank">PEP 3107 - Function Annotations</a> : 最早的类型标注相关 PEP, 描述了对函数参数与返回值做标注的语法</li>
+<li><a href="https://peps.python.org/pep-0526/" target="_blank">PEP 526 – Syntax for Variable Annotations</a> : 描述了对变量做标注的语法</li>
+<li><a href="https://peps.python.org/pep-0482/" target="_blank">PEP 482 – Literature Overview for Type Hints</a> : 描述了 Python 在设计类型标注的语义时参考了哪些语言/工具/实现</li>
+<li><a href="https://peps.python.org/pep-0483/" target="_blank">PEP 483 – The Theory of Type Hints</a> : 简要说明了标注应该如何作为 &ldquo;类型提示&rdquo; 使用</li>
+<li><a href="https://peps.python.org/pep-0484/" target="_blank">PEP 484 – Type Hints</a> : 正式且详细地描述了标注如何作为 &ldquo;类型提示&rdquo; 使用</li>
+</ul>
+<p>我抽出时间来通读了上面的 PEP, 下面便是我在其中看到的一些或有趣或意料之外的事实 (以及吐槽与思考).</p>
+  </div>
+</div>
 
 <div class="post">
   <h2 class="post-item post-title">

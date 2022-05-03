@@ -2,10 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://blog.origami404.top/post/2022-04-chromebook/</loc>
-    <lastmod>2022-04-20T01:13:06+00:00</lastmod>
+    <loc>https://blog.origami404.top/compiler-and-type-theory/</loc>
+    <lastmod>2022-05-03T11:30:00+08:00</lastmod>
   </url><url>
     <loc>https://blog.origami404.top/</loc>
+    <lastmod>2022-05-03T11:30:00+08:00</lastmod>
+  </url><url>
+    <loc>https://blog.origami404.top/tags/python/</loc>
+    <lastmod>2022-05-03T11:30:00+08:00</lastmod>
+  </url><url>
+    <loc>https://blog.origami404.top/compiler-and-type-theory/2022-05-py-annotation-2/</loc>
+    <lastmod>2022-05-03T11:30:00+08:00</lastmod>
+  </url><url>
+    <loc>https://blog.origami404.top/tags/%E7%BC%96%E7%A8%8B/</loc>
+    <lastmod>2022-05-03T11:30:00+08:00</lastmod>
+  </url><url>
+    <loc>https://blog.origami404.top/post/2022-04-chromebook/</loc>
     <lastmod>2022-04-20T01:13:06+00:00</lastmod>
   </url><url>
     <loc>https://blog.origami404.top/post/</loc>
@@ -57,9 +69,6 @@
     <lastmod>2022-03-12T22:00:00+08:00</lastmod>
   </url><url>
     <loc>https://blog.origami404.top/tags/arm/</loc>
-    <lastmod>2022-02-13T21:00:00+08:00</lastmod>
-  </url><url>
-    <loc>https://blog.origami404.top/compiler-and-type-theory/</loc>
     <lastmod>2022-02-13T21:00:00+08:00</lastmod>
   </url><url>
     <loc>https://blog.origami404.top/tags/%E6%AF%95%E6%98%87%E6%9D%AF/</loc>
@@ -182,13 +191,7 @@
     <loc>https://blog.origami404.top/post/2020-10-anbox-and-compile-kernel/</loc>
     <lastmod>2020-10-02T23:22:00+08:00</lastmod>
   </url><url>
-    <loc>https://blog.origami404.top/tags/python/</loc>
-    <lastmod>2020-07-21T11:30:00+08:00</lastmod>
-  </url><url>
     <loc>https://blog.origami404.top/compiler-and-type-theory/2020-07-python-and-type-annotations/</loc>
-    <lastmod>2020-07-21T11:30:00+08:00</lastmod>
-  </url><url>
-    <loc>https://blog.origami404.top/tags/%E7%BC%96%E7%A8%8B/</loc>
     <lastmod>2020-07-21T11:30:00+08:00</lastmod>
   </url><url>
     <loc>https://blog.origami404.top/compiler-and-type-theory/2020-04-notes-on-category-theory-for-programmers/</loc>

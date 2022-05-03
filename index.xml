@@ -6,7 +6,27 @@
     <description>Recent content on Origami404 的 Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 20 Apr 2022 01:13:06 +0000</lastBuildDate><atom:link href="https://blog.origami404.top/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 03 May 2022 11:30:00 +0800</lastBuildDate><atom:link href="https://blog.origami404.top/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Python 类型标注之追本溯源</title>
+      <link>https://blog.origami404.top/compiler-and-type-theory/2022-05-py-annotation-2/</link>
+      <pubDate>Tue, 03 May 2022 11:30:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/compiler-and-type-theory/2022-05-py-annotation-2/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;本文是 &lt;a href=&#34;./2020-07-python-and-type-annotations.md&#34;&gt;Python 与 Type Annotations&lt;/a&gt; 的续作. 主要是回顾在那篇文章之前的 Python 类型标注(即 Python 3.6 以及之前版本), 并不过多涉及新的类型标注使用. 主要作用是追本溯源, 固实基础. 接下来我应该还会出一篇介绍这两年来 Python 在类型标注方面的新进展.&lt;/p&gt;
+&lt;p&gt;本来呢是想两篇写成一篇的, 但是发现光是回顾历史就占据了过多篇幅, 索性分为两篇, 一篇往前, 一篇往后, 也是一件美事.&lt;/p&gt;
+&lt;p&gt;所谓类型标注之本, 在下面的 PEP 里:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://peps.python.org/pep-3107/&#34; target=&#34;_blank&#34;&gt;PEP 3107 - Function Annotations&lt;/a&gt; : 最早的类型标注相关 PEP, 描述了对函数参数与返回值做标注的语法&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://peps.python.org/pep-0526/&#34; target=&#34;_blank&#34;&gt;PEP 526 – Syntax for Variable Annotations&lt;/a&gt; : 描述了对变量做标注的语法&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://peps.python.org/pep-0482/&#34; target=&#34;_blank&#34;&gt;PEP 482 – Literature Overview for Type Hints&lt;/a&gt; : 描述了 Python 在设计类型标注的语义时参考了哪些语言/工具/实现&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://peps.python.org/pep-0483/&#34; target=&#34;_blank&#34;&gt;PEP 483 – The Theory of Type Hints&lt;/a&gt; : 简要说明了标注应该如何作为 &amp;ldquo;类型提示&amp;rdquo; 使用&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://peps.python.org/pep-0484/&#34; target=&#34;_blank&#34;&gt;PEP 484 – Type Hints&lt;/a&gt; : 正式且详细地描述了标注如何作为 &amp;ldquo;类型提示&amp;rdquo; 使用&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;我抽出时间来通读了上面的 PEP, 下面便是我在其中看到的一些或有趣或意料之外的事实 (以及吐槽与思考).&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>HP Chromebook 13G1 刷机记录</title>
       <link>https://blog.origami404.top/post/2022-04-chromebook/</link>

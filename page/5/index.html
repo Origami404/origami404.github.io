@@ -22,7 +22,7 @@
 <meta name="theme-color" content="#ffffff" />
 
 
-<title>Git-impls - Origami404 的 Blog</title>
+<title>Origami404 的 Blog - 有空的话就随便逛逛吧 www</title>
 
 
 <meta name="author" content="Origami404" />
@@ -31,14 +31,14 @@
 <meta name="description" content="有空的话就随便逛逛吧 www" />
 
 
-<link rel="alternate" type="application/rss+xml" href="https://blog.origami404.top/git-impl/index.xml" title="Origami404 的 Blog" />
+<link rel="alternate" type="application/rss+xml" href="https://blog.origami404.top/index.xml" title="Origami404 的 Blog" />
 
-<meta property="og:title" content="Git-impls" />
-<meta name="twitter:title" content="Git-impls" />
+<meta property="og:title" content="Origami404 的 Blog" />
+<meta name="twitter:title" content="Origami404 的 Blog" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://blog.origami404.top/git-impl/" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
+<meta property="og:url" content="https://blog.origami404.top/" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://blog.origami404.top/img/og.png" /><meta property="og:updated_time" content="2021-02-21T22:00:00+08:00" />
+<meta name="twitter:image" content="https://blog.origami404.top/img/og.png" /><meta property="og:updated_time" content="2022-05-03T11:30:00+08:00" />
 
 
 <style>
@@ -106,235 +106,35 @@
 
 <div class="post">
     <h2 class="post-item post-title">
-        <a href="https://blog.origami404.top/post/2021-09-determinant-begin-from-wedge-product/">从外代数出发的行列式理论</a>
+        <a href="https://blog.origami404.top/post/2019-07-blog-init/">Blog 搭建</a>
     </h2>
     <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2021-09-27</span>
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2019-07-20</span>
 
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;5294 字</span>
-
-<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E6%95%B0%E5%AD%A6">数学</a>&nbsp;<a href="/tags/%E7%BA%BF%E4%BB%A3">线代</a>&nbsp;<a href="/tags/%E6%96%B0%E8%A7%82%E7%82%B9">新观点</a>&nbsp;</span>
-
-    </div>
-    <div class="post-item post-summary markdown-body">
-        <h2 id="前置">前置</h2>
-<p>这篇文章有些前置知识我默认读者是知道的, 比如矢量和线性空间(<a href="https://zh.wikipedia.org/wiki/%E5%90%91%E9%87%8F%E7%A9%BA%E9%97%B4" target="_blank">wiki</a>, <a href="https://www.zhihu.com/question/24086219" target="_blank">知乎</a>)的概念. 具体来讲, 我希望读者能完全理解这句话: &ldquo;基底通过线性组合张成线性空间&rdquo;. 但更加重要的是, 我希望读者能够放开胆子, 接受并批判地思考与新的语言与概念. 文中有些地方我特意没有使用书本的符号, 为的就是让读者直接判断他自己到底是在跟着文章思路走还是靠课本里记下的结论硬看. 通过这篇文章, 我希望能有更多人开始 &ldquo;思考&rdquo; 和 &ldquo;创造&rdquo; 数学, 穿过数学高冷的表面, 看到数学定义背后的 &ldquo;动机&rdquo; 和 &ldquo;深意&rdquo;, 最终享受数学, 而不是只是跟着课本学点计算.</p>
-<p>要知道, 数学家也是人. 一旦你觉得有什么东西是反人类的, 它背后一定是有自己的逻辑. 这里的逻辑, 是数学定义背后数学家们思考的内在的直觉的<strong>人的</strong>逻辑, 而不完全是死的客观精准的数理逻辑.</p>
-<p>建议餐前食用: <a href="https://www.bilibili.com/video/BV1Gs411R7Yo" target="_blank">3b1b: 发明新数学是怎样一种体验？</a></p>
-<p>餐后或餐中可以结合: <a href="https://www.bilibili.com/video/BV1ys411472E" target="_blank">3b1b: 线性代数的本质</a></p>
-<p>比起纯粹的几何直观, 我更看重一种 &ldquo;符号上的直观&rdquo;, 也就是说, 你得把这一套数学符号, 当作与生俱来的, 自然的东西. 所谓直观学习, 不是把所有东西都归纳成你的 &ldquo;直观&rdquo;, 而是让你能把更多的东西变成你的直观.</p>
-<p>鸡汤灌得够多了, 让我们开始吧.</p>
-    </div>
-</div>
-
-<div class="post">
-    <h2 class="post-item post-title">
-        <a href="https://blog.origami404.top/compiler-and-type-theory/2021-09-compiler-frontend-with-flex-bison/">基于Bison和Flex的编译器前端实现</a>
-    </h2>
-    <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2021-09-05</span>
-
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;3930 字</span>
-
-<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86">编译原理</a>&nbsp;<a href="/tags/%E7%BC%96%E8%AF%91%E5%89%8D%E7%AB%AF">编译前端</a>&nbsp;<a href="/tags/c">C</a>&nbsp;<a href="/tags/linux-%E5%B7%A5%E5%85%B7">linux 工具</a>&nbsp;</span>
-
-    </div>
-    <div class="post-item post-summary markdown-body">
-        <h2 id="前言">前言</h2>
-<p>最近被某学长介绍了<a href="https://compiler.educg.net/" target="_blank">毕昇杯</a>编译器比赛, 有点感兴趣, 遂开始用 C 自己实现, 然后就:</p>
-<blockquote>
-<p><strong>还是 Java 香!</strong></p>
-</blockquote>
-<p>本文记录了我用 Bison 和 Flex 来构建 <a href="https://gitlab.eduxiji.net/nscscc/compiler2021/-/blob/master/SysY%E8%AF%AD%E8%A8%80%E5%AE%9A%E4%B9%89.pdf" target="_blank">SysY2021</a> 语言前端的尝试.</p>
-    </div>
-</div>
-
-<div class="post">
-    <h2 class="post-item post-title">
-        <a href="https://blog.origami404.top/git-impl/2021-02-git-impl-command/">Git Command: Git 的数据使用方式</a>
-    </h2>
-    <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2021-02-21</span>
-
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;313 字</span>
-
-<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/mgit">mgit</a>&nbsp;<a href="/tags/git">Git</a>&nbsp;<a href="/tags/%E8%BD%AE%E5%AD%90">轮子</a>&nbsp;</span>
-
-    </div>
-    <div class="post-item post-summary markdown-body">
-        <p><strong>此文章施工中&hellip;</strong></p>
-<p>现在让我们来使用上面我们写好的 Git Object 来实现常用的 Git 命令吧.</p>
-    </div>
-</div>
-
-<div class="post">
-    <h2 class="post-item post-title">
-        <a href="https://blog.origami404.top/git-impl/2021-02-git-impl-index/">Git Index: Git 的暂存区</a>
-    </h2>
-    <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2021-02-20</span>
-
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;1601 字</span>
-
-<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/mgit">mgit</a>&nbsp;<a href="/tags/git">Git</a>&nbsp;<a href="/tags/%E8%BD%AE%E5%AD%90">轮子</a>&nbsp;</span>
-
-    </div>
-    <div class="post-item post-summary markdown-body">
-        <p><strong>此文章施工中&hellip;</strong></p>
-<h2 id="二进制格式">二进制格式</h2>
-<p>前后顺序<strong>均按从低位到高位</strong>.</p>
-    </div>
-</div>
-
-<div class="post">
-    <h2 class="post-item post-title">
-        <a href="https://blog.origami404.top/git-impl/2021-02-git-impl-object-file/">Git 实现: Object 文件</a>
-    </h2>
-    <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2021-02-19</span>
-
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;3966 字</span>
-
-<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/mgit">mgit</a>&nbsp;<a href="/tags/git">Git</a>&nbsp;<a href="/tags/%E8%BD%AE%E5%AD%90">轮子</a>&nbsp;</span>
-
-    </div>
-    <div class="post-item post-summary markdown-body">
-        <h2 id="导读">导读</h2>
-<p>本文先介绍了一些方便查看 Git Object 文件 二进制内容的命令行工具, 其次分别介绍了 4 种 Object: <code>Blob</code>, <code>Commit</code>, <code>Tree</code>, <code>Tag</code>.</p>
-<p>每一种 <code>Object</code> 按&quot;概念模型&quot;与&quot;二进制格式&quot;分隔, 前者主要介绍其储存了那些抽象信息, 后者则专注于其二进制储存格式.</p>
-    </div>
-</div>
-
-<div class="post">
-    <h2 class="post-item post-title">
-        <a href="https://blog.origami404.top/git-impl/2021-02-git-impl-content/">Git 实现: 目录 &amp; 前言 &amp; Git repo</a>
-    </h2>
-    <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2021-02-19</span>
-
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;1106 字</span>
-
-<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/mgit">mgit</a>&nbsp;<a href="/tags/git">Git</a>&nbsp;<a href="/tags/%E8%BD%AE%E5%AD%90">轮子</a>&nbsp;</span>
-
-    </div>
-    <div class="post-item post-summary markdown-body">
-        <h2 id="前言">前言</h2>
-<p>写这篇文章一开始主要是受到了 <a href="https://wyag.thb.lt/" target="_blank">Write Yourself a Git</a>, <a href="https://zhuanlan.zhihu.com/p/45510461" target="_blank">深入理解Git实现原理</a> 这两篇文章的激励. 俗话说学会使用轮子的最佳方法就是造一个轮子(<del>其实是我刚刚说的</del>), 而在使用 Python 实现的过程中又多少碰到了点前面两篇文章没有覆盖到的细节点, 特记录于此, 以飨读者.</p>
-<p>本文章介绍顺序是先介绍其存储用的数据结构, 分别按其概念模型(包含了什么信息, 为什么要这样设计)及其二进制格式(储存在文件系统中的格式)来介绍; 随后再描述如何实现 Git 的常用功能.</p>
-<p>本文章不是 Git 的教程, 如果读者对 Git 的操作并非十分了解的话可以参考 ProGit, 一本非常好的 Git 教材.</p>
-<p>本文对于细节扣得有点多, 可能并不适合只想理解 Git 底层模型的读者.</p>
-<p><del>或者也可以像我一样现学现写</del>.</p>
-<p>本文的配套代码及 Markdown 源码一同发布于 <a href="https://github.com/Origami404/mgit" target="_blank">GitHub: mgit</a>, 可以配套查看. (顺着 Commit 看我怎么挣扎着理解的说不定别有一番乐趣).</p>
-<p>由于作者水平有限, 时间亦有限, 错漏难免, 还请大佬指正.</p>
-    </div>
-</div>
-
-<div class="post">
-    <h2 class="post-item post-title">
-        <a href="https://blog.origami404.top/post/2020-10-boot-recovery-in-uefi/">UEFI下的引导恢复</a>
-    </h2>
-    <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-10-31</span>
-
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;506 字</span>
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;678 字</span>
 
 <span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E6%8A%98%E8%85%BE">折腾</a>&nbsp;</span>
 
     </div>
     <div class="post-item post-summary markdown-body">
-        <h2 id="背景">背景</h2>
-<p>想调整一下分区大小, 结果一不小心删掉了 ESP&hellip;</p>
-    </div>
-</div>
-
-<div class="post">
-    <h2 class="post-item post-title">
-        <a href="https://blog.origami404.top/post/2020-10-anbox-and-compile-kernel/">Anbox 踩坑 &amp; Manjaro 下的内核编译</a>
-    </h2>
-    <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-10-02</span>
-
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;1268 字</span>
-
-<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E6%8A%98%E8%85%BE">折腾</a>&nbsp;</span>
-
-    </div>
-    <div class="post-item post-summary markdown-body">
-        <h2 id="前言--anbox-简介">前言 &amp; Anbox 简介</h2>
-<p>最近换回了 Manjaro 和 Xfce, 打算认认真真地开始将 Linux 作为日常生活系统而不仅仅是开发系统来用了. 然而在日常生活中, 总归是逃不掉某国产IM的 :(. 为了实现以 Manjaro 作为生活主力系统的目标, (同时也为了以后说不定能愉快地打游戏), 决定安装一个能跑安卓应用的东西. 于是我的 Anbox 之旅就在完全搞不懂 Android x86 是什么玩意的情况下展开了.</p>
-<p><a href="https://anbox.io/" target="_blank">Anbox 官网</a>上的介绍:</p>
-<blockquote>
-<p>Anbox: Android in a Box
-Run Android applications on any GNU/Linux operating system.
-Anbox puts the Android operating system into a container, abstracts hardware access and integrates core system services into a GNU/Linux system. Every Android application will be integrated with your operating system like any other native application.</p>
-</blockquote>
-<p>简单来讲就类似 docker , 利用 LXD 技术在 Linux 系统里新建一个全新的容器, 然后直接去跑一个 Android x86. 好处嘛就是跑得比虚拟机快, 集成度比虚拟机好. 坏处嘛就是兼容性还是有待提高&hellip;</p>
-    </div>
-</div>
-
-<div class="post">
-    <h2 class="post-item post-title">
-        <a href="https://blog.origami404.top/compiler-and-type-theory/2020-07-python-and-type-annotations/">Python 与 Type Annotations</a>
-    </h2>
-    <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-07-21</span>
-
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;6092 字</span>
-
-<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;<a href="/tags/python">Python</a>&nbsp;</span>
-
-    </div>
-    <div class="post-item post-summary markdown-body">
         <h2 id="前言">前言</h2>
-<p>用Python写了个Scheme解释器, <a href="https://github.com/Origami404/SmallScheme" target="_blank">代码</a>. 记录一下Python的类型标注要怎么用, 有什么坑.</p>
-<blockquote>
-<p><del>话说回来这好像是我第一篇技术性文章&hellip;?</del></p>
-<p><del>不务正业实锤</del></p>
-</blockquote>
-<blockquote>
-<p>本文假定您已有支持编译期泛型的静态类型语言的编程背景, 比如C++, Haskell之类的.</p>
-</blockquote>
-    </div>
-</div>
-
-<div class="post">
-    <h2 class="post-item post-title">
-        <a href="https://blog.origami404.top/compiler-and-type-theory/2020-04-notes-on-category-theory-for-programmers/">Category-theory-for-programmers 阅读笔记</a>
-    </h2>
-    <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-04-16</span>
-
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;2897 字</span>
-
-<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/haskell">Haskell</a>&nbsp;<a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0">读书笔记</a>&nbsp;</span>
-
-    </div>
-    <div class="post-item post-summary markdown-body">
-        <h2 id="前言--介绍">前言 &amp; 介绍</h2>
-<p><code>Category Theory for Programmers</code>, 顾名思义, 是一本关于范畴论的书, 但是偏向CS而非数学.</p>
-<p>书的$\LaTeX$代码以<code>GPL-3.0</code>公布在<a href="https://github.com/hmemcpy/milewski-ctfp-pdf" target="_blank">GitHub</a>, 有两个版本, 一个以<code>C++</code>作为辅助说明语言, 另一个是<code>Scala</code>.</p>
-<p>作为一个蒟蒻OI党当然是选择<code>C++</code>版啦.</p>
-<p>本文(如果不咕咕咕的话)会持续更新, 大概记录一些摘录或者感想或者我不知道的东西&hellip;</p>
+<p>忽然想建个blog来记录自己没填的坑了&hellip;</p>
     </div>
 </div>
 <div class="pagination"><div class="pag-first">
-    <a href="/git-impl/"><i class="iconfont icon-caret-back-circle-sharp"></i></a>
+    <a href="/"><i class="iconfont icon-caret-back-circle-sharp"></i></a>
   </div><div class="pag-previous">
-    <a href="/git-impl/page/2/"><i class="iconfont icon-chevron-back-circle-sharp"></i></a>
+    <a href="/page/4/"><i class="iconfont icon-chevron-back-circle-sharp"></i></a>
   </div><div class="pag-item">
-    <a href="/git-impl/">1</a>
+    <a href="/">1</a>
   </div><div class="pag-item">
-    <a href="/git-impl/page/2/">2</a>
+    <a href="/page/2/">2</a>
+  </div><div class="pag-item">
+    <a href="/page/3/">3</a>
+  </div><div class="pag-item">
+    <a href="/page/4/">4</a>
   </div><div class="pag-item pag-current">
-    <a href="/git-impl/page/3/">3</a>
-  </div><div class="pag-item">
-    <a href="/git-impl/page/4/">4</a>
-  </div><div class="pag-item">
-    <a href="/git-impl/page/5/">5</a>
-  </div><div class="pag-next">
-    <a href="/git-impl/page/4/"><i class="iconfont icon-chevron-forward-circle-sharp"></i></a>
-  </div><div class="pag-last">
-    <a href="/git-impl/page/5/"><i class="iconfont icon-caret-forward-circle-sharp"></i></a>
+    <a href="/page/5/">5</a>
   </div></div>
             </div>
             <aside class="col-12 col-md-3 float-left sidebar">
@@ -750,13 +550,6 @@ Anbox puts the Android operating system into a container, abstracts hardware acc
             </span>
             
         </div>
-    </div>
-    
-    
-    
-    <div class="sidebar-item sidebar-toc">
-        <h3>目录</h3>
-        
     </div>
     
     
