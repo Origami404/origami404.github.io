@@ -133,7 +133,7 @@ PEP 484 – Type Hints : 正式且详细地描述了标注如何作为 &ldquo;�
     <div class="post-item post-meta">
         <span><i class="iconfont icon-today-sharp"></i>&nbsp;2022-05-03</span>
 
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;4352 字</span>
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;5210 字</span>
 
 <span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;<a href="/tags/python">Python</a>&nbsp;</span>
 
@@ -170,11 +170,20 @@ PEP 484 – Type Hints : 正式且详细地描述了标注如何作为 &ldquo;�
 <li>函数调用. 这同时包括了对 <code>TypeVar('T')</code> 的调用</li>
 <li>字面量. 字面量必须使用 <code>Literal[]</code> 来标注</li>
 <li>非类型别名的变量.</li>
-<li></li>
 </ul>
 <h2 id="类型标注的求值时间">类型标注的求值时间?</h2>
 <p>由上一个问题可知类型标注就是普通的表达式, 那么它们何时求值呢?</p>
-<p>根据 PEP 3107, 函数的类型标注会在函数定义时被求值(包括参数的与返回值的). 但是根据 PEP &hellip;</p>
+<p>根据 PEP 3107, 函数的类型标注会在函数定义时被求值(包括参数的与返回值的). 同时根据 PEP 526, 局部变量的标注 <strong>不会</strong> 被求值, 但是全局变量跟类变量的标注 <strong>会</strong> 被求值:</p>
+<pre><code class="language-python">def f():
+    x: NonexistentName  # No error.
+
+x: NonexistentName  # Error!
+class X:
+    var: NonexistentName  # Error!
+</code></pre>
+<blockquote>
+<p>在这之后根据 <a href="https://peps.python.org/pep-0563/" target="_blank">PEP 583</a>, 标注求值的时间可以通过 import 一个 <code>__feature__</code> 来推迟到解析完整个文件, 并且这将在 Python 3.10 成为默认行为.</p>
+</blockquote>
 <h2 id="运行时获得的类型标注是其求值后的结果">运行时获得的类型标注是其求值后的结果</h2>
 <p>根据 PEP 3107:</p>
 <blockquote>
@@ -191,7 +200,80 @@ PEP 484 – Type Hints : 正式且详细地描述了标注如何作为 &ldquo;�
 </blockquote>
 <p>也就是说运行期其实没办法获得类型标注本来的 &ldquo;字面上&rdquo; 的结果.</p>
 <h2 id="标注类成员列表">标注类成员列表</h2>
-<p>TODO</p>
+<p>对变量的类型标注并不会创建一个变量:</p>
+<pre><code class="language-python">a: int
+
+print(a) # NameError: name 'a' is not defined
+</code></pre>
+<blockquote>
+<p>这并不意味着对变量进行类型标注就毫无用处. 在局部作用域标注变量会导致变量成为一个局部变量 (也就是说不会再往全局找):</p>
+<pre><code class="language-python">a = 20
+def f():
+    a: int
+    print(a)
+
+# UnboundLocalError: local variable 'a' referenced before assignment
+f() 
+</code></pre>
+</blockquote>
+<p>于是我们便可以借助这一点来 &ldquo;声明&rdquo; 类实例的变量:</p>
+<pre><code class="language-python">class Point:
+    # 看起来像是引入了名叫 x y 的类变量
+    # 实际上只是做了标注, 并没有绑定变量
+    # 在类层级做这样的标注默认是声明的实例成员
+    x: int = 0 # 带默认值的
+    y: int     # 不带的, 要在 __init__ 里初始化
+
+    # 可以使用 `ClassVar` 泛型来标记这是一个类成员而不是实例成员
+    # 为了使类成员被创建(而不是仅仅被标注上), 需要给它绑定一个对象 
+    origin: ClassVar[Tuple[int, int]] = (0, 0)
+
+    def __init__(self, x: int, y: int) -&gt; None:
+        self.x = x
+        self.y = y
+</code></pre>
+<h2 id="标注表达式">标注表达式</h2>
+<p><a href="https://peps.python.org/pep-0526/#annotating-expressions" target="_blank">PEP 526</a> 中提到表达式也可以被标注, 一般用于给对象或者字典动态添加成员的时候. 不过截至目前 (2022.05), mypy 并不支持这种标注.</p>
+<pre><code class="language-python">class Cls:
+    pass
+
+c = Cls()
+c.x: int = 0  # Annotates c.x with int.
+c.y: int      # Annotates c.y with int.
+
+d = {}
+d['a']: int = 0  # Annotates d['a'] with int.
+d['b']: int      # Annotates d['b'] with int.
+</code></pre>
+<p>但是 mypy 是支持下面这种简单的只是把变量括起来的括号表达式. 虽然标准提到这样标注的仍然是表达式而不是变量, 但是 mypy 显然是把它当成对变量的标注的.</p>
+<pre><code class="language-python">(x): int      # Annotates x with int, (x) treated as expression by compiler.
+(y): int = 0  # Same situation here.
+</code></pre>
+<h2 id="解包赋值-for-with-中的变量标注">解包赋值, <code>for</code>, <code>with</code> 中的变量标注</h2>
+<!-- TODO: 海象表达式的类型标注 -->
+<p>变量的类型标注不支持跟解包搭配, 只能分开写, 如下:</p>
+<pre><code class="language-python"># Tuple packing with variable annotation syntax
+t: Tuple[int, ...] = (1, 2, 3)
+# or
+t: Tuple[int, ...] = 1, 2, 3  # This only works in Python 3.8+
+
+# Tuple unpacking with variable annotation syntax
+header: str
+kind: int
+body: Optional[List[str]]
+rest: List[str]
+header, kind, body, *rest = message
+</code></pre>
+<p>同时 <code>for</code> 跟 <code>with</code> 里定义的变量也同样不支持在原地标注, 只能像解包一样在前面标注好:</p>
+<pre><code class="language-python">a: int
+for a in my_iter:
+    ...
+
+f: MyFile
+with myfunc() as f:
+    ...
+</code></pre>
+<p>解包被 ban 主要是因为它会带来混淆: 对于标注 <code>x, y: T</code> 到底是标注了 <code>y</code> 是 <code>T</code> 还是标注了 <code>(x, y)</code> 是 <code>T</code>? 而 <code>with</code> 和 <code>for</code> 被 ban 是因为 CPython 的 LL(1) 文法解析器解析带标注的 <code>with</code> 和 <code>for</code> 语句比较困难&hellip;</p>
 <h2 id="type-vs-class-and-type-gaurd">Type vs Class (and Type Gaurd)</h2>
 <p>在 PEP 483 中提到:</p>
 <blockquote>
@@ -237,6 +319,9 @@ print(dir(x))
 # 如果真的想获得 `x` 的类型标注, 可能可以从 AST 入手.
 </code></pre>
 <p>不过对于函数而言事情又有所不同. 在函数定义执行的时候会将类型标注与创建出的函数对象绑定, 作为函数对象的 <code>__annotations__</code> 存在, 就好像文档字符串一样.</p>
+<blockquote>
+<p>类跟 module 与函数一样, 有其 <code>__annotations__</code> 属性, 可以用来获取当前类中被标注的实例/类成员变量或者模块中被标注的全局变量的标注</p>
+</blockquote>
 <pre><code class="language-python">def neg(x: int) -&gt; int:
     return -x
 
@@ -432,7 +517,7 @@ def a_func(arg: 'expensive_mod.SomeClass') -&gt; None:
 </ul>
 <h2 id="stub-files">Stub files</h2>
 <p>TODO</p>
-<p><a href="https://peps.python.org/pep-0484/#stub-files" target="_blank">PEP 484</a></p>
+<p>See <a href="https://peps.python.org/pep-0484/#stub-files" target="_blank">PEP 484</a></p>
     </div>
 </article>
 
@@ -654,6 +739,8 @@ def a_func(arg: 'expensive_mod.SomeClass') -&gt; None:
     <li><a href="#类型标注的求值时间">类型标注的求值时间?</a></li>
     <li><a href="#运行时获得的类型标注是其求值后的结果">运行时获得的类型标注是其求值后的结果</a></li>
     <li><a href="#标注类成员列表">标注类成员列表</a></li>
+    <li><a href="#标注表达式">标注表达式</a></li>
+    <li><a href="#解包赋值-for-with-中的变量标注">解包赋值, <code>for</code>, <code>with</code> 中的变量标注</a></li>
     <li><a href="#type-vs-class-and-type-gaurd">Type vs Class (and Type Gaurd)</a></li>
     <li><a href="#list-为什么是不变-invariant-类型"><code>list</code> 为什么是不变 (invariant) 类型?</a></li>
     <li><a href="#为什么泛型是方括号">为什么泛型是方括号?</a></li>
@@ -896,6 +983,8 @@ def a_func(arg: 'expensive_mod.SomeClass') -&gt; None:
     <li><a href="#类型标注的求值时间">类型标注的求值时间?</a></li>
     <li><a href="#运行时获得的类型标注是其求值后的结果">运行时获得的类型标注是其求值后的结果</a></li>
     <li><a href="#标注类成员列表">标注类成员列表</a></li>
+    <li><a href="#标注表达式">标注表达式</a></li>
+    <li><a href="#解包赋值-for-with-中的变量标注">解包赋值, <code>for</code>, <code>with</code> 中的变量标注</a></li>
     <li><a href="#type-vs-class-and-type-gaurd">Type vs Class (and Type Gaurd)</a></li>
     <li><a href="#list-为什么是不变-invariant-类型"><code>list</code> 为什么是不变 (invariant) 类型?</a></li>
     <li><a href="#为什么泛型是方括号">为什么泛型是方括号?</a></li>
