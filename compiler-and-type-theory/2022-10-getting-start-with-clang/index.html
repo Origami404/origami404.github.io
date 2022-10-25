@@ -189,7 +189,7 @@ cmake -DBUILD_SHARED_LIBS=On \
 </ul>
 </li>
 <li><code>LLVM_OPTIMIZED_TABLEGEN=On</code>: 在 Debug 模式下使用优化的 <a href="https://llvm.org/docs/TableGen/" target="_blank">TableGen</a>. TableGen 是 LLVM 后端用于描述平台信息相关的 DSL 和小工具. 一般它不会出 bug, 所以即使在 Debug 模式下也可以使用对它的优化.</li>
-<li><code>LLVM_CCAHCHE_BUILD=TRUE</code>: 使用 <a href="https://ccache.dev/" target="_blank">Ccach</a>. 一般我们用 Makefile 之类的构建工具的话, 它会自动帮我们检测源文件时间和编译产物时间来决定要不要重新编译. 但是这种选择经常跟项目里各种各样的配置混杂在一起, 导致我们经常需要 <code>make clean &amp;&amp; make</code> 重新来一趟干净的编译. Ccache 将 &ldquo;编译缓存&rdquo; 这件事单独拉出来, 在确保安全的情况下, 即使执行了 <code>make clean</code> 再 <code>make</code>, 也可以复用之前的编译结果, 加快编译进度.</li>
+<li><code>LLVM_CCAHCHE_BUILD=TRUE</code>: 使用 <a href="https://ccache.dev/" target="_blank">Ccache</a>. 一般我们用 Makefile 之类的构建工具的话, 它会自动帮我们检测源文件时间和编译产物时间来决定要不要重新编译. 但是这种选择经常跟项目里各种各样的配置混杂在一起, 导致我们经常需要 <code>make clean &amp;&amp; make</code> 重新来一趟干净的编译. Ccache 将 &ldquo;编译缓存&rdquo; 这件事单独拉出来, 在确保安全的情况下, 即使执行了 <code>make clean</code> 再 <code>make</code>, 也可以复用之前的编译结果, 加快编译进度.</li>
 <li><code>LLVM_USE_SPLIT_DWARF=On</code>: <code>DWARF</code> 是一种调试信息格式, 这个配置可以分离可执行文件与调试信息, 在具体调试时再按需加载符号信息, 能提高调试启动速度.</li>
 <li><code>CMAKE_EXPORT_COMPILE_COMMANDS=TRUE</code>: 生成 <code>compile_commands.json</code>. (不会有人不用 <a href="https://marketplace.visualstudio.com/items?itemName=llvm-vs-code-extensions.vscode-clangd" target="_blank">Clangd</a> 来在 VSCode 上看 LLVM 源码吧)</li>
 <li><code>CMAKE_C_COMPILER</code>, <code>CMAKE_CXX_COMPILER</code>: 这两个必须指定, 似乎 CMake 并不会直接从 <code>CC</code>/<code>CXX</code> 环境变量中读取编译器配置. 使用 clang(++) 编译的话比 gcc(++) 要快一些, 还省点内存.</li>
