@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta http-equiv="Cache-Control" content="no-transform" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-<meta name="generator" content="Hugo 0.95.0" />
+<meta name="generator" content="Hugo 0.93.3" />
 
 
 
@@ -103,6 +103,52 @@
                 
 
 
+
+<div class="post">
+    <h2 class="post-item post-title">
+        <a href="https://blog.origami404.top/compiler-and-type-theory/2020-07-python-and-type-annotations/">Python 与 Type Annotations</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-07-21</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;6092 字</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;<a href="/tags/python">Python</a>&nbsp;</span>
+
+    </div>
+    <div class="post-item post-summary markdown-body">
+        <h2 id="前言">前言</h2>
+<p>用Python写了个Scheme解释器, <a href="https://github.com/Origami404/SmallScheme" target="_blank">代码</a>. 记录一下Python的类型标注要怎么用, 有什么坑.</p>
+<blockquote>
+<p><del>话说回来这好像是我第一篇技术性文章&hellip;?</del></p>
+<p><del>不务正业实锤</del></p>
+</blockquote>
+<blockquote>
+<p>本文假定您已有支持编译期泛型的静态类型语言的编程背景, 比如C++, Haskell之类的.</p>
+</blockquote>
+    </div>
+</div>
+
+<div class="post">
+    <h2 class="post-item post-title">
+        <a href="https://blog.origami404.top/compiler-and-type-theory/2020-04-notes-on-category-theory-for-programmers/">Category-theory-for-programmers 阅读笔记</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-04-16</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;2897 字</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/haskell">Haskell</a>&nbsp;<a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0">读书笔记</a>&nbsp;</span>
+
+    </div>
+    <div class="post-item post-summary markdown-body">
+        <h2 id="前言--介绍">前言 &amp; 介绍</h2>
+<p><code>Category Theory for Programmers</code>, 顾名思义, 是一本关于范畴论的书, 但是偏向CS而非数学.</p>
+<p>书的$\LaTeX$代码以<code>GPL-3.0</code>公布在<a href="https://github.com/hmemcpy/milewski-ctfp-pdf" target="_blank">GitHub</a>, 有两个版本, 一个以<code>C++</code>作为辅助说明语言, 另一个是<code>Scala</code>.</p>
+<p>作为一个蒟蒻OI党当然是选择<code>C++</code>版啦.</p>
+<p>本文(如果不咕咕咕的话)会持续更新, 大概记录一些摘录或者感想或者我不知道的东西&hellip;</p>
+    </div>
+</div>
 
 <div class="post">
     <h2 class="post-item post-title">
@@ -268,51 +314,6 @@ $$</p>
 </ul>
     </div>
 </div>
-
-<div class="post">
-    <h2 class="post-item post-title">
-        <a href="https://blog.origami404.top/linux-conf/2020-01-arch-nvidia/">Arch Nvidia 闭源驱动 配置</a>
-    </h2>
-    <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-01-29</span>
-
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;499 字</span>
-
-<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E6%8A%98%E8%85%BE">折腾</a>&nbsp;<a href="/tags/arch">Arch</a>&nbsp;</span>
-
-    </div>
-    <div class="post-item post-summary markdown-body">
-        <p>其实开源驱动已经很好了, 但是颜色看起来总是怪怪的&hellip;</p>
-<p>白色跟浅浅的黄白之间的交界简直awful&hellip;令人窒息, 特别是每次打开google都得看一次, 辣眼睛.</p>
-<p>一开始以为是颜色深度的问题, 因为win下是32位, 开源驱动下是24位, 但是怎么搞都搞不上32位, 遂放弃.</p>
-<p>后来一狠心, 装了闭源驱动, 发现并不是颜色深度的问题, 而是一个叫Color Range的玩意的问题, 于是特此记录.</p>
-    </div>
-</div>
-
-<div class="post">
-    <h2 class="post-item post-title">
-        <a href="https://blog.origami404.top/linux-conf/2020-01-arch-install-basic/">Arch 安装记录</a>
-    </h2>
-    <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-01-29</span>
-
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;1778 字</span>
-
-<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E6%8A%98%E8%85%BE">折腾</a>&nbsp;<a href="/tags/arch">Arch</a>&nbsp;</span>
-
-    </div>
-    <div class="post-item post-summary markdown-body">
-        <p>简单记录一下安装arch时需要的命令. (虽然<code>install.txt</code>里都有了)</p>
-<p><del><code>install.txt</code>复读机</del></p>
-<blockquote>
-<p>如果你还不知道Arch是什么, 可以<a href="https://zh.wikipedia.org/zh-hans/Arch_Linux" target="_blank">戳这里看看维基</a></p>
-</blockquote>
-<h2 id="打开作弊指南-installtxt">打开<del>作弊指南</del> install.txt</h2>
-<p>为了方便安装, 在启动完arch镜像后, <code>/root</code>下有一个<code>install.txt</code>, 打开就是安装所需的大部分步骤, 然后就可以一边看着一边抄了.</p>
-<p>一开始我用<code>Ctrl+Alt+F2</code>开多一个虚拟终端然后在<code>F1</code>和<code>F2</code>之间切换着抄, 后来<code>vim</code>支持虚拟终端之后就直接<code>vim</code>抄美滋滋.</p>
-<p>具体做法是用<code>vim</code>打开<code>install.txt</code>之后, 在<code>normal</code>模式下键入<code>:term</code>就可以打开一个终端. 然后按<code>Ctrl+Shift+h/j/k/l</code>就可以挪终端位置, 挪到喜欢的位置就可以开抄(?)了.</p>
-    </div>
-</div>
 <div class="pagination"><div class="pag-first">
     <a href="/post/"><i class="iconfont icon-caret-back-circle-sharp"></i></a>
   </div><div class="pag-previous">
@@ -398,6 +399,10 @@ $$</p>
             </span>
             
             <span>
+                <a href="/tags/clang/">Clang</a>
+            </span>
+            
+            <span>
                 <a href="/tags/docker/">Docker</a>
             </span>
             
@@ -431,6 +436,10 @@ $$</p>
             
             <span>
                 <a href="/tags/windows/">Windows</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%88%9D%E5%AD%A6/">初学</a>
             </span>
             
             <span>
@@ -614,6 +623,10 @@ $$</p>
             </span>
             
             <span>
+                <a href="/tags/clang/">Clang</a>
+            </span>
+            
+            <span>
                 <a href="/tags/docker/">Docker</a>
             </span>
             
@@ -647,6 +660,10 @@ $$</p>
             
             <span>
                 <a href="/tags/windows/">Windows</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%88%9D%E5%AD%A6/">初学</a>
             </span>
             
             <span>

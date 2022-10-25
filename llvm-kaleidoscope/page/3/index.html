@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta http-equiv="Cache-Control" content="no-transform" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-<meta name="generator" content="Hugo 0.95.0" />
+<meta name="generator" content="Hugo 0.93.3" />
 
 
 
@@ -103,6 +103,58 @@
                 
 
 
+
+<div class="post">
+    <h2 class="post-item post-title">
+        <a href="https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-5/">LLVM Kaleidoscope 第 5 章 扩展语言：控制流</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2022-01-15</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;9103 字</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86">编译原理</a>&nbsp;<a href="/tags/%E7%BC%96%E8%AF%91%E5%89%8D%E7%AB%AF">编译前端</a>&nbsp;<a href="/tags/llvm">LLVM</a>&nbsp;<a href="/tags/%E7%BF%BB%E8%AF%91">翻译</a>&nbsp;</span>
+
+    </div>
+    <div class="post-item post-summary markdown-body">
+        <h2 id="51-前言">5.1 前言</h2>
+<p>欢迎来到 <a href="/llvm-kaleidoscope/2022-01-kaleidoscope-ch-0">我的第一个基于 LLVM 的语言前端</a> 教程第五章。前四章描述了一门简单语言的实现，生成 LLVM IR 并优化，随后即时编译到本地代码的过程。不幸的是，至少到目前为止，Kaleidoscope 还不堪大用：它没有控制流结构 (除了函数调用与返回). 这意味着你不能用它写出带条件分支的代码，这显著地影响了 Kaleidoscope 的威力。在本章，我们将扩展 Kaleidoscope，使其支持 if/then/else 表达式和一个简单的 for 循环。</p>
+    </div>
+</div>
+
+<div class="post">
+    <h2 class="post-item post-title">
+        <a href="https://blog.origami404.top/post/2021-09-constructive-def-of-vector-operation/">矢量运算与高阶线性结构的构造性定义</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2021-09-30</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;1651 字</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E6%95%B0%E5%AD%A6">数学</a>&nbsp;<a href="/tags/%E7%BA%BF%E4%BB%A3">线代</a>&nbsp;<a href="/tags/%E6%96%B0%E8%A7%82%E7%82%B9">新观点</a>&nbsp;</span>
+
+    </div>
+    <div class="post-item post-summary markdown-body">
+        <h2 id="前言">前言</h2>
+<p>上大学了, 终于有大段的时间来整理数学和物理学内容了.</p>
+<p>本文有其思想上的参考: <a href="https://www.bilibili.com/video/BV1Gs411R7Yo" target="_blank">3b1b: 发明新数学是怎样一种体验？</a></p>
+<h2 id="最原始的双线性二元运算">&ldquo;最原始的&quot;双线性二元运算</h2>
+<p>让我们来考虑矢量的运算吧!</p>
+<p>假如我们需要在线性空间 $\mathbb{V}$ 上定义二元运算, 显然我们会希望这个运算至少是线性的, 否则为啥我们要在线性空间上搞呢. 同时如果一个二元运算是双线性的(就是说对于两个操作数而言它都是线性的), 那么我们只需要对 $\mathbb{V}$ 的基底定义此运算即可.</p>
+<p>换句话说, 对于双线性运算 $\mathbf{a} \otimes \mathbf{b}$, 我们可以将其按基底展开:</p>
+<p>$$
+\begin{aligned}
+\mathbf{a} \otimes \mathbf{b}
+&amp;= (\sum_{i=1}^n a_i \mathbf{e_i}) \otimes (\sum_{i=1}^n b_i \mathbf{e_i}) \\
+&amp;= \sum_{i=1}^n \sum_{j=1}^n a_i b_j (\mathbf{e_i} \otimes \mathbf{e_j})
+\end{aligned}
+$$</p>
+<p>那么, 我们只需要定义所有的 $\mathbf{e_i} \otimes \mathbf{e_j}$ (一共 $n^2$ 个) 即可.</p>
+<blockquote>
+<p>等等, 这都啥跟啥啊????</p>
+</blockquote>
+    </div>
+</div>
 
 <div class="post">
     <h2 class="post-item post-title">
@@ -271,52 +323,6 @@ Anbox puts the Android operating system into a container, abstracts hardware acc
 <p>简单来讲就类似 docker , 利用 LXD 技术在 Linux 系统里新建一个全新的容器, 然后直接去跑一个 Android x86. 好处嘛就是跑得比虚拟机快, 集成度比虚拟机好. 坏处嘛就是兼容性还是有待提高&hellip;</p>
     </div>
 </div>
-
-<div class="post">
-    <h2 class="post-item post-title">
-        <a href="https://blog.origami404.top/compiler-and-type-theory/2020-07-python-and-type-annotations/">Python 与 Type Annotations</a>
-    </h2>
-    <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-07-21</span>
-
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;6092 字</span>
-
-<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;<a href="/tags/python">Python</a>&nbsp;</span>
-
-    </div>
-    <div class="post-item post-summary markdown-body">
-        <h2 id="前言">前言</h2>
-<p>用Python写了个Scheme解释器, <a href="https://github.com/Origami404/SmallScheme" target="_blank">代码</a>. 记录一下Python的类型标注要怎么用, 有什么坑.</p>
-<blockquote>
-<p><del>话说回来这好像是我第一篇技术性文章&hellip;?</del></p>
-<p><del>不务正业实锤</del></p>
-</blockquote>
-<blockquote>
-<p>本文假定您已有支持编译期泛型的静态类型语言的编程背景, 比如C++, Haskell之类的.</p>
-</blockquote>
-    </div>
-</div>
-
-<div class="post">
-    <h2 class="post-item post-title">
-        <a href="https://blog.origami404.top/compiler-and-type-theory/2020-04-notes-on-category-theory-for-programmers/">Category-theory-for-programmers 阅读笔记</a>
-    </h2>
-    <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-04-16</span>
-
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;2897 字</span>
-
-<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/haskell">Haskell</a>&nbsp;<a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0">读书笔记</a>&nbsp;</span>
-
-    </div>
-    <div class="post-item post-summary markdown-body">
-        <h2 id="前言--介绍">前言 &amp; 介绍</h2>
-<p><code>Category Theory for Programmers</code>, 顾名思义, 是一本关于范畴论的书, 但是偏向CS而非数学.</p>
-<p>书的$\LaTeX$代码以<code>GPL-3.0</code>公布在<a href="https://github.com/hmemcpy/milewski-ctfp-pdf" target="_blank">GitHub</a>, 有两个版本, 一个以<code>C++</code>作为辅助说明语言, 另一个是<code>Scala</code>.</p>
-<p>作为一个蒟蒻OI党当然是选择<code>C++</code>版啦.</p>
-<p>本文(如果不咕咕咕的话)会持续更新, 大概记录一些摘录或者感想或者我不知道的东西&hellip;</p>
-    </div>
-</div>
 <div class="pagination"><div class="pag-first">
     <a href="/llvm-kaleidoscope/"><i class="iconfont icon-caret-back-circle-sharp"></i></a>
   </div><div class="pag-previous">
@@ -402,6 +408,10 @@ Anbox puts the Android operating system into a container, abstracts hardware acc
             </span>
             
             <span>
+                <a href="/tags/clang/">Clang</a>
+            </span>
+            
+            <span>
                 <a href="/tags/docker/">Docker</a>
             </span>
             
@@ -435,6 +445,10 @@ Anbox puts the Android operating system into a container, abstracts hardware acc
             
             <span>
                 <a href="/tags/windows/">Windows</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%88%9D%E5%AD%A6/">初学</a>
             </span>
             
             <span>
@@ -618,6 +632,10 @@ Anbox puts the Android operating system into a container, abstracts hardware acc
             </span>
             
             <span>
+                <a href="/tags/clang/">Clang</a>
+            </span>
+            
+            <span>
                 <a href="/tags/docker/">Docker</a>
             </span>
             
@@ -651,6 +669,10 @@ Anbox puts the Android operating system into a container, abstracts hardware acc
             
             <span>
                 <a href="/tags/windows/">Windows</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%88%9D%E5%AD%A6/">初学</a>
             </span>
             
             <span>

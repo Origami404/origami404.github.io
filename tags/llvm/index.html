@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta http-equiv="Cache-Control" content="no-transform" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-<meta name="generator" content="Hugo 0.95.0" />
+<meta name="generator" content="Hugo 0.93.3" />
 
 
 
@@ -38,7 +38,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://blog.origami404.top/tags/llvm/" /><meta property="og:image" content="https://blog.origami404.top/img/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://blog.origami404.top/img/og.png" /><meta property="og:updated_time" content="2022-01-21T22:00:00+08:00" />
+<meta name="twitter:image" content="https://blog.origami404.top/img/og.png" /><meta property="og:updated_time" content="2022-10-25T14:30:00+08:00" />
 
 
 <style>
@@ -107,6 +107,31 @@
 </div>
 
 
+
+<div class="post">
+  <h2 class="post-item post-title">
+    <a href="https://blog.origami404.top/compiler-and-type-theory/2022-10-getting-start-with-clang/">LLVM/Clang 源码起步</a>
+  </h2>
+  <div class="post-item post-meta">
+    <span><i class="iconfont icon-today-sharp"></i>&nbsp;2022-10-25</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;1473 字</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E7%BC%96%E7%A8%8B">编程</a>&nbsp;<a href="/tags/llvm">LLVM</a>&nbsp;<a href="/tags/clang">Clang</a>&nbsp;<a href="/tags/%E5%88%9D%E5%AD%A6">初学</a>&nbsp;</span>
+
+  </div>
+  <div class="post-item post-summary markdown-body">
+    <h2 id="前言">前言</h2>
+<p>本文章主要记录了我从源码构建 LLVM/Clang 的过程与细节. 注意此文章的目标为构建 Debug 版本与借助代码理解 LLVM/Clang, 而非简单的安装.</p>
+<h2 id="参考">参考</h2>
+<p>感谢:</p>
+<ul>
+<li>来自 <a href="https://github.com/inclyc" target="_blank">inclyc</a> 的指点</li>
+<li><a href="https://llvm.org/docs/GettingStarted.html" target="_blank">Getting Started with the LLVM System</a></li>
+<li><a href="https://clang.llvm.org/get_started.html" target="_blank">Getting Started: Building and Running Clang</a></li>
+</ul>
+  </div>
+</div>
 
 <div class="post">
   <h2 class="post-item post-title">
@@ -303,26 +328,16 @@
   </div>
 </div>
 
-<div class="post">
-  <h2 class="post-item post-title">
-    <a href="https://blog.origami404.top/llvm-kaleidoscope/2022-01-kaleidoscope-ch-5/">LLVM Kaleidoscope 第 5 章 扩展语言：控制流</a>
-  </h2>
-  <div class="post-item post-meta">
-    <span><i class="iconfont icon-today-sharp"></i>&nbsp;2022-01-15</span>
 
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;9103 字</span>
-
-<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86">编译原理</a>&nbsp;<a href="/tags/%E7%BC%96%E8%AF%91%E5%89%8D%E7%AB%AF">编译前端</a>&nbsp;<a href="/tags/llvm">LLVM</a>&nbsp;<a href="/tags/%E7%BF%BB%E8%AF%91">翻译</a>&nbsp;</span>
-
-  </div>
-  <div class="post-item post-summary markdown-body">
-    <h2 id="51-前言">5.1 前言</h2>
-<p>欢迎来到 <a href="/llvm-kaleidoscope/2022-01-kaleidoscope-ch-0">我的第一个基于 LLVM 的语言前端</a> 教程第五章。前四章描述了一门简单语言的实现，生成 LLVM IR 并优化，随后即时编译到本地代码的过程。不幸的是，至少到目前为止，Kaleidoscope 还不堪大用：它没有控制流结构 (除了函数调用与返回). 这意味着你不能用它写出带条件分支的代码，这显著地影响了 Kaleidoscope 的威力。在本章，我们将扩展 Kaleidoscope，使其支持 if/then/else 表达式和一个简单的 for 循环。</p>
-  </div>
-</div>
-
-
-
+<div class="pagination"><div class="pag-item pag-current">
+    <a href="/tags/llvm/">1</a>
+  </div><div class="pag-item">
+    <a href="/tags/llvm/page/2/">2</a>
+  </div><div class="pag-next">
+    <a href="/tags/llvm/page/2/"><i class="iconfont icon-chevron-forward-circle-sharp"></i></a>
+  </div><div class="pag-last">
+    <a href="/tags/llvm/page/2/"><i class="iconfont icon-caret-forward-circle-sharp"></i></a>
+  </div></div>
             </div>
             <aside class="col-12 col-md-3 float-left sidebar">
     
@@ -389,6 +404,10 @@
             </span>
             
             <span>
+                <a href="/tags/clang/">Clang</a>
+            </span>
+            
+            <span>
                 <a href="/tags/docker/">Docker</a>
             </span>
             
@@ -422,6 +441,10 @@
             
             <span>
                 <a href="/tags/windows/">Windows</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%88%9D%E5%AD%A6/">初学</a>
             </span>
             
             <span>
@@ -605,6 +628,10 @@
             </span>
             
             <span>
+                <a href="/tags/clang/">Clang</a>
+            </span>
+            
+            <span>
                 <a href="/tags/docker/">Docker</a>
             </span>
             
@@ -638,6 +665,10 @@
             
             <span>
                 <a href="/tags/windows/">Windows</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%E5%88%9D%E5%AD%A6/">初学</a>
             </span>
             
             <span>

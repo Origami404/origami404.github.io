@@ -6,7 +6,16 @@
     <description>Recent content in Python on Origami404 的 Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 03 May 2022 11:30:00 +0800</lastBuildDate><atom:link href="https://blog.origami404.top/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 22 Jun 2022 19:30:00 +0800</lastBuildDate><atom:link href="https://blog.origami404.top/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Python 类型标注之新进展</title>
+      <link>https://blog.origami404.top/compiler-and-type-theory/2022-06-py-annotaion-3/</link>
+      <pubDate>Wed, 22 Jun 2022 19:30:00 +0800</pubDate>
+      
+      <guid>https://blog.origami404.top/compiler-and-type-theory/2022-06-py-annotaion-3/</guid>
+      <description>前言 本文是 Python 类型标注之追本溯源 的续篇. 主要是看看第一篇文章之后的 Python 类型标注 (Python 3.6 之后的版本) 能玩些什么花活. 正如前一篇文章提到的, 本篇就主要是类似 &amp;ldquo;What&amp;rsquo;s new&amp;rdquo; 了. 主要参考文档如下: What&amp;rsquo;s new in Python</description>
+    </item>
+    
     <item>
       <title>Python 类型标注之追本溯源</title>
       <link>https://blog.origami404.top/compiler-and-type-theory/2022-05-py-annotation-2/</link>
